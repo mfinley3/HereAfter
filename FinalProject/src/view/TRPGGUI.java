@@ -13,6 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Sets up the GUI.  Starts with the options of "New Game", "Continue" or "Quit" and dynamically changes while buttons are selected.
+ * 
+ * 
+ * @author Katelyn
+ *
+ */
+
 public class TRPGGUI extends JFrame {
 	//Random serial number
 	private static final long serialVersionUID = -703102129384036053L;
