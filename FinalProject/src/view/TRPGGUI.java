@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -63,6 +64,8 @@ public class TRPGGUI extends JFrame {
 	public TRPGGUI() {
 
 		mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		
 		firstPage = true;
 		secondPage = false;
 
@@ -74,15 +77,17 @@ public class TRPGGUI extends JFrame {
 		this.setLocation(100, 0);
 
 		this.setLayout(new BorderLayout());
-
+		
+/*
 		// Start up page
 		ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
 		background = new JLabel(image);
 		mainPanel.add(background);
-
-		this.add(mainPanel);
-
-		registerListeners();
+*/
+		this.add(mainPanel, BorderLayout.CENTER);
+selectUnits();
+		
+		//registerListeners();
 
 	}
 
@@ -102,20 +107,97 @@ public class TRPGGUI extends JFrame {
 	}
 	
 	private void selectUnits() {
-		JPanel panel = new JPanel();
 		
+		mainPanel.setBackground(Color.RED);
+		JLabel title = new JLabel("HereAfter");
+		title.setFont(new Font("Verdana", Font.PLAIN, 50));
+		mainPanel.add(title, BorderLayout.NORTH);
+		
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(5,3));
 		panel.setBackground(Color.DARK_GRAY);
-		panel.setLayout(new BorderLayout());
+		
+		
+		JLabel nameLabel = new JLabel("Enter User Name: ");
+		nameLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
 		
 		JTextField name = new JTextField(); 
-		JLabel enterName = new JLabel("Enter User Name: ");
+		name.setFont(new Font("Verdana", Font.PLAIN, 25));
 		
-		panel.add(name, BorderLayout.NORTH);
-		panel.add(enterName, BorderLayout.NORTH);
+		JLabel infoLabel = new JLabel("Select 5 units");
+		infoLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
 		
-		mainPanel.add(panel);
+		
+		JPanel soldier = new JPanel();
+		soldier.setLayout(new BorderLayout());
+		JTextField numSold = new JTextField(); 
+		//soldier.add(picture, BorderLayout.CENTER);
+		soldier.add(numSold, BorderLayout.SOUTH);
+		
+		JPanel doc = new JPanel();
+		doc.setLayout(new BorderLayout());
+		JTextField numDoc = new JTextField(); 
+		//soldier.add(picture, BorderLayout.CENTER);
+		doc.add(numDoc, BorderLayout.SOUTH);
+		
+/*
+		JPanel doc = new JPanel();
+		doc.setLayout(new BorderLayout());
+		JTextField numDoc = new JTextField(); 
+		//soldier.add(picture, BorderLayout.CENTER);
+		doc.add(numDoc, BorderLayout.SOUTH);
+		
+		JPanel doc = new JPanel();
+		doc.setLayout(new BorderLayout());
+		JTextField numDoc = new JTextField(); 
+		//soldier.add(picture, BorderLayout.CENTER);
+		doc.add(numDoc, BorderLayout.SOUTH);
+		
+		JPanel doc = new JPanel();
+		doc.setLayout(new BorderLayout());
+		JTextField numDoc = new JTextField(); 
+		//soldier.add(picture, BorderLayout.CENTER);
+		doc.add(numDoc, BorderLayout.SOUTH);
+		
+*/	
+		
+		JButton makeUnit = new JButton("Make Unit!");
 
-		//repaint();
+		
+		
+		//set opacity to either true of false
+		
+		panel.add(nameLabel);
+		panel.add(name);
+		panel.add(new JPanel());
+		panel.add(infoLabel);
+		panel.add(new JPanel());
+		panel.add(new JPanel());
+		panel.add(soldier);
+		panel.add(doc);
+		//panel.add(other);
+		//panel.add(other);
+		//panel.add(other);
+		panel.add(new JPanel());
+		panel.add(new JPanel());
+		panel.add(new JPanel());
+		
+		
+		
+		
+		panel.add(new JPanel());
+		panel.add(new JPanel());
+		panel.add(new JPanel());
+		panel.add(makeUnit);
+		
+		
+		
+		mainPanel.add(panel, BorderLayout.CENTER);
+		
+		revalidate();
+		repaint();
+
 		
 	}
 
