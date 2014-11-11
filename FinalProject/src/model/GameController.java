@@ -28,14 +28,12 @@ public class GameController {
 	 * create a new game.
 	 */
 	
-	public GameController(Player player1, Player player2, Map map){
-		this.map = map;
+	public GameController(Player player1, Difficulty i){
+		this.map = new Map(i);
 		this.player1 = player1;
-		this.player2 = player2;
 	
 		// Place the players on the map
-		map.placePlayer1(player1);
-		map.placePlayer2(player1);
+		map.addUnitstoMap(player1.getTeam());
 			
 		currPlayer = player1;
 		tempUnitList = player1.getAllAliveUnits();
@@ -51,7 +49,7 @@ public class GameController {
 		
 	}
 	
-	public boolean canMove(){
+	public boolean playerCanMove(){
 		return !tempUnitList.empty();
 	}
 	
@@ -107,5 +105,9 @@ public class GameController {
 	public void doNothing(){
 		currUnit.setMovesLeft(0);
 		nextPlayerOnList();
+	}
+	
+	public Map getMap(){
+		return map;
 	}
 }
