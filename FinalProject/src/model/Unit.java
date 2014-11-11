@@ -1,9 +1,10 @@
 package model;
 
 
+
 public interface Unit {
 
-	Space[] itemList = new Space[6]; // Every Unit gets a max of 6 items
+	ItemSpace[] itemList = new ItemSpace[6]; // Every Unit gets a max of 6 items
 	
 	public int health();
 	

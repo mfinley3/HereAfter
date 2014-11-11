@@ -1,12 +1,12 @@
 package model;
 
-public class Space {
+public class ItemSpace {
 
 	private boolean atkItem;
 	private boolean defItem;
 	private boolean healthItem;
 
-	public Space() {
+	public ItemSpace() {
 		// Creates an empty game space
 	}
 
