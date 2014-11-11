@@ -39,13 +39,18 @@ public class GameController {
 		tempUnitList = player1.getAllAliveUnits();
 		
 	}
-	
-	public void move(int i, int j){
-		if(currMovesLeft()>0){
-			// SOME STUFF REGARDING THE MAP
-			
-			currUnit.move();	// 
-		}
+	/**
+	 * Move a selected Unit to a another space. Can 
+	 * 
+	 * @param sr, the starting row
+	 * @param sc, the starting column
+	 * @param er, the ending row
+	 * @param ec, the ending column
+	 */
+	public void move(int sr, int sc, int er, int ec){
+		// SOME STUFF REGARDING THE MAP
+		if(map.getUnitAt(sr,sc).canMove())
+			map.moveUnit(sr, sc, er, ec);
 		
 	}
 	
@@ -110,4 +115,12 @@ public class GameController {
 	public Map getMap(){
 		return map;
 	}
+	
+	// Selected unit
+	
+	// Move options, wait
+	
+	// End Turn message
+	
+	// Heal Command 
 }
