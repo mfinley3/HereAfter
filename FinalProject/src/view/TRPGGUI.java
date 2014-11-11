@@ -3,8 +3,10 @@ package view;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import model.Difficulty;
 import model.GameController;
@@ -45,11 +48,12 @@ public class TRPGGUI extends JFrame {
 	private boolean firstPage;
 	private boolean secondPage;
 	private JTabbedPane views;
-	
-	private JPanel panel;
-	
+
+	private JPanel mainPanel;
+	private JPanel pickUnitPanel;
+
 	private JPanel text = new TextView();
-	private JPanel graphical = new GraphicalView(); 
+	private JPanel graphical = new GraphicalView();
 	private GameController controller;
 
 	public static void main(String[] args) {
@@ -57,11 +61,8 @@ public class TRPGGUI extends JFrame {
 	}
 
 	public TRPGGUI() {
-		
-		//Create a controller
-		//controller = new GameController();
-		
-		panel =  new JPanel();
+
+		mainPanel = new JPanel();
 		firstPage = true;
 		secondPage = false;
 
@@ -74,30 +75,47 @@ public class TRPGGUI extends JFrame {
 
 		this.setLayout(new BorderLayout());
 
-		//Start up page
+		// Start up page
 		ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
 		background = new JLabel(image);
-		panel.add(background);
-		
-		this.add(panel);
+		mainPanel.add(background);
+
+		this.add(mainPanel);
 
 		registerListeners();
 
 	}
-	
+
 	private void actualMap() {
 
 		views = new JTabbedPane();
 		views.add(graphical, "Graphical");
 		views.add(text, "Text");
-		panel.add(views, BorderLayout.CENTER);
+		mainPanel.add(views, BorderLayout.CENTER);
 		System.out.println("what");
-		
+
 		JButton sd = new JButton("yes");
-		panel.add(sd);
-		this.add(panel);
+		mainPanel.add(sd);
 		revalidate();
 		repaint();
+
+	}
+	
+	private void selectUnits() {
+		JPanel panel = new JPanel();
+		
+		panel.setBackground(Color.DARK_GRAY);
+		panel.setLayout(new BorderLayout());
+		
+		JTextField name = new JTextField(); 
+		JLabel enterName = new JLabel("Enter User Name: ");
+		
+		panel.add(name, BorderLayout.NORTH);
+		panel.add(enterName, BorderLayout.NORTH);
+		
+		mainPanel.add(panel);
+
+		//repaint();
 		
 	}
 
@@ -106,8 +124,8 @@ public class TRPGGUI extends JFrame {
 		MouseListener listener = new ListenToMouse();
 		MouseMotionListener motionListener = new ListenToMouse();
 
-		panel.addMouseMotionListener(motionListener);
-		panel.addMouseListener(listener);
+		mainPanel.addMouseMotionListener(motionListener);
+		mainPanel.addMouseListener(listener);
 
 	}
 
@@ -129,47 +147,49 @@ public class TRPGGUI extends JFrame {
 			if (firstPage) {
 
 				if (clickX > 685 && clickX < 875 && clickY > 150 && clickY < 190) {
-					//190x40
-					
+					// 190x40
+
 					// This means there is a new game
 					// go to the second page with the level options
 					ImageIcon image2 = new ImageIcon("FinalStartScreenBackgroundDifficulty.png");
 					background.setIcon(image2);
 					firstPage = false;
 					secondPage = true;
-				} else if(clickX > 645 && clickX < 925 && clickY > 210 && clickY < 250) {
-					//This means they want to continue their game
-					//280x40
-					
-					
+				} else if (clickX > 645 && clickX < 925 && clickY > 210 && clickY < 250) {
+					// This means they want to continue their game
+					// 280x40
+
 					firstPage = false;
-				} else if(clickX > 740 && clickX < 830 && clickY > 270 && clickY < 310) {
-					//This means they want to quit the game
-					//90x40
-					
+				} else if (clickX > 740 && clickX < 830 && clickY > 270 && clickY < 310) {
+					// This means they want to quit the game
+					// 90x40
+
 					System.exit(0);
 				}
-			} else if(secondPage){
+			} else if (secondPage) {
 				if (clickX > 740 && clickX < 840 && clickY > 235 && clickY < 275) {
 					// This means the difficulty is easy
-					//map = new Map(Difficulty.EASY);
-					
-				System.out.println("easy");
-					
-					
-				} else if(clickX > 715 && clickX < 860 && clickY > 290 && clickY < 325) {
-					//This means the difficulty is medium
-					//map = new Map(Difficulty.MEDIUM);
+					// map = new Map(Difficulty.EASY);
+
+					System.out.println("easy");
+
+				} else if (clickX > 715 && clickX < 860 && clickY > 290 && clickY < 325) {
+					// This means the difficulty is medium
+					// map = new Map(Difficulty.MEDIUM);
 					System.out.println("medium");
-				} else if(clickX > 740 && clickX < 840 && clickY > 340 && clickY < 380) {
-					//This means the difficulty is hard
-					//map = new Map(Difficulty.HARD);
+				} else if (clickX > 740 && clickX < 840 && clickY > 340 && clickY < 380) {
+					// This means the difficulty is hard
+					// map = new Map(Difficulty.HARD);
 					System.out.println("hard");
-				} 
-				panel.remove(background);
+				}
+				mainPanel.remove(background);
 				repaint();
-				actualMap();
+				selectUnits();
+				//actualMap();
+				
 				secondPage = false;
+				// Create a controller
+				//controller = new GameController();
 			}
 		}
 
