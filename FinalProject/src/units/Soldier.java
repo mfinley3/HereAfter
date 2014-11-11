@@ -1,7 +1,6 @@
 package units;
 
 import item.Item;
-import item.ItemList;
 import item.ItemType;
 
 public class Soldier implements Unit {
@@ -15,7 +14,7 @@ public class Soldier implements Unit {
 	public int health() {
 		// Health level * health modifier
 		int hpMod = 1;
-		//(itemList.isEmpty())
+		//itemList.contains(healthItem);
 		return 100 * hpMod;
 	}
 

@@ -1,6 +1,9 @@
 package units;
 
-import item.ItemList;
+import item.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -9,7 +12,7 @@ import item.ItemList;
  */
 public interface Unit {
 
-	public ItemList[] itemList = new ItemList[6]; // Every Unit gets a blank list of items
+	public ArrayList<Item> itemList = new ArrayList<Item>(); // Every Unit gets a blank list of items
 	
 	public int health();
 	
