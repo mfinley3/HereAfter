@@ -5,6 +5,7 @@ import java.util.Stack;
 
 import space.Space;
 import space.WasteLandSpace;
+import units.Soldier;
 import units.Unit;
 
 public class Map {
@@ -19,6 +20,7 @@ public class Map {
 				for (int j = 0; j < map.length; j++) {
 					map[i][j] = new WasteLandSpace(); // Map of empty spaces
 				}
+				
 			if(difficulty == .5){
 				//make the easy map
 			}
@@ -52,5 +54,15 @@ public class Map {
 		}
 		
 	}
-	
+
+	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol){
+		
+		unitsOnMap[moveToRow][moveToCol] = unitsOnMap[startRow][startCol];
+		unitsOnMap[startRow][startCol] = null;
+		unitsOnMap[moveToRow][moveToCol].setCanMove();
+		map[startRow][startCol].setOccupied(false);
+		map[moveToRow][moveToCol].setOccupied(true);
+		
+		
+	}
 }
