@@ -27,7 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Difficulty;
-import model.GameController;
+import model.GameController1;
 import model.Map;
 
 /**
@@ -54,7 +54,7 @@ public class TRPGGUI extends JFrame {
 
 	private JPanel text = new TextView();
 	private JPanel graphical = new GraphicalView();
-	private GameController controller;
+	private GameController1 controller;
 
 	public static void main(String[] args) {
 		new TRPGGUI().setVisible(true);
