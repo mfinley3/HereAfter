@@ -1,10 +1,15 @@
 package model;
 
+import item.ItemList;
 
-
+/**
+ * 
+ * @author Chioke
+ *
+ */
 public interface Unit {
 
-	ItemSpace[] itemList = new ItemSpace[6]; // Every Unit gets a max of 6 items
+	ItemList[] itemList = new ItemList[6]; // Every Unit gets a max of 6 items
 	
 	public int health();
 	
