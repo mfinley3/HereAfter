@@ -12,7 +12,7 @@ import units.Unit;
  * @author Brian Seaman
  *
  */
-public class GameController1 {
+public class GameController {
 	public Player player1;
 	public Player player2;
 	private Map map;
@@ -28,7 +28,7 @@ public class GameController1 {
 	 * create a new game.
 	 */
 	
-	public GameController1(Player player1, Difficulty i){
+	public GameController(Player player1, Difficulty i){
 		this.map = new Map(i);
 		this.player1 = player1;
 	
