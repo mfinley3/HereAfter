@@ -14,15 +14,19 @@ public interface Unit {
 
 	public ArrayList<Item> itemList = new ArrayList<Item>(); // Every Unit gets a blank list of items
 	
-	public int health();
+	public int getHealth();
 	
-	public int movesAvailable();
+	public int attack();
 	
-	public void move();
-	
-	public void attack();
+	public int defense();
 	
 	public void visibility();
+	
+	public int getMovement();
+	
+	public boolean canMove();
+	
+	public void setCanMove();
 	
 	/*
 	 * Methods dealing w/ Unit Locations

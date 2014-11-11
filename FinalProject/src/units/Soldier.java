@@ -5,43 +5,75 @@ import item.ItemType;
 
 public class Soldier implements Unit {
 
+	private boolean canMove = false;
+	
 	public Soldier() {
 		Item givenWeapon = new Item("Rifle", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}
-	
+
 	@Override
-	public int health() {
+	public int getHealth() {
 		// Health level * health modifier
 		int hpMod = 1;
-		//itemList.contains(healthItem);
-		return 100 * hpMod;
-	}
-
-	@Override
-	public int movesAvailable() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+		int totalHealth = 100;
 		
+		for (Item item : itemList) {
+			if (item.isHealthItem()) {
+				hpMod += 1;
+				totalHealth = 100 * hpMod;
+			}
+		}
+		return totalHealth;
 	}
 
 	@Override
-	public void attack() {
-		// TODO Auto-generated method stub
-		
+	public int attack() {
+		// Attack level * attack modifier
+		int atkMod = 1;
+		for (Item item : itemList) {
+			if (item.isAtkItem()) {
+				atkMod = 2;
+			}
+		}
+		return 10 * atkMod;
+	}
+	
+	@Override
+	public int defense() {
+		// Defense level * attack modifier
+		int atkMod = 1;
+		for (Item item : itemList) {
+			if (item.isAtkItem()) {
+				atkMod = 2;
+			}
+		}
+		return 10 * atkMod;
 	}
 
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub
-		
+
+	}
+	
+	@Override
+	public int getMovement() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
+	@Override
+	public boolean canMove() {
+		// TODO Auto-generated method stub
+		return canMove;
+	}
+	
+	@Override
+	public void setCanMove() {
+		canMove = !canMove;
+	}
+	
 	@Override
 	public int getUR() {
 		// TODO Auto-generated method stub
@@ -51,7 +83,7 @@ public class Soldier implements Unit {
 	@Override
 	public void setUR(int uR) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -63,7 +95,7 @@ public class Soldier implements Unit {
 	@Override
 	public void setHC(int uC) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
