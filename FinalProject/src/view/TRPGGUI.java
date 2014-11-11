@@ -27,8 +27,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.GameController;
 import model.Difficulty;
-import model.GameController;
 import model.Map;
 
 /**

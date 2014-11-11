@@ -1,7 +1,10 @@
-package model;
+package controller;
 
 import java.util.List;
 
+import model.Difficulty;
+import model.Map;
+import model.Player;
 import units.Unit;
 
 /**
