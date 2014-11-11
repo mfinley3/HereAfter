@@ -1,4 +1,4 @@
-package model;
+package units;
 
 import item.ItemList;
 

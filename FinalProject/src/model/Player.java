@@ -3,6 +3,8 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+import units.Unit;
+
 public class Player {
 	public int missionsDone;
 	public int livingTeam;
