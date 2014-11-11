@@ -9,11 +9,9 @@ import item.ItemList;
  */
 public interface Unit {
 
-	ItemList[] itemList = new ItemList[6]; // Every Unit gets a max of 6 items
+	public ItemList[] itemList = new ItemList[6]; // Every Unit gets a blank list of items
 	
 	public int health();
-	
-	public void setHealth(int health);
 	
 	public int movesAvailable();
 	
