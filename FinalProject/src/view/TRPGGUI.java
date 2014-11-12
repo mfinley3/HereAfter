@@ -5,6 +5,7 @@ import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -61,12 +63,11 @@ public class TRPGGUI extends JFrame {
 
 		setTitle("HereAfter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 
-		this.setSize(1010, 660);
+		this.setSize(1000, 660);
 		this.setVisible(true);
 		this.setLocation(100, 0);
-
-		this.setLayout(new BorderLayout());
 
 		// Start up page
 		ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
@@ -74,9 +75,10 @@ public class TRPGGUI extends JFrame {
 		mainPanel.add(background, BorderLayout.CENTER);
 
 		this.add(mainPanel, BorderLayout.CENTER);
-selectUnits();
+//selectUnits();
+
 		
-		//registerListeners();
+		registerListeners();
 
 	}
 
@@ -86,10 +88,32 @@ selectUnits();
 		views.add(graphical, "Graphical");
 		views.add(text, "Text");
 		mainPanel.add(views, BorderLayout.CENTER);
-		System.out.println("what");
+		
+		JLabel title = new JLabel("HereAfter");
+		title.setFont(new Font("Verdana", Font.PLAIN, 50));
+		mainPanel.add(title, BorderLayout.NORTH);
+		
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(8,1));
+		JButton move = new JButton("Move");
+		JButton attack = new JButton("Attack");
+		JButton item = new JButton("Use an Item");
+		JButton wait = new JButton("Wait");
+		
+		buttons.add(new JPanel());
+		buttons.add(new JPanel());
+		buttons.add(move);
+		buttons.add(attack);
+		buttons.add(item);
+		buttons.add(wait);
+		buttons.add(new JPanel());
+		buttons.add(new JPanel());
+		
+		
+		mainPanel.add(buttons, BorderLayout.WEST);
 
-		JButton sd = new JButton("yes");
-		mainPanel.add(sd);
+		//JButton sd = new JButton("yes");
+		//mainPanel.add(sd);
 		revalidate();
 		repaint();
 
@@ -111,9 +135,9 @@ selectUnits();
 		background.setIcon(city);
 		
 		
-		
 		JLabel nameLabel = new JLabel("Enter User Name: ");
 		nameLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
+		nameLabel.setForeground(Color.RED);
 		//nameLabel.setBackground(new Color(0,0,0,10));
 		//nameLabel.setOpaque(false);
 		
@@ -162,8 +186,8 @@ selectUnits();
 		JTextField numDoc = new JTextField(); 
 		//soldier.add(picture, BorderLayout.CENTER);
 		doc.add(numDoc, BorderLayout.SOUTH);
-		
-*/	
+*/
+
 		JButton makeUnit = new JButton("Make Unit!");
 
 		
@@ -197,8 +221,8 @@ selectUnits();
 		
 		mainPanel.add(panel, BorderLayout.CENTER);
 		
-		revalidate();
-		repaint();
+		//revalidate();
+		//repaint();
 
 		
 	}
@@ -266,8 +290,11 @@ selectUnits();
 					// map = new Map(Difficulty.HARD);
 					System.out.println("hard");
 				}
-				selectUnits();
-				//actualMap();
+				//selectUnits();
+				mainPanel.remove(background);
+				revalidate();
+				repaint();
+				actualMap();
 				
 				secondPage = false;
 				// Create a controller
