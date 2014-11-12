@@ -5,34 +5,21 @@ import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
 import controller.GameController;
-import model.Difficulty;
-import model.Map;
 
 /**
  * 
@@ -84,12 +71,12 @@ public class TRPGGUI extends JFrame {
 		// Start up page
 		ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
 		background = new JLabel(image);
-		mainPanel.add(background);
+		mainPanel.add(background, BorderLayout.CENTER);
 
 		this.add(mainPanel, BorderLayout.CENTER);
-//selectUnits();
+selectUnits();
 		
-		registerListeners();
+		//registerListeners();
 
 	}
 
@@ -123,25 +110,28 @@ public class TRPGGUI extends JFrame {
 		ImageIcon city = new ImageIcon("unitSelect.jpeg");
 		background.setIcon(city);
 		
-
 		
 		
 		JLabel nameLabel = new JLabel("Enter User Name: ");
 		nameLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
+		//nameLabel.setBackground(new Color(0,0,0,10));
+		//nameLabel.setOpaque(false);
+		
 		
 		JTextField name = new JTextField(); 
 		name.setFont(new Font("Verdana", Font.PLAIN, 25));
 		
-		JLabel infoLabel = new JLabel("Select 5 units");
+		JTextArea infoLabel = new JTextArea("Select 5 units");
 		infoLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
+		infoLabel.setBackground(new Color(0,0,0,10));
 		
 		
 		JPanel soldier = new JPanel();
 		soldier.setLayout(new BorderLayout());
 		JTextField numSold = new JTextField(); 
 		JLabel soldPic = new JLabel();
-		ImageIcon picSold = new ImageIcon("___________________________");
-		soldPic.setIcon(picSold);
+		//ImageIcon picSold = new ImageIcon("___________________________");
+		//soldPic.setIcon(picSold);
 		soldier.add(soldPic, BorderLayout.CENTER);
 		soldier.add(numSold, BorderLayout.SOUTH);
 		
@@ -149,8 +139,8 @@ public class TRPGGUI extends JFrame {
 		doc.setLayout(new BorderLayout());
 		JTextField numDoc = new JTextField(); 
 		JLabel docPic = new JLabel();
-		ImageIcon picDoc = new ImageIcon("___________________________");
-		docPic.setIcon(picDoc);
+		//ImageIcon picDoc = new ImageIcon("___________________________");
+		//docPic.setIcon(picDoc);
 		doc.add(docPic, BorderLayout.CENTER);
 		doc.add(numDoc, BorderLayout.SOUTH);
 		
@@ -203,7 +193,7 @@ public class TRPGGUI extends JFrame {
 		panel.add(new JPanel());
 		panel.add(makeUnit);
 		
-
+		
 		
 		mainPanel.add(panel, BorderLayout.CENTER);
 		
