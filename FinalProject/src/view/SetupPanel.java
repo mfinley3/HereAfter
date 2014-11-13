@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -68,6 +69,7 @@ public class SetupPanel extends JPanel {
 
 		JLabel userNameLabel = new JLabel("Enter user name: ");
 		userNameLabel.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		userNameLabel.setForeground(Color.WHITE);
 		userNameLabel.setSize(200, 25);
 		userNameLabel.setLocation(15, 100);
 		this.add(userNameLabel);
