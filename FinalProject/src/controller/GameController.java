@@ -8,6 +8,8 @@ import model.Player;
 import units.Unit;
 
 /**
+ * TODO Finish this
+ * 
  * The controller of the project. Sends messages to map, Saves Data, Loads Data,
  * sets up players, calculate which map is needed, sends messages to the enemy
  * team factory, etc.
@@ -31,18 +33,29 @@ public class GameController {
 	 * create a new game.
 	 */
 	
+	/**
+	 * TODO Work on this
+	 * 
+	 * Constructor for one player.
+	 * 
+	 * @param player1
+	 * @param i
+	 */
 	public GameController(Player player1, Difficulty i){
-		this.map = new Map(i);
+		this.map = new Map(i.getValue());
 		this.player1 = player1;
 	
 		// Place the players on the map
-		map.addUnitstoMap(player1.getTeam());
+		map.addUnitsToMap(player1.getTeam());
 			
 		currPlayer = player1;
-		tempUnitList = player1.getAllAliveUnits();
+		tempUnitList = player1.allAliveUnits();
+		turns = 0;
 		
 	}
 	/**
+	 * TODO Test and Finish
+	 * 
 	 * Move a selected Unit to a another space. Can 
 	 * 
 	 * @param sr, the starting row
@@ -52,29 +65,55 @@ public class GameController {
 	 */
 	public void move(int sr, int sc, int er, int ec){
 		// SOME STUFF REGARDING THE MAP
-		if(map.getUnitAt(sr,sc).canMove())
+		//if(map.getUnitAt(sr,sc).canMove())
 			map.moveUnit(sr, sc, er, ec);
 		
 	}
 	
-	public boolean playerCanMove(){
-		return !tempUnitList.empty();
-	}
+	/**
+	 * TODO Check if the selected unit can move.
+	 */
+//	public boolean playerCanMove(){
+//		return !((List<Unit>) tempUnitList).isEmpty();
+//	}
 	
-	public boolean attack(){
-		if(canMove)
+	/**
+	 * TODO Finish this
+	 * 
+	 * @param sr
+	 * @param sc
+	 * @param er
+	 * @param ec
+	 * @return
+	 */
+	public boolean attack(int sr, int sc, int er, int ec){
+		if(true)
 			// Send attack message to map
 			return true;
 		else
 			return false;
 	}
 	
-	public boolean hasItem(){
-		return currUnit.hasItem();
-	}
+	/**
+	 * TODO Finish this method.
+	 */
+//	public boolean hasItem(){
+//		return currUnit.hasItem();
+//	}
 	
-	public boolean useItem(){
-		if(!hasItem())
+	/**
+	 * TODO Finish this method
+	 * 
+	 * Use the item of a selected unit. 
+	 * 
+	 * @param sr, the row where the player is in
+	 * @param sc, column where the selected unit is
+	 * @param er, where the item will be used (row)
+	 * @param ec, where the item will be used (column)
+	 * @return if the item was used.
+	 */
+	public boolean useItem(int sr, int sc, int er, int ec){
+		if(false)
 			return false;
 		else{
 			// If attack item, use on target space
@@ -87,6 +126,15 @@ public class GameController {
 		}
 	}
 	
+	/**
+	 * TODO Finish this method
+	 * 
+	 * Checks both of the player's aliveUnits to see if all of their 
+	 * units are dead. If either of them are out of units they can move,
+	 * return true and end the game. Checked after every move and attack.
+	 * @return if the game is over or not
+	 */
+	
 	public boolean gameOver(){
 		if(player1.allAliveUnits().isEmpty())
 			//Display some kind of message telling player 2 won
@@ -98,23 +146,55 @@ public class GameController {
 			return false;
 	}
 	
+	/**
+	 * TODO Finish this.
+	 * Get the stats for the selected player.
+	 * @param p
+	 * @return
+	 */
 	public Object getTeamStats(Player p){
 		return p.getTeamStats();
 	}
 	
+	/**
+	 * TODO Get this working
+	 * Get the selected unit's stats
+	 * 
+	 * @param p, the player that is asking
+	 * @param u, the player's unit
+	 * @return
+	 */
 	public Object getCurrUnitStats(Player p, Unit u){
-		return p.getUnitStats(u);
+//		return p.getUnitStats(u);
+		return false;
 	}
 	
+	/**
+	 * TODO Get this working too
+	 * Get the number of turns gone through in the game
+	 * @return the number of turns taken in game
+	 */
 	public int getTurns(){
 		return turns;
 	}
 	
+	/**
+	 * TODO Finish this and create a method for ending the whole turn
+	 * 
+	 * This method is used when a player wants to do nothing and end
+	 * that current unit's turn. Doesn't end the entire turn, just the
+	 * turn of the currently selected unit.
+	 */
 	public void doNothing(){
-		currUnit.setMovesLeft(0);
-		nextPlayerOnList();
+//		currUnit.setMovesLeft(0);
+//		nextPlayerOnList();
 	}
 	
+	/**
+	 * TODO FINISH and Test
+	 *  Return the map. Used in setting up the GUI with the current game.
+	 * @return the map of the current game
+	 */
 	public Map getMap(){
 		return map;
 	}
@@ -123,7 +203,15 @@ public class GameController {
 	
 	// Move options, wait
 	
-	// End Turn message
+	/**
+	 * TODO FINISH
+	 * When called, ends a turn.
+	 * 
+	 * 
+	 */
+	public void endTurn(){
+		
+	}
 	
 	// Heal Command 
 }
