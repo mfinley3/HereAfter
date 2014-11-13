@@ -53,7 +53,14 @@ public class TRPGGUI extends JFrame {
 		new TRPGGUI().setVisible(true);
 	}
 
-	public TRPGGUI() {
+	public TRPGGUI() {	
+		this.setSize(1000, 660);
+		this.setVisible(true);
+		this.setLocation(100, 0);
+		
+		setTitle("HereAfter");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -61,27 +68,30 @@ public class TRPGGUI extends JFrame {
 		firstPage = true;
 		secondPage = false;
 
-		setTitle("HereAfter");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
 
-		this.setSize(1000, 660);
-		this.setVisible(true);
-		this.setLocation(100, 0);
+
+
 
 		// Start up page
-		ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
-		background = new JLabel(image);
-		mainPanel.add(background, BorderLayout.CENTER);
+		//ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
+		//background = new JLabel(image);
+		//mainPanel.add(background, BorderLayout.CENTER);
 
-		this.add(mainPanel, BorderLayout.CENTER);
+		//this.add(mainPanel, BorderLayout.CENTER);
 //selectUnits();
 
 		
-		registerListeners();
+		//registerListeners();
 
+		this.add(new SetupPanel());
 	}
 
+	private void selectUnits() {
+		this.add(new SetupPanel());
+		
+	}
+	
+	
 	private void actualMap() {
 
 		views = new JTabbedPane();
@@ -112,119 +122,10 @@ public class TRPGGUI extends JFrame {
 		
 		mainPanel.add(buttons, BorderLayout.WEST);
 
-		//JButton sd = new JButton("yes");
-		//mainPanel.add(sd);
+
 		revalidate();
 		repaint();
 
-	}
-	
-	private void selectUnits() {
-		
-		//mainPanel.setBackground(Color.RED);
-		JLabel title = new JLabel("HereAfter");
-		title.setFont(new Font("Verdana", Font.PLAIN, 50));
-		//mainPanel.add(title, BorderLayout.NORTH);
-		
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(5,3));
-		panel.setBackground(new Color(0,0,0,10));
-
-
-		ImageIcon city = new ImageIcon("unitSelect.jpeg");
-		background.setIcon(city);
-		
-		
-		JLabel nameLabel = new JLabel("Enter User Name: ");
-		nameLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
-		nameLabel.setForeground(Color.RED);
-		//nameLabel.setBackground(new Color(0,0,0,10));
-		//nameLabel.setOpaque(false);
-		
-		
-		JTextField name = new JTextField(); 
-		name.setFont(new Font("Verdana", Font.PLAIN, 25));
-		
-		JTextArea infoLabel = new JTextArea("Select 5 units");
-		infoLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
-		infoLabel.setBackground(new Color(0,0,0,10));
-		
-		
-		JPanel soldier = new JPanel();
-		soldier.setLayout(new BorderLayout());
-		JTextField numSold = new JTextField(); 
-		JLabel soldPic = new JLabel();
-		//ImageIcon picSold = new ImageIcon("___________________________");
-		//soldPic.setIcon(picSold);
-		soldier.add(soldPic, BorderLayout.CENTER);
-		soldier.add(numSold, BorderLayout.SOUTH);
-		
-		JPanel doc = new JPanel();
-		doc.setLayout(new BorderLayout());
-		JTextField numDoc = new JTextField(); 
-		JLabel docPic = new JLabel();
-		//ImageIcon picDoc = new ImageIcon("___________________________");
-		//docPic.setIcon(picDoc);
-		doc.add(docPic, BorderLayout.CENTER);
-		doc.add(numDoc, BorderLayout.SOUTH);
-		
-/*
-		JPanel doc = new JPanel();
-		doc.setLayout(new BorderLayout());
-		JTextField numDoc = new JTextField(); 
-		//soldier.add(picture, BorderLayout.CENTER);
-		doc.add(numDoc, BorderLayout.SOUTH);
-		
-		JPanel doc = new JPanel();
-		doc.setLayout(new BorderLayout());
-		JTextField numDoc = new JTextField(); 
-		//soldier.add(picture, BorderLayout.CENTER);
-		doc.add(numDoc, BorderLayout.SOUTH);
-		
-		JPanel doc = new JPanel();
-		doc.setLayout(new BorderLayout());
-		JTextField numDoc = new JTextField(); 
-		//soldier.add(picture, BorderLayout.CENTER);
-		doc.add(numDoc, BorderLayout.SOUTH);
-*/
-
-		JButton makeUnit = new JButton("Make Unit!");
-
-		
-		
-		//set opacity to either true of false
-		
-		panel.add(nameLabel);
-		panel.add(name);
-		panel.add(new JPanel());
-		panel.add(infoLabel);
-		panel.add(new JPanel());
-		panel.add(new JPanel());
-		panel.add(soldier);
-		panel.add(doc);
-		//panel.add(other);
-		//panel.add(other);
-		//panel.add(other);
-		panel.add(new JPanel());
-		panel.add(new JPanel());
-		panel.add(new JPanel());
-		
-		
-		
-	
-		panel.add(new JPanel());
-		panel.add(new JPanel());
-		panel.add(new JPanel());
-		panel.add(makeUnit);
-		
-		
-		
-		mainPanel.add(panel, BorderLayout.CENTER);
-		
-		//revalidate();
-		//repaint();
-
-		
 	}
 
 	private void registerListeners() {
@@ -294,7 +195,9 @@ public class TRPGGUI extends JFrame {
 				mainPanel.remove(background);
 				revalidate();
 				repaint();
-				actualMap();
+				//actualMap();
+				selectUnits();
+				
 				
 				secondPage = false;
 				// Create a controller
