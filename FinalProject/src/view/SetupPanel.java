@@ -1,18 +1,22 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+
+import controller.GameController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +31,12 @@ public class SetupPanel extends JPanel {
 	private JTextArea userName, docNum, soldNum, engNum;
 	private JButton select;
 	private boolean selectLevel, startUp1, selectUnits;
+	private GameController controller;
+	
+	private JTabbedPane views;
+
+	private JPanel text = new TextView();
+	private JPanel graphical = new GraphicalView();
 
 	public SetupPanel() {
 
@@ -37,7 +47,7 @@ public class SetupPanel extends JPanel {
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
 			setUp2 = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
 		} catch (IOException e) {
-			System.out.println("Could not find 'unitSelect.jpeg'");
+			System.out.println("Could not find picture file");
 		}
 		
 		startUp1 = true;
@@ -89,12 +99,24 @@ public class SetupPanel extends JPanel {
 
 		select.addActionListener(new selectButtonListener());
 		this.add(select);
+		
+		JLabel doc = new JLabel("Doctor");
+		doc.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		doc.setSize(100, 25);
+		doc.setLocation(50, 250);
+		this.add(doc);
 
 		docNum = new JTextArea();
 		docNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		docNum.setSize(25, 25);
-		docNum.setLocation(50, 325);
+		docNum.setLocation(70, 350);
 		this.add(docNum);
+		
+		JLabel sold = new JLabel("Soldier");
+		sold.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		sold.setSize(100, 25);
+		sold.setLocation(250, 250);
+		this.add(sold);
 
 		soldNum = new JTextArea();
 		soldNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
@@ -106,11 +128,69 @@ public class SetupPanel extends JPanel {
 
 	private class selectButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent ae) {
-
+			//Check that the number of all units adds to 5.  if they dont, show an error message
+			//Once this is confirmed, then we want to create the actual map
+			
 			// if() {
 
 			// }
+			System.out.println("YAS");
+			actualMap();
+			
 		}
+	}
+	
+	private void actualMap() {
+		this.removeAll();
+		this.setLayout(new BorderLayout());
+		revalidate();
+		repaint();
+		
+
+		
+		title = new JLabel("HereAfter");
+		title.setFont(new Font(Font.SERIF, Font.BOLD, 50));
+		title.setSize(250, 70);
+		this.add(title, BorderLayout.NORTH);
+		
+		views = new JTabbedPane();
+		views.add(graphical, "Graphical");
+	
+		views.add(text, "Text");
+		this.add(views, BorderLayout.CENTER);
+		
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(8,1));
+		buttons.setOpaque(false);
+		
+		JButton move = new JButton("Move");
+		JButton attack = new JButton("Attack");
+		JButton item = new JButton("Use an Item");
+		JButton wait = new JButton("Wait");
+		
+		JPanel temp = new JPanel();
+		temp.setOpaque(false);
+		JPanel temp1 = new JPanel();
+		temp1.setOpaque(false);
+		JPanel temp2 = new JPanel();
+		temp2.setOpaque(false);
+		JPanel temp3 = new JPanel();
+		temp3.setOpaque(false);
+		
+		
+		buttons.add(temp);
+		buttons.add(temp1);
+		buttons.add(move);
+		buttons.add(attack);
+		buttons.add(item);
+		buttons.add(wait);
+		buttons.add(temp2);
+		buttons.add(temp3);
+		
+		
+		this.add(buttons, BorderLayout.WEST);
+
+
 	}
 	
 	private void registerListeners() {
@@ -201,12 +281,6 @@ public class SetupPanel extends JPanel {
 				
 				// Create a controller
 				//controller = new GameController();
-			} else if(selectUnits) {
-				
-				
-				
-				
-				
 			}
 		}
 
