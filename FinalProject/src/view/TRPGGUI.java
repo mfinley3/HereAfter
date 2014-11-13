@@ -1,35 +1,27 @@
 package view;
 
+
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.GameController;
-import model.Difficulty;
-import model.Map;
 
 /**
  * 
@@ -71,23 +63,22 @@ public class TRPGGUI extends JFrame {
 
 		setTitle("HereAfter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 
-		this.setSize(990, 660);
+		this.setSize(1000, 660);
 		this.setVisible(true);
 		this.setLocation(100, 0);
 
-		this.setLayout(new BorderLayout());
-		
-/*
 		// Start up page
 		ImageIcon image = new ImageIcon("FinalStartScreenBackground.png");
 		background = new JLabel(image);
-		mainPanel.add(background);
-*/
+		mainPanel.add(background, BorderLayout.CENTER);
+
 		this.add(mainPanel, BorderLayout.CENTER);
-selectUnits();
+//selectUnits();
+
 		
-		//registerListeners();
+		registerListeners();
 
 	}
 
@@ -97,10 +88,32 @@ selectUnits();
 		views.add(graphical, "Graphical");
 		views.add(text, "Text");
 		mainPanel.add(views, BorderLayout.CENTER);
-		System.out.println("what");
+		
+		JLabel title = new JLabel("HereAfter");
+		title.setFont(new Font("Verdana", Font.PLAIN, 50));
+		mainPanel.add(title, BorderLayout.NORTH);
+		
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(8,1));
+		JButton move = new JButton("Move");
+		JButton attack = new JButton("Attack");
+		JButton item = new JButton("Use an Item");
+		JButton wait = new JButton("Wait");
+		
+		buttons.add(new JPanel());
+		buttons.add(new JPanel());
+		buttons.add(move);
+		buttons.add(attack);
+		buttons.add(item);
+		buttons.add(wait);
+		buttons.add(new JPanel());
+		buttons.add(new JPanel());
+		
+		
+		mainPanel.add(buttons, BorderLayout.WEST);
 
-		JButton sd = new JButton("yes");
-		mainPanel.add(sd);
+		//JButton sd = new JButton("yes");
+		//mainPanel.add(sd);
 		revalidate();
 		repaint();
 
@@ -108,37 +121,51 @@ selectUnits();
 	
 	private void selectUnits() {
 		
-		mainPanel.setBackground(Color.RED);
+		//mainPanel.setBackground(Color.RED);
 		JLabel title = new JLabel("HereAfter");
 		title.setFont(new Font("Verdana", Font.PLAIN, 50));
-		mainPanel.add(title, BorderLayout.NORTH);
-		
+		//mainPanel.add(title, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(5,3));
-		panel.setBackground(Color.DARK_GRAY);
+		panel.setBackground(new Color(0,0,0,10));
+
+
+		ImageIcon city = new ImageIcon("unitSelect.jpeg");
+		background.setIcon(city);
 		
 		
 		JLabel nameLabel = new JLabel("Enter User Name: ");
 		nameLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
+		nameLabel.setForeground(Color.RED);
+		//nameLabel.setBackground(new Color(0,0,0,10));
+		//nameLabel.setOpaque(false);
+		
 		
 		JTextField name = new JTextField(); 
 		name.setFont(new Font("Verdana", Font.PLAIN, 25));
 		
-		JLabel infoLabel = new JLabel("Select 5 units");
+		JTextArea infoLabel = new JTextArea("Select 5 units");
 		infoLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
+		infoLabel.setBackground(new Color(0,0,0,10));
 		
 		
 		JPanel soldier = new JPanel();
 		soldier.setLayout(new BorderLayout());
 		JTextField numSold = new JTextField(); 
-		//soldier.add(picture, BorderLayout.CENTER);
+		JLabel soldPic = new JLabel();
+		//ImageIcon picSold = new ImageIcon("___________________________");
+		//soldPic.setIcon(picSold);
+		soldier.add(soldPic, BorderLayout.CENTER);
 		soldier.add(numSold, BorderLayout.SOUTH);
 		
 		JPanel doc = new JPanel();
 		doc.setLayout(new BorderLayout());
 		JTextField numDoc = new JTextField(); 
-		//soldier.add(picture, BorderLayout.CENTER);
+		JLabel docPic = new JLabel();
+		//ImageIcon picDoc = new ImageIcon("___________________________");
+		//docPic.setIcon(picDoc);
+		doc.add(docPic, BorderLayout.CENTER);
 		doc.add(numDoc, BorderLayout.SOUTH);
 		
 /*
@@ -159,9 +186,8 @@ selectUnits();
 		JTextField numDoc = new JTextField(); 
 		//soldier.add(picture, BorderLayout.CENTER);
 		doc.add(numDoc, BorderLayout.SOUTH);
-		
-*/	
-		
+*/
+
 		JButton makeUnit = new JButton("Make Unit!");
 
 		
@@ -185,7 +211,7 @@ selectUnits();
 		
 		
 		
-		
+	
 		panel.add(new JPanel());
 		panel.add(new JPanel());
 		panel.add(new JPanel());
@@ -195,8 +221,8 @@ selectUnits();
 		
 		mainPanel.add(panel, BorderLayout.CENTER);
 		
-		revalidate();
-		repaint();
+		//revalidate();
+		//repaint();
 
 		
 	}
@@ -264,10 +290,11 @@ selectUnits();
 					// map = new Map(Difficulty.HARD);
 					System.out.println("hard");
 				}
+				//selectUnits();
 				mainPanel.remove(background);
+				revalidate();
 				repaint();
-				selectUnits();
-				//actualMap();
+				actualMap();
 				
 				secondPage = false;
 				// Create a controller
