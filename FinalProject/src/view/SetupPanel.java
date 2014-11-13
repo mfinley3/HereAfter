@@ -242,38 +242,42 @@ public class SetupPanel extends JPanel {
 
 			if (startUp1) {
 
-				if (clickX > 685 && clickX < 875 && clickY > 150 && clickY < 190) {
+				if (clickX > 685 && clickX < 870 && clickY > 190 && clickY < 230) {
 					// 190x40
-
+					
 					// This means there is a new game
 					// go to the second page with the level options
 					selectLevel = true;
 					startUp1 = false;
 					
 					repaint();
-				} else if (clickX > 645 && clickX < 925 && clickY > 210 && clickY < 250) {
+				} else if (clickX > 650 && clickX < 940 && clickY > 250 && clickY < 290) {
 					// This means they want to continue their game
 					// 280x40
-
+					
 					startUp1 = false;
-				} else if (clickX > 740 && clickX < 830 && clickY > 270 && clickY < 310) {
+				} else if (clickX > 750 && clickX < 850 && clickY > 310 && clickY < 350) {
 					// This means they want to quit the game
 					// 90x40
-
+					
 					System.exit(0);
 				}
 			} else if (selectLevel) {
-				if (clickX > 740 && clickX < 840 && clickY > 235 && clickY < 275) {
+				if (clickX > 750 && clickX < 850 && clickY > 235 && clickY < 275) {
 					// This means the difficulty is easy
 					// map = new Map(Difficulty.EASY);
 					
-				} else if (clickX > 715 && clickX < 860 && clickY > 290 && clickY < 325) {
+					
+				} else if (clickX > 725 && clickX < 875 && clickY > 290 && clickY < 320) {
 					// This means the difficulty is medium
 					// map = new Map(Difficulty.MEDIUM);
+					
 					
 				} else if (clickX > 740 && clickX < 840 && clickY > 340 && clickY < 380) {
 					// This means the difficulty is hard
 					// map = new Map(Difficulty.HARD);
+
+					
 					
 				}
 				selectUnit();
