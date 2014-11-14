@@ -34,21 +34,20 @@ public class Map {
 			}		
 	}
 	
-	public void addUnitsToMap(List<Unit> unitList){
+	public void addUnitsToMap(Stack<Unit> unitList){
 		
-		unitList = new Stack<Unit>();
 		unitsOnMap = new Unit[25][25];
 					
 		int k = 0;
 		int r = 2;
 		
 		while(!unitList.isEmpty()){
-			unitsOnMap[k][r] = ((Stack<Unit>) unitList).pop();
+			unitsOnMap[k][r] = unitList.pop();
 			map[k][r].setOccupied(true);
 			if(r != 0){
 				r--;
 			}else{
-				k--;
+				k++;
 			}
 				
 		}

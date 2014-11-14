@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import java.util.Stack;
 
 import model.Difficulty;
 import model.Map;
@@ -46,17 +47,39 @@ public class GameController {
 		this.player1 = player1;
 	
 		// Place the players on the map
-		map.addUnitsToMap(player1.getTeam());
+		map.addUnitsToMap((Stack<Unit>) player1.getTeam());
 			
 		currPlayer = player1;
 		tempUnitList = player1.allAliveUnits();
 		turns = 0;
 		
 	}
+	
+	/**
+	 * TODO Modify once player-specific units are made.
+	 * Used when selecting a unit from the GUI.
+	 * If the Unit is there and can move, set it to be the current.
+	 * Return the unit, or null.
+	 * 
+	 * @param r, the row
+	 * @param c, the column
+	 * @return the current Unit
+	 */
+	public Unit getUnitOnMap(int r, int c){
+		Unit temp = map.getUnitAt(r, c);
+		
+		if(temp!=null)
+			if(temp.canMove())
+				currUnit = temp;
+		
+		return temp;
+	}
+	
+	
 	/**
 	 * TODO Test and Finish
 	 * 
-	 * Move a selected Unit to a another space. Can 
+	 * Move a selected Unit to a another space.
 	 * 
 	 * @param sr, the starting row
 	 * @param sc, the starting column
@@ -64,9 +87,11 @@ public class GameController {
 	 * @param ec, the ending column
 	 */
 	public void move(int sr, int sc, int er, int ec){
-		// SOME STUFF REGARDING THE MAP
-		//if(map.getUnitAt(sr,sc).canMove())
-			map.moveUnit(sr, sc, er, ec);
+		currUnit = map.getUnitAt(sr,sc);
+		
+		if(currUnit != null)
+			if(map.getUnitAt(sr,sc).canMove())
+				map.moveUnit(sr, sc, er, ec);
 		
 	}
 	
@@ -206,7 +231,6 @@ public class GameController {
 	/**
 	 * TODO FINISH
 	 * When called, ends a turn.
-	 * 
 	 * 
 	 */
 	public void endTurn(){
