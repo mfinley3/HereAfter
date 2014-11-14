@@ -65,4 +65,9 @@ public class Map {
 		
 		
 	}
+	
+	public Unit getUnitAt(int row, int col){
+		return unitsOnMap[row][col];
+	}
+	
 }
