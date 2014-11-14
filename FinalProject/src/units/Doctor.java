@@ -3,14 +3,14 @@ package units;
 import item.Item;
 import item.ItemType;
 
-public class Soldier extends Unit {
-	
-	public Soldier() {
+public class Doctor extends Unit {
+
+	public Doctor() {
 		super();
-		Item givenWeapon = new Item("Combat Rifle", ItemType.ATK);
+		Item givenWeapon = new Item("Emergency Kit", ItemType.HP);
 		itemList.add(givenWeapon);
 	}
-
+	
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub

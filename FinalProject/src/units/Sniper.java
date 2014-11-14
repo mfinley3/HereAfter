@@ -3,11 +3,11 @@ package units;
 import item.Item;
 import item.ItemType;
 
-public class Soldier extends Unit {
-	
-	public Soldier() {
+public class Sniper extends Unit {
+
+	public Sniper() {
 		super();
-		Item givenWeapon = new Item("Combat Rifle", ItemType.ATK);
+		Item givenWeapon = new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}
 
@@ -22,5 +22,4 @@ public class Soldier extends Unit {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
