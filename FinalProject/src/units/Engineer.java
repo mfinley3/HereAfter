@@ -14,12 +14,14 @@ public class Engineer extends Unit {
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub
+		//Avg View
 		
 	}
 
 	@Override
 	public int getMovement() {
 		// TODO Auto-generated method stub
+		//avg. mvmt
 		return 0;
 	}
 

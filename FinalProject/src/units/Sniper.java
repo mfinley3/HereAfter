@@ -14,12 +14,14 @@ public class Sniper extends Unit {
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub
+		//high view!
 		
 	}
 
 	@Override
 	public int getMovement() {
 		// TODO Auto-generated method stub
+		//small mvmt
 		return 0;
 	}
 }

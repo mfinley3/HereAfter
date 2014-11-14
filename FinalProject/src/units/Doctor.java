@@ -14,12 +14,14 @@ public class Doctor extends Unit {
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub
+		//Average View
 		
 	}
 
 	@Override
 	public int getMovement() {
 		// TODO Auto-generated method stub
+		//Avg Mvmt
 		return 0;
 	}
 

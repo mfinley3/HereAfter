@@ -14,12 +14,14 @@ public class Ranger extends Unit {
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub
+		//small view
 		
 	}
 
 	@Override
 	public int getMovement() {
 		// TODO Auto-generated method stub
+		//High movement!
 		return 0;
 	}
 

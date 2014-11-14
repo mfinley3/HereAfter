@@ -14,12 +14,14 @@ public class Soldier extends Unit {
 	@Override
 	public void visibility() {
 		// TODO Auto-generated method stub
+		//increased view
 		
 	}
 
 	@Override
 	public int getMovement() {
 		// TODO Auto-generated method stub
+		//increased move
 		return 0;
 	}
 
