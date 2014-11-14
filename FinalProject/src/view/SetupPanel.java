@@ -77,6 +77,7 @@ public class SetupPanel extends JPanel {
 		JLabel selectLabel = new JLabel(
 				"Select your units.  Enter a number between 0 and 5 for ");
 		selectLabel.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		selectLabel.setForeground(Color.BLACK);
 		selectLabel.setSize(900, 25);
 		selectLabel.setLocation(15, 170);
 		this.add(selectLabel);
@@ -84,12 +85,14 @@ public class SetupPanel extends JPanel {
 		JLabel selectLabel2 = new JLabel(
 				"each type of unit.  Can have up to 5 units total.");
 		selectLabel2.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		selectLabel2.setForeground(Color.BLACK);
 		selectLabel2.setSize(900, 25);
 		selectLabel2.setLocation(15, 195);
 		this.add(selectLabel2);
 
 		userName = new JTextArea();
 		userName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		userName.setForeground(Color.BLACK);
 		userName.setSize(250, 25);
 		userName.setLocation(220, 100);
 		this.add(userName);
@@ -104,24 +107,28 @@ public class SetupPanel extends JPanel {
 		
 		JLabel doc = new JLabel("Doctor");
 		doc.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		doc.setForeground(Color.BLACK);
 		doc.setSize(100, 25);
 		doc.setLocation(50, 250);
 		this.add(doc);
 
 		docNum = new JTextArea();
 		docNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		docNum.setForeground(Color.BLACK);
 		docNum.setSize(25, 25);
 		docNum.setLocation(70, 350);
 		this.add(docNum);
 		
 		JLabel sold = new JLabel("Soldier");
 		sold.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		sold.setForeground(Color.BLACK);
 		sold.setSize(100, 25);
 		sold.setLocation(250, 250);
 		this.add(sold);
 
 		soldNum = new JTextArea();
 		soldNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		soldNum.setForeground(Color.BLACK);
 		soldNum.setSize(250, 25);
 		soldNum.setLocation(220, 100);
 		this.add(soldNum);
