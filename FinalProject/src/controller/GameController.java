@@ -3,6 +3,8 @@ package controller;
 import java.util.List;
 import java.util.Stack;
 
+import javax.swing.JPanel;
+
 import model.Difficulty;
 import model.Map;
 import model.Player;
@@ -11,7 +13,7 @@ import units.Unit;
 /**
  * TODO Finish this
  * 
- * The controller of the project. Sends messages to map, Saves Data, Loads Data,
+ * The controller for a game. Sends messages to map, Saves Data, Loads Data,
  * sets up players, calculate which map is needed, sends messages to the enemy
  * team factory, etc.
  * 
@@ -26,6 +28,11 @@ public class GameController {
 	private Unit currUnit;
 	private Player currPlayer;
 	private int turns;
+	
+	private int currRow;
+	private int currCol;
+	private int endRow;
+	private int endCol;
 	
 	/*
 	 * Will work on being able to control each unit on the map. Things 
@@ -45,9 +52,16 @@ public class GameController {
 	public GameController(Player player1, Difficulty i){
 		this.map = new Map(i.getValue());
 		this.player1 = player1;
+		
+		Stack<Unit> temp = new Stack<Unit>();
+		
+		// Put the player's units into a stack and put it into the Map
+		for(Unit k: player1.getTeam()){
+			temp.push(k);
+		}
 	
 		// Place the players on the map
-		map.addUnitsToMap((Stack<Unit>) player1.getTeam());
+		map.addUnitsToMap(temp);
 			
 		currPlayer = player1;
 		tempUnitList = player1.allAliveUnits();
@@ -55,8 +69,45 @@ public class GameController {
 		
 	}
 	
+	public void setCurrRow(int currRow) {
+		this.currRow = currRow;
+	}
+
+	public void setCurrCol(int currCol) {
+		this.currCol = currCol;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
+	public void setEndCol(int intCol) {
+		this.endCol = intCol;
+	}
+	
 	/**
-	 * TODO Modify once player-specific units are made.
+	 * Set the the current unit to the unit located at this space.
+	 * Will return
+	 * @param row
+	 * @param col
+	 */
+	public void setCurrentUnit(int row, int col){
+		currUnit = map.getUnitAt(row, col);
+	}
+	
+	/**
+	 * Get method for CurrUnit
+	 * 
+	 * @return the currently selected unit
+	 */
+	public Unit getCurrentUnit(){
+		return currUnit;
+	}
+	
+	/**
+	 * TODO Modify once player-specific units are made. Might need to destroy
+	 * WARNING: May need to be deleted
+	 * 
 	 * Used when selecting a unit from the GUI.
 	 * If the Unit is there and can move, set it to be the current.
 	 * Return the unit, or null.
@@ -86,21 +137,23 @@ public class GameController {
 	 * @param er, the ending row
 	 * @param ec, the ending column
 	 */
-	public void move(int sr, int sc, int er, int ec){
-		currUnit = map.getUnitAt(sr,sc);
+	public void move(){
 		
 		if(currUnit != null)
-			if(map.getUnitAt(sr,sc).canMove())
-				map.moveUnit(sr, sc, er, ec);
-		
+		{
+			//if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol))
+			{
+				map.moveUnit(currRow, currCol, endRow, endCol);
+			}
+		}
 	}
 	
 	/**
 	 * TODO Check if the selected unit can move.
 	 */
-//	public boolean playerCanMove(){
-//		return !((List<Unit>) tempUnitList).isEmpty();
-//	}
+	public boolean playerCanMove(){
+		return !((List<Unit>) tempUnitList).isEmpty();
+		}
 	
 	/**
 	 * TODO Finish this
@@ -211,23 +264,21 @@ public class GameController {
 	 * turn of the currently selected unit.
 	 */
 	public void doNothing(){
-//		currUnit.setMovesLeft(0);
-//		nextPlayerOnList();
+		currUnit.setCanMove();
+//		if(){
+//			
+//		}
 	}
 	
 	/**
-	 * TODO FINISH and Test
-	 *  Return the map. Used in setting up the GUI with the current game.
+	 * TODO Test
+	 * Return the map. Used in setting up the GUI with the current game.
 	 * @return the map of the current game
 	 */
 	public Map getMap(){
 		return map;
 	}
-	
-	// Selected unit
-	
-	// Move options, wait
-	
+		
 	/**
 	 * TODO FINISH
 	 * When called, ends a turn.
@@ -237,5 +288,19 @@ public class GameController {
 		
 	}
 	
-	// Heal Command 
+	/**
+	 * TODO FINISH
+	 * 
+	 * Heal a friendly unit. Checks to see if on the same side, and if the
+	 * unit can heal.
+	 * 
+	 * @param sr, healer row
+	 * @param sc, healer col
+	 * @param er, target row
+	 * @param ec, target col
+	 * @return can heal, or can't heal
+	 */
+	public boolean heal(int sr, int sc, int er, int ec){
+		return false;
+	}
 }

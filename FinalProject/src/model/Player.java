@@ -17,20 +17,19 @@ import units.*;;
 public class Player {
 	public int missionsDone;
 	public int livingTeam;
-	private Stack<Unit> livingUnits;
-	private List<Unit> deadUnits;
+	private List<Unit> livingUnits;
 	private String id;
 	
 	public Player(String id){
 		this.setID(id);
-		livingUnits = new Stack<Unit>();
+		livingUnits = new LinkedList<Unit>();
 		
 		// Add five soldiers for now
-		livingUnits.push((Unit) new Soldier());
-		livingUnits.push((Unit) new Soldier());
-		livingUnits.push((Unit) new Soldier());
-		livingUnits.push((Unit) new Soldier());
-		livingUnits.push((Unit) new Soldier());
+		livingUnits.add((Unit) new Soldier());
+		livingUnits.add((Unit) new Soldier());
+		livingUnits.add((Unit) new Soldier());
+		livingUnits.add((Unit) new Soldier());
+		livingUnits.add((Unit) new Soldier());
 	}
 
 	public Object getTeamStats() {
@@ -40,6 +39,10 @@ public class Player {
 	
 	public List<Unit> getTeam(){
 		return livingUnits;
+	}
+	
+	public boolean everyonesDeadDave(){
+		return livingUnits.isEmpty();
 	}
 
 	public List<Unit> allAliveUnits() {
