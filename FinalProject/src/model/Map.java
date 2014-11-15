@@ -119,8 +119,7 @@ public class Map extends Observable {
 
 	}
 
-	public void moveUnit(int startRow, int startCol, int moveToRow,
-			int moveToCol) {
+	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
 
 		unitsOnMap[moveToRow][moveToCol] = unitsOnMap[startRow][startCol];
 		unitsOnMap[startRow][startCol] = null;
