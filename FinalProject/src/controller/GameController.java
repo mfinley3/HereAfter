@@ -3,12 +3,15 @@ package controller;
 import java.util.List;
 import java.util.Stack;
 
-import javax.swing.JPanel;
-
 import model.Difficulty;
 import model.Map;
 import model.Player;
-import units.Unit;
+import units.*;
+
+/*
+ * TODO Give the controller more responsibility somehow.
+ *
+ */
 
 /**
  * TODO Finish this
@@ -31,8 +34,6 @@ public class GameController {
 	
 	private int currRow;
 	private int currCol;
-	private int endRow;
-	private int endCol;
 	
 	/*
 	 * Will work on being able to control each unit on the map. Things 
@@ -69,22 +70,6 @@ public class GameController {
 		
 	}
 	
-	public void setCurrRow(int currRow) {
-		this.currRow = currRow;
-	}
-
-	public void setCurrCol(int currCol) {
-		this.currCol = currCol;
-	}
-
-	public void setEndRow(int endRow) {
-		this.endRow = endRow;
-	}
-
-	public void setEndCol(int intCol) {
-		this.endCol = intCol;
-	}
-	
 	/**
 	 * Set the the current unit to the unit located at this space.
 	 * Will return
@@ -93,6 +78,8 @@ public class GameController {
 	 */
 	public void setCurrentUnit(int row, int col){
 		currUnit = map.getUnitAt(row, col);
+		currRow = row;
+		currCol = col;
 	}
 	
 	/**
@@ -126,7 +113,6 @@ public class GameController {
 		return temp;
 	}
 	
-	
 	/**
 	 * TODO Test and Finish
 	 * 
@@ -137,13 +123,13 @@ public class GameController {
 	 * @param er, the ending row
 	 * @param ec, the ending column
 	 */
-	public void move(){
+	public void move(int endingRow, int endingCol){
 		
 		if(currUnit != null)
 		{
 			//if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol))
 			{
-				map.moveUnit(currRow, currCol, endRow, endCol);
+				map.moveUnit(currRow, currCol, endingRow, endingCol);
 			}
 		}
 	}
@@ -164,7 +150,7 @@ public class GameController {
 	 * @param ec
 	 * @return
 	 */
-	public boolean attack(int sr, int sc, int er, int ec){
+	public boolean attack(int targetRow, int targetCol){
 		if(true)
 			// Send attack message to map
 			return true;
@@ -190,7 +176,7 @@ public class GameController {
 	 * @param ec, where the item will be used (column)
 	 * @return if the item was used.
 	 */
-	public boolean useItem(int sr, int sc, int er, int ec){
+	public boolean useItem(int endingRow, int endingCol){
 		if(false)
 			return false;
 		else{
@@ -300,7 +286,7 @@ public class GameController {
 	 * @param ec, target col
 	 * @return can heal, or can't heal
 	 */
-	public boolean heal(int sr, int sc, int er, int ec){
+	public boolean heal(int targetRow, int targetCol){
 		return false;
 	}
 }
