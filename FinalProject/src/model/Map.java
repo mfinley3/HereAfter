@@ -87,5 +87,10 @@ public class Map extends Observable{
 		// TODO Auto-generated method stub
 		return unitsOnMap;
 	}
+
+	public boolean isOccupied(int row, int column) {
+		//MAKE THIS LATER TONIGHT!
+		return false;
+	}
 	
 }
