@@ -3,13 +3,14 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Observer;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 
-public class TextView extends JPanel{
+public class TextView extends JPanel implements Observer{
 
 	  private JLabel textMap;
 	  private String stringOfMap;

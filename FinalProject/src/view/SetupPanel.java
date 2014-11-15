@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import model.Difficulty;
 import controller.GameController;
 
 import java.awt.event.ActionEvent;
@@ -32,7 +33,6 @@ public class SetupPanel extends JPanel {
 	private JTextArea userName, docNum, soldNum, engNum;
 	private JButton select;
 	private boolean selectLevel, startUp1, selectUnits;
-	private GameController controller;
 	
 	private JTabbedPane views;
 
@@ -272,17 +272,17 @@ public class SetupPanel extends JPanel {
 			} else if (selectLevel) {
 				if (clickX > 750 && clickX < 850 && clickY > 235 && clickY < 275) {
 					// This means the difficulty is easy
-					// map = new Map(Difficulty.EASY);
+					((GraphicalView) graphical).setDifficulty(Difficulty.EASY);
 					
 					
 				} else if (clickX > 725 && clickX < 875 && clickY > 290 && clickY < 320) {
 					// This means the difficulty is medium
-					// map = new Map(Difficulty.MEDIUM);
+					((GraphicalView) graphical).setDifficulty(Difficulty.MEDIUM);
 					
 					
 				} else if (clickX > 740 && clickX < 840 && clickY > 340 && clickY < 380) {
 					// This means the difficulty is hard
-					// map = new Map(Difficulty.HARD);
+					((GraphicalView) graphical).setDifficulty(Difficulty.HARD);
 
 					
 					
@@ -292,8 +292,6 @@ public class SetupPanel extends JPanel {
 				selectUnits = true;
 				repaint();
 				
-				// Create a controller
-				//controller = new GameController();
 			}
 		}
 

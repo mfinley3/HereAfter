@@ -1,21 +1,20 @@
 package model;
 
-import java.util.List;
+import java.util.Observable;
 import java.util.Stack;
 
 import space.Space;
 import space.WasteLandSpace;
-import units.Soldier;
 import units.Unit;
 
-public class Map {
+public class Map extends Observable{
 	
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
 	
 	public Map(double difficulty) {
 		
-			map = new Space[25][25];
+			map = new Space[50][50];
 			for (int i = 0; i < map.length; i++) {
 				for (int j = 0; j < map.length; j++) {
 					map[i][j] = new WasteLandSpace(); // Map of empty spaces
@@ -23,12 +22,18 @@ public class Map {
 				
 			if(difficulty == .5){
 				//make the easy map
+				setChanged();
+				notifyObservers();
 			}
 			if(difficulty == 1){
 				//make the medium map
+				setChanged();
+				notifyObservers();
 			}
 			if(difficulty == 2){
 				//make the hard map
+				setChanged();
+				notifyObservers();
 			}				
 				
 			}		
@@ -36,7 +41,7 @@ public class Map {
 	
 	public void addUnitsToMap(Stack<Unit> unitList){
 		
-		unitsOnMap = new Unit[25][25];
+		unitsOnMap = new Unit[50][50];
 					
 		int k = 0;
 		int r = 2;
@@ -51,6 +56,8 @@ public class Map {
 			}
 				
 		}
+		setChanged();
+		notifyObservers();
 		
 	}
 
@@ -61,12 +68,24 @@ public class Map {
 		unitsOnMap[moveToRow][moveToCol].setCanMove();
 		map[startRow][startCol].setOccupied(false);
 		map[moveToRow][moveToCol].setOccupied(true);
+		setChanged();
+		notifyObservers();
 		
 		
 	}
 	
 	public Unit getUnitAt(int row, int col){
 		return unitsOnMap[row][col];
+	}
+
+	public Space[][] getSpaces() {
+		// TODO Auto-generated method stub
+		return map;
+	}
+
+	public Unit[][] getUnits() {
+		// TODO Auto-generated method stub
+		return unitsOnMap;
 	}
 	
 }
