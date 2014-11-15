@@ -2,16 +2,18 @@ package space;
 
 public abstract class Space {
 
+	private String spaceType;
 	private Boolean walkable;
 	private Boolean occupied;
 	private Boolean visable;
 	private int moveHinderance;
 	
-	public Space (Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance){
+	public Space (String spaceType, Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance){
 		
+		this.spaceType = spaceType;
 		this.walkable = walkable;
 		this.occupied = occupied;
-		this.setVisable(visable);
+		this.visable = visable;
 		this.moveHinderance = moveHinderance;
 		
 	}
@@ -56,6 +58,13 @@ public abstract class Space {
 	 */
 	public void setVisable(Boolean visable) {
 		this.visable = visable;
+	}
+	
+	/**
+	 * @return the spaceType
+	 */
+	public String getSpaceType() {
+		return spaceType;
 	}
 
 

@@ -1,42 +1,95 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Observable;
+import java.util.Scanner;
 import java.util.Stack;
 
+import space.BridgeSpace;
+import space.CaptureCornerSpace;
+import space.MountainSpace;
+import space.PathSpace;
 import space.Space;
-import space.WasteLandSpace;
+import space.TowerSpace;
+import space.WallSpace;
+import space.WastelandSpace;
+import space.WaterSpace;
 import units.Unit;
 
 public class Map extends Observable {
 
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
+	private Scanner scan;
 
 	public Map(double difficulty) {
 
 		map = new Space[50][50];
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map.length; j++) {
-				map[i][j] = new WasteLandSpace(); // Map of empty spaces
-			}
 
-			if (difficulty == .5) {
-				// make the easy map
-				setChanged();
-				notifyObservers();
-			}
-			if (difficulty == 1) {
-				// make the medium map
-				setChanged();
-				notifyObservers();
-			}
-			if (difficulty == 2) {
-				// make the hard map
-				setChanged();
-				notifyObservers();
+		if (difficulty == .5) {
+			File easyMap = new File("Easy Map.txt");
+			try {
+				scan = new Scanner(easyMap);
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
 			}
 
 		}
+		if (difficulty == 1) {
+			File mediumMap = new File("Medium Map.txt");
+			try {
+				scan = new Scanner(mediumMap);
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+			}
+
+		}
+		if (difficulty == 2) {
+			File hardMap = new File("Hard Map.txt");
+			try {
+				scan = new Scanner(hardMap);
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+			}
+
+		}
+
+		while (scan.hasNext())
+			for (int m = 0; m < map.length; m++) {
+				for (int n = 0; n < map.length; n++) {
+
+					String mapLetterEquivalence = scan.next();
+
+					if (mapLetterEquivalence.equals("W"))
+						map[m][n] = new WastelandSpace();
+
+					if (mapLetterEquivalence.equals("P"))
+						map[m][n] = new PathSpace();
+
+					if (mapLetterEquivalence.equals("R"))
+						map[m][n] = new WaterSpace();
+
+					if (mapLetterEquivalence.equals("U"))
+						map[m][n] = new WallSpace();
+
+					if (mapLetterEquivalence.equals("B"))
+						map[m][n] = new BridgeSpace();
+
+					if (mapLetterEquivalence.equals("M"))
+						map[m][n] = new MountainSpace();
+
+					if (mapLetterEquivalence.equals("T"))
+						map[m][n] = new TowerSpace();
+
+					if (mapLetterEquivalence.equals("C"))
+						map[m][n] = new CaptureCornerSpace();
+
+				}
+			}
 	}
 
 	public void addUnitsToMap(Stack<Unit> unitList) {
@@ -79,12 +132,12 @@ public class Map extends Observable {
 	}
 
 	public Space[][] getSpaces() {
-		// TODO Auto-generated method stub
+
 		return map;
 	}
 
 	public Unit[][] getUnits() {
-		// TODO Auto-generated method stub
+
 		return unitsOnMap;
 	}
 
