@@ -3,6 +3,11 @@ package units;
 import item.Item;
 import item.ItemType;
 
+/**
+ * 
+ * @author Chioke
+ *
+ */
 public class Sniper extends Unit {
 
 	public Sniper() {
@@ -13,15 +18,16 @@ public class Sniper extends Unit {
 
 	@Override
 	public void visibility() {
-		// TODO Auto-generated method stub
-		//high view!
+		// Has high visibility.
 		
 	}
 
 	@Override
-	public int getMovement() {
-		// TODO Auto-generated method stub
-		//small mvmt
+	public int movesAvailable(int hinderance) {
+		//  Has minimal amount of moves available.
+		int moves = 2;
+		if (moves - hinderance > 0)
+			return moves;
 		return 0;
 	}
 }

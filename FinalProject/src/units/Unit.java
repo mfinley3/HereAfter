@@ -68,7 +68,7 @@ public abstract class Unit {
 
 	public abstract void visibility();
 
-	public abstract int getMovement();
+	public abstract int movesAvailable(int hinderance);
 
 	public boolean canMove() {
 		return false;

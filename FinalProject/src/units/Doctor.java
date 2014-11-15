@@ -3,6 +3,11 @@ package units;
 import item.Item;
 import item.ItemType;
 
+/**
+ * 
+ * @author Chioke
+ *
+ */
 public class Doctor extends Unit {
 
 	public Doctor() {
@@ -13,15 +18,16 @@ public class Doctor extends Unit {
 	
 	@Override
 	public void visibility() {
-		// TODO Auto-generated method stub
-		//Average View
+		// Has minimal visibility.
 		
 	}
 
 	@Override
-	public int getMovement() {
-		// TODO Auto-generated method stub
-		//Avg Mvmt
+	public int movesAvailable(int hinderance) {
+		//  Has average amount of moves available.
+		int moves = 4;
+		if (moves - hinderance > 0)
+			return moves;
 		return 0;
 	}
 

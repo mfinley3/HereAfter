@@ -3,6 +3,11 @@ package units;
 import item.Item;
 import item.ItemType;
 
+/**
+ * 
+ * @author Chioke
+ *
+ */
 public class Ranger extends Unit {
 
 	public Ranger() {
@@ -13,15 +18,16 @@ public class Ranger extends Unit {
 	
 	@Override
 	public void visibility() {
-		// TODO Auto-generated method stub
-		//small view
+		// Has minimal visibility.
 		
 	}
 
 	@Override
-	public int getMovement() {
-		// TODO Auto-generated method stub
-		//High movement!
+	public int movesAvailable(int hinderance) {
+		//  Has high amount of moves available.
+		int moves = 10;
+		if (moves - hinderance > 0)
+			return moves;
 		return 0;
 	}
 
