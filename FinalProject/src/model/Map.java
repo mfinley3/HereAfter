@@ -58,7 +58,7 @@ public class Map extends Observable {
 
 		}
 
-		while (scan.hasNext())
+		while (scan.hasNext()){
 			for (int m = 0; m < map.length; m++) {
 				for (int n = 0; n < map.length; n++) {
 
@@ -90,6 +90,11 @@ public class Map extends Observable {
 
 				}
 			}
+		}
+		
+		setChanged();
+		notifyObservers();
+		
 	}
 
 	public void addUnitsToMap(Stack<Unit> unitList) {
