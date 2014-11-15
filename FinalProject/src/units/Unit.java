@@ -14,10 +14,11 @@ public abstract class Unit {
 	// Every Unit gets a blank list of items
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 
+	private int totalHealth = 100;
+
 	public int getHealth() {
 		// Health level * health modifier
 		int hpMod = 1;
-		int totalHealth = 100;
 
 		for (Item item : itemList) {
 			if (item.isHealthItem()) {
@@ -29,19 +30,45 @@ public abstract class Unit {
 		return totalHealth;
 	}
 
-	public int attack() {
-		return 0;
+	public void reduceHealth(int damage) {
+		if(damage - getDefense() <= 0) {
+			return;
+		} else {
+			totalHealth -= (damage - getDefense());
+		}
 	}
 
-	public int defense() {
-		return 0;
+	public int getAttack() {
+		// attack level * attack modifier
+		int atkMod = 1;
+		int atkPower = 40;
+
+		for (Item item : itemList) {
+			if (item.isAtkItem()) {
+				atkMod += 1;
+				atkPower *= atkMod;
+			}
+		}
+		return atkPower;
+	}
+
+	public int getDefense() {
+		// defense level * defense modifier
+		int defMod = 1;
+		int defPower = 10;
+
+		for (Item item : itemList) {
+			if (item.isAtkItem()) {
+				defMod += 1;
+				defPower *= defMod;
+			}
+		}
+		return defPower;
 	}
 
 	public abstract void visibility();
 
-	public int getMovement() {
-		return 0;
-	}
+	public abstract int getMovement();
 
 	public boolean canMove() {
 		return false;
@@ -50,29 +77,25 @@ public abstract class Unit {
 	public void setCanMove() {
 	}
 
-	/*
-	 * Methods dealing w/ Unit Locations
-	 */
-	public int getUR() {
-		return 0;
-	} // Getting their row location
-
-	public void setUR(int uR) {
-	} // Setting their row location
-
-	public int getUC() {
-		return 0;
-	} // Getting their column location
-
-	public void setHC(int uC) {
-	} // Setting their column location
-
 	public boolean isAlive() {
-		return false;
+		if (getHealth() <= 0)
+			return false;
+		return true;
 	}
 
 	public String getStats() {
-		return null;
+		String inventory = "";
+		for (Item s : itemList) {
+		    inventory += "\n" + String.format("%s ", s);
+		}
+		
+		String result = "Unit Type: " + "<Unit Type>";
+		result += "\nCurrent Health: " + getHealth();
+		result += "\nCurrent Attack Power: " + getAttack();
+		result += "\nCurrent Defense Power: " + getDefense();
+		result += "\nInventory: " + inventory;
+		
+		return result;
 	}
 
 } // end of class Unit
