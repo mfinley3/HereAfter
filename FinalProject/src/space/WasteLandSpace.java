@@ -3,7 +3,7 @@ package space;
 public class WasteLandSpace extends Space{
 
 	public WasteLandSpace() {
-		super(true, false, 0);
+		super(true, false, true, 0);
 		
 	}
 	
