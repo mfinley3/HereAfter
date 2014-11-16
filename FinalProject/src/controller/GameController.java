@@ -28,6 +28,8 @@ public class GameController {
 	
 	private int currRow;
 	private int currCol;
+	private int endRow;
+	private int endCol;
 	
 	/*
 	 * Will work on being able to control each unit on the map. Things 
@@ -117,11 +119,11 @@ public class GameController {
 	 * @param er, the ending row
 	 * @param ec, the ending column
 	 */
-	public boolean move(int endingRow, int endingCol){
+	public boolean move(){
 		
 		if(currUnit != null){
-			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endingRow, endingCol)){
-				map.moveUnit(currRow, currCol, endingRow, endingCol);
+			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol)){
+				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);
 				return true;
 			}
@@ -149,8 +151,8 @@ public class GameController {
 	 * @param ec
 	 * @return
 	 */
-	public boolean attack(int targetRow, int targetCol){
-		if(currUnit.canMove() && map.isOccupied(targetRow, targetCol))
+	public boolean attack(){
+		if(currUnit.canMove() && map.isOccupied(endRow, endCol))
 			// Send attack message to map
 			return true;
 		else
@@ -169,13 +171,9 @@ public class GameController {
 	 * 
 	 * Use the item of a selected unit. 
 	 * 
-	 * @param sr, the row where the player is in
-	 * @param sc, column where the selected unit is
-	 * @param er, where the item will be used (row)
-	 * @param ec, where the item will be used (column)
 	 * @return if the item was used.
 	 */
-	public boolean useItem(int endingRow, int endingCol){
+	public boolean useItem(){
 		if(false)
 			return false;
 		else{
@@ -187,6 +185,15 @@ public class GameController {
 			
 			return true;
 		}
+	}
+	
+	/**
+	 * 
+	 * Tells the selected unit to wait until next turn. 
+	 * 
+	 */
+	public void unitWait(){
+		currUnit.setCanMove();
 	}
 	
 	/**
@@ -291,5 +298,13 @@ public class GameController {
 	 */
 	public boolean heal(int targetRow, int targetCol){
 		return false;
+	}
+	
+	public void setEndRow(int endRow){
+		this.endRow = endRow;
+	}
+	
+	public void setEndColumn(int endCol){
+		this.endCol = endCol;
 	}
 }

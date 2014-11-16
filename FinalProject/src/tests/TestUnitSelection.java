@@ -48,14 +48,18 @@ public class TestUnitSelection {
 		g.setCurrentUnit(0, 0);
 		assertTrue(u==g.getCurrentUnit());
 		assertTrue(u.canMove());
-		assertTrue(g.move(2, 2));
+		g.setEndRow(2);
+		g.setEndColumn(2);
+		assertTrue(g.move());
 		assertFalse(u.canMove());
 		assertFalse(u==g.getUnitOnMap(0, 0));
 		assertTrue(u==g.getUnitOnMap(2,2));
 		assertTrue(g.setCurrentUnit(1, 0));
 		assertFalse(g.setCurrentUnit(2, 2));
 		assertTrue(g.getCurrentUnit()==g.getUnitOnMap(1, 0));
-		assertFalse(g.move(2,2));
+		g.setEndRow(2);
+		g.setEndColumn(2);
+		assertFalse(g.move());
 		assertTrue(g.getCurrentUnit().canMove());
 	}
 	

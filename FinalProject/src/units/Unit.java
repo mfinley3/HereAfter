@@ -80,10 +80,9 @@ public abstract class Unit {
 	}
 
 	public void setCanMove() {
-		if(canMove)
-			canMove = false;
-		else
-			canMove = true;
+		
+		canMove = !canMove;
+		
 	}
 
 	public boolean isAlive() {
