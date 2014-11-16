@@ -3,9 +3,7 @@ package controller;
 import java.util.List;
 import java.util.Stack;
 
-import model.Difficulty;
-import model.Map;
-import model.Player;
+import model.*;
 import units.*;
 
 /**
@@ -20,7 +18,7 @@ import units.*;
  */
 public class GameController {
 	private Player player1;
-	private Player player2;
+	private AI player2;
 	private Map map;
 	private List<Unit> tempUnitList;
 	private Unit currUnit;
@@ -140,7 +138,7 @@ public class GameController {
 		}
 	
 	/**
-	 * TODO 1) Check if friendly 2) Check within range
+	 * TODO 1) Check if friendly 2) Check within range 3) After attack, check if dead
 	 * 
 	 * Get it to attack
 	 * 
@@ -255,7 +253,6 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Test
 	 * Return the map. Used in setting up the GUI with the current game.
 	 * @return the map of the current game
 	 */
