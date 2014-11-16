@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
@@ -144,7 +145,6 @@ public class SetupPanel extends JPanel {
 			// if() {
 
 			// }
-			System.out.println("YAS");
 			actualMap();
 			
 		}
@@ -165,7 +165,10 @@ public class SetupPanel extends JPanel {
 		this.add(title, BorderLayout.NORTH);
 		
 		views = new JTabbedPane();
-		views.add(graphical, "Graphical");
+
+		JScrollPane scrollPanel = new JScrollPane(graphical);
+		scrollPanel.setSize(862, 542);
+		views.add(scrollPanel, "Graphical");
 	
 		views.add(text, "Text");
 		this.add(views, BorderLayout.CENTER);

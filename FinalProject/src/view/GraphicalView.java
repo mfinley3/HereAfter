@@ -27,8 +27,6 @@ import model.Player;
 
 public class GraphicalView extends JPanel implements Observer {
 
-	private JPanel canvas;
-	private JScrollPane scrollPanel;
 	private int clickX, clickY, row, column;
 	private Enum difficulty;
 	private GameController controller;
@@ -41,46 +39,32 @@ public class GraphicalView extends JPanel implements Observer {
 
 	public GraphicalView() {
 		firstClick = true;
-
+		currentSpaces = new Space[50][50];
+		
+		
 		this.setLayout(null);
 
-		canvas = new JPanel();
-
 		Dimension maxSize = new Dimension(4800, 4800);
-		canvas.setPreferredSize(maxSize);
-		canvas.setBackground(Color.WHITE);
-		canvas.setVisible(true);
+		this.setPreferredSize(maxSize);
+		this.setBackground(Color.WHITE);
+		this.setVisible(true);
 
-		
-
-		scrollPanel = new JScrollPane(canvas);
-		scrollPanel.setSize(862, 542);
-
-		this.add(scrollPanel);
 
 		MouseListener listener = new ListenToMouse();
 		MouseMotionListener motionListener = new ListenToMouse();
 
-		canvas.addMouseMotionListener(motionListener);
-		canvas.addMouseListener(listener);
+		this.addMouseMotionListener(motionListener);
+		this.addMouseListener(listener);
 
 		try {
-			waste = ImageIO.read(new File("WasteLandSpace.jgp"));
-			System.out.println("7");
+			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
 			bridge = ImageIO.read(new File("BridgeSpace.jpg"));
-			System.out.println("1");
 			corner = ImageIO.read(new File("CornerSpace.jpg"));
-			System.out.println("2");
-			mountain = ImageIO.read(new File("MountainSpace.jgp"));
-			System.out.println("3");
-			path = ImageIO.read(new File("PathSpace.jgp"));
-			System.out.println("4");
-			tower = ImageIO.read(new File("TowerSpace.jgp"));
-			System.out.println("5");
-			wall = ImageIO.read(new File("WallSpace.jgp"));
-			System.out.println("6");
-			water = ImageIO.read(new File("WaterSpace.jgp"));
-			System.out.println("8");
+			mountain = ImageIO.read(new File("MountainSpace.jpg"));
+			path = ImageIO.read(new File("PathSpace.jpg"));
+			tower = ImageIO.read(new File("TowerSpace.jpg"));
+			wall = ImageIO.read(new File("WallSpace.jpg"));
+			water = ImageIO.read(new File("WaterSpace.jpg"));
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -91,7 +75,6 @@ public class GraphicalView extends JPanel implements Observer {
 
 		controller.getMap().addObserver(this);
 
-		canvas.repaint();
 
 	}
 
@@ -196,7 +179,7 @@ public class GraphicalView extends JPanel implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
-		canvas.repaint();
+		repaint();
 		firstClick = true;
 	}
 
@@ -205,10 +188,23 @@ public class GraphicalView extends JPanel implements Observer {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
-		//for(int i = 0)
+		int x = 0;
+		int y = 0;
 		
-		g2.drawImage(waste, 0, 0, null);
 
+		
+		for (int col = 0; col < currentSpaces.length; col++) {
+			x = 0;
+			for (int row = 0; row < currentSpaces.length; row++) {
+				g2.drawImage(waste, x, y, null);
+				// if(currentSpaces[col][row] )
+
+				x += 96;
+
+			}
+			y += 96;
+		}
+		
 	}
 
 }
