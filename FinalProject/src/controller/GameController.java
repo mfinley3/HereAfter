@@ -19,8 +19,8 @@ import units.*;
  *
  */
 public class GameController {
-	public Player player1;
-	public Player player2;
+	private Player player1;
+	private Player player2;
 	private Map map;
 	private List<Unit> tempUnitList;
 	private Unit currUnit;
@@ -163,7 +163,7 @@ public class GameController {
 	 * TODO Finish this method.
 	 */
 //	public boolean hasItem(){
-//		return currUnit.hasItem();
+//		return currUnit.;
 //	}
 	
 	/**
@@ -295,6 +295,4 @@ public class GameController {
 	public boolean heal(int targetRow, int targetCol){
 		return false;
 	}
-	
-	
 }

@@ -3,8 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 import model.*;
 import controller.*;
-import units.Unit;
-
+import units.*;
 import org.junit.Test;
 
 public class TestUnitSelection {
@@ -12,6 +11,12 @@ public class TestUnitSelection {
 	@Test
 	public void TestThings(){
 		Player p = new Player("EB");
+		p.addUnits(new Soldier());
+		p.addUnits(new Engineer());
+		p.addUnits(new Doctor());
+		p.addUnits(new Ranger());
+		p.addUnits(new Sniper());
+
 		GameController g = new GameController(p, Difficulty.EASY);
 		System.out.println(g.getMap().toString());
 		Unit u = g.getUnitOnMap(2, 0);
@@ -30,7 +35,14 @@ public class TestUnitSelection {
 	
 	@Test
 	public void TestMovement(){
-		GameController g = new GameController(new Player("EM"), Difficulty.EASY);
+		Player p = new Player("EB");
+		p.addUnits(new Soldier());
+		p.addUnits(new Engineer());
+		p.addUnits(new Doctor());
+		p.addUnits(new Ranger());
+		p.addUnits(new Sniper());
+		
+		GameController g = new GameController(p, Difficulty.EASY);
 		Unit u = g.getUnitOnMap(0, 0);
 		assertTrue(u!=null);
 		g.setCurrentUnit(0, 0);
@@ -49,7 +61,14 @@ public class TestUnitSelection {
 	
 	@Test
 	public void testEndTurnAndNewTurn(){
-		GameController g = new GameController(new Player("EM"), Difficulty.EASY);
+		Player p = new Player("EB");
+		p.addUnits(new Soldier());
+		p.addUnits(new Engineer());
+		p.addUnits(new Doctor());
+		p.addUnits(new Ranger());
+		p.addUnits(new Sniper());
+		
+		GameController g = new GameController(p, Difficulty.EASY);
 		g.setCurrentUnit(0, 0);
 	}
 }

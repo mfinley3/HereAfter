@@ -2,7 +2,6 @@ package model;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 import units.*;;
 
@@ -15,21 +14,15 @@ import units.*;;
  *
  */
 public class Player {
-	public int missionsDone;
-	public int livingTeam;
+	private int missionsDone;
+	private int livingTeam;
 	private List<Unit> livingUnits;
 	private String id;
 	
 	public Player(String id){
 		this.setID(id);
 		livingUnits = new LinkedList<Unit>();
-		
-		// Add five soldiers for now
-		livingUnits.add((Unit) new Soldier());
-		livingUnits.add((Unit) new Soldier());
-		livingUnits.add((Unit) new Soldier());
-		livingUnits.add((Unit) new Soldier());
-		livingUnits.add((Unit) new Soldier());
+		missionsDone= livingTeam = 0;
 	}
 
 	public Object getTeamStats() {
@@ -56,5 +49,10 @@ public class Player {
 
 	public void setID(String id) {
 		this.id = id;
+	}
+	
+	public void addUnits(Unit toAdd){
+		livingUnits.add(toAdd);
+		livingTeam++;
 	}
 }
