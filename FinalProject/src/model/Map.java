@@ -17,12 +17,22 @@ import space.WastelandSpace;
 import space.WaterSpace;
 import units.Unit;
 
+/**
+ * The Map class, creates a new map.
+ * Also handles moving units, adding units to the map
+ * and checking to see if a space is occupied.
+ */
 public class Map extends Observable {
 
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
 	private Scanner scan;
 
+	/**
+	 * Instantiates a new map.
+	 *
+	 * @param difficulty Takes in a double representing the difficulty. Is used to pick what map to make.
+	 */
 	public Map(double difficulty) {
 
 		map = new Space[50][50];
@@ -97,6 +107,11 @@ public class Map extends Observable {
 		
 	}
 
+	/**
+	 * Adds the players picked units to map.
+	 *
+	 * @param unitList The list of units to be added to the map.
+	 */
 	public void addUnitsToMap(Stack<Unit> unitList) {
 
 		unitsOnMap = new Unit[50][50];
@@ -119,6 +134,14 @@ public class Map extends Observable {
 
 	}
 
+	/**
+	 * When called it moves the selected unit to the selected spot.
+	 *
+	 * @param startRow the start row used to pick the unit to move.
+	 * @param startCol the start col used to pick the unit to move.
+	 * @param moveToRow the move to row used to pick the space to move the unit to.
+	 * @param moveToCol the move to col used to pick the space to move the unit to.
+	 */
 	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
 
 		unitsOnMap[moveToRow][moveToCol] = unitsOnMap[startRow][startCol];
@@ -131,20 +154,44 @@ public class Map extends Observable {
 
 	}
 
+	/**
+	 * Gets the unit at the requested location.
+	 *
+	 * @param row the row
+	 * @param col the col
+	 * @return Unit, Returns the 'full' Unit at requested spot.
+	 */
 	public Unit getUnitAt(int row, int col) {
 		return unitsOnMap[row][col];
 	}
 
+	/**
+	 * Method to get the array of spaces in other words the actual map.
+	 *
+	 * @return map, Map is the Space[][].
+	 */
 	public Space[][] getSpaces() {
 
 		return map;
 	}
 
+	/**
+	 * Method to get the array of Units in other words the Units on the map.
+	 *
+	 * @return unitsOnMap, unitsOnMap is the Unit[][]
+	 */
 	public Unit[][] getUnits() {
 
 		return unitsOnMap;
 	}
 
+	/**
+	 * Checks if the requested space is occupied.
+	 *
+	 * @param row The row of the requested space.
+	 * @param column the column of the requested space.
+	 * @return true, If the space is occupied.
+	 */
 	public boolean isOccupied(int row, int column) {
 		if (map[row][column].getOccupied() == true) {
 			return true;
