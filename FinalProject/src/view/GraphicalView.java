@@ -1,8 +1,11 @@
 package view;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +18,7 @@ import controller.GameController;
 import model.Difficulty;
 import model.Map;
 import model.Player;
+import model.Shape;
 
 public class GraphicalView extends JPanel implements Observer {
 
@@ -43,7 +47,8 @@ public class GraphicalView extends JPanel implements Observer {
 
 		canvas.addMouseMotionListener(motionListener);
 		canvas.addMouseListener(listener);
-
+		
+//----------------------------------------------------------------------------------------------------------------
 		// Create a controller
 		controller = new GameController(new Player("A"), Difficulty.EASY);
 
@@ -153,6 +158,20 @@ public class GraphicalView extends JPanel implements Observer {
 		currentUnits = map.getUnits();
 		repaint();
 		firstClick = true;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+
+		for (Shape s : listOfShapes) {
+			s.draw(g2);
+		}
+		
+
+
 	}
 
 }

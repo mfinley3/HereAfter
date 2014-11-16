@@ -3,6 +3,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
@@ -28,6 +29,12 @@ public class TextView extends JPanel implements Observer{
 		  add(textMap);
 		  
 	  }
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
