@@ -28,7 +28,7 @@ import model.Player;
 public class GraphicalView extends JPanel implements Observer {
 
 	private int clickX, clickY, row, column;
-	private Enum difficulty;
+	private String userName;
 	private GameController controller;
 	private boolean firstClick;
 	private Map map;
@@ -39,16 +39,14 @@ public class GraphicalView extends JPanel implements Observer {
 
 	public GraphicalView() {
 		firstClick = true;
-		currentSpaces = new Space[50][50];
-		
-		
+		// currentSpaces = new Space[50][50];
+		// currentUnits = new Unit[50][50];
+
 		this.setLayout(null);
 
 		Dimension maxSize = new Dimension(4800, 4800);
 		this.setPreferredSize(maxSize);
-		this.setBackground(Color.WHITE);
 		this.setVisible(true);
-
 
 		MouseListener listener = new ListenToMouse();
 		MouseMotionListener motionListener = new ListenToMouse();
@@ -69,17 +67,15 @@ public class GraphicalView extends JPanel implements Observer {
 			System.out.println("Could not find picture file");
 		}
 
-		// ----------------------------------------------------------------------------------------------------------------
-		// Create a controller
-		controller = new GameController(new Player("A"), Difficulty.EASY);
-
-		controller.getMap().addObserver(this);
-
+		//currentSpaces = map.getSpaces();
+		//currentUnits = map.getUnits();
+		
+		//map = controller.getMap();
 
 	}
 
-	public void setDifficulty(Difficulty temp) {
-		difficulty = temp;
+	public void setController(GameController temp) {
+		controller = temp;
 	}
 
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
@@ -177,10 +173,13 @@ public class GraphicalView extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		map = controller.getMap();
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
 		repaint();
 		firstClick = true;
+		
+		System.out.println("UPDATE");
 	}
 
 	@Override
@@ -190,21 +189,23 @@ public class GraphicalView extends JPanel implements Observer {
 
 		int x = 0;
 		int y = 0;
-		
 
 		
-		for (int col = 0; col < currentSpaces.length; col++) {
-			x = 0;
-			for (int row = 0; row < currentSpaces.length; row++) {
-				g2.drawImage(waste, x, y, null);
-				// if(currentSpaces[col][row] )
+		
+		if (currentSpaces != null) {
+			System.out.println("hello");
+			for (int col = 0; col < currentSpaces.length; col++) {
+				x = 0;
+				for (int row = 0; row < currentSpaces.length; row++) {
+					g2.drawImage(waste, x, y, null);
+					// if(currentSpaces[col][row] )
 
-				x += 96;
+					x += 96;
 
+				}
+				y += 96;
 			}
-			y += 96;
 		}
-		
 	}
 
 }

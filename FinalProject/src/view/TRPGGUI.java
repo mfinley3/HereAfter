@@ -31,7 +31,7 @@ public class TRPGGUI extends JFrame {
 	}
 
 	public TRPGGUI() {	
-		this.setSize(1000, 660);
+		this.setSize(995, 660);
 		this.setVisible(true);
 		this.setLocation(100, 0);
 		

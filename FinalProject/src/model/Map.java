@@ -101,7 +101,7 @@ public class Map extends Observable {
 				}
 			}
 		}
-		
+		System.out.println("DONE");
 		setChanged();
 		notifyObservers();
 		
