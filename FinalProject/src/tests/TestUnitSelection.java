@@ -50,6 +50,6 @@ public class TestUnitSelection {
 	@Test
 	public void testEndTurnAndNewTurn(){
 		GameController g = new GameController(new Player("EM"), Difficulty.EASY);
-		g.setCurrentUnit(0, 0)
+		g.setCurrentUnit(0, 0);
 	}
 }
