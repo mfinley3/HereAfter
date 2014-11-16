@@ -39,8 +39,6 @@ public class GraphicalView extends JPanel implements Observer {
 
 	public GraphicalView() {
 		firstClick = true;
-		// currentSpaces = new Space[50][50];
-		// currentUnits = new Unit[50][50];
 
 		this.setLayout(null);
 
@@ -67,15 +65,15 @@ public class GraphicalView extends JPanel implements Observer {
 			System.out.println("Could not find picture file");
 		}
 
-		//currentSpaces = map.getSpaces();
-		//currentUnits = map.getUnits();
 		
-		//map = controller.getMap();
 
 	}
 
 	public void setController(GameController temp) {
 		controller = temp;
+		map = controller.getMap();
+		currentSpaces = map.getSpaces();
+		currentUnits = map.getUnits();
 	}
 
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
@@ -125,7 +123,8 @@ public class GraphicalView extends JPanel implements Observer {
 			} else {
 				if (row > 0 && row < currentSpaces.length && column > 0
 						&& column < currentSpaces.length) {
-					controller.move(row, column);
+					controller.setEndRow(row);
+					controller.setEndColumn(column);
 				}
 			}
 		}
@@ -193,12 +192,27 @@ public class GraphicalView extends JPanel implements Observer {
 		
 		
 		if (currentSpaces != null) {
-			System.out.println("hello");
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-					g2.drawImage(waste, x, y, null);
-					// if(currentSpaces[col][row] )
+					
+					if(currentSpaces[col][row].getSpaceType().equals("Bridge")) {
+						g2.drawImage(bridge, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("Mountain")) {
+						g2.drawImage(mountain, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("Path")) {
+						g2.drawImage(path, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("Tower")) {
+						g2.drawImage(tower, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("Wall")) {
+						g2.drawImage(wall, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
+						g2.drawImage(waste, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("Water")) {
+						g2.drawImage(water, x, y, null);
+					} else if(currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
+						g2.drawImage(corner, x, y, null);
+					}
 
 					x += 96;
 

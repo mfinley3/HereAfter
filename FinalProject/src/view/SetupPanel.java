@@ -20,6 +20,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import units.Doctor;
+import units.Engineer;
+import units.Ranger;
+import units.Sniper;
+import units.Soldier;
+import units.Unit;
 import model.Difficulty;
 import model.Player;
 import controller.GameController;
@@ -35,7 +41,7 @@ public class SetupPanel extends JPanel {
 	private BufferedImage background, setUp1, setUp2;
 	private JLabel title;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
-	private JButton select;
+	private JButton select, wait, item, attack, move;
 	private boolean selectLevel, startUp1, selectUnits;
 	private GameController controller;
 	private Enum difficulty;
@@ -184,33 +190,95 @@ public class SetupPanel extends JPanel {
 			// Check that the number of all units adds to 5. if they dont, show
 			// an error message
 			// Once this is confirmed, then we want to create the actual map
+			try {
+				String temp = docNum.getText();
+				int docs = Integer.parseInt(temp);
+				temp = soldNum.getText();
+				int solds = Integer.parseInt(temp);
+				temp = engNum.getText();
+				int engs = Integer.parseInt(temp);
+				temp = rangNum.getText();
+				int rangs = Integer.parseInt(temp);
+				temp = snipNum.getText();
+				int snips = Integer.parseInt(temp);
 
-			String temp = docNum.getText();
-			int docs = Integer.parseInt(temp);
-			temp = soldNum.getText();
-			int solds = Integer.parseInt(temp);
-			temp = engNum.getText();
-			int engs = Integer.parseInt(temp);
-			temp = rangNum.getText();
-			int rangs = Integer.parseInt(temp);
-			temp = snipNum.getText();
-			int snips = Integer.parseInt(temp);
+				if (docs + solds + engs + rangs + snips == 5) {
+					Player player = new Player(userName.getText());
+					controller = new GameController(player, (Difficulty) difficulty);
+					controller.getMap().addObserver((Observer) graphical);
+					System.out.println(controller.getMap().countObservers());
+					((GraphicalView) graphical).setController(controller);
+					
+					while(docs != 0) {
+						player.addUnits((Unit) new Doctor());
+						docs --;
+					}
+					while(solds != 0) {
+						player.addUnits((Unit) new Soldier());
+						solds --;
+					}
+					while(engs != 0) {
+						player.addUnits((Unit) new Engineer());
+						engs --;
+					}
+					while(rangs != 0) {
+						player.addUnits((Unit) new Ranger());
+						rangs --;
+					}
+					while(snips != 0) {
+						player.addUnits((Unit) new Sniper());
+						snips --;
+					}
+					
 
-			if (docs + solds + engs + rangs + snips == 5) {
-				controller = new GameController(new Player(userName.getText()), (Difficulty) difficulty);
-				controller.getMap().addObserver((Observer) graphical);
-				System.out.println(controller.getMap().countObservers());
-				((GraphicalView) graphical).setController(controller);
-				
-				actualMap();
-			} else {
-				JOptionPane.showMessageDialog(null, "The number of units must add up to 5");
+					actualMap();
+				} else {
+					JOptionPane.showMessageDialog(null,"The number of units must add up to 5");
+				}
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null,
+						userName.getText() + " did not enter a valid input");
 			}
-			
 
 		}
 	}
 
+	private class moveButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.move();
+		}
+		
+	}
+	
+	private class attackButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.attack();
+		}
+		
+	}
+	
+	private class useItemButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.useItem();
+		}
+		
+	}
+	
+	private class waitButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.unitWait();
+		}
+		
+	}
+	
 	private void actualMap() {
 		this.removeAll();
 		this.setLayout(new BorderLayout());
@@ -236,10 +304,14 @@ public class SetupPanel extends JPanel {
 		buttons.setLayout(new GridLayout(8, 1));
 		buttons.setOpaque(false);
 
-		JButton move = new JButton("Move");
-		JButton attack = new JButton("Attack");
-		JButton item = new JButton("Use an Item");
-		JButton wait = new JButton("Wait");
+		move = new JButton("Move");
+		move.addActionListener(new moveButtonListener());
+		attack = new JButton("Attack");
+		attack.addActionListener(new attackButtonListener());
+		item = new JButton("Use an Item");
+		item.addActionListener(new useItemButtonListener());
+		wait = new JButton("Wait");
+		wait.addActionListener(new waitButtonListener());
 
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
