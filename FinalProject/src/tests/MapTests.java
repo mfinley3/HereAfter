@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+import java.util.Stack;
 
 import model.Map;
 
@@ -10,6 +11,8 @@ import org.junit.Test;
 
 import space.CaptureCornerSpace;
 import space.Space;
+import units.Soldier;
+import units.Unit;
 
 public class MapTests {
 
@@ -90,5 +93,31 @@ public class MapTests {
 		}
 
 	}
+	
+	@Test
+	public void testIsOccupied(){
+		
+		Map testMap = new Map(.5);
+		Space[][] testSpaceMap = testMap.getSpaces();
+		
+		Stack<Unit> unitList = new Stack<Unit>();
+		unitList.add(new Soldier());
+		unitList.add(new Soldier());
+		unitList.add(new Soldier());
+		unitList.add(new Soldier());
+		unitList.add(new Soldier());
+		testMap.addUnitsToMap(unitList);
+		
+		for (int m = 0; m < testSpaceMap.length; m++) {
+			for (int n = 0; n < testSpaceMap.length; n++) {
+				if( m == 0 && n == 0 ||  m == 1 && n == 0 || m == 2 && n == 0 || m == 0 && n == 1 || m == 0 && n == 2){
+					assertTrue(testMap.isOccupied(m,n));
+				}else{
+				assertFalse(testMap.isOccupied(m,n));
 
+				}
+			}
+		}
+	}
+	
 }
