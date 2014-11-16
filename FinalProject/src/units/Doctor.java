@@ -20,6 +20,18 @@ public class Doctor extends Unit {
 	public void visibility() {
 		// Has minimal visibility.
 		
+		/*
+		 * The unit would need to know the map, or at least
+		 * make reference to it, to understand its visibility.
+		 * 
+		 * Personally, I think that would make for overly complex
+		 * unit classes and I could foresee some problems arising
+		 * out of it in the long run (Units overlapping each other,
+		 * etc.). To avoid that, I think we should add the visibility
+		 * to the gameController, where if unit type is <unitType>,
+		 * give it such and such functionality.
+		 */
+		
 	}
 
 	@Override
