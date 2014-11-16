@@ -8,11 +8,6 @@ import model.Map;
 import model.Player;
 import units.*;
 
-/*
- * TODO Give the controller more responsibility somehow.
- *
- */
-
 /**
  * TODO Finish this
  * 
@@ -43,7 +38,7 @@ public class GameController {
 	 */
 	
 	/**
-	 * TODO Work on this
+	 * TODO Work on this. Will add a createAI method soon
 	 * 
 	 * Constructor for one player.
 	 * 
@@ -58,6 +53,7 @@ public class GameController {
 		
 		// Put the player's units into a stack and put it into the Map
 		for(Unit k: player1.getTeam()){
+			k.setCanMove();
 			temp.push(k);
 		}
 	
@@ -65,7 +61,7 @@ public class GameController {
 		map.addUnitsToMap(temp);
 			
 		currPlayer = player1;
-		tempUnitList = player1.allAliveUnits();
+		tempUnitList = currPlayer.allAliveUnits();
 		turns = 0;
 		
 	}
@@ -76,10 +72,15 @@ public class GameController {
 	 * @param row
 	 * @param col
 	 */
-	public void setCurrentUnit(int row, int col){
-		currUnit = map.getUnitAt(row, col);
-		currRow = row;
-		currCol = col;
+	public boolean setCurrentUnit(int row, int col){
+		if(map.getUnitAt(row, col)!=null && map.getUnitAt(row, col).canMove()){
+			currUnit = map.getUnitAt(row, col);
+			currRow = row;
+			currCol = col;
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	/**
@@ -123,15 +124,18 @@ public class GameController {
 	 * @param er, the ending row
 	 * @param ec, the ending column
 	 */
-	public void move(int endingRow, int endingCol){
+	public boolean move(int endingRow, int endingCol){
 		
 		if(currUnit != null)
 		{
-			//if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol))
+			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endingRow, endingCol))
 			{
 				map.moveUnit(currRow, currCol, endingRow, endingCol);
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
 	/**

@@ -13,9 +13,14 @@ public abstract class Unit {
 
 	// Every Unit gets a blank list of items
 	public ArrayList<Item> itemList = new ArrayList<Item>();
+	private boolean canMove;
 
 	private int totalHealth = 100;
-
+	
+	public Unit(){
+		canMove = false;
+	}
+	
 	public int getHealth() {
 		// Health level * health modifier
 		int hpMod = 1;
@@ -71,10 +76,14 @@ public abstract class Unit {
 	public abstract int movesAvailable(int hinderance);
 
 	public boolean canMove() {
-		return false;
+		return canMove;
 	}
 
 	public void setCanMove() {
+		if(canMove)
+			canMove = false;
+		else
+			canMove = true;
 	}
 
 	public boolean isAlive() {

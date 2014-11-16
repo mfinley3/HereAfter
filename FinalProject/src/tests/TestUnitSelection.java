@@ -27,4 +27,21 @@ public class TestUnitSelection {
 		u = g.getUnitOnMap(0, 2);
 		assertTrue(u!=null);
 	}
+	
+	@Test
+	public void TestMovement(){
+		GameController g = new GameController(new Player("EM"), Difficulty.EASY);
+		Unit u = g.getUnitOnMap(0, 0);
+		assertTrue(u!=null);
+		g.setCurrentUnit(0, 0);
+		assertTrue(u==g.getCurrentUnit());
+		assertTrue(u.canMove());
+		assertTrue(g.move(2, 2));
+		assertFalse(u.canMove());
+		assertFalse(u==g.getUnitOnMap(0, 0));
+		assertTrue(u==g.getUnitOnMap(2,2));
+		assertTrue(g.setCurrentUnit(1, 0));
+		assertFalse(g.setCurrentUnit(2, 2));
+		assertTrue(g.getCurrentUnit()==g.getUnitOnMap(1, 0));
+	}
 }
