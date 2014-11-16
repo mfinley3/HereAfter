@@ -93,13 +93,13 @@ public class MapTests {
 		}
 
 	}
-	
+
 	@Test
-	public void testIsOccupied(){
-		
+	public void testIsOccupied() {
+
 		Map testMap = new Map(.5);
 		Space[][] testSpaceMap = testMap.getSpaces();
-		
+
 		Stack<Unit> unitList = new Stack<Unit>();
 		unitList.add(new Soldier());
 		unitList.add(new Soldier());
@@ -107,17 +107,17 @@ public class MapTests {
 		unitList.add(new Soldier());
 		unitList.add(new Soldier());
 		testMap.addUnitsToMap(unitList);
-		
+
 		for (int m = 0; m < testSpaceMap.length; m++) {
 			for (int n = 0; n < testSpaceMap.length; n++) {
-				if( m == 0 && n == 0 ||  m == 1 && n == 0 || m == 2 && n == 0 || m == 0 && n == 1 || m == 0 && n == 2){
-					assertTrue(testMap.isOccupied(m,n));
-				}else{
-				assertFalse(testMap.isOccupied(m,n));
+				if (m == 0 && n == 0 || m == 1 && n == 0 || m == 2 && n == 0 || m == 0 && n == 1 || m == 0 && n == 2) {
+					assertTrue(testMap.isOccupied(m, n));
+				} else {
+					assertFalse(testMap.isOccupied(m, n));
 
 				}
 			}
 		}
 	}
-	
+
 }
