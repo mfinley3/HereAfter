@@ -43,5 +43,13 @@ public class TestUnitSelection {
 		assertTrue(g.setCurrentUnit(1, 0));
 		assertFalse(g.setCurrentUnit(2, 2));
 		assertTrue(g.getCurrentUnit()==g.getUnitOnMap(1, 0));
+		assertFalse(g.move(2,2));
+		assertTrue(g.getCurrentUnit().canMove());
+	}
+	
+	@Test
+	public void testEndTurnAndNewTurn(){
+		GameController g = new GameController(new Player("EM"), Difficulty.EASY);
+		g.setCurrentUnit(0, 0)
 	}
 }

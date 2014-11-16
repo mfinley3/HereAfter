@@ -26,6 +26,7 @@ public class GameController {
 	private Unit currUnit;
 	private Player currPlayer;
 	private int turns;
+	private boolean playerTurn;
 	
 	private int currRow;
 	private int currCol;
@@ -63,7 +64,7 @@ public class GameController {
 		currPlayer = player1;
 		tempUnitList = currPlayer.allAliveUnits();
 		turns = 0;
-		
+		playerTurn = true;
 	}
 	
 	/**
@@ -93,7 +94,6 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Modify once player-specific units are made. Might need to destroy
 	 * WARNING: May need to be deleted
 	 * 
 	 * Used when selecting a unit from the GUI.
@@ -106,11 +106,6 @@ public class GameController {
 	 */
 	public Unit getUnitOnMap(int r, int c){
 		Unit temp = map.getUnitAt(r, c);
-		
-		if(temp!=null)
-			if(temp.canMove())
-				currUnit = temp;
-		
 		return temp;
 	}
 	
@@ -126,11 +121,10 @@ public class GameController {
 	 */
 	public boolean move(int endingRow, int endingCol){
 		
-		if(currUnit != null)
-		{
-			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endingRow, endingCol))
-			{
+		if(currUnit != null){
+			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endingRow, endingCol)){
 				map.moveUnit(currRow, currCol, endingRow, endingCol);
+				tempUnitList.remove(currUnit);
 				return true;
 			}
 		}
@@ -139,14 +133,17 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Check if the selected unit can move.
+	 * TODO Check if the selected player can move.
 	 */
 	public boolean playerCanMove(){
-		return !((List<Unit>) tempUnitList).isEmpty();
+		return !tempUnitList.isEmpty();
 		}
 	
 	/**
-	 * TODO Finish this
+	 * TODO 1) Check if friendly 2) Check within range
+	 * 
+	 * Get it to attack
+	 * 
 	 * 
 	 * @param sr
 	 * @param sc
@@ -155,7 +152,7 @@ public class GameController {
 	 * @return
 	 */
 	public boolean attack(int targetRow, int targetCol){
-		if(true)
+		if(currUnit.canMove() && map.isOccupied(targetRow, targetCol))
 			// Send attack message to map
 			return true;
 		else
@@ -238,7 +235,6 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Get this working too
 	 * Get the number of turns gone through in the game
 	 * @return the number of turns taken in game
 	 */
@@ -246,18 +242,16 @@ public class GameController {
 		return turns;
 	}
 	
-	/**
-	 * TODO Finish this and create a method for ending the whole turn
-	 * 
+	/** 
 	 * This method is used when a player wants to do nothing and end
 	 * that current unit's turn. Doesn't end the entire turn, just the
 	 * turn of the currently selected unit.
 	 */
-	public void doNothing(){
+	public void unitDoNothing(){
 		currUnit.setCanMove();
-//		if(){
-//			
-//		}
+		tempUnitList.remove(currUnit);
+		if(tempUnitList.isEmpty())
+			endTurn();
 	}
 	
 	/**
@@ -270,22 +264,30 @@ public class GameController {
 	}
 		
 	/**
-	 * TODO FINISH
+	 * TODO Edit when work is done
 	 * When called, ends a turn.
 	 * 
 	 */
 	public void endTurn(){
-		
+		if(playerTurn){
+			playerTurn = false;
+			tempUnitList.clear();
+			// Add methods to switch to AI
+		}
+		else{
+			playerTurn = true;
+			tempUnitList.clear();
+			tempUnitList = player1.allAliveUnits();
+			turns++;
+		}
 	}
 	
 	/**
-	 * TODO FINISH
+	 * TODO Add test to see if it is on the same side
 	 * 
 	 * Heal a friendly unit. Checks to see if on the same side, and if the
 	 * unit can heal.
 	 * 
-	 * @param sr, healer row
-	 * @param sc, healer col
 	 * @param er, target row
 	 * @param ec, target col
 	 * @return can heal, or can't heal
@@ -293,4 +295,6 @@ public class GameController {
 	public boolean heal(int targetRow, int targetCol){
 		return false;
 	}
+	
+	
 }
