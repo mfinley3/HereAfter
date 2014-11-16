@@ -44,7 +44,7 @@ public class SetupPanel extends JPanel {
 		this.setLayout(null);
 
 		try {
-			background = ImageIO.read(new File("unitSelect.jpeg"));
+			background = ImageIO.read(new File("unitSelect.jpg"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
 			setUp2 = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
 		} catch (IOException e) {
@@ -63,6 +63,7 @@ public class SetupPanel extends JPanel {
 		
 		title = new JLabel("HereAfter");
 		title.setFont(new Font(Font.SERIF, Font.BOLD, 50));
+		title.setForeground(Color.WHITE);
 		title.setSize(250, 70);
 		title.setLocation(395, 15);
 		this.add(title);
@@ -77,7 +78,7 @@ public class SetupPanel extends JPanel {
 		JLabel selectLabel = new JLabel(
 				"Select your units.  Enter a number between 0 and 5 for ");
 		selectLabel.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		selectLabel.setForeground(Color.BLACK);
+		selectLabel.setForeground(Color.WHITE);
 		selectLabel.setSize(900, 25);
 		selectLabel.setLocation(15, 170);
 		this.add(selectLabel);
@@ -85,14 +86,14 @@ public class SetupPanel extends JPanel {
 		JLabel selectLabel2 = new JLabel(
 				"each type of unit.  Can have up to 5 units total.");
 		selectLabel2.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		selectLabel2.setForeground(Color.BLACK);
+		selectLabel2.setForeground(Color.WHITE);
 		selectLabel2.setSize(900, 25);
 		selectLabel2.setLocation(15, 195);
 		this.add(selectLabel2);
 
 		userName = new JTextArea();
 		userName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		userName.setForeground(Color.BLACK);
+		userName.setForeground(Color.WHITE);
 		userName.setSize(250, 25);
 		userName.setLocation(220, 100);
 		this.add(userName);
@@ -107,28 +108,28 @@ public class SetupPanel extends JPanel {
 		
 		JLabel doc = new JLabel("Doctor");
 		doc.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		doc.setForeground(Color.BLACK);
+		doc.setForeground(Color.WHITE);
 		doc.setSize(100, 25);
 		doc.setLocation(50, 250);
 		this.add(doc);
 
 		docNum = new JTextArea();
 		docNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		docNum.setForeground(Color.BLACK);
+		docNum.setForeground(Color.WHITE);
 		docNum.setSize(25, 25);
 		docNum.setLocation(70, 350);
 		this.add(docNum);
 		
 		JLabel sold = new JLabel("Soldier");
 		sold.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		sold.setForeground(Color.BLACK);
+		sold.setForeground(Color.WHITE);
 		sold.setSize(100, 25);
 		sold.setLocation(250, 250);
 		this.add(sold);
 
 		soldNum = new JTextArea();
 		soldNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		soldNum.setForeground(Color.BLACK);
+		soldNum.setForeground(Color.WHITE);
 		soldNum.setSize(250, 25);
 		soldNum.setLocation(220, 100);
 		this.add(soldNum);
@@ -159,6 +160,7 @@ public class SetupPanel extends JPanel {
 		
 		title = new JLabel("HereAfter");
 		title.setFont(new Font(Font.SERIF, Font.BOLD, 50));
+		title.setForeground(Color.WHITE);
 		title.setSize(250, 70);
 		this.add(title, BorderLayout.NORTH);
 		
