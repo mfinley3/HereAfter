@@ -171,7 +171,7 @@ public class GameController {
 		else if (!currUnit.canMove())
 			JOptionPane.showMessageDialog(null,
 					"Unit can't move anymore. Select a new unit.");
-		else if (!map.isOccupied(endRow, endCol))
+		else if (map.isOccupied(endRow, endCol))
 			JOptionPane.showMessageDialog(null,
 					"Space is occupied, you can't move there");
 		else if (!map.getSpace(endRow, endCol).getCanMoveTo())
