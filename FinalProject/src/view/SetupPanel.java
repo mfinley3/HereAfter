@@ -206,8 +206,9 @@ public class SetupPanel extends JPanel {
 					Player player = new Player(userName.getText());
 					controller = new GameController(player, (Difficulty) difficulty);
 					controller.getMap().addObserver((Observer) graphical);
-					System.out.println(controller.getMap().countObservers());
 					((GraphicalView) graphical).setController(controller);
+					controller.getMap().addObserver((Observer) text);
+					((TextView) text).setController(controller);
 					
 					while(docs != 0) {
 						player.addUnits((Unit) new Doctor());
@@ -274,7 +275,7 @@ public class SetupPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			controller.unitWait();
+			controller.unitDoNothing();
 		}
 		
 	}
@@ -407,23 +408,27 @@ public class SetupPanel extends JPanel {
 						&& clickY < 275) {
 					// This means the difficulty is easy
 					difficulty = Difficulty.EASY;
-
+					selectUnit();
+					selectLevel = false;
+					selectUnits = true;
+					repaint();
 				} else if (clickX > 725 && clickX < 875 && clickY > 290
 						&& clickY < 320) {
 					// This means the difficulty is medium
 					difficulty = Difficulty.MEDIUM;
-
+					selectUnit();
+					selectLevel = false;
+					selectUnits = true;
+					repaint();
 				} else if (clickX > 740 && clickX < 840 && clickY > 340
 						&& clickY < 380) {
 					// This means the difficulty is hard
 					difficulty = Difficulty.HARD;
-
+					selectUnit();
+					selectLevel = false;
+					selectUnits = true;
+					repaint();
 				}
-				selectUnit();
-				selectLevel = false;
-				selectUnits = true;
-				repaint();
-
 			}
 		}
 

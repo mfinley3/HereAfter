@@ -74,6 +74,7 @@ public class GraphicalView extends JPanel implements Observer {
 		map = controller.getMap();
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
+		System.out.println("setController");
 	}
 
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
@@ -195,7 +196,8 @@ public class GraphicalView extends JPanel implements Observer {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-					
+					System.out.println(col + " " + row);
+					System.out.println(currentSpaces[col][row]);
 					if(currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						g2.drawImage(bridge, x, y, null);
 					} else if(currentSpaces[col][row].getSpaceType().equals("Mountain")) {
