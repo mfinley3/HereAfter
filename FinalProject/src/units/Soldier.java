@@ -18,12 +18,6 @@ public class Soldier extends Unit {
 	}
 
 	@Override
-	public void visibility() {
-		// Has minimal visibility.
-		
-	}
-
-	@Override
 	public int movesAvailable(int hinderance) {
 		//  Has 'improved' amount of moves available.
 		int moves = 6;

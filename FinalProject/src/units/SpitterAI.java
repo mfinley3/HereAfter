@@ -13,12 +13,6 @@ public class SpitterAI extends Unit {
 	}
 
 	@Override
-	public void visibility() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public int movesAvailable(int hinderance) {
 		// TODO Auto-generated method stub
 		return 0;

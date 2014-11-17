@@ -11,12 +11,6 @@ public class AlphaProtectorAI extends Unit {
 		Item givenWeapon = new Item("Big Daddy", ItemType.HP);
 		itemList.add(givenWeapon);
 	}
-	
-	@Override
-	public void visibility() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int movesAvailable(int hinderance) {

@@ -110,8 +110,6 @@ public abstract class Unit {
 		return defPower;
 	}
 
-	public abstract void visibility();
-
 	public abstract int movesAvailable(int hinderance);
 
 	public boolean canMove() {

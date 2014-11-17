@@ -16,12 +16,6 @@ public class Engineer extends Unit {
 		Item givenWeapon = new Item("Homemade Armor Suit", ItemType.DEF);
 		itemList.add(givenWeapon);
 	}
-	
-	@Override
-	public void visibility() {
-		// Has minimal visibility.
-		
-	}
 
 	@Override
 	public int movesAvailable(int hinderance) {

@@ -18,12 +18,6 @@ public class Sniper extends Unit {
 	}
 
 	@Override
-	public void visibility() {
-		// Has high visibility.
-		
-	}
-
-	@Override
 	public int movesAvailable(int hinderance) {
 		//  Has minimal amount of moves available.
 		int moves = 2;

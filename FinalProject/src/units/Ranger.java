@@ -16,12 +16,6 @@ public class Ranger extends Unit {
 		Item givenWeapon = new Item("Ranger Rifle", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}
-	
-	@Override
-	public void visibility() {
-		// Has minimal visibility.
-		
-	}
 
 	@Override
 	public int movesAvailable(int hinderance) {
