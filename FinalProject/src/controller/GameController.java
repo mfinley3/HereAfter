@@ -217,11 +217,12 @@ public class GameController {
 	}
 	
 	/**
+	 * 
 	 * TODO Test and modify for AI.
 	 * Get the stats for the selected player.
 	 * @return
 	 */
-	public Object getTeamStats(){
+	public String getTeamStats(){
 		if(this.playerTurn){
 			return player1.getTeamStats();
 		}
