@@ -29,12 +29,10 @@ public class Player {
 
 	public String getTeamStats() {
 		// TODO Auto-generated method stub
-		System.out.println("get team stats");
-		System.out.println(allUnits.size());
 		String temp = "";
 		for(Unit i: allUnits)
-			temp = temp + i.getStats() + "\n";
-		temp = temp + "\n";
+			temp = temp + i.getStats() + "<br>";
+		temp = temp + "<br>";
 		
 		
 		return temp;
@@ -64,8 +62,6 @@ public class Player {
 	public void addUnits(Unit toAdd){
 		livingUnits.add(toAdd);
 		allUnits.add(toAdd);
-
-		System.out.println(allUnits.size());
 		livingTeam++;
 	}
 }
