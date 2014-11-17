@@ -89,7 +89,7 @@ public class GameController {
 			if (map.getUnitAt(row, col).canMove()) {
 				if (currUnit != null) {
 					setCanMove(currRow, currCol, false);
-				}
+				} 
 
 				currUnit = map.getUnitAt(row, col);
 				currRow = row;
