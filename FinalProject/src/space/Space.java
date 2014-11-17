@@ -7,15 +7,24 @@ public abstract class Space {
 	private Boolean occupied;
 	private Boolean visable;
 	private int moveHinderance;
+	private int visablityModifier;
 	
-	public Space (String spaceType, Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance){
+	public Space (String spaceType, Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance, int visablityModifier){
 		
 		this.spaceType = spaceType;
 		this.walkable = walkable;
 		this.occupied = occupied;
 		this.visable = visable;
 		this.moveHinderance = moveHinderance;
+		this.visablityModifier = visablityModifier;
 		
+	}
+	
+	/**
+	 * @return the spaceType
+	 */
+	public String getSpaceType() {
+		return spaceType;
 	}
 
 	/**
@@ -59,12 +68,12 @@ public abstract class Space {
 	public void setVisable(Boolean visable) {
 		this.visable = visable;
 	}
-	
+
 	/**
-	 * @return the spaceType
+	 * @return the visablityModifier
 	 */
-	public String getSpaceType() {
-		return spaceType;
+	public int getVisablityModifier() {
+		return visablityModifier;
 	}
 
 
