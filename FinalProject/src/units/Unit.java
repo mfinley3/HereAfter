@@ -4,6 +4,8 @@ import item.Item;
 
 import java.util.ArrayList;
 
+import model.Difficulty;
+
 /**
  * 
  * @author Chioke
@@ -17,35 +19,45 @@ public abstract class Unit {
 
 	private int totalHealth = 100;
 	private String unitType = "";
-	
-	public Unit(){
+	private Difficulty d;
+
+	public Unit() {
 		canMove = false;
 	}
-	
+
 	public String getUnitType() {
 		return unitType;
 	}
-	
+
 	public void setUnitType(String unitType) {
 		this.unitType = unitType;
 	}
-	
+
 	public int getHealth() {
 		// Health level * health modifier
 		int hpMod = 1;
 
-		for (Item item : itemList) {
-			if (item.isHealthItem()) {
-				hpMod += 1;
-				totalHealth = 100 * hpMod;
-				// Grabbing a health item will replenish your life
+		if (unitType.equals("Runner") || unitType.equals("Spitter")
+				|| unitType.equals("AlphaProtector")) {
+			hpMod *= (int) d.getValue();
+			totalHealth = 100 * hpMod;
+		}
+
+		// Only non-AI characters can benefit from items
+		else {
+			for (Item item : itemList) {
+				if (item.isHealthItem()) {
+					hpMod++;
+					totalHealth = 100 * hpMod;
+					// Grabbing a health item will replenish your life
+				}
 			}
 		}
 		return totalHealth;
 	}
 
 	public void reduceHealth(int damage) {
-		if(damage - getDefense() <= 0) {
+		if (damage - getDefense() <= 0) {
 			return;
 		} else {
 			totalHealth -= (damage - getDefense());
@@ -57,10 +69,19 @@ public abstract class Unit {
 		int atkMod = 1;
 		int atkPower = 40;
 
-		for (Item item : itemList) {
-			if (item.isAtkItem()) {
-				atkMod += 1;
-				atkPower *= atkMod;
+		if (unitType.equals("Runner") || unitType.equals("Spitter")
+				|| unitType.equals("AlphaProtector")) {
+			atkMod *= (int) d.getValue();
+			atkPower *= atkMod;
+		}
+
+		// Only non-AI characters can benefit from items
+		else {
+			for (Item item : itemList) {
+				if (item.isAtkItem()) {
+					atkMod++;
+					atkPower *= atkMod;
+				}
 			}
 		}
 		return atkPower;
@@ -71,10 +92,19 @@ public abstract class Unit {
 		int defMod = 1;
 		int defPower = 10;
 
-		for (Item item : itemList) {
-			if (item.isAtkItem()) {
-				defMod += 1;
-				defPower *= defMod;
+		if (unitType.equals("Runner") || unitType.equals("Spitter")
+				|| unitType.equals("AlphaProtector")) {
+			defMod *= (int) d.getValue();
+			defPower *= defMod;
+		}
+
+		// Only non-AI characters can benefit from items
+		else {
+			for (Item item : itemList) {
+				if (item.isAtkItem()) {
+					defMod++;
+					defPower *= defMod;
+				}
 			}
 		}
 		return defPower;
@@ -89,9 +119,7 @@ public abstract class Unit {
 	}
 
 	public void setCanMove() {
-		
 		canMove = !canMove;
-		
 	}
 
 	public boolean isAlive() {
@@ -103,15 +131,15 @@ public abstract class Unit {
 	public String getStats() {
 		String inventory = "";
 		for (Item s : itemList) {
-		    inventory += s.toString();
+			inventory += s.toString();
 		}
-		
+
 		String result = "Unit Type: " + getUnitType();
 		result += "<br>Current Health: " + getHealth();
 		result += "<br>Current Attack Power: " + getAttack();
 		result += "<br>Current Defense Power: " + getDefense();
 		result += "<br>Inventory: " + inventory;
-		
+
 		return result;
 	}
 
