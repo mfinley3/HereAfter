@@ -196,6 +196,7 @@ public class GameController {
 			map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
 			targetDead(endRow, endCol);
 			// If no other unit can move, end the turn
+			tempUnitList.remove(currUnit);
 			if (tempUnitList.isEmpty())
 				endTurn();
 			return true;
@@ -444,6 +445,8 @@ public class GameController {
 			else
 				player2.unitKilled(temp);
 
+			if(tempUnitList.contains(temp))
+				tempUnitList.remove(temp);
 			// Check to see if the game is over
 			gameOver();
 
@@ -458,5 +461,9 @@ public class GameController {
 
 	public boolean playerWon() {
 		return playerWon;
+	}
+
+	public boolean playerTurn() {
+		return playerTurn;
 	}
 }

@@ -127,5 +127,7 @@ public class TestUnitSelection {
 		System.out.println(g.getCurrentUnit().getHealth());
 		assertTrue(u.getHealth()<0);
 		assertFalse(u.isAlive());
+		
+		assertTrue(!g.playerTurn());
 	}
 }
