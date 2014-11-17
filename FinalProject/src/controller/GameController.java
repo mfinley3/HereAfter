@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -67,7 +68,7 @@ public class GameController {
 		// Place the enemy on the map
 			
 		currPlayer = player1;
-		tempUnitList = currPlayer.allAliveUnits();
+		tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
 		turns = 0;
 		playerTurn = true;
 	}
@@ -81,13 +82,13 @@ public class GameController {
 	public boolean setCurrentUnit(int row, int col){
 		if(map.getUnitAt(row, col)!=null && map.getUnitAt(row, col).canMove()){
 			if(currUnit!=null){
-				setCanMove(currRow, currCol);
+				setCanMove(currRow, currCol, false);
 			}
 			
 			currUnit = map.getUnitAt(row, col);
 			currRow = row;
 			currCol = col;
-			setCanMove(row, col);
+			setCanMove(row, col, true);
 			return true;
 		}
 		else
@@ -131,7 +132,7 @@ public class GameController {
 		
 		if(currUnit != null){
 			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol) && map.getSpace(endRow, endCol).getCanMoveTo()){
-				setCanMove(currRow, currCol);
+				setCanMove(currRow, currCol, false);
 				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);
 				if(tempUnitList.isEmpty())
@@ -197,7 +198,7 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Finish this method
+	 * TODO Test this method
 	 * 
 	 * Checks both of the player's aliveUnits to see if all of their 
 	 * units are dead. If either of them are out of units they can move,
@@ -337,22 +338,24 @@ public class GameController {
 	}
 	
 	/**
+	 * TODO fix this
+	 * 
 	 * Decides if the current unit can move onto a surrounding space.
 	 * Called twice, before and after a move/attack.
 	 * 
 	 * @param currRow
 	 * @param currCol
 	 */
-	private void setCanMove(int currRow, int currCol)
+	private void setCanMove(int currRow, int currCol, boolean set)
     {
         if(currRow>0)
-            canMoveHelper(currUnit.movesAvailable(0),currRow-1,currCol);
+            canMoveHelper(currUnit.movesAvailable(0),currRow-1,currCol, set);
         if(currRow<map.getSpaces().length)
-            canMoveHelper(currUnit.movesAvailable(0),currRow+1,currCol);
+            canMoveHelper(currUnit.movesAvailable(0),currRow+1,currCol, set);
         if(currCol>0)
-            canMoveHelper(currUnit.movesAvailable(0),currRow,currCol-1);
+            canMoveHelper(currUnit.movesAvailable(0),currRow,currCol-1, set);
         if(currCol<map.getSpaces()[currRow].length)
-            canMoveHelper(currUnit.movesAvailable(0),currRow,currCol+1);
+            canMoveHelper(currUnit.movesAvailable(0),currRow,currCol+1, set);
     }
    
 	/**
@@ -362,14 +365,18 @@ public class GameController {
 	 * @param currRow
 	 * @param currCol
 	 */
-    private void canMoveHelper(int movesAvail, int currRow, int currCol){
+    private void canMoveHelper(int movesAvail, int currRow, int currCol,boolean set){
         movesAvail = movesAvail - map.getSpace(currRow, currCol).getMoveHinderance();
         if(movesAvail>=0){
-        	map.getSpace(currRow-1, currCol).setCanMoveTo();
-        	canMoveHelper(movesAvail, currRow+1, currCol);
-            canMoveHelper(movesAvail, currRow-1, currCol);
-            canMoveHelper(movesAvail, currRow, currCol+1);
-            canMoveHelper(movesAvail, currRow, currCol-1);
+        	map.getSpace(currRow, currCol).setCanMoveTo(set);
+            if(currRow<map.getSpaces().length)
+            	canMoveHelper(movesAvail, currRow+1, currCol, set);
+        	if(currRow>0)
+        		canMoveHelper(movesAvail, currRow-1, currCol, set);
+            if(currCol<map.getSpaces()[currRow].length)
+            	canMoveHelper(movesAvail, currRow, currCol+1, set);
+            if(currCol>0)
+            	canMoveHelper(movesAvail, currRow, currCol-1, set);
 
         }
     }
@@ -402,4 +409,12 @@ public class GameController {
     	else
     		return false;
     }
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public boolean playerWon() {
+		return playerWon;
+	}
 }

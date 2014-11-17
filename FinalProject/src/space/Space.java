@@ -82,9 +82,9 @@ public abstract class Space {
 	 * Sets if a current unit can move to this spot. Is called before
 	 * and after a move occurs or a unit is selected/deselected.
 	 */
-	public void setCanMoveTo(){
+	public void setCanMoveTo(boolean canMove){
 		
-		canMoveTo = !canMoveTo;
+		canMoveTo = canMove;
 	}
 	
 	public boolean getCanMoveTo(){

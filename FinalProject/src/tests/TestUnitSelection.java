@@ -50,6 +50,7 @@ public class TestUnitSelection {
 		assertTrue(u.canMove());
 		g.setEndRow(2);
 		g.setEndColumn(2);
+		assertTrue(g.getMap().getSpace(2, 2).getCanMoveTo());
 		assertTrue(g.move());
 		assertFalse(u.canMove());
 		assertFalse(u==g.getUnitOnMap(0, 0));
