@@ -144,11 +144,11 @@ public class Map extends Observable {
 	 */
 	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
 
-		unitsOnMap[moveToRow][moveToCol] = unitsOnMap[startRow][startCol];
-		unitsOnMap[startRow][startCol] = null;
-		unitsOnMap[moveToRow][moveToCol].setCanMove();
-		map[startRow][startCol].setOccupied(false);
-		map[moveToRow][moveToCol].setOccupied(true);
+		unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
+		unitsOnMap[startCol][startRow] = null;
+		unitsOnMap[moveToCol][moveToRow].setCanMove();
+		map[startCol][startRow].setOccupied(false);
+		map[moveToCol][moveToRow].setOccupied(true);
 		setChanged();
 		notifyObservers();
 
