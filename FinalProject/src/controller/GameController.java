@@ -93,6 +93,7 @@ public class GameController {
 			currRow = row;
 			currCol = col;
 			setCanMove(row, col, true);
+			System.out.println("New CurrUnit " +currUnit.getUnitType()+ " at: ("+ currRow + ", " + currCol+")");
 			return true;
 		}
 		else
@@ -133,9 +134,10 @@ public class GameController {
 	 * @param ec, the ending column
 	 */
 	public boolean move(){
+		System.out.println("("+ currRow+ ", " + currCol +") Move to (" + endRow + ", " + endCol + ")");
 		
 		if(currUnit != null){
-			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol) && map.getSpace(endRow, endCol).getCanMoveTo()){
+			if(currUnit.canMove() && !map.isOccupied(endRow, endCol) && map.getSpace(endRow, endCol).getCanMoveTo()){
 				setCanMove(currRow, currCol, false);
 				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);
@@ -145,7 +147,14 @@ public class GameController {
 			}
 		}
 		
-		JOptionPane.showMessageDialog(null, "Sorry, you can't move there.");
+		if(currUnit == null)
+			JOptionPane.showMessageDialog(null, "Please select a Unit");
+		else if(!currUnit.canMove())
+			JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
+		else if(!map.isOccupied(endRow, endCol))
+			JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
+		else if(!map.getSpace(endRow, endCol).getCanMoveTo())
+			JOptionPane.showMessageDialog(null, "Space is out of range.");
 		return false;
 	}
 	
@@ -335,10 +344,12 @@ public class GameController {
 	}
 	
 	public void setEndRow(int endRow){
+		System.out.println("New endCol: "+endRow);
 		this.endRow = endRow;
 	}
 	
 	public void setEndColumn(int endCol){
+		System.out.println("New endCol: "+endCol);
 		this.endCol = endCol;
 	}
 	
