@@ -204,11 +204,6 @@ public class SetupPanel extends JPanel {
 
 				if (docs + solds + engs + rangs + snips == 5) {
 					Player player = new Player(userName.getText());
-					controller = new GameController(player, (Difficulty) difficulty);
-					controller.getMap().addObserver((Observer) graphical);
-					((GraphicalView) graphical).setController(controller);
-					controller.getMap().addObserver((Observer) text);
-					((TextView) text).setController(controller);
 					
 					while(docs != 0) {
 						player.addUnits((Unit) new Doctor());
@@ -231,7 +226,11 @@ public class SetupPanel extends JPanel {
 						snips --;
 					}
 					
-
+					controller = new GameController(player, (Difficulty) difficulty);
+					controller.getMap().addObserver((Observer) graphical);
+					((GraphicalView) graphical).setController(controller);
+					controller.getMap().addObserver((Observer) text);
+					((TextView) text).setController(controller);
 					actualMap();
 				} else {
 					JOptionPane.showMessageDialog(null,"The number of units must add up to 5");

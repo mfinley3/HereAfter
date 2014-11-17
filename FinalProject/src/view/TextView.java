@@ -21,9 +21,7 @@ public class TextView extends JPanel implements Observer{
 	  //setting up the layout of the text view
 	  public TextView() {
 		  
-		  
-		  
-		  mapText = new JLabel();
+		  mapText = new JLabel("");
 		  mapText.setBackground(Color.WHITE);
 		  mapText.setFont(new Font(Font.SERIF, Font.BOLD, 20));
 		  add(mapText);
@@ -31,17 +29,20 @@ public class TextView extends JPanel implements Observer{
 	  }
 	  
 	  private void printStats() {
-		  mapText.setText(controller.getTeamStats());
+		  String temp = controller.getTeamStats();
+		  System.out.println(temp);
+		  mapText.setText(temp);
 	  }
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		printStats();
 	}
 
 	public void setController(GameController controller) {
 		this.controller = controller;
+		System.out.println("WHAT");
+		printStats();
 		
 	}
 	
