@@ -17,6 +17,7 @@ import space.WastelandSpace;
 import space.WaterSpace;
 import units.Unit;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Map class, creates a new map.
  * Also handles moving units, adding units to the map
@@ -24,8 +25,13 @@ import units.Unit;
  */
 public class Map extends Observable {
 
+	/** The map. */
 	private Space[][] map;
+	
+	/** The units on map. */
 	private Unit[][] unitsOnMap;
+	
+	/** The scan. */
 	private Scanner scan;
 
 	/**
@@ -199,6 +205,13 @@ public class Map extends Observable {
 		return false;
 	}
 	
+	/**
+	 * Gets the space in the map at the requested spot.
+	 *
+	 * @param row The row of the requested space. 
+	 * @param column The column of the requested space.
+	 * @return the space at the requested spot.
+	 */
 	public Space getSpace(int row, int column){
 		return map[row][column];
 	}

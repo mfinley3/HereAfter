@@ -132,7 +132,7 @@ public class GameController {
 	public boolean move(){
 		
 		if(currUnit != null){
-			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol) && map.getSpace(endRow, endCol).currCanMove()){
+			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol) && map.getSpace(endRow, endCol).getCanMoveTo()){
 				setCanMove(currRow, currCol);
 				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);
@@ -347,7 +347,7 @@ public class GameController {
     private void canMoveHelper(int movesAvail, int currRow, int currCol){
         movesAvail = movesAvail - map.getSpace(currRow, currCol).getMoveHinderance();
         if(movesAvail>=0){
-            map.getSpace(currRow-1, currCol).setCurrCanMove();
+            map.getSpace(currRow-1, currCol).setCanMoveTo();
             canMoveHelper(movesAvail, currRow+1, currCol);
             canMoveHelper(movesAvail, currRow-1, currCol);
             canMoveHelper(movesAvail, currRow, currCol+1);

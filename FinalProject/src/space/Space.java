@@ -6,9 +6,10 @@ public abstract class Space {
 	private Boolean walkable;
 	private Boolean occupied;
 	private Boolean visable;
+	private boolean canMoveTo;
 	private int moveHinderance;
 	private int visablityModifier;
-	private boolean currCanMove;
+	
 	
 	public Space (String spaceType, Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance, int visablityModifier){
 		
@@ -18,7 +19,7 @@ public abstract class Space {
 		this.visable = visable;
 		this.moveHinderance = moveHinderance;
 		this.visablityModifier = visablityModifier;
-		this.currCanMove = false;
+		this.canMoveTo = false;
 	}
 	
 	/**
@@ -81,14 +82,12 @@ public abstract class Space {
 	 * Sets if a current unit can move to this spot. Is called before
 	 * and after a move occurs or a unit is selected/deselected.
 	 */
-	public void setCurrCanMove(){
-		if(currCanMove)
-			currCanMove = false;
-		else
-			currCanMove = true;
+	public void setCanMoveTo(){
+		
+		canMoveTo = !canMoveTo;
 	}
 	
-	public boolean currCanMove(){
-		return currCanMove;
+	public boolean getCanMoveTo(){
+		return canMoveTo;
 	}
 }
