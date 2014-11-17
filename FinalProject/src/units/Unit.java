@@ -103,8 +103,6 @@ public abstract class Unit {
 		result += "\nCurrent Defense Power: " + getDefense();
 		result += "\nInventory: " + inventory;
 		
-		System.out.println("getStats of a unit");
-		
 		return result;
 	}
 

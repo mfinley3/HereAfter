@@ -74,7 +74,6 @@ public class GraphicalView extends JPanel implements Observer {
 		map = controller.getMap();
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
-		System.out.println("setController");
 	}
 
 	private class ListenToMouse implements MouseMotionListener, MouseListener {

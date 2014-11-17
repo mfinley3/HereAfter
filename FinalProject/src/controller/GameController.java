@@ -224,11 +224,9 @@ public class GameController {
 	 */
 	public String getTeamStats(){
 		if(this.playerTurn){
-			System.out.println("GAME CONTROLLER playerTurn true");
 			return player1.getTeamStats();
 		}
 		else{ // Finish once AI is working
-			System.out.println("GAME CONTROLLER playerTurn false");
 			return "";
 		}
 	}

@@ -30,7 +30,6 @@ public class TextView extends JPanel implements Observer{
 	  
 	  private void printStats() {
 		  String temp = controller.getTeamStats();
-		  System.out.println(temp);
 		  mapText.setText(temp);
 	  }
 
@@ -41,7 +40,6 @@ public class TextView extends JPanel implements Observer{
 
 	public void setController(GameController controller) {
 		this.controller = controller;
-		System.out.println("WHAT");
 		printStats();
 		
 	}
