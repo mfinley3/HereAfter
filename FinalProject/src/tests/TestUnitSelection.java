@@ -76,4 +76,56 @@ public class TestUnitSelection {
 		GameController g = new GameController(p, Difficulty.EASY);
 		g.setCurrentUnit(0, 0);
 	}
+	
+	@Test
+	public void testAttackAndHeal(){
+		// Test Attack
+		Unit i = new Soldier();
+		Unit b = new Soldier();
+		Player p = new Player("EB");
+		p.addUnits(b);
+		p.addUnits(i);
+		p.addUnits(new Doctor());
+		p.addUnits(new Ranger());
+		p.addUnits(new Sniper());
+		GameController g = new GameController(p ,Difficulty.EASY);
+		g.setCurrentUnit(1, 0);
+		g.setEndRow(1);
+		g.setEndColumn(0);
+		System.out.println(g.getCurrentUnit().getHealth());
+		assertTrue(g.getCurrentUnit().getHealth()==100);
+		g.setCurrentUnit(0, 0);
+		g.setEndRow(1);
+		g.setEndColumn(0);
+		
+		// Test isAlive
+		
+		g.attack();
+		g.setCurrentUnit(1, 0);
+		System.out.println(g.getCurrentUnit().getHealth());
+		assertTrue(g.getCurrentUnit().getHealth()<100);
+		assertTrue(g.getCurrentUnit().isAlive());
+		g.setCurrentUnit(0, 1);
+		g.attack();
+		
+		g.setCurrentUnit(1, 0);
+		System.out.println(g.getCurrentUnit().getHealth());
+		assertTrue(g.getCurrentUnit().getHealth()<100);
+		assertTrue(g.getCurrentUnit().isAlive());
+		Unit u=g.getCurrentUnit();
+		
+		g.setCurrentUnit(0, 2);
+		g.attack();
+		g.setCurrentUnit(1, 0);
+		System.out.println(g.getCurrentUnit().getHealth());
+		assertTrue(u.getHealth()<100);
+		assertTrue(u.isAlive());
+		
+		g.setCurrentUnit(2, 0);
+		g.attack();
+		g.setCurrentUnit(1, 0);
+		System.out.println(g.getCurrentUnit().getHealth());
+		assertTrue(u.getHealth()<0);
+		assertFalse(u.isAlive());
+	}
 }
