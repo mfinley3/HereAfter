@@ -14,7 +14,7 @@ import units.*;;
  *
  */
 public class Player {
-	private int missionsDone;
+	private int gamesFinished;
 	private int livingTeam;
 	private List<Unit> livingUnits;
 	private List<Unit> allUnits;
@@ -24,7 +24,7 @@ public class Player {
 		this.setID(id);
 		livingUnits = new LinkedList<Unit>();
 		allUnits = new LinkedList<Unit>();
-		missionsDone= livingTeam = 0;
+		gamesFinished= livingTeam = 0;
 	}
 
 	public String getTeamStats() {
@@ -72,5 +72,15 @@ public class Player {
 	public void unitKilled(Unit dead){
 		livingUnits.remove(dead);
 		livingTeam--;
+	}
+
+	public int getGamesFinished() {
+		// TODO Auto-generated method stub
+		return gamesFinished;
+	}
+
+	public void gameFinished() {
+		// TODO Auto-generated method stub
+		gamesFinished++;
 	}
 }

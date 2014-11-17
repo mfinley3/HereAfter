@@ -25,7 +25,7 @@ public class GameController {
 	private Player currPlayer;
 	private int turns;
 	private boolean playerTurn;
-	private boolean gameWon;
+	private boolean gameOver;
 	private boolean playerWon;
 	
 	private int currRow;
@@ -52,7 +52,7 @@ public class GameController {
 		this.map = new Map(i.getValue());
 		this.player1 = player1;
 		this.player2 = new AI(i);
-		gameWon = playerWon = false;
+		gameOver = playerWon = false;
 		
 		Stack<Unit> temp = new Stack<Unit>();
 		
@@ -103,9 +103,7 @@ public class GameController {
 		return currUnit;
 	}
 	
-	/**
-	 * WARNING: May need to be deleted
-	 * 
+	/** 
 	 * Used when selecting a unit from the GUI.
 	 * If the Unit is there and can move, set it to be the current.
 	 * Return the unit, or null.
@@ -136,6 +134,8 @@ public class GameController {
 				setCanMove(currRow, currCol);
 				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);
+				if(tempUnitList.isEmpty())
+					endTurn();
 				return true;
 			}
 		}
@@ -144,7 +144,7 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO 1) Check if friendly 2) Check within range 3) After attack, check if dead
+	 * TODO 1) Check if friendly 2) Check within range
 	 * 
 	 * Get it to attack
 	 * 
@@ -206,12 +206,30 @@ public class GameController {
 	 */
 	
 	public boolean gameOver(){
-		if(player1.allAliveUnits().isEmpty())
+		if(player2.everyonesDeadDave()){
+			gameOver = true;
+			playerWon = true;
 			//Display some kind of message telling player 2 won
+			System.out.println("Player " + player1.getID() + " won!");
+			System.out.println("Number of turns taken: " + turns);
+			player1.gameFinished();
+			System.out.println("Games you finished: " + player1.getGamesFinished());
+			System.out.println("Your team stats: ");
+			System.out.println(player1.getTeamStats());
 			return true;
-		else if (player2.allAliveUnits().isEmpty())
+		}
+		else if (player1.everyonesDeadDave()){
+			gameOver = true;
+			playerWon = false;
 			// Display some kind of message telling player 1 won
+			System.out.println("AI won! Better luck next time...");
+			System.out.println("Number of turns taken: " + turns);
+			player1.gameFinished();
+			System.out.println("Games you've finished: " + player1.getGamesFinished());
+			System.out.println("AI team stats: ");
+			System.out.println(player1.getTeamStats());
 			return true;
+		}
 		else
 			return false;
 	}
@@ -297,7 +315,7 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Add test to see if it is on the same side
+	 * TODO Check item type, see if it is on same side
 	 * 
 	 * Heal a friendly unit. Checks to see if on the same side, and if the
 	 * unit can heal.
@@ -347,8 +365,8 @@ public class GameController {
     private void canMoveHelper(int movesAvail, int currRow, int currCol){
         movesAvail = movesAvail - map.getSpace(currRow, currCol).getMoveHinderance();
         if(movesAvail>=0){
-            map.getSpace(currRow-1, currCol).setCanMoveTo();
-            canMoveHelper(movesAvail, currRow+1, currCol);
+        	map.getSpace(currRow-1, currCol).setCanMoveTo();
+        	canMoveHelper(movesAvail, currRow+1, currCol);
             canMoveHelper(movesAvail, currRow-1, currCol);
             canMoveHelper(movesAvail, currRow, currCol+1);
             canMoveHelper(movesAvail, currRow, currCol-1);
