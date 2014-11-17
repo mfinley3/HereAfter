@@ -17,6 +17,7 @@ public class Player {
 	private int missionsDone;
 	private int livingTeam;
 	private List<Unit> livingUnits;
+	private List<Unit> allUnits;
 	private String id;
 	
 	public Player(String id){
@@ -25,9 +26,13 @@ public class Player {
 		missionsDone= livingTeam = 0;
 	}
 
-	public Object getTeamStats() {
+	public String getTeamStats() {
 		// TODO Auto-generated method stub
-		return null;
+		String temp = "";
+		for(Unit i: allUnits)
+			temp = temp + i.getStats() + "\n";
+		temp = temp + "\n";
+		return temp;
 	}
 	
 	public List<Unit> getTeam(){

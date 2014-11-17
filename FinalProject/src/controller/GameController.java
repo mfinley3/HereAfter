@@ -217,26 +217,29 @@ public class GameController {
 	}
 	
 	/**
-	 * TODO Finish this.
+	 * TODO Test and modify for AI.
 	 * Get the stats for the selected player.
-	 * @param p
 	 * @return
 	 */
-	public Object getTeamStats(Player p){
-		return p.getTeamStats();
+	public Object getTeamStats(){
+		if(this.playerTurn){
+			return player1.getTeamStats();
+		}
+		else{ // Finish once AI is working
+			return "";
+		}
 	}
 	
 	/**
-	 * TODO Get this working
+	 * TODO Test and modify for AI
 	 * Get the selected unit's stats
 	 * 
 	 * @param p, the player that is asking
 	 * @param u, the player's unit
 	 * @return
 	 */
-	public Object getCurrUnitStats(Player p, Unit u){
-//		return p.getUnitStats(u);
-		return false;
+	public String getCurrUnitStats(Unit u){
+		return currUnit.getStats();
 	}
 	
 	/**
