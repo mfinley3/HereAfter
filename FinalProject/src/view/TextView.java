@@ -30,7 +30,7 @@ public class TextView extends JPanel implements Observer{
 	  
 	  private void printStats() {
 		  String temp = controller.getTeamStats();
-		  mapText.setText(temp);
+		  mapText.setText("<html>" + temp + "</html>");
 	  }
 
 	@Override

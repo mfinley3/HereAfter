@@ -31,8 +31,8 @@ public class Player {
 		// TODO Auto-generated method stub
 		String temp = "";
 		for(Unit i: allUnits)
-			temp = temp + i.getStats() + "\n";
-		temp = temp + "\n";
+			temp = temp + i.getStats() + "<br>";
+		temp = temp + "<br>";
 		
 		
 		return temp;
