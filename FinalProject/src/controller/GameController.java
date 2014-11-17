@@ -25,6 +25,8 @@ public class GameController {
 	private Player currPlayer;
 	private int turns;
 	private boolean playerTurn;
+	private boolean gameWon;
+	private boolean playerWon;
 	
 	private int currRow;
 	private int currCol;
@@ -49,6 +51,8 @@ public class GameController {
 	public GameController(Player player1, Difficulty i){
 		this.map = new Map(i.getValue());
 		this.player1 = player1;
+		this.player2 = new AI(i);
+		gameWon = playerWon = false;
 		
 		Stack<Unit> temp = new Stack<Unit>();
 		
@@ -60,6 +64,7 @@ public class GameController {
 	
 		// Place the players on the map
 		map.addUnitsToMap(temp);
+		// Place the enemy on the map
 			
 		currPlayer = player1;
 		tempUnitList = currPlayer.allAliveUnits();
@@ -69,15 +74,20 @@ public class GameController {
 	
 	/**
 	 * Set the the current unit to the unit located at this space.
-	 * Will return
+	 * Will return true if it 
 	 * @param row
 	 * @param col
 	 */
 	public boolean setCurrentUnit(int row, int col){
 		if(map.getUnitAt(row, col)!=null && map.getUnitAt(row, col).canMove()){
+			if(currUnit!=null){
+				setCanMove(currRow, currCol);
+			}
+			
 			currUnit = map.getUnitAt(row, col);
 			currRow = row;
 			currCol = col;
+			setCanMove(row, col);
 			return true;
 		}
 		else
@@ -122,7 +132,8 @@ public class GameController {
 	public boolean move(){
 		
 		if(currUnit != null){
-			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol)){
+			if(map.getUnitAt(currRow,currCol).canMove() && !map.isOccupied(endRow, endCol) && map.getSpace(endRow, endCol).currCanMove()){
+				setCanMove(currRow, currCol);
 				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);
 				return true;
@@ -131,13 +142,6 @@ public class GameController {
 		
 		return false;
 	}
-	
-	/**
-	 * TODO Check if the selected player can move.
-	 */
-	public boolean playerCanMove(){
-		return !tempUnitList.isEmpty();
-		}
 	
 	/**
 	 * TODO 1) Check if friendly 2) Check within range 3) After attack, check if dead
@@ -152,9 +156,14 @@ public class GameController {
 	 * @return
 	 */
 	public boolean attack(){
-		if(currUnit.canMove() && map.isOccupied(endRow, endCol))
-			// Send attack message to map
+		if(currUnit.canMove() && map.isOccupied(endRow, endCol)){
+			map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
+			targetDead(endRow, endCol);
+			// If no other unit can move, end the turn
+			if(tempUnitList.isEmpty())
+				endTurn();
 			return true;
+		}
 		else
 			return false;
 	}
@@ -188,15 +197,6 @@ public class GameController {
 	}
 	
 	/**
-	 * 
-	 * Tells the selected unit to wait until next turn. 
-	 * 
-	 */
-	public void unitWait(){
-		currUnit.setCanMove();
-	}
-	
-	/**
 	 * TODO Finish this method
 	 * 
 	 * Checks both of the player's aliveUnits to see if all of their 
@@ -217,9 +217,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 
-	 * TODO Test and modify for AI.
-	 * Get the stats for the selected player.
+	 * Get all of the stats stats for the selected player.
 	 * @return
 	 */
 	public String getTeamStats(){
@@ -227,13 +225,12 @@ public class GameController {
 			return player1.getTeamStats();
 		}
 		else{ // Finish once AI is working
-			return "";
+			return player2.getTeamStats();
 		}
 	}
 	
 	/**
-	 * TODO Test and modify for AI
-	 * Get the selected unit's stats
+	 * Get the selected unit's stats.
 	 * 
 	 * @param p, the player that is asking
 	 * @param u, the player's unit
@@ -272,19 +269,28 @@ public class GameController {
 	}
 		
 	/**
-	 * TODO Edit when work is done
 	 * When called, ends a turn.
 	 * 
 	 */
 	public void endTurn(){
 		if(playerTurn){
+			// Remove all of the player's units from tempList
 			playerTurn = false;
+			for(Unit i: tempUnitList)
+				i.setCanMove();
 			tempUnitList.clear();
-			// Add methods to switch to AI
+			
+			//Switch to AI
+			tempUnitList = player2.allAliveUnits();
 		}
 		else{
+			// Remove all of the AI's units from the tempList
 			playerTurn = true;
+			for(Unit i: tempUnitList)
+				i.setCanMove();
 			tempUnitList.clear();
+			
+			// Switch to player, add one to turns 
 			tempUnitList = player1.allAliveUnits();
 			turns++;
 		}
@@ -311,4 +317,71 @@ public class GameController {
 	public void setEndColumn(int endCol){
 		this.endCol = endCol;
 	}
+	
+	/**
+	 * Decides if the current unit can move onto a surrounding space.
+	 * Called twice, before and after a move/attack.
+	 * 
+	 * @param currRow
+	 * @param currCol
+	 */
+	private void setCanMove(int currRow, int currCol)
+    {
+        if(currRow>0)
+            canMoveHelper(currUnit.movesAvailable(0),currRow-1,currCol);
+        if(currRow<map.getSpaces().length)
+            canMoveHelper(currUnit.movesAvailable(0),currRow+1,currCol);
+        if(currCol>0)
+            canMoveHelper(currUnit.movesAvailable(0),currRow,currCol-1);
+        if(currCol<map.getSpaces()[currRow].length)
+            canMoveHelper(currUnit.movesAvailable(0),currRow,currCol+1);
+    }
+   
+	/**
+	 * Helper method for setCanMove.
+	 * 
+	 * @param movesAvail
+	 * @param currRow
+	 * @param currCol
+	 */
+    private void canMoveHelper(int movesAvail, int currRow, int currCol){
+        movesAvail = movesAvail - map.getSpace(currRow, currCol).getMoveHinderance();
+        if(movesAvail>=0){
+            map.getSpace(currRow-1, currCol).setCurrCanMove();
+            canMoveHelper(movesAvail, currRow+1, currCol);
+            canMoveHelper(movesAvail, currRow-1, currCol);
+            canMoveHelper(movesAvail, currRow, currCol+1);
+            canMoveHelper(movesAvail, currRow, currCol-1);
+
+        }
+    }
+    
+    /**
+     * Checks to see if a specific unit is dead. If it is,
+     * remove it from the map and from the alive unit lists in the
+     * associated team.
+     * 
+     * @param row
+     * @param col
+     * @return
+     */
+    private boolean targetDead(int row, int col){
+    	Unit temp = map.getUnitAt(row, col);
+    	if(!temp.isAlive()){
+    		// Remove them from the map
+    		
+    		// Remove them from the associated list
+    		if(player1.allAliveUnits().contains(temp))
+    			player1.unitKilled(temp);
+    		else
+    			player2.unitKilled(temp);
+    		
+    		// Check to see if the game is over
+    		gameOver();
+    		
+    		return true;
+    	}
+    	else
+    		return false;
+    }
 }

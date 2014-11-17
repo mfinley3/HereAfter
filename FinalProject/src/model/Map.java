@@ -198,5 +198,9 @@ public class Map extends Observable {
 		}
 		return false;
 	}
+	
+	public Space getSpace(int row, int column){
+		return map[row][column];
+	}
 
 }

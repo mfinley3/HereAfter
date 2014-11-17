@@ -64,4 +64,13 @@ public class Player {
 		allUnits.add(toAdd);
 		livingTeam++;
 	}
+	
+	public int getAliveNum(){
+		return livingTeam;
+	}
+	
+	public void unitKilled(Unit dead){
+		livingUnits.remove(dead);
+		livingTeam--;
+	}
 }
