@@ -7,6 +7,7 @@ public class RunnerAI extends Unit {
 	
 	public RunnerAI() {
 		super();
+		setUnitType("Runner");
 		// Maybe no given item?
 		Item givenWeapon = new Item("Emergency Kit", ItemType.HP);
 		itemList.add(givenWeapon);

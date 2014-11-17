@@ -12,6 +12,7 @@ public class Soldier extends Unit {
 	
 	public Soldier() {
 		super();
+		setUnitType("Soldier");
 		Item givenWeapon = new Item("Combat Rifle", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}

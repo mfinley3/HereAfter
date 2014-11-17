@@ -16,9 +16,18 @@ public abstract class Unit {
 	private boolean canMove;
 
 	private int totalHealth = 100;
+	private String unitType = "";
 	
 	public Unit(){
 		canMove = false;
+	}
+	
+	public String getUnitType() {
+		return unitType;
+	}
+	
+	public void setUnitType(String unitType) {
+		this.unitType = unitType;
 	}
 	
 	public int getHealth() {
@@ -94,10 +103,10 @@ public abstract class Unit {
 	public String getStats() {
 		String inventory = "";
 		for (Item s : itemList) {
-		    inventory += "\n" + String.format("%s ", s);
+		    inventory += s.toString();
 		}
 		
-		String result = "Unit Type: " + "<Unit Type>";
+		String result = "Unit Type: " + getUnitType();
 		result += "<br>Current Health: " + getHealth();
 		result += "<br>Current Attack Power: " + getAttack();
 		result += "<br>Current Defense Power: " + getDefense();
