@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import javax.swing.JOptionPane;
+
 import model.*;
 import units.*;
 
@@ -59,7 +61,7 @@ public class GameController {
 		
 		// Put the player's units into a stack and put it into the Map
 		for(Unit k: player1.getTeam()){
-			k.setCanMove();
+			k.setCanMove(true);
 			temp.push(k);
 		}
 	
@@ -69,6 +71,8 @@ public class GameController {
 			
 		currPlayer = player1;
 		tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
+		for(Unit j: tempUnitList)
+			j.setCanMove(true);
 		turns = 0;
 		playerTurn = true;
 	}
@@ -141,6 +145,7 @@ public class GameController {
 			}
 		}
 		
+		JOptionPane.showMessageDialog(null, "Sorry, you can't move there.");
 		return false;
 	}
 	
@@ -273,7 +278,7 @@ public class GameController {
 	 * turn of the currently selected unit.
 	 */
 	public void unitDoNothing(){
-		currUnit.setCanMove();
+		currUnit.setCanMove(false);
 		tempUnitList.remove(currUnit);
 		if(tempUnitList.isEmpty())
 			endTurn();
@@ -296,7 +301,7 @@ public class GameController {
 			// Remove all of the player's units from tempList
 			playerTurn = false;
 			for(Unit i: tempUnitList)
-				i.setCanMove();
+				i.setCanMove(false);
 			tempUnitList.clear();
 			
 			//Switch to AI
@@ -306,7 +311,7 @@ public class GameController {
 			// Remove all of the AI's units from the tempList
 			playerTurn = true;
 			for(Unit i: tempUnitList)
-				i.setCanMove();
+				i.setCanMove(false);
 			tempUnitList.clear();
 			
 			// Switch to player, add one to turns 
@@ -367,6 +372,7 @@ public class GameController {
 	 */
     private void canMoveHelper(int movesAvail, int currRow, int currCol,boolean set){
         movesAvail = movesAvail - map.getSpace(currRow, currCol).getMoveHinderance();
+        movesAvail = movesAvail -1;
         if(movesAvail>=0){
         	map.getSpace(currRow, currCol).setCanMoveTo(set);
             if(currRow<map.getSpaces().length)

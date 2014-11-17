@@ -116,8 +116,8 @@ public abstract class Unit {
 		return canMove;
 	}
 
-	public void setCanMove() {
-		canMove = !canMove;
+	public void setCanMove(boolean canMove) {
+		this.canMove = canMove;
 	}
 
 	public boolean isAlive() {
