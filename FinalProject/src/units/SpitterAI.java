@@ -7,6 +7,7 @@ public class SpitterAI extends Unit {
 	
 	public SpitterAI() {
 		super();
+		setUnitType("Spitter");
 		Item givenWeapon = new Item("Ebola-Virus Spit Launcher", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}

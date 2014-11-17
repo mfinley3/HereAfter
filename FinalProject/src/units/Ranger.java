@@ -12,6 +12,7 @@ public class Ranger extends Unit {
 
 	public Ranger() {
 		super();
+		setUnitType("Ranger");
 		Item givenWeapon = new Item("Ranger Rifle", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}

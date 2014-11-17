@@ -99,5 +99,9 @@ public class Item implements Serializable {
 	public void setHealthItem(boolean healthItem) {
 		this.healthItem = healthItem;
 	}
+	
+	public String toString() {
+		return "Item Name: " + title + "\nItem Type: " + item;
+	}
 
 } // end of class Item

@@ -12,6 +12,7 @@ public class Engineer extends Unit {
 
 	public Engineer() {
 		super();
+		setUnitType("Engineer");
 		Item givenWeapon = new Item("Homemade Armor Suit", ItemType.DEF);
 		itemList.add(givenWeapon);
 	}

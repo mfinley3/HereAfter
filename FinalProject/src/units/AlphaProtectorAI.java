@@ -7,6 +7,7 @@ public class AlphaProtectorAI extends Unit {
 
 	public AlphaProtectorAI() {
 		super();
+		setUnitType("AlphaProtector");
 		Item givenWeapon = new Item("Big Daddy", ItemType.HP);
 		itemList.add(givenWeapon);
 	}

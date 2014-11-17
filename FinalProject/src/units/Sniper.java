@@ -12,6 +12,7 @@ public class Sniper extends Unit {
 
 	public Sniper() {
 		super();
+		setUnitType("Sniper");
 		Item givenWeapon = new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK);
 		itemList.add(givenWeapon);
 	}

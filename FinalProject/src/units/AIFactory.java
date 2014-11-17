@@ -1,42 +1,29 @@
 package units;
 
-import java.awt.Color;
-import java.awt.Point;
-
-
 public class AIFactory {
 
 	/**
-	 * This creates the Rectangle {@link Shape}
+	 * This creates the AlphaProtector {@link Unit}
 	 * 
-	 * @param start		the starting point of the shape.
-	 * @param finish	the ending point of the shape.
-	 * @param color		the color of the shape
-	 * @return A new Rectangle Shape with the given information
+	 * @return A new AlphaProtector Unit with the given information
 	 */
 	public static Unit createAlphaProtector() {
 		return new AlphaProtectorAI();
 	}
 
 	/**
-	 * This creates the Line {@link Shape}
+	 * This creates the Runner {@link Unit}
 	 * 
-	 * @param start		the starting point of the shape.
-	 * @param finish	the ending point of the shape.
-	 * @param color		the color of the shape
-	 * @return A new Line Shape with the given information
+	 * @return A new Runner Unit with the given information
 	 */
 	public static Unit createRunner() {
 		return new RunnerAI();
 	}
 
 	/**
-	 * This creates the Oval {@link Shape}
+	 * This creates the Spitter {@link Unit}
 	 * 
-	 * @param start		the starting point of the shape.
-	 * @param finish	the ending point of the shape.
-	 * @param color		the color of the shape
-	 * @return A new Oval Shape with the given information
+	 * @return A new Spitter Unit with the given information
 	 */
 	public static Unit createSpitter() {
 		return new SpitterAI();
