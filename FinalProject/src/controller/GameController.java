@@ -35,6 +35,10 @@ public class GameController {
 	private int currCol;
 	private int endRow;
 	private int endCol;
+	
+	private GameTypeInterface j;
+	
+	private Object winConditions;
 
 	/*
 	 * Will work on being able to control each unit on the map. Things included
