@@ -391,13 +391,13 @@ public class GameController {
 	 */
 	private void setCanMove(int currRow, int currCol, boolean set) {
 		if (currRow > 0)
-			canMoveHelper(currUnit.movesAvailable(0), currRow - 1, currCol, set);
+			canMoveHelper(currUnit.movesAvailable(), currRow - 1, currCol, set);
 		if (currRow < map.getSpaces().length)
-			canMoveHelper(currUnit.movesAvailable(0), currRow + 1, currCol, set);
+			canMoveHelper(currUnit.movesAvailable(), currRow + 1, currCol, set);
 		if (currCol > 0)
-			canMoveHelper(currUnit.movesAvailable(0), currRow, currCol - 1, set);
+			canMoveHelper(currUnit.movesAvailable(), currRow, currCol - 1, set);
 		if (currCol < map.getSpaces()[currRow].length)
-			canMoveHelper(currUnit.movesAvailable(0), currRow, currCol + 1, set);
+			canMoveHelper(currUnit.movesAvailable(), currRow, currCol + 1, set);
 	}
 
 	/**

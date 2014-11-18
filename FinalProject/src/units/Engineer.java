@@ -18,12 +18,9 @@ public class Engineer extends Unit {
 	}
 
 	@Override
-	public int movesAvailable(int hinderance) {
+	public int movesAvailable() {
 		//  Has average amount of moves available.
-		int moves = 4;
-		if (moves - hinderance > 0)
-			return moves;
-		return 0;
+		return 4;
 	}
 
 }

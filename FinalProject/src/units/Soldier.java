@@ -18,12 +18,9 @@ public class Soldier extends Unit {
 	}
 
 	@Override
-	public int movesAvailable(int hinderance) {
+	public int movesAvailable() {
 		//  Has 'improved' amount of moves available.
-		int moves = 6;
-		if (moves - hinderance > 0)
-			return moves;
-		return 0;
+		return 6;
 	}
 
 }

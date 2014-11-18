@@ -13,9 +13,9 @@ public class SpitterAI extends Unit {
 	}
 
 	@Override
-	public int movesAvailable(int hinderance) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int movesAvailable() {
+		// Almost like an enemy AI version of a soldier
+		return 4;
 	}
 
 }

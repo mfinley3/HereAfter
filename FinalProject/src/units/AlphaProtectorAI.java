@@ -13,9 +13,9 @@ public class AlphaProtectorAI extends Unit {
 	}
 
 	@Override
-	public int movesAvailable(int hinderance) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int movesAvailable() {
+		// Suppose to have really little-to-no movement
+		return 1;
 	}
 
 }

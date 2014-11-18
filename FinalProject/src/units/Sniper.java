@@ -18,11 +18,8 @@ public class Sniper extends Unit {
 	}
 
 	@Override
-	public int movesAvailable(int hinderance) {
+	public int movesAvailable() {
 		//  Has minimal amount of moves available.
-		int moves = 2;
-		if (moves - hinderance > 0)
-			return moves;
-		return 0;
+		return 2;
 	}
 }
