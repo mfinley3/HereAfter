@@ -44,7 +44,7 @@ public class SetupPanel extends JPanel {
 	private JButton select, wait, item, attack, move;
 	private boolean selectLevel, startUp1, selectUnits;
 	private GameController controller;
-	private Enum difficulty;
+	private Difficulty difficulty;
 
 	private JTabbedPane views;
 
@@ -206,27 +206,27 @@ public class SetupPanel extends JPanel {
 					Player player = new Player(userName.getText());
 					
 					while(docs != 0) {
-						player.addUnits((Unit) new Doctor());
+						player.addUnits((Unit) new Doctor(difficulty));
 						docs --;
 					}
 					while(solds != 0) {
-						player.addUnits((Unit) new Soldier());
+						player.addUnits((Unit) new Soldier(difficulty));
 						solds --;
 					}
 					while(engs != 0) {
-						player.addUnits((Unit) new Engineer());
+						player.addUnits((Unit) new Engineer(difficulty));
 						engs --;
 					}
 					while(rangs != 0) {
-						player.addUnits((Unit) new Ranger());
+						player.addUnits((Unit) new Ranger(difficulty));
 						rangs --;
 					}
 					while(snips != 0) {
-						player.addUnits((Unit) new Sniper());
+						player.addUnits((Unit) new Sniper(difficulty));
 						snips --;
 					}
 					
-					controller = new GameController(player, (Difficulty) difficulty);
+					controller = new GameController(player, difficulty);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
 					controller.getMap().addObserver((Observer) text);
