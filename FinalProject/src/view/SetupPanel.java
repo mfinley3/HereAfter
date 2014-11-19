@@ -312,7 +312,10 @@ public class SetupPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "Add instructions to this.  It is in SetupPanel");
+			
+			new Thread(new HelpWindow()).start();
+			
+			//JOptionPane.showMessageDialog(null, "Add instructions to this.  It is in SetupPanel");
 		}
 
 	}

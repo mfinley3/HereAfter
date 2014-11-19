@@ -25,13 +25,8 @@ import units.Unit;
  */
 public class Map extends Observable {
 
-	/** The map. */
 	private Space[][] map;
-	
-	/** The units on map. */
 	private Unit[][] unitsOnMap;
-	
-	/** The scan. */
 	private Scanner scan;
 
 	/**
