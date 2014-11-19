@@ -21,10 +21,11 @@ public abstract class Unit {
 	private int defense;
 	private int movement;
 	private int health;
+	private int range;
 	private String unitType;
 	private Double difficulty;
 
-	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, double difficulty) {
+	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty) {
 		
 		this.unitType = unitType;
 		itemList.add(item); // Adds each Unit's given item
@@ -33,6 +34,7 @@ public abstract class Unit {
 		this.health = health;
 		this.movement = movement;
 		this.difficulty = difficulty;
+		this.range = range;
 		
 	}
 
@@ -163,7 +165,10 @@ public abstract class Unit {
 		return result;
 	}
 	
-	public abstract int getRange();
+	public int getRange(){
+		return range;
+	}
+		
 
 } // end of class Unit
 

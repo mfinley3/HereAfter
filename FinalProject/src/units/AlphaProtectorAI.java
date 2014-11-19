@@ -7,14 +7,8 @@ public class AlphaProtectorAI extends Unit {
 
 	public AlphaProtectorAI(double difficulty) {
 		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
-		super("AlphaProtector", new Item("Big Daddy", ItemType.HP), 35, 65, 100, 1, difficulty);
+		super("AlphaProtector", new Item("Big Daddy", ItemType.HP), 35, 65, 100, 1, 2, difficulty);
 		
 	}
-
-	@Override
-	public int getRange() {
-		// TODO Auto-generated method stub
-		return 7;
-	}
-
+	//7
 }

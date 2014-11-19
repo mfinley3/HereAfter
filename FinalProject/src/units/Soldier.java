@@ -12,14 +12,8 @@ public class Soldier extends Unit {
 	
 	public Soldier(double difficulty) {
 		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
-		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 40, 30, 100, 6, difficulty);
+		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 40, 30, 100, 6, 4, difficulty);
 		
-	}
-
-	@Override
-	public int getRange() {
-		// TODO Auto-generated method stub
-		return 4;
 	}
 
 }
