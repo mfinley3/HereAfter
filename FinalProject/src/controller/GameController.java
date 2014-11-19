@@ -1,7 +1,6 @@
 package controller;
 
-import gametype.CaptureTower;
-import gametype.GameTypeInterface;
+import gametype.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import model.*;
 import units.*;
 
 /**
- * TODO Add win conditions 
+ * TODO Add win conditions and change attack
  * 
  * The controller for a game. Sends messages to map, Saves Data, Loads Data,
  * sets up players, calculate which map is needed, sends messages to the enemy
@@ -168,6 +167,13 @@ public class GameController {
 					&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 				setCanMove(currRow, currCol, false);
 				map.moveUnit(currRow, currCol, endRow, endCol);
+				
+				// Set the new CurrRow and CurrCol, and check
+				currRow = endRow;
+				currCol = endCol;
+				gameOver();
+				
+				// Take the unit that can no longer move out of the tempUnitList
 				tempUnitList.remove(currUnit);
 				if (tempUnitList.isEmpty())
 					endTurn();
@@ -204,7 +210,10 @@ public class GameController {
 		if (currUnit.canMove() && map.isOccupied(endRow, endCol)) {
 			map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
 			targetDead(endRow, endCol);
+			
+			gameOver();
 			// If no other unit can move, end the turn
+			currUnit.setCanMove(false);
 			tempUnitList.remove(currUnit);
 			if (tempUnitList.isEmpty())
 				endTurn();
@@ -212,6 +221,8 @@ public class GameController {
 		} else
 			return false;
 	}
+	
+	
 
 	/**
 	 * TODO Finish this method.
@@ -252,7 +263,7 @@ public class GameController {
 	 */
 
 	public boolean gameOver() {
-		if (player2.everyonesDeadDave()) {
+		if (checkWinConditions()) {
 			gameOver = true;
 			playerWon = true;
 			// Display some kind of message telling player 2 won
@@ -347,19 +358,25 @@ public class GameController {
 			for (Unit i : tempUnitList)
 				i.setCanMove(false);
 			tempUnitList.clear();
-
+			currUnit = null;
+			
 			// Switch to AI
 			tempUnitList = player2.allAliveUnits();
 		} else {
+			
 			// Remove all of the AI's units from the tempList
 			playerTurn = true;
+			
+			// 
 			for (Unit i : tempUnitList)
 				i.setCanMove(false);
 			tempUnitList.clear();
+			currUnit = null;
 
 			// Switch to player, add one to turns
 			tempUnitList = player1.allAliveUnits();
 			turns++;
+			gameOver();
 		}
 	}
 
@@ -390,8 +407,6 @@ public class GameController {
 	}
 
 	/**
-	 * TODO fix this
-	 * 
 	 * Decides if the current unit can move onto a surrounding space. Called
 	 * twice, before and after a move/attack.
 	 * 
@@ -446,7 +461,7 @@ public class GameController {
 	private boolean targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
 		if (!temp.isAlive()) {
-			// Remove them from the map
+			// TODO Remove them from the map
 
 			// Remove them from the associated list
 			if (player1.allAliveUnits().contains(temp))
@@ -457,6 +472,8 @@ public class GameController {
 			if(tempUnitList.contains(temp))
 				tempUnitList.remove(temp);
 			// Check to see if the game is over
+			System.out.println("Unit " + temp.getUnitType()+ " at (" + row +", "+ col + ") is dead!");
+			checkWinConditions();
 			gameOver();
 
 			return true;
@@ -477,10 +494,19 @@ public class GameController {
 	}
 	
 	/**
-	 * FINISH
-	 * @return
+	 * TODO FINISH
+	 * @return Depending on the game type, if the game has been won
 	 */
 	public boolean checkWinConditions(){
-		return j.CheckWinCondition(winConditions);
+		if(j instanceof gametype.CaptureTower){
+			// If it's a CaptureTower game, check to see if the current player unit
+			// unit is on a tower space. If it is, the game has been won;
+			// return true. Else, return false.
+			if(map.getSpace(currRow, currCol) instanceof space.TowerSpace && player1.allAliveUnits().contains(map.getUnitAt(currRow, currCol)))
+				winConditions = true;
+			return j.CheckWinCondition(winConditions);
+		}
+		else
+			return false;
 	}
 }

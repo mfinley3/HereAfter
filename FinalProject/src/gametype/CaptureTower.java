@@ -17,9 +17,9 @@ public class CaptureTower implements GameTypeInterface{
 	
 	@Override
 	public boolean CheckWinCondition(Object ob) {
-		// TODO Finish
+		// The calculations for this one are done in the game.
 		
-		return temp;
+		return (boolean)ob;
 	}
 
 	@Override
