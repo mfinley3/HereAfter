@@ -192,40 +192,68 @@ public class SetupPanel extends JPanel {
 			// Once this is confirmed, then we want to create the actual map
 			try {
 				String temp = docNum.getText();
-				int docs = Integer.parseInt(temp);
+				int docs;
+				try {
+					docs = Integer.parseInt(temp);
+				} catch (Exception e) {
+					docs = 0;
+				}
+
 				temp = soldNum.getText();
-				int solds = Integer.parseInt(temp);
+				int solds;
+				try {
+					solds = Integer.parseInt(temp);
+				} catch (Exception e) {
+					solds = 0;
+				}
+
 				temp = engNum.getText();
-				int engs = Integer.parseInt(temp);
+				int engs;
+				try {
+					engs = Integer.parseInt(temp);
+				} catch (Exception e) {
+					engs = 0;
+				}
+
 				temp = rangNum.getText();
-				int rangs = Integer.parseInt(temp);
+				int rangs;
+				try {
+					rangs = Integer.parseInt(temp);
+				} catch (Exception e) {
+					rangs = 0;
+				}
 				temp = snipNum.getText();
-				int snips = Integer.parseInt(temp);
+				int snips;
+				try {
+					snips = Integer.parseInt(temp);
+				} catch (Exception e) {
+					snips = 0;
+				}
 
 				if (docs + solds + engs + rangs + snips == 5) {
 					Player player = new Player(userName.getText());
-					
-					while(docs != 0) {
+
+					while (docs != 0) {
 						player.addUnits((Unit) new Doctor(difficulty));
-						docs --;
+						docs--;
 					}
-					while(solds != 0) {
+					while (solds != 0) {
 						player.addUnits((Unit) new Soldier(difficulty));
-						solds --;
+						solds--;
 					}
-					while(engs != 0) {
+					while (engs != 0) {
 						player.addUnits((Unit) new Engineer(difficulty));
-						engs --;
+						engs--;
 					}
-					while(rangs != 0) {
+					while (rangs != 0) {
 						player.addUnits((Unit) new Ranger(difficulty));
-						rangs --;
+						rangs--;
 					}
-					while(snips != 0) {
+					while (snips != 0) {
 						player.addUnits((Unit) new Sniper(difficulty));
-						snips --;
+						snips--;
 					}
-					
+
 					controller = new GameController(player, difficulty);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
@@ -233,11 +261,12 @@ public class SetupPanel extends JPanel {
 					((TextView) text).setController(controller);
 					actualMap();
 				} else {
-					JOptionPane.showMessageDialog(null,"The number of units must add up to 5");
+					JOptionPane.showMessageDialog(null,
+							"The number of units must add up to 5");
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null,
-						userName.getText() + " did not enter a valid input");
+				JOptionPane.showMessageDialog(null, userName.getText()
+						+ " did not enter a valid input");
 			}
 
 		}
@@ -249,36 +278,36 @@ public class SetupPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			controller.move();
 		}
-		
+
 	}
-	
+
 	private class attackButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.attack();
 		}
-		
+
 	}
-	
+
 	private class useItemButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.useItem();
 		}
-		
+
 	}
-	
+
 	private class waitButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.unitDoNothing();
 		}
-		
+
 	}
-	
+
 	private void actualMap() {
 		this.removeAll();
 		this.setLayout(new BorderLayout());
