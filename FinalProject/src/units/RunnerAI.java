@@ -5,18 +5,10 @@ import item.ItemType;
 
 public class RunnerAI extends Unit {
 	
-	public RunnerAI() {
-		super();
-		setUnitType("Runner");
-		// Maybe no given item?
-		Item givenWeapon = new Item("Emergency Kit", ItemType.HP);
-		itemList.add(givenWeapon);
+	public RunnerAI(double difficulty) {
+		super("Runner", new Item("Emergency Kit", ItemType.HP), 35, 25, 100, 8 ,difficulty);
+		
 	}
 
-	@Override
-	public int movesAvailable() {
-		// Almost like an enemy AI version of a ranger
-		return 7;
-	}
 
 }

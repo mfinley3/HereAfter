@@ -10,17 +10,8 @@ import item.ItemType;
  */
 public class Ranger extends Unit {
 
-	public Ranger() {
-		super();
-		setUnitType("Ranger");
-		Item givenWeapon = new Item("Ranger Rifle", ItemType.ATK);
-		itemList.add(givenWeapon);
+	public Ranger(double difficulty) {
+		super("Ranger", new Item("Ranger Rifle", ItemType.ATK), 30, 45, 100, 7 ,difficulty);
+		
 	}
-
-	@Override
-	public int movesAvailable() {
-		//  Has high amount of moves available.
-		return 10;
-	}
-
 }

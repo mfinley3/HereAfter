@@ -10,17 +10,9 @@ import item.ItemType;
  */
 public class Engineer extends Unit {
 
-	public Engineer() {
-		super();
-		setUnitType("Engineer");
-		Item givenWeapon = new Item("Homemade Armor Suit", ItemType.DEF);
-		itemList.add(givenWeapon);
-	}
-
-	@Override
-	public int movesAvailable() {
-		//  Has average amount of moves available.
-		return 4;
+	public Engineer(double difficulty) {
+		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 50, 100, 5 ,difficulty);
+		
 	}
 
 }

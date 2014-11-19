@@ -101,11 +101,11 @@ public class MapTests {
 		Space[][] testSpaceMap = testMap.getSpaces();
 
 		Stack<Unit> unitList = new Stack<Unit>();
-		unitList.add(new Soldier());
-		unitList.add(new Soldier());
-		unitList.add(new Soldier());
-		unitList.add(new Soldier());
-		unitList.add(new Soldier());
+		unitList.add(new Soldier(.5));
+		unitList.add(new Soldier(.5));
+		unitList.add(new Soldier(.5));
+		unitList.add(new Soldier(.5));
+		unitList.add(new Soldier(.5));
 		testMap.addUnitsToMap(unitList);
 
 		for (int m = 0; m < testSpaceMap.length; m++) {

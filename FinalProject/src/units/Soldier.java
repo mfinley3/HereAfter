@@ -10,17 +10,9 @@ import item.ItemType;
  */
 public class Soldier extends Unit {
 	
-	public Soldier() {
-		super();
-		setUnitType("Soldier");
-		Item givenWeapon = new Item("Combat Rifle", ItemType.ATK);
-		itemList.add(givenWeapon);
-	}
-
-	@Override
-	public int movesAvailable() {
-		//  Has 'improved' amount of moves available.
-		return 6;
+	public Soldier(double difficulty) {
+		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 40, 30, 100, 6 ,difficulty);
+		
 	}
 
 }

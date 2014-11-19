@@ -164,8 +164,7 @@ public class GameController {
 				+ endRow + ", " + endCol + ")");
 
 		if (currUnit != null) {
-			if (currUnit.canMove() && !map.isOccupied(endRow, endCol)
-					&& map.getSpace(endRow, endCol).getCanMoveTo()) {
+			if (currUnit.canMove() && !map.isOccupied(endRow, endCol)&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 				setCanMove(currRow, currCol, false);
 				map.moveUnit(currRow, currCol, endRow, endCol);
 				tempUnitList.remove(currUnit);

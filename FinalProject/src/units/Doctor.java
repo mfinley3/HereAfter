@@ -10,17 +10,9 @@ import item.ItemType;
  */
 public class Doctor extends Unit {
 
-	public Doctor() {
-		super();
-		setUnitType("Doctor");
-		Item givenWeapon = new Item("Emergency Kit", ItemType.HP);
-		itemList.add(givenWeapon);
-	}
+	public Doctor(double difficulty) {
+		super("Doctor", new Item("Emergency Kit", ItemType.HP), 10, 35, 100, 6 ,difficulty);
 
-	@Override
-	public int movesAvailable() {
-		//  Has average amount of moves available.
-		return 4;
 	}
 
 }
