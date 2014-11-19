@@ -12,8 +12,8 @@ import model.Difficulty;
  *
  */
 public abstract class Unit {
-
-	// Every Unit gets a blank list of items
+	//small change to fix git not working
+	// Every Unit gets a blank list of items 
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 	private boolean canMove;
 
