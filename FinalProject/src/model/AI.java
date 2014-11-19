@@ -16,11 +16,14 @@ public class AI {
 
 	private List<Unit> livingUnits;
 	private List<Unit> allUnits;
-	private Difficulty d;
+	private List<Unit> deadUnits;
+	private double d;
 	private int totalAILeft;
 
 	public AI(Difficulty d){
-		this.d = d;
+		this.d = d.getValue();
+		allUnits = new LinkedList<Unit>();
+		deadUnits = new LinkedList<Unit>();
 		livingUnits = new LinkedList<Unit>();
 		generateTeam();
 		totalAILeft=0;
@@ -31,13 +34,6 @@ public class AI {
 	 */
 	private void generateTeam() {
 		// TODO Use the factory to make a team
-		this.addUnits(new SpitterAI(.5));
-		this.addUnits(new SpitterAI(.5));
-		this.addUnits(new SpitterAI(.5));
-		this.addUnits(new SpitterAI(.5));
-		this.addUnits(new SpitterAI(.5));
-		this.addUnits(new SpitterAI(.5));
-		this.addUnits(new SpitterAI(.5));
 	}
 
 	public String getTeamStats() {
@@ -68,6 +64,8 @@ public class AI {
 	public int getAliveNum(){
 		return totalAILeft;
 	}
+	
+	// Respawn Enemies
 	
 	public void unitKilled(Unit dead){
 		livingUnits.remove(dead);
