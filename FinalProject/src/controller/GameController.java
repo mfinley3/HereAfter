@@ -485,8 +485,12 @@ public class GameController {
 			tempUnitList.clear();
 			currUnit = null;
 
+			System.out.println("Player 1 ends turn.");
+			
 			// Switch to AI
 			tempUnitList = player2.allAliveUnits();
+			if(tempUnitList.isEmpty())
+				endTurn();
 		} else {
 
 			// Remove all of the AI's units from the tempList
@@ -501,7 +505,12 @@ public class GameController {
 			// Switch to player, add one to turns
 			tempUnitList = player1.allAliveUnits();
 			turns++;
+			
+			System.out.println("Second Player (AI) ends its turn.");
+			
 			gameOver();
+			if(tempUnitList.isEmpty())
+				endTurn();
 		}
 	}
 
