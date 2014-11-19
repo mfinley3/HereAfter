@@ -1,6 +1,7 @@
 package units;
 
 import item.Item;
+import item.ItemType;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,7 @@ public abstract class Unit {
 		// Only non-AI characters can benefit from items
 		else {
 			for (Item item : itemList) {
-				if (item.isHealthItem()) {
+				if ((item.getItemType() == ItemType.HP)) {
 					hpMod++;
 					health = health * hpMod;
 					// Grabbing a health item will replenish your life
@@ -96,7 +97,7 @@ public abstract class Unit {
 		// Only non-AI characters can benefit from items
 		else {
 			for (Item item : itemList) {
-				if (item.isAtkItem()) {
+				if (item.getItemType() == ItemType.ATK) {
 					atkMod++;
 					attack *= atkMod;
 				}
@@ -123,7 +124,7 @@ public abstract class Unit {
 		// Only non-AI characters can benefit from items
 		else {
 			for (Item item : itemList) {
-				if (item.isAtkItem()) {
+				if ((item.getItemType() == ItemType.DEF)) {
 					defMod++;
 					defense *= defMod;
 				}

@@ -11,9 +11,10 @@ import item.ItemType;
 public class Engineer extends Unit {
 
 	public Engineer(double difficulty) {
-		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
-		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 50, 100, 5, 2, difficulty);
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
+		
+		// Defense is doubled at creation so Defense is actually 50
+		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 25, 100, 5, 2, difficulty);
 		
 	}
-	//2
 }
