@@ -1,5 +1,6 @@
 package controller;
 
+import gametype.CaptureTower;
 import gametype.GameTypeInterface;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import model.*;
 import units.*;
 
 /**
- * TODO Finish this
+ * TODO Add win conditions 
  * 
  * The controller for a game. Sends messages to map, Saves Data, Loads Data,
  * sets up players, calculate which map is needed, sends messages to the enemy
@@ -39,7 +40,6 @@ public class GameController {
 	private int endCol;
 	
 	private GameTypeInterface j;
-	
 	private Object winConditions;
 
 	/*
@@ -62,6 +62,9 @@ public class GameController {
 		this.player1 = player1;
 		this.player2 = new AI(i);
 		gameOver = playerWon = false;
+		
+		j = new CaptureTower();
+		winConditions = false;
 
 		Stack<Unit> temp = new Stack<Unit>();
 
@@ -471,5 +474,13 @@ public class GameController {
 
 	public boolean playerTurn() {
 		return playerTurn;
+	}
+	
+	/**
+	 * FINISH
+	 * @return
+	 */
+	public boolean checkWinConditions(){
+		return j.CheckWinCondition(winConditions);
 	}
 }

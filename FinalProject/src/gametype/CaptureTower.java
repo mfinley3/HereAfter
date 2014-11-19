@@ -9,10 +9,17 @@ package gametype;
  */
 public class CaptureTower implements GameTypeInterface{
 
+	private boolean temp;
+	
+	public CaptureTower(){
+		temp = false;
+	}
+	
 	@Override
 	public boolean CheckWinCondition(Object ob) {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO Finish
+		
+		return temp;
 	}
 
 	@Override
@@ -21,7 +28,7 @@ public class CaptureTower implements GameTypeInterface{
 		return "There is a tower far away on the other end of the map. \n"
 				+ "Get all of your units to it and surround it to take it. \n"
 				+ "Only one unit has to still be alive to finish the mission, \n"
-				+ "but it would be better if the whole unit survives."
+				+ "but it would be better if the whole team survives."
 				+ "Good luck.";
 	}
 	
