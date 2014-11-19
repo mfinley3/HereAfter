@@ -37,9 +37,12 @@ public class GameController {
 	private int currCol;
 	private int endRow;
 	private int endCol;
-	
+
 	private GameTypeInterface j;
 	private Object winConditions;
+
+	private int tempRow;
+	private int tempCol;
 
 	/*
 	 * Will work on being able to control each unit on the map. Things included
@@ -61,7 +64,7 @@ public class GameController {
 		this.player1 = player1;
 		this.player2 = new AI(i);
 		gameOver = playerWon = false;
-		
+
 		j = new CaptureTower();
 		winConditions = false;
 
@@ -97,7 +100,7 @@ public class GameController {
 			if (map.getUnitAt(row, col).canMove()) {
 				if (currUnit != null) {
 					setCanMove(currRow, currCol, false);
-				} 
+				}
 
 				currUnit = map.getUnitAt(row, col);
 				currRow = row;
@@ -107,15 +110,17 @@ public class GameController {
 						+ " at: (" + currRow + ", " + currCol + ")");
 				return true;
 			}
-			
-			else{
-				JOptionPane.showMessageDialog(null, "Selected player cannot move");
+
+			else {
+				JOptionPane.showMessageDialog(null,
+						"Selected player cannot move");
 				return false;
 			}
-		} 
-		
+		}
+
 		else {
-			JOptionPane.showMessageDialog(null, "Space is empty. Please select a new space.");
+			JOptionPane.showMessageDialog(null,
+					"Space is empty. Please select a new space.");
 			return false;
 		}
 	}
@@ -163,16 +168,18 @@ public class GameController {
 				+ endRow + ", " + endCol + ")");
 
 		if (currUnit != null) {
-			if (currUnit.canMove() && !map.isOccupied(endRow, endCol)&& map.getSpace(endRow, endCol).getCanMoveTo()) {
+			if (currUnit.canMove() && !map.isOccupied(endRow, endCol)
+					&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 				setCanMove(currRow, currCol, false);
 				map.moveUnit(currRow, currCol, endRow, endCol);
-				
+
 				// Set the new CurrRow and CurrCol, and check
 				currRow = endRow;
 				currCol = endCol;
 				gameOver();
-				
+
 				// Take the unit that can no longer move out of the tempUnitList
+				currUnit.setCanMove(false);
 				tempUnitList.remove(currUnit);
 				if (tempUnitList.isEmpty())
 					endTurn();
@@ -206,23 +213,142 @@ public class GameController {
 	 * @return
 	 */
 	public boolean attack() {
-		if (currUnit.canMove() && map.isOccupied(endRow, endCol)) {
-			map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
-			targetDead(endRow, endCol);
-			
-			gameOver();
-			// If no other unit can move, end the turn
-			currUnit.setCanMove(false);
-			tempUnitList.remove(currUnit);
-			if (tempUnitList.isEmpty())
-				endTurn();
-			return true;
+
+		if (currUnit != null && map.getUnitAt(currRow, currCol) != null) {
+			// if both exist, check if one can move
+			if (currUnit.canMove()) {
+				boolean canAttack = false;
+				if (map.getSpace(currRow, currCol).getCanMoveTo()) {
+					canAttack = true;
+					if (inAttackRange(currRow, currCol)) {
+						// If it's in range, just attack
+						actAttack();
+						return canAttack;
+					} else {
+						// Move closer
+						attackHelper(currUnit.getMovement(), currRow, currCol);
+						actAttack();
+						return canAttack;
+					}
+				} else {
+					canAttack = attackHelper(currUnit.getMovement(), currRow,
+							currCol);
+
+				}
+
+				map.getUnitAt(endRow, endCol)
+						.reduceHealth(currUnit.getAttack());
+			}
+
+			else
+				JOptionPane.showMessageDialog(null,
+						"The currently selected unit cannot move.");
 		} else
+			JOptionPane.showMessageDialog(null,
+					"Current unit or target are not available.");
+
+		return false;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * Move, and then check if the enemy is in range.
+	 * 
+	 * @return If the current unit is in range of the target after a move
+	 */
+	private boolean attackHelper(int movesLeft, int row, int col) {
+		if (movesLeft < 0)
+			return false;
+		else {
+
+			boolean toReturn = this.inAttackRange(row, col);
+
+			if (toReturn) {
+				map.moveUnit(currRow, currCol, col, row);
+				currCol = col;
+				currRow = row;
+				return true;
+			}
+
+			else {
+				if (row > 0 && endRow < row && !toReturn)
+					toReturn = attackHelper(
+							(movesLeft - 1 - map.getSpace(row - 1, col)
+									.getMoveHinderance()), row - 1, col);
+				if (row < map.getSpaces().length && endRow > row && !toReturn)
+					toReturn = attackHelper(
+							(movesLeft - 1 - map.getSpace(row + 1, col)
+									.getMoveHinderance()), row + 1, col);
+				if (col > 0 && endCol < col && !toReturn)
+					toReturn = attackHelper(
+							(movesLeft - 1 - map.getSpace(row, col - 1)
+									.getMoveHinderance()), row, col - 1);
+				if (col < map.getSpaces()[row].length && endCol > col
+						&& !toReturn)
+					toReturn = attackHelper(
+							(movesLeft - 1 - map.getSpace(row, col + 1)
+									.getMoveHinderance()), row, col + 1);
+			}
+
+			return toReturn;
+		}
+	}
+
+	/**
+	 * Simply check if the enemy is in range. Range is based on the four
+	 * cardinal directions.
+	 * 
+	 * @return If the current unit is in range of the target.
+	 */
+	private boolean inAttackRange(int row, int col) {
+		int temp = currUnit.getRange();
+
+		while (temp >= 0) {
+			// Try to see if the weapon will reach.
+			if (row < endRow) {
+				row++;
+				temp--;
+			} else if (row > endRow) {
+				row--;
+				temp--;
+			} else if (col < endCol) {
+				col++;
+				temp--;
+			} else if (col > endCol) {
+				col--;
+				temp--;
+			}
+			// Else, both are equal; return true.
+			else
+				return true;
+		}
+
+		// If the last move set them both equal, check if they are equal
+		if (col == endCol && row == endRow)
+			return true;
+		else
 			return false;
 	}
-	
-	
 
+	/**
+	 * Actually attack the target. Only called if the currUnit can attack the
+	 * targeted one.
+	 */
+	private void actAttack() {
+		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
+		targetDead(endRow, endCol);
+
+		gameOver();
+		// If no other unit can move, end the turn
+		currUnit.setCanMove(false);
+		tempUnitList.remove(currUnit);
+		if (tempUnitList.isEmpty())
+			endTurn();
+	}
+
+	
+	
 	/**
 	 * TODO Finish this method.
 	 */
@@ -358,15 +484,15 @@ public class GameController {
 				i.setCanMove(false);
 			tempUnitList.clear();
 			currUnit = null;
-			
+
 			// Switch to AI
 			tempUnitList = player2.allAliveUnits();
 		} else {
-			
+
 			// Remove all of the AI's units from the tempList
 			playerTurn = true;
-			
-			// 
+
+			//
 			for (Unit i : tempUnitList)
 				i.setCanMove(false);
 			tempUnitList.clear();
@@ -468,10 +594,11 @@ public class GameController {
 			else
 				player2.unitKilled(temp);
 
-			if(tempUnitList.contains(temp))
+			if (tempUnitList.contains(temp))
 				tempUnitList.remove(temp);
 			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType()+ " at (" + row +", "+ col + ") is dead!");
+			System.out.println("Unit " + temp.getUnitType() + " at (" + row
+					+ ", " + col + ") is dead!");
 			checkWinConditions();
 			gameOver();
 
@@ -491,21 +618,24 @@ public class GameController {
 	public boolean playerTurn() {
 		return playerTurn;
 	}
-	
+
 	/**
 	 * TODO FINISH
+	 * 
 	 * @return Depending on the game type, if the game has been won
 	 */
-	public boolean checkWinConditions(){
-		if(j instanceof gametype.CaptureTower){
-			// If it's a CaptureTower game, check to see if the current player unit
+	public boolean checkWinConditions() {
+		if (j instanceof gametype.CaptureTower) {
+			// If it's a CaptureTower game, check to see if the current player
+			// unit
 			// unit is on a tower space. If it is, the game has been won;
 			// return true. Else, return false.
-			if(map.getSpace(currRow, currCol) instanceof space.TowerSpace && player1.allAliveUnits().contains(map.getUnitAt(currRow, currCol)))
+			if (map.getSpace(currRow, currCol) instanceof space.TowerSpace
+					&& player1.allAliveUnits().contains(
+							map.getUnitAt(currRow, currCol)))
 				winConditions = true;
 			return j.CheckWinCondition(winConditions);
-		}
-		else
+		} else
 			return false;
 	}
 }

@@ -152,7 +152,6 @@ public class Map extends Observable {
 
 		unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
 		unitsOnMap[startCol][startRow] = null;
-		unitsOnMap[moveToCol][moveToRow].setCanMove(false);
 		map[startCol][startRow].setOccupied(false);
 		map[moveToCol][moveToRow].setOccupied(true);
 		setChanged();

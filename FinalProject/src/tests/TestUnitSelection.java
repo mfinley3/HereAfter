@@ -11,11 +11,11 @@ public class TestUnitSelection {
 	@Test
 	public void TestThings(){
 		Player p = new Player("EB");
-		p.addUnits(new Soldier());
-		p.addUnits(new Engineer());
-		p.addUnits(new Doctor());
-		p.addUnits(new Ranger());
-		p.addUnits(new Sniper());
+		p.addUnits(new Soldier(Difficulty.EASY.getValue()));
+		p.addUnits(new Engineer(Difficulty.EASY.getValue()));
+		p.addUnits(new Doctor(Difficulty.EASY.getValue()));
+		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
+		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 
 		GameController g = new GameController(p, Difficulty.EASY);
 		System.out.println(g.getMap().toString());
@@ -36,11 +36,11 @@ public class TestUnitSelection {
 	@Test
 	public void TestMovement(){
 		Player p = new Player("EB");
-		p.addUnits(new Soldier());
-		p.addUnits(new Engineer());
-		p.addUnits(new Doctor());
-		p.addUnits(new Ranger());
-		p.addUnits(new Sniper());
+		p.addUnits(new Soldier(Difficulty.EASY.getValue()));
+		p.addUnits(new Engineer(Difficulty.EASY.getValue()));
+		p.addUnits(new Doctor(Difficulty.EASY.getValue()));
+		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
+		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 		
 		GameController g = new GameController(p, Difficulty.EASY);
 		Unit u = g.getUnitOnMap(0, 0);
@@ -67,11 +67,11 @@ public class TestUnitSelection {
 	@Test
 	public void testEndTurnAndNewTurn(){
 		Player p = new Player("EB");
-		p.addUnits(new Soldier());
-		p.addUnits(new Engineer());
-		p.addUnits(new Doctor());
-		p.addUnits(new Ranger());
-		p.addUnits(new Sniper());
+		p.addUnits(new Soldier(Difficulty.EASY.getValue()));
+		p.addUnits(new Engineer(Difficulty.EASY.getValue()));
+		p.addUnits(new Doctor(Difficulty.EASY.getValue()));
+		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
+		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 		
 		GameController g = new GameController(p, Difficulty.EASY);
 		g.setCurrentUnit(0, 0);
@@ -80,14 +80,14 @@ public class TestUnitSelection {
 	@Test
 	public void testAttackAndHeal(){
 		// Test Attack
-		Unit i = new Soldier();
-		Unit b = new Soldier();
+		Unit i = new Soldier(Difficulty.EASY.getValue());
+		Unit b = new Soldier(Difficulty.EASY.getValue());
 		Player p = new Player("EB");
 		p.addUnits(b);
 		p.addUnits(i);
-		p.addUnits(new Doctor());
-		p.addUnits(new Ranger());
-		p.addUnits(new Sniper());
+		p.addUnits(new Doctor(Difficulty.EASY.getValue()));
+		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
+		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 		GameController g = new GameController(p ,Difficulty.EASY);
 		g.setCurrentUnit(1, 0);
 		g.setEndRow(1);
