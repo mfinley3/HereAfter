@@ -121,14 +121,12 @@ public class GraphicalView extends JPanel implements Observer {
 			column = clickY / 96;
 
 			if (firstClick) {
-
-				// if (map.isOccupied(row, column)) {
+				System.out.println("NESDF");
 				controller.setCurrentUnit(row, column);
 				firstClick = false;
 
-				// }
 			} else {
-				if (row > 0 && row < currentSpaces.length && column > 0
+				if (row >= 0 && row < currentSpaces.length && column >= 0
 						&& column < currentSpaces.length) {
 					controller.setEndRow(row);
 					controller.setEndColumn(column);
@@ -183,6 +181,7 @@ public class GraphicalView extends JPanel implements Observer {
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
 		repaint();
+		System.out.println("firstCLICK");
 		firstClick = true;
 	}
 

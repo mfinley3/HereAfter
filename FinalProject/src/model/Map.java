@@ -168,7 +168,10 @@ public class Map extends Observable {
 	 * @return Unit, Returns the 'full' Unit at requested spot.
 	 */
 	public Unit getUnitAt(int row, int col) {
-		return unitsOnMap[row][col];
+		System.out.println("this Happens " + row + ", " + col);
+		System.out.println(unitsOnMap[row][col]);
+		
+		return unitsOnMap[col][row];
 	}
 
 	/**
@@ -199,7 +202,7 @@ public class Map extends Observable {
 	 * @return true, If the space is occupied.
 	 */
 	public boolean isOccupied(int row, int column) {
-		if (map[row][column].getOccupied() == true) {
+		if (map[column][row].getOccupied() == true) {
 			return true;
 		}
 		return false;

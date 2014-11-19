@@ -133,7 +133,7 @@ public abstract class Unit {
 		}
 
 		String result = "Unit Type: " + getUnitType();
-		result += "Difficulty: " + d.getValue(); //Checking if I can use as a multiplier
+		//result += "Difficulty: " + d.getValue(); //Checking if I can use as a multiplier
 		result += "<br>Current Health: " + getHealth();
 		result += "<br>Current Attack Power: " + getAttack();
 		result += "<br>Current Defense Power: " + getDefense();

@@ -234,23 +234,23 @@ public class SetupPanel extends JPanel {
 					Player player = new Player(userName.getText());
 
 					while (docs != 0) {
-						player.addUnits((Unit) new Doctor(difficulty));
+						player.addUnits((Unit) new Doctor());
 						docs--;
 					}
 					while (solds != 0) {
-						player.addUnits((Unit) new Soldier(difficulty));
+						player.addUnits((Unit) new Soldier());
 						solds--;
 					}
 					while (engs != 0) {
-						player.addUnits((Unit) new Engineer(difficulty));
+						player.addUnits((Unit) new Engineer());
 						engs--;
 					}
 					while (rangs != 0) {
-						player.addUnits((Unit) new Ranger(difficulty));
+						player.addUnits((Unit) new Ranger());
 						rangs--;
 					}
 					while (snips != 0) {
-						player.addUnits((Unit) new Sniper(difficulty));
+						player.addUnits((Unit) new Sniper());
 						snips--;
 					}
 
