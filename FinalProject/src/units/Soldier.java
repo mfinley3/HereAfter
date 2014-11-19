@@ -11,7 +11,8 @@ import item.ItemType;
 public class Soldier extends Unit {
 	
 	public Soldier(double difficulty) {
-		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 40, 30, 100, 6 ,difficulty);
+		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
+		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 40, 30, 100, 6, difficulty);
 		
 	}
 

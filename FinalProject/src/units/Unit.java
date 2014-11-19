@@ -27,7 +27,7 @@ public abstract class Unit {
 	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, double difficulty) {
 		
 		this.unitType = unitType;
-		itemList.add(item);
+		itemList.add(item); // Adds each Unit's given item
 		this.attack = attack;
 		this.defense = defense;
 		this.health = health;
@@ -44,6 +44,11 @@ public abstract class Unit {
 		// Health level * health modifier
 		int hpMod = 1;
 
+		/*
+		 * If the unitType is an AI, items do not benefit it,
+		 * it only gets its stats changed depending upon the
+		 * chosen game difficulty.
+		 */
 		if (unitType.equals("Runner") || unitType.equals("Spitter")
 				|| unitType.equals("AlphaProtector")) {
 			hpMod *= difficulty;
@@ -75,6 +80,11 @@ public abstract class Unit {
 		// attack level * attack modifier
 		int atkMod = 1;
 
+		/*
+		 * If the unitType is an AI, items do not benefit it,
+		 * it only gets its stats changed depending upon the
+		 * chosen game difficulty.
+		 */
 		if (unitType.equals("Runner") || unitType.equals("Spitter")
 				|| unitType.equals("AlphaProtector")) {
 			atkMod *= difficulty;
@@ -97,6 +107,11 @@ public abstract class Unit {
 		// defense level * defense modifier
 		int defMod = 1;
 
+		/*
+		 * If the unitType is an AI, items do not benefit it,
+		 * it only gets its stats changed depending upon the
+		 * chosen game difficulty.
+		 */
 		if (unitType.equals("Runner") || unitType.equals("Spitter")
 				|| unitType.equals("AlphaProtector")) {
 			defMod *= difficulty;
