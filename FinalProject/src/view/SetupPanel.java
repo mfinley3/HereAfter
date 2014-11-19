@@ -192,15 +192,44 @@ public class SetupPanel extends JPanel {
 			// Once this is confirmed, then we want to create the actual map
 			try {
 				String temp = docNum.getText();
-				int docs = Integer.parseInt(temp);
+				int docs;
+				try{
+					docs = Integer.parseInt(temp);
+				} catch (Exception e) {
+					docs = 0;
+				}
+				
 				temp = soldNum.getText();
-				int solds = Integer.parseInt(temp);
+				int solds;
+				try{
+					solds = Integer.parseInt(temp);
+				} catch (Exception e) {
+					solds = 0;
+				}
+				
 				temp = engNum.getText();
-				int engs = Integer.parseInt(temp);
+				int engs;
+				try{
+					engs = Integer.parseInt(temp);
+				} catch (Exception e) {
+					engs = 0;
+				}
+				
 				temp = rangNum.getText();
-				int rangs = Integer.parseInt(temp);
+				int rangs;
+				try{
+					rangs = Integer.parseInt(temp);
+				} catch (Exception e) {
+					rangs = 0;
+				}
+				
 				temp = snipNum.getText();
-				int snips = Integer.parseInt(temp);
+				int snips;
+				try{
+					snips = Integer.parseInt(temp);
+				} catch (Exception e) {
+					snips = 0;
+				}
 
 				if (docs + solds + engs + rangs + snips == 5) {
 					Player player = new Player(userName.getText());
