@@ -16,4 +16,10 @@ public class Soldier extends Unit {
 		
 	}
 
+	@Override
+	public int getRange() {
+		// TODO Auto-generated method stub
+		return 4;
+	}
+
 }

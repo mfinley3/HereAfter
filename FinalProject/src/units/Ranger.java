@@ -15,4 +15,10 @@ public class Ranger extends Unit {
 		super("Ranger", new Item("Ranger Rifle", ItemType.ATK), 30, 45, 100, 7, difficulty);
 		
 	}
+
+	@Override
+	public int getRange() {
+		// TODO Auto-generated method stub
+		return 3;
+	}
 }

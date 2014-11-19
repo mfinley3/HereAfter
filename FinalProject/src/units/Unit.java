@@ -162,6 +162,8 @@ public abstract class Unit {
 
 		return result;
 	}
+	
+	public abstract int getRange();
 
 } // end of class Unit
 

@@ -11,4 +11,10 @@ public class SpitterAI extends Unit {
 	
 	}
 
+	@Override
+	public int getRange() {
+		// TODO Auto-generated method stub
+		return 3;
+	}
+
 }
