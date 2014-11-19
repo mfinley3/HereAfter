@@ -31,13 +31,13 @@ public class AI {
 	 */
 	private void generateTeam() {
 		// TODO Use the factory to make a team
-		this.addUnits(new SpitterAI());
-		this.addUnits(new SpitterAI());
-		this.addUnits(new SpitterAI());
-		this.addUnits(new SpitterAI());
-		this.addUnits(new SpitterAI());
-		this.addUnits(new SpitterAI());
-		this.addUnits(new SpitterAI());
+		this.addUnits(new SpitterAI(.5));
+		this.addUnits(new SpitterAI(.5));
+		this.addUnits(new SpitterAI(.5));
+		this.addUnits(new SpitterAI(.5));
+		this.addUnits(new SpitterAI(.5));
+		this.addUnits(new SpitterAI(.5));
+		this.addUnits(new SpitterAI(.5));
 	}
 
 	public String getTeamStats() {
