@@ -8,7 +8,7 @@ public class AIFactory {
 	 * @return A new AlphaProtector Unit with the given information
 	 */
 	public static Unit createAlphaProtector() {
-		return new AlphaProtectorAI(.5);
+		return new AlphaProtectorAI();
 	}
 
 	/**
@@ -17,7 +17,7 @@ public class AIFactory {
 	 * @return A new Runner Unit with the given information
 	 */
 	public static Unit createRunner() {
-		return new RunnerAI(.5);
+		return new RunnerAI();
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class AIFactory {
 	 * @return A new Spitter Unit with the given information
 	 */
 	public static Unit createSpitter() {
-		return new SpitterAI(.5);
+		return new SpitterAI();
 	}
 
 } // end of AIFactory

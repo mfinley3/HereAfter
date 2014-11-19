@@ -22,6 +22,7 @@ import space.Space;
 import units.Doctor;
 import units.Engineer;
 import units.Ranger;
+import units.RunnerAI;
 import units.Sniper;
 import units.Soldier;
 import units.Unit;
@@ -40,7 +41,7 @@ public class GraphicalView extends JPanel implements Observer {
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
 	private BufferedImage bridge, corner, mountain, path, tower, wall, waste,
-			water, doctor, engineer, ranger, sniper, soldier;
+			water, doctor, engineer, ranger, sniper, soldier, runner;
 
 	public GraphicalView() {
 		firstClick = true;
@@ -68,6 +69,7 @@ public class GraphicalView extends JPanel implements Observer {
 			water = ImageIO.read(new File("WaterSpace.jpg"));
 			
 			soldier = ImageIO.read(new File("soldier1.png"));
+			runner = ImageIO.read(new File("zombie.png"));
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -227,8 +229,9 @@ public class GraphicalView extends JPanel implements Observer {
 						g2.drawImage(sniper, x, y, null);
 					} else if(currentUnits[col][row] instanceof Soldier) {
 						g2.drawImage(soldier, x, y, null);
-					} 
-
+					} else if(currentUnits[col][row] instanceof RunnerAI) {
+						g2.drawImage(runner, x, y, null);
+					}
 					x += 96;
 
 				}

@@ -15,6 +15,7 @@ import space.TowerSpace;
 import space.WallSpace;
 import space.WastelandSpace;
 import space.WaterSpace;
+import units.RunnerAI;
 import units.Unit;
 
 // TODO: Auto-generated Javadoc
@@ -37,6 +38,7 @@ public class Map extends Observable {
 	public Map(double difficulty) {
 
 		map = new Space[50][50];
+		unitsOnMap= new Unit[50][50];
 
 		if (difficulty == .5) {
 			File easyMap = new File("Easy Map.txt");
@@ -102,9 +104,39 @@ public class Map extends Observable {
 				}
 			}
 		}
+		
+		addEnemies(difficulty);
 		System.out.println("DONE");
 		setChanged();
 		notifyObservers();
+		
+	}
+
+	//IMPORTANT DO NOT TOUCH - this method is only temporary and is only to only be used for the first iteration.
+	//I will be adding the enemies to the map via a file reader for the second iteration. Meaning this method will be deleted
+	//along with anything inside of it. So I would highly recommend not adding functionality to it because I will just be deleting it.
+	private void addEnemies(double difficulty) {
+	
+		//IMPORTANT READ ABOVE
+		unitsOnMap[40][38] = new RunnerAI(difficulty);
+		map[40][38].setOccupied(true);
+		
+		//IMPORTANT READ ABOVE
+		unitsOnMap[40][39] = new RunnerAI(difficulty);
+		map[40][39].setOccupied(true);
+		
+		//IMPORTANT READ ABOVE
+		unitsOnMap[40][40] = new RunnerAI(difficulty);
+		map[40][40].setOccupied(true);
+
+		//IMPORTANT READ ABOVE
+		unitsOnMap[41][38] = new RunnerAI(difficulty);
+		map[41][38].setOccupied(true);
+
+		//IMPORTANT READ ABOVE
+		unitsOnMap[42][38] = new RunnerAI(difficulty);
+		map[42][38].setOccupied(true);
+		
 		
 	}
 
@@ -114,8 +146,6 @@ public class Map extends Observable {
 	 * @param unitList The list of units to be added to the map.
 	 */
 	public void addUnitsToMap(Stack<Unit> unitList) {
-
-		unitsOnMap = new Unit[50][50];
 
 		int k = 0;
 		int r = 2;
