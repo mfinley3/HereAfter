@@ -17,20 +17,27 @@ public abstract class Unit {
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 	private boolean canMove;
 
-	private int totalHealth = 100;
-	private String unitType = "";
-	private Difficulty d;
+	private int attack;
+	private int defense;
+	private int movement;
+	private int health;
+	private String unitType;
+	private Double difficulty;
 
-	public Unit() {
-		canMove = false;
+	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, double difficulty) {
+		
+		this.unitType = unitType;
+		itemList.add(item);
+		this.attack = attack;
+		this.defense = defense;
+		this.health = health;
+		this.movement = movement;
+		this.difficulty = difficulty;
+		
 	}
 
 	public String getUnitType() {
 		return unitType;
-	}
-
-	public void setUnitType(String unitType) {
-		this.unitType = unitType;
 	}
 
 	public int getHealth() {
@@ -39,8 +46,8 @@ public abstract class Unit {
 
 		if (unitType.equals("Runner") || unitType.equals("Spitter")
 				|| unitType.equals("AlphaProtector")) {
-			hpMod *= (int) d.getValue();
-			totalHealth = 100 * hpMod;
+			hpMod *= difficulty;
+			health = health * hpMod;
 		}
 
 		// Only non-AI characters can benefit from items
@@ -48,31 +55,30 @@ public abstract class Unit {
 			for (Item item : itemList) {
 				if (item.isHealthItem()) {
 					hpMod++;
-					totalHealth = 100 * hpMod;
+					health = health * hpMod;
 					// Grabbing a health item will replenish your life
 				}
 			}
 		}
-		return totalHealth;
+		return health;
 	}
 
 	public void reduceHealth(int damage) {
 		if (damage - getDefense() <= 0) {
 			return;
 		} else {
-			totalHealth -= (damage - getDefense());
+			health -= (damage - defense);
 		}
 	}
 
 	public int getAttack() {
 		// attack level * attack modifier
 		int atkMod = 1;
-		int atkPower = 40;
 
 		if (unitType.equals("Runner") || unitType.equals("Spitter")
 				|| unitType.equals("AlphaProtector")) {
-			atkMod *= (int) d.getValue();
-			atkPower *= atkMod;
+			atkMod *= difficulty;
+			attack *= atkMod;
 		}
 
 		// Only non-AI characters can benefit from items
@@ -80,22 +86,21 @@ public abstract class Unit {
 			for (Item item : itemList) {
 				if (item.isAtkItem()) {
 					atkMod++;
-					atkPower *= atkMod;
+					attack *= atkMod;
 				}
 			}
 		}
-		return atkPower;
+		return attack;
 	}
 
 	public int getDefense() {
 		// defense level * defense modifier
 		int defMod = 1;
-		int defPower = 10;
 
 		if (unitType.equals("Runner") || unitType.equals("Spitter")
 				|| unitType.equals("AlphaProtector")) {
-			defMod *= (int) d.getValue();
-			defPower *= defMod;
+			defMod *= difficulty;
+			defense *= defMod;
 		}
 
 		// Only non-AI characters can benefit from items
@@ -103,14 +108,16 @@ public abstract class Unit {
 			for (Item item : itemList) {
 				if (item.isAtkItem()) {
 					defMod++;
-					defPower *= defMod;
+					defense *= defMod;
 				}
 			}
 		}
-		return defPower;
+		return defense;
 	}
 
-	public abstract int movesAvailable();
+	public int getMovement(){
+		return movement;
+	}
 
 	public boolean canMove() {
 		return canMove;
@@ -133,7 +140,6 @@ public abstract class Unit {
 		}
 
 		String result = "Unit Type: " + getUnitType();
-		//result += "Difficulty: " + d.getValue(); //Checking if I can use as a multiplier
 		result += "<br>Current Health: " + getHealth();
 		result += "<br>Current Attack Power: " + getAttack();
 		result += "<br>Current Defense Power: " + getDefense();
