@@ -7,8 +7,8 @@ public class AIFactory {
 	 * 
 	 * @return A new AlphaProtector Unit with the given information
 	 */
-	public static Unit createAlphaProtector() {
-		return new AlphaProtectorAI();
+	public static Unit createAlphaProtector(double difficulty) {
+		return new AlphaProtectorAI(difficulty);
 	}
 
 	/**
@@ -16,8 +16,8 @@ public class AIFactory {
 	 * 
 	 * @return A new Runner Unit with the given information
 	 */
-	public static Unit createRunner() {
-		return new RunnerAI();
+	public static Unit createRunner(double difficulty) {
+		return new RunnerAI(difficulty);
 	}
 
 	/**
@@ -25,8 +25,8 @@ public class AIFactory {
 	 * 
 	 * @return A new Spitter Unit with the given information
 	 */
-	public static Unit createSpitter() {
-		return new SpitterAI();
+	public static Unit createSpitter(double difficulty) {
+		return new SpitterAI(difficulty);
 	}
 
 } // end of AIFactory
