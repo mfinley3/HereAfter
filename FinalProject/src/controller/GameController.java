@@ -98,9 +98,7 @@ public class GameController {
 	public boolean setCurrentUnit(int row, int col) {
 		if (map.getUnitAt(row, col) != null) {
 			if (map.getUnitAt(row, col).canMove()) {
-				if (currUnit != null) {
-					setCanMove(currRow, currCol, false);
-				}
+				map.resetMapCanMove();
 
 				currUnit = map.getUnitAt(row, col);
 				currRow = row;
@@ -170,7 +168,7 @@ public class GameController {
 		if (currUnit != null) {
 			if (currUnit.canMove() && !map.isOccupied(endRow, endCol)
 					&& map.getSpace(endRow, endCol).getCanMoveTo()) {
-				setCanMove(currRow, currCol, false);
+				map.resetMapCanMove();
 				map.moveUnit(currRow, currCol, endRow, endCol);
 
 				// Set the new CurrRow and CurrCol, and check
@@ -276,7 +274,8 @@ public class GameController {
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row - 1, col)
 									.getMoveHinderance()), row - 1, col);
-				if (row < map.getSpaces().length && endRow > row && !toReturn)
+				if (row < map.getSpaces().length - 1 && endRow > row
+						&& !toReturn)
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row + 1, col)
 									.getMoveHinderance()), row + 1, col);
@@ -284,7 +283,7 @@ public class GameController {
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row, col - 1)
 									.getMoveHinderance()), row, col - 1);
-				if (col < map.getSpaces()[row].length && endCol > col
+				if (col < map.getSpaces()[row].length - 1 && endCol > col
 						&& !toReturn)
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row, col + 1)
@@ -347,8 +346,6 @@ public class GameController {
 			endTurn();
 	}
 
-	
-	
 	/**
 	 * TODO Finish this method.
 	 */
@@ -388,32 +385,36 @@ public class GameController {
 	 */
 
 	public boolean gameOver() {
-		if (checkWinConditions()) {
-			gameOver = true;
-			playerWon = true;
-			// Display some kind of message telling player 2 won
-			System.out.println("Player " + player1.getID() + " won!");
-			System.out.println("Number of turns taken: " + turns);
-			player1.gameFinished();
-			System.out.println("Games you finished: "
-					+ player1.getGamesFinished());
-			System.out.println("Your team stats: ");
-			System.out.println(player1.getTeamStats());
-			return true;
-		} else if (player1.everyonesDeadDave()) {
-			gameOver = true;
-			playerWon = false;
-			// Display some kind of message telling player 1 won
-			System.out.println("AI won! Better luck next time...");
-			System.out.println("Number of turns taken: " + turns);
-			player1.gameFinished();
-			System.out.println("Games you've finished: "
-					+ player1.getGamesFinished());
-			System.out.println("AI team stats: ");
-			System.out.println(player1.getTeamStats());
-			return true;
-		} else
-			return false;
+		if (!gameOver) {
+			if (checkWinConditions()) {
+				gameOver = true;
+				playerWon = true;
+				// Display some kind of message telling player 2 won
+				System.out.println("Player " + player1.getID() + " won!");
+				System.out.println("Number of turns taken: " + turns);
+				player1.gameFinished();
+				System.out.println("Games you finished: "
+						+ player1.getGamesFinished());
+				System.out.println("Your team stats: ");
+				System.out.println(player1.getTeamStats());
+				return true;
+			} else if (player1.everyonesDeadDave()) {
+				gameOver = true;
+				playerWon = false;
+				// Display some kind of message telling player 1 won
+				System.out.println("AI won! Better luck next time...");
+				System.out.println("Number of turns taken: " + turns);
+				player1.gameFinished();
+				System.out.println("Games you've finished: "
+						+ player1.getGamesFinished());
+				System.out.println("AI team stats: ");
+				System.out.println(player1.getTeamStats());
+				return true;
+			} else
+				return false;
+		}
+
+		return false;
 	}
 
 	/**
@@ -478,45 +479,48 @@ public class GameController {
 	 * 
 	 */
 	public void endTurn() {
-		if (playerTurn) {
-			// Remove all of the player's units from tempList
-			playerTurn = false;
-			for (Unit i : tempUnitList)
-				i.setCanMove(false);
-			tempUnitList.clear();
-			currUnit = null;
+		map.resetMapCanMove();
+		if (!gameOver) {
+			if (playerTurn) {
+				// Remove all of the player's units from tempList
+				playerTurn = false;
+				for (Unit i : tempUnitList)
+					i.setCanMove(false);
+				tempUnitList.clear();
+				currUnit = null;
 
-			System.out.println("Player 1 ends turn.");
-			
-			// Switch to AI
-			tempUnitList = player2.allAliveUnits();
-			for (Unit i : tempUnitList)
-				i.setCanMove(true);
-			
-			if(tempUnitList.isEmpty())
-				endTurn();
-		} else {
+				System.out.println("Player 1 ends turn.");
 
-			// Remove all of the AI's units from the tempList
-			playerTurn = true;
+				// Switch to AI
+				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
+				for (Unit i : tempUnitList)
+					i.setCanMove(true);
 
-			//
-			for (Unit i : tempUnitList)
-				i.setCanMove(false);
-			tempUnitList.clear();
-			currUnit = null;
+				if (tempUnitList.isEmpty())
+					endTurn();
+			} else {
 
-			// Switch to player, add one to turns
-			tempUnitList = player1.allAliveUnits();
-			for (Unit i : tempUnitList)
-				i.setCanMove(true);
-			turns++;
-			
-			System.out.println("Second Player (AI) ends its turn.");
-			
-			gameOver();
-			if(tempUnitList.isEmpty())
-				endTurn();
+				// Remove all of the AI's units from the tempList
+				playerTurn = true;
+
+				//
+				for (Unit i : tempUnitList)
+					i.setCanMove(false);
+				tempUnitList.clear();
+				currUnit = null;
+
+				// Switch to player, add one to turns
+				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
+				for (Unit i : tempUnitList)
+					i.setCanMove(true);
+				turns++;
+
+				System.out.println("Second Player (AI) ends its turn.");
+
+				gameOver();
+				if (tempUnitList.isEmpty())
+					endTurn();
+			}
 		}
 	}
 
@@ -555,38 +559,36 @@ public class GameController {
 	 */
 	private void setCanMove(int currRow, int currCol, boolean set) {
 		if (currRow > 0)
-			canMoveHelper(currUnit.getMovement(), currRow - 1, currCol, set);
-		if (currRow < map.getSpaces().length)
-			canMoveHelper(currUnit.getMovement(), currRow + 1, currCol, set);
+			canMoveHelper(currUnit.getMovement() - 1, currRow - 1, currCol);
+		if (currRow < 50)
+			canMoveHelper(currUnit.getMovement() - 1, currRow + 1, currCol);
 		if (currCol > 0)
-			canMoveHelper(currUnit.getMovement(), currRow, currCol - 1, set);
-		if (currCol < map.getSpaces()[currRow].length)
-			canMoveHelper(currUnit.getMovement(), currRow, currCol + 1, set);
+			canMoveHelper(currUnit.getMovement() - 1, currRow, currCol - 1);
+		if (currCol < 50)
+			canMoveHelper(currUnit.getMovement() - 1, currRow, currCol + 1);
 	}
 
 	/**
 	 * Helper method for setCanMove.
 	 * 
 	 * @param movesAvail
-	 * @param currRow
-	 * @param currCol
+	 * @param row
+	 * @param col
 	 */
-	private void canMoveHelper(int movesAvail, int currRow, int currCol,
-			boolean set) {
-		movesAvail = movesAvail
-				- map.getSpace(currRow, currCol).getMoveHinderance();
-		movesAvail = movesAvail - 1;
-		if (movesAvail >= 0) {
-			map.getSpace(currRow, currCol).setCanMoveTo(set);
-			if (currRow < map.getSpaces().length)
-				canMoveHelper(movesAvail, currRow + 1, currCol, set);
-			if (currRow > 0)
-				canMoveHelper(movesAvail, currRow - 1, currCol, set);
-			if (currCol < map.getSpaces()[currRow].length)
-				canMoveHelper(movesAvail, currRow, currCol + 1, set);
-			if (currCol > 0)
-				canMoveHelper(movesAvail, currRow, currCol - 1, set);
-
+	private void canMoveHelper(int movesAvail, int row, int col) {
+		movesAvail = movesAvail - map.getSpace(row, col).getMoveHinderance();
+		if (movesAvail < 0)
+			return;
+		else {
+			map.getSpace(row, col).setCanMoveTo(true);
+			if (row < map.getSpaces().length - 1)
+				canMoveHelper(movesAvail - 1, row + 1, col);
+			if (row > 0)
+				canMoveHelper(movesAvail - 1, row - 1, col);
+			if (col < map.getSpaces()[row].length - 1)
+				canMoveHelper(movesAvail - 1, row, col + 1);
+			if (col > 0)
+				canMoveHelper(movesAvail - 1, row, col - 1);
 		}
 	}
 

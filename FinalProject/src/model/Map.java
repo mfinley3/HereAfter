@@ -253,5 +253,12 @@ public class Map extends Observable {
 		// TODO Auto-generated method stub
 		return enemyList;
 	}
+	
+	public void resetMapCanMove(){
+		for(int i =0; i < map.length; i++)
+			for(int j =0; j < map[i].length; j++)
+				map[i][j].setCanMoveTo(false);
+			
+	}
 
 }
