@@ -214,7 +214,7 @@ public class GameController {
 	 */
 	public boolean attack() {
 
-		if (currUnit != null && map.getUnitAt(currRow, currCol) != null) {
+		if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 			// if both exist, check if one can move
 			if (currUnit.canMove()) {
 				boolean canAttack = false;
@@ -459,6 +459,7 @@ public class GameController {
 	public void unitDoNothing() {
 		currUnit.setCanMove(false);
 		tempUnitList.remove(currUnit);
+		System.out.println("Unit does nothing.");
 		if (tempUnitList.isEmpty())
 			endTurn();
 	}
@@ -489,6 +490,9 @@ public class GameController {
 			
 			// Switch to AI
 			tempUnitList = player2.allAliveUnits();
+			for (Unit i : tempUnitList)
+				i.setCanMove(true);
+			
 			if(tempUnitList.isEmpty())
 				endTurn();
 		} else {
@@ -504,6 +508,8 @@ public class GameController {
 
 			// Switch to player, add one to turns
 			tempUnitList = player1.allAliveUnits();
+			for (Unit i : tempUnitList)
+				i.setCanMove(true);
 			turns++;
 			
 			System.out.println("Second Player (AI) ends its turn.");
@@ -531,7 +537,7 @@ public class GameController {
 	}
 
 	public void setEndRow(int endRow) {
-		System.out.println("New endCol: " + endRow);
+		System.out.println("New endRow: " + endRow);
 		this.endRow = endRow;
 	}
 
