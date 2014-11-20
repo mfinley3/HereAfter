@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +39,9 @@ import java.awt.event.MouseMotionListener;
 
 public class SetupPanel extends JPanel {
 
-	private BufferedImage background, setUp1, setUp2;
+	private BufferedImage background, setUp1, setUp2, soldier;
+	private ImageIcon doctor, engineer, ranger,
+			sniper;
 	private JLabel title;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help;
@@ -60,6 +63,12 @@ public class SetupPanel extends JPanel {
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
 			setUp2 = ImageIO.read(new File(
 					"FinalStartScreenBackgroundDifficulty.png"));
+			doctor = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
+			engineer = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
+			ranger = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
+			sniper = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
+			soldier = ImageIO.read(new File("soldier1.jpg")); 
+
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -182,6 +191,7 @@ public class SetupPanel extends JPanel {
 		soldNum.setSize(25, 25);
 		soldNum.setLocation(380, 545);
 		this.add(soldNum);
+		
 
 	}
 
@@ -238,11 +248,13 @@ public class SetupPanel extends JPanel {
 						docs--;
 					}
 					while (solds != 0) {
-						player.addUnits((Unit) new Soldier(difficulty.getValue()));
+						player.addUnits((Unit) new Soldier(difficulty
+								.getValue()));
 						solds--;
 					}
 					while (engs != 0) {
-						player.addUnits((Unit) new Engineer(difficulty.getValue()));
+						player.addUnits((Unit) new Engineer(difficulty
+								.getValue()));
 						engs--;
 					}
 					while (rangs != 0) {
@@ -307,15 +319,16 @@ public class SetupPanel extends JPanel {
 		}
 
 	}
-	
+
 	private class helpButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			new Thread(new HelpWindow()).start();
-			
-			//JOptionPane.showMessageDialog(null, "Add instructions to this.  It is in SetupPanel");
+
+			// JOptionPane.showMessageDialog(null,
+			// "Add instructions to this.  It is in SetupPanel");
 		}
 
 	}
@@ -395,6 +408,7 @@ public class SetupPanel extends JPanel {
 			gr.drawImage(setUp1, 0, 0, null);
 		} else if (selectLevel) {
 			gr.drawImage(setUp2, 0, 0, null);
+			gr.drawImage(soldier, 380, 0, null);
 		}
 	}
 
