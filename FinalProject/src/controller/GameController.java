@@ -9,6 +9,7 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 import model.*;
+import space.Space;
 import units.*;
 
 /**
@@ -211,35 +212,41 @@ public class GameController {
 		if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 			// if both exist, check if one can move
 			if (currUnit.canMove()) {
-				boolean canAttack = false;
-				if (map.getSpace(currRow, currCol).getCanMoveTo()) {
-					canAttack = true;
-					if (inAttackRange(currRow, currCol)) {
-						// If it's in range, just attack
-						actAttack();
-						return canAttack;
-					} else {
-						// Move closer
-						attackHelper(currUnit.getMovement(), currRow, currCol);
-						actAttack();
-						return canAttack;
-					}
-				} else {
-					canAttack = attackHelper(currUnit.getMovement(), currRow,
-							currCol);
-
+				boolean canAttack = inAttackRange(endRow, endCol);
+				if (canAttack) {
+					actAttack();
+					return canAttack;
 				}
-
-				map.getUnitAt(endRow, endCol)
-						.reduceHealth(currUnit.getAttack());
+				
+				else{
+					canAttack = attackHelper(currUnit.getMovement()-1, currRow, currCol);
+					if(canAttack)
+						actAttack();
+					return canAttack;
+				}
 			}
 
-			else
-				JOptionPane.showMessageDialog(null,
-						"The currently selected unit cannot move.");
-		} else
-			JOptionPane.showMessageDialog(null,
-					"Current unit or target are not available.");
+		}
+		/*
+		 * if (currUnit != null && map.getUnitAt(endRow, endCol) != null) { //
+		 * if both exist, check if one can move if (currUnit.canMove()) {
+		 * boolean canAttack = false; if (map.getSpace(currRow,
+		 * currCol).getCanMoveTo()) { canAttack = true; if
+		 * (inAttackRange(currRow, currCol)) { // If it's in range, just attack
+		 * actAttack(); return canAttack; } else { // Move closer
+		 * attackHelper(currUnit.getMovement(), currRow, currCol); actAttack();
+		 * return canAttack; } } else { canAttack =
+		 * attackHelper(currUnit.getMovement(), currRow, currCol);
+		 * 
+		 * }
+		 * 
+		 * map.getUnitAt(endRow, endCol) .reduceHealth(currUnit.getAttack()); }
+		 * 
+		 * else JOptionPane.showMessageDialog(null,
+		 * "The currently selected unit cannot move."); } else
+		 * JOptionPane.showMessageDialog(null,
+		 * "Current unit or target are not available.");
+		 */
 
 		return false;
 	}
@@ -256,7 +263,7 @@ public class GameController {
 			return false;
 		else {
 
-			boolean toReturn = this.inAttackRange(row, col);
+			boolean toReturn = this.inAttackRange(endRow, endCol);
 
 			if (toReturn) {
 				map.moveUnit(currRow, currCol, col, row);
@@ -270,8 +277,7 @@ public class GameController {
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row - 1, col)
 									.getMoveHinderance()), row - 1, col);
-				if (row < map.getSpaces().length - 1 && endRow > row
-						&& !toReturn)
+				if (row < 49 && endRow > row && !toReturn)
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row + 1, col)
 									.getMoveHinderance()), row + 1, col);
@@ -279,8 +285,7 @@ public class GameController {
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row, col - 1)
 									.getMoveHinderance()), row, col - 1);
-				if (col < map.getSpaces()[row].length - 1 && endCol > col
-						&& !toReturn)
+				if (col < 49 && endCol > col && !toReturn)
 					toReturn = attackHelper(
 							(movesLeft - 1 - map.getSpace(row, col + 1)
 									.getMoveHinderance()), row, col + 1);
@@ -404,7 +409,7 @@ public class GameController {
 				System.out.println("Games you've finished: "
 						+ player1.getGamesFinished());
 				System.out.println("AI team stats: ");
-				System.out.println(player1.getTeamStats());
+				System.out.println(player2.getTeamStats());
 				return true;
 			} else
 				return false;
@@ -454,11 +459,16 @@ public class GameController {
 	 * currently selected unit.
 	 */
 	public void unitDoNothing() {
-		currUnit.setCanMove(false);
-		tempUnitList.remove(currUnit);
-		System.out.println("Unit does nothing.");
-		if (tempUnitList.isEmpty())
-			endTurn();
+		if (currUnit != null) {
+			currUnit.setCanMove(false);
+			tempUnitList.remove(currUnit);
+			System.out.println("Unit does nothing.");
+			if (tempUnitList.isEmpty())
+				endTurn();
+		}
+
+		else
+			JOptionPane.showMessageDialog(null, "Please select a unit.");
 	}
 
 	/**
@@ -553,15 +563,19 @@ public class GameController {
 	 * @param currRow
 	 * @param currCol
 	 */
-	private void setCanMove(int currRow, int currCol, boolean set) {
-		if (currRow > 0)
-			canMoveHelper(currUnit.getMovement() - 1, currRow - 1, currCol);
-		if (currRow < 50)
-			canMoveHelper(currUnit.getMovement() - 1, currRow + 1, currCol);
-		if (currCol > 0)
-			canMoveHelper(currUnit.getMovement() - 1, currRow, currCol - 1);
-		if (currCol < 50)
-			canMoveHelper(currUnit.getMovement() - 1, currRow, currCol + 1);
+	private void setCanMove(int row, int col, boolean set) {
+		if (row < 49)
+			canMoveHelper(currUnit.getMovement() - 1, row + 1, col,
+					MoveDirection.DOWN);
+		if (row > 0)
+			canMoveHelper(currUnit.getMovement() - 1, row - 1, col,
+					MoveDirection.UP);
+		if (col < 49)
+			canMoveHelper(currUnit.getMovement() - 1, row, col + 1,
+					MoveDirection.RIGHT);
+		if (col > 0)
+			canMoveHelper(currUnit.getMovement() - 1, row, col - 1,
+					MoveDirection.LEFT);
 	}
 
 	/**
@@ -571,20 +585,21 @@ public class GameController {
 	 * @param row
 	 * @param col
 	 */
-	private void canMoveHelper(int movesAvail, int row, int col) {
+	private void canMoveHelper(int movesAvail, int row, int col, MoveDirection m) {
+
 		movesAvail = movesAvail - map.getSpace(row, col).getMoveHinderance();
-		if (movesAvail < 0)
+		if (movesAvail < 0 || map.getSpace(row, col).getCanMoveTo()) {
 			return;
-		else {
+		} else {
 			map.getSpace(row, col).setCanMoveTo(true);
-			if (row < 50)
-				canMoveHelper(movesAvail - 1, row + 1, col);
-			if (row > 0)
-				canMoveHelper(movesAvail - 1, row - 1, col);
-			if (col < 50)
-				canMoveHelper(movesAvail - 1, row, col + 1);
-			if (col > 0)
-				canMoveHelper(movesAvail - 1, row, col - 1);
+			if (row < 49 && m != MoveDirection.UP)
+				canMoveHelper(movesAvail - 1, row + 1, col, m);
+			if (row > 0 && m != MoveDirection.DOWN)
+				canMoveHelper(movesAvail - 1, row - 1, col, m);
+			if (col < 49 && m != MoveDirection.LEFT)
+				canMoveHelper(movesAvail - 1, row, col + 1, m);
+			if (col > 0 && m != MoveDirection.RIGHT)
+				canMoveHelper(movesAvail - 1, row, col - 1, m);
 		}
 	}
 
@@ -598,6 +613,7 @@ public class GameController {
 	 */
 	private boolean targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
+		if(temp!=null){
 		if (!temp.isAlive()) {
 			// TODO Remove them from the map
 
@@ -612,12 +628,19 @@ public class GameController {
 			// Check to see if the game is over
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row
 					+ ", " + col + ") is dead!");
+			System.out.println("Numbers on both sides: " + player1.getAliveNum()+", " + player2.getAliveNum());
+			map.attacked(currRow,currCol, row, col);
 			checkWinConditions();
 			gameOver();
 
 			return true;
-		} else
+		}
+		
+		else{
+			map.attacked(currRow,currCol, row, col);
 			return false;
+		}}
+		else return false;
 	}
 
 	public boolean isGameOver() {
@@ -643,12 +666,16 @@ public class GameController {
 			// unit
 			// unit is on a tower space. If it is, the game has been won;
 			// return true. Else, return false.
-			if (map.getSpace(currRow, currCol) instanceof space.TowerSpace
+			if ((map.getSpace(currRow, currCol) instanceof space.TowerSpace
 					&& player1.allAliveUnits().contains(
-							map.getUnitAt(currRow, currCol)))
+							map.getUnitAt(currRow, currCol))) || player2.everyonesDeadDave())
 				winConditions = true;
 			return j.CheckWinCondition(winConditions);
 		} else
 			return false;
+	}
+
+	private enum MoveDirection {
+		UP, DOWN, LEFT, RIGHT;
 	}
 }

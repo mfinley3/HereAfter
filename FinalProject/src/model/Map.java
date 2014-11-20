@@ -260,8 +260,15 @@ public class Map extends Observable {
 				map[i][j].setCanMoveTo(false);
 			
 	}
-	
-	public void dead(){
+
+	public void attacked(int currRow, int currCol, int row, int col) {
+		// TODO Auto-generated method stub
+		if(unitsOnMap[row][col]!=null)
+		if(!unitsOnMap[row][col].isAlive()){
+			if(enemyList.contains(unitsOnMap[row][col]))
+				enemyList.remove(unitsOnMap[row][col]);
+			unitsOnMap[row][col] = null;
+		}
 		setChanged();
 		notifyObservers();
 	}

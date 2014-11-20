@@ -72,7 +72,7 @@ public abstract class Unit {
 	}
 
 	public void reduceHealth(int damage) {
-		if (damage - getDefense() <= 0) {
+		if (damage <= getDefense()) {
 			return;
 		} else {
 			health -= (damage - defense);
