@@ -71,4 +71,10 @@ public class AI {
 		livingUnits.remove(dead);
 		totalAILeft--;
 	}
+	
+	public void addListOfUnits(List<Unit> list){
+		totalAILeft = list.size();
+		allUnits = new LinkedList<Unit>(list);
+		livingUnits = new LinkedList<Unit>(list);
+	}
 }

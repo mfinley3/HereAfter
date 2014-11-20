@@ -260,5 +260,10 @@ public class Map extends Observable {
 				map[i][j].setCanMoveTo(false);
 			
 	}
+	
+	public void dead(){
+		setChanged();
+		notifyObservers();
+	}
 
 }

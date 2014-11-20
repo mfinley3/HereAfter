@@ -27,7 +27,6 @@ public class GameController {
 	private Map map;
 	private List<Unit> tempUnitList;
 	private Unit currUnit;
-	private Player currPlayer;
 	private int turns;
 	private boolean playerTurn;
 	private boolean gameOver;
@@ -40,9 +39,6 @@ public class GameController {
 
 	private GameTypeInterface j;
 	private Object winConditions;
-
-	private int tempRow;
-	private int tempCol;
 
 	/*
 	 * Will work on being able to control each unit on the map. Things included
@@ -78,9 +74,9 @@ public class GameController {
 
 		// Place the players on the map
 		map.addUnitsToMap(temp);
-		// Place the enemy on the map
+		// Place the enemy on the map / Get Enemy from map
+		player2.addListOfUnits(map.getEnemyUnits());
 
-		currPlayer = player1;
 		tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
 		for (Unit j : tempUnitList)
 			j.setCanMove(true);
@@ -581,11 +577,11 @@ public class GameController {
 			return;
 		else {
 			map.getSpace(row, col).setCanMoveTo(true);
-			if (row < map.getSpaces().length - 1)
+			if (row < 50)
 				canMoveHelper(movesAvail - 1, row + 1, col);
 			if (row > 0)
 				canMoveHelper(movesAvail - 1, row - 1, col);
-			if (col < map.getSpaces()[row].length - 1)
+			if (col < 50)
 				canMoveHelper(movesAvail - 1, row, col + 1);
 			if (col > 0)
 				canMoveHelper(movesAvail - 1, row, col - 1);
