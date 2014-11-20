@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
 import java.util.Stack;
@@ -29,6 +31,7 @@ public class Map extends Observable {
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
 	private Scanner scan;
+	private List<Unit> enemyList;
 
 	/**
 	 * Instantiates a new map.
@@ -117,25 +120,28 @@ public class Map extends Observable {
 	//along with anything inside of it. So I would highly recommend not adding functionality to it because I will just be deleting it.
 	private void addEnemies(double difficulty) {
 	
+		enemyList = new ArrayList<Unit>();
 		//IMPORTANT READ ABOVE
 		unitsOnMap[40][38] = new RunnerAI(difficulty);
 		map[40][38].setOccupied(true);
-		
+		enemyList.add(unitsOnMap[40][38]);
 		//IMPORTANT READ ABOVE
 		unitsOnMap[40][39] = new RunnerAI(difficulty);
 		map[40][39].setOccupied(true);
-		
+		enemyList.add(unitsOnMap[40][39]);
 		//IMPORTANT READ ABOVE
 		unitsOnMap[40][40] = new RunnerAI(difficulty);
 		map[40][40].setOccupied(true);
-
+		enemyList.add(unitsOnMap[40][40]);
 		//IMPORTANT READ ABOVE
 		unitsOnMap[41][38] = new RunnerAI(difficulty);
 		map[41][38].setOccupied(true);
-
+		enemyList.add(unitsOnMap[41][38]);
 		//IMPORTANT READ ABOVE
 		unitsOnMap[42][38] = new RunnerAI(difficulty);
 		map[42][38].setOccupied(true);
+		enemyList.add(unitsOnMap[42][38]);
+
 		
 		
 	}
@@ -241,6 +247,11 @@ public class Map extends Observable {
 	 */
 	public Space getSpace(int row, int column){
 		return map[row][column];
+	}
+
+	public List<Unit> getEnemyUnits() {
+		// TODO Auto-generated method stub
+		return enemyList;
 	}
 
 }
