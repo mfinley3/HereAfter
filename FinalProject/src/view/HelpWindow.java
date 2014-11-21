@@ -1,11 +1,9 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class HelpWindow extends JFrame implements Runnable {
@@ -52,7 +50,7 @@ public class HelpWindow extends JFrame implements Runnable {
 		item.setEditable(false);
 		item.setBackground(Color.WHITE);
 		item.setLineWrap(true);
-		item.setText("ITEM: Using Items is not yet supported. It is HIGHLY recommended you do not press this button as no one knows what may happen if you do. It could break the universe... (But it will likely just break the game");
+		item.setText("ITEM: Using Items is not yet supported. It is HIGHLY recommended you do not press this button as no one knows what may happen if you do. It could break the universe... (But it will likely just break the game)");
 		
 		wait = new JTextArea();
 		wait.setEditable(false);

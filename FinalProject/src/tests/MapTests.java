@@ -1,15 +1,14 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.FileNotFoundException;
 import java.util.Stack;
 
 import model.Map;
 
 import org.junit.Test;
 
-import space.CaptureCornerSpace;
 import space.Space;
 import units.Soldier;
 import units.Unit;

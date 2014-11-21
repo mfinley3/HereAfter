@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,10 +13,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
+import model.Map;
 import space.Space;
 import units.Doctor;
 import units.Engineer;
@@ -27,9 +25,6 @@ import units.Sniper;
 import units.Soldier;
 import units.Unit;
 import controller.GameController;
-import model.Difficulty;
-import model.Map;
-import model.Player;
 
 public class GraphicalView extends JPanel implements Observer {
 

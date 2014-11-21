@@ -2,18 +2,7 @@ package view;
 
 
 
-import javax.swing.JTabbedPane;
-
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import controller.GameController;
 
 /**
  * 

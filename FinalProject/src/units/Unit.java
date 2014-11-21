@@ -5,8 +5,6 @@ import item.ItemType;
 
 import java.util.ArrayList;
 
-import model.Difficulty;
-
 /**
  * 
  * @author Chioke
