@@ -163,7 +163,7 @@ public class GameController {
 				+ endRow + ", " + endCol + ")");
 
 		if (currUnit != null) {
-			if (currUnit.canMove() && !map.isOccupied(endRow, endCol)
+			if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol)==currUnit)
 					&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 				map.resetMapCanMove();
 				map.moveUnit(currRow, currCol, endRow, endCol);
@@ -460,11 +460,9 @@ public class GameController {
 	 */
 	public void unitDoNothing() {
 		if (currUnit != null) {
-			currUnit.setCanMove(false);
-			tempUnitList.remove(currUnit);
-			System.out.println("Unit does nothing.");
-			if (tempUnitList.isEmpty())
-				endTurn();
+			endCol = currCol;
+			endRow = currRow;
+			move();
 		}
 
 		else
@@ -564,6 +562,7 @@ public class GameController {
 	 * @param currCol
 	 */
 	private void setCanMove(int row, int col, boolean set) {
+		map.getSpace(currRow, currCol).setCanMoveTo(true);
 		if (row < 49)
 			canMoveHelper(currUnit.getMovement() - 1, row + 1, col,
 					MoveDirection.DOWN);
