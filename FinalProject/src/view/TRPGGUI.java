@@ -1,14 +1,18 @@
 package view;
 
 
+
 import javax.swing.JTabbedPane;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import controller.GameController;
 
 /**
@@ -27,20 +31,25 @@ public class TRPGGUI extends JFrame {
 	
 
 	public static void main(String[] args) {
-		new TRPGGUI().setVisible(true);
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	new TRPGGUI();
+            }
+        });
 	}
 
 	public TRPGGUI() {	
-		this.setSize(995, 660);
-		this.setVisible(true);
-		this.setLocation(100, 0);
+		
+		this.setSize(998, 660);
+		this.setLocation(100, 10);
 		
 		setTitle("HereAfter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
 		this.add(new SetupPanel());
-	}
+		this.setVisible(true);
 	
+	}
 
 }

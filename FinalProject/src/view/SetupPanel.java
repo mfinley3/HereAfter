@@ -39,9 +39,9 @@ import java.awt.event.MouseMotionListener;
 
 public class SetupPanel extends JPanel {
 
+	
 	private BufferedImage background, setUp1, setUp2, soldier;
-	private ImageIcon doctor, engineer, ranger,
-			sniper;
+	private ImageIcon doctor, engineer, ranger,sniper;
 	private JLabel title;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help;
@@ -61,8 +61,7 @@ public class SetupPanel extends JPanel {
 		try {
 			background = ImageIO.read(new File("unitSelect.jpg"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
-			setUp2 = ImageIO.read(new File(
-					"FinalStartScreenBackgroundDifficulty.png"));
+			setUp2 = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
 			doctor = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
 			engineer = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
 			ranger = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
@@ -266,12 +265,14 @@ public class SetupPanel extends JPanel {
 						snips--;
 					}
 
+					
 					controller = new GameController(player, difficulty);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
 					controller.getMap().addObserver((Observer) text);
 					((TextView) text).setController(controller);
 					actualMap();
+					
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"The number of units must add up to 5");
@@ -280,7 +281,7 @@ public class SetupPanel extends JPanel {
 				JOptionPane.showMessageDialog(null, userName.getText()
 						+ " did not enter a valid input");
 			}
-
+			
 		}
 	}
 
