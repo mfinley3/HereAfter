@@ -120,14 +120,23 @@ public class GraphicalView extends JPanel implements Observer {
 			if (firstClick) {
 				System.out.println("NESDF");
 				controller.setCurrentUnit(row, column);
-				firstClick = false;
-
+				if(controller.getCurrentUnit()!=null){
+					if(controller.getCurrentUnit().canMove())
+						firstClick = false;
+					else
+						System.out.println("Unit can't move; select a new one.");
+				}
+				else
+					System.out.println("No unit to select; please select a new unit.");
+				
 			} else {
 				if (row >= 0 && row < currentSpaces.length && column >= 0
 						&& column < currentSpaces.length) {
 					controller.setEndRow(row);
 					controller.setEndColumn(column);
 				}
+				
+				firstClick = false;
 			}
 		}
 
@@ -234,5 +243,4 @@ public class GraphicalView extends JPanel implements Observer {
 			}
 		}
 	}
-
 }

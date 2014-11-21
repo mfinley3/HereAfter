@@ -107,15 +107,11 @@ public class GameController {
 			}
 
 			else {
-				JOptionPane.showMessageDialog(null,
-						"Selected player cannot move");
 				return false;
 			}
 		}
 
 		else {
-			JOptionPane.showMessageDialog(null,
-					"Space is empty. Please select a new space.");
 			return false;
 		}
 	}

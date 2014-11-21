@@ -180,7 +180,7 @@ public class Map extends Observable {
 	 * @param moveToCol the move to col used to pick the space to move the unit to.
 	 */
 	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
-		if(startCol != moveToCol && startRow != moveToRow){
+		if(startCol != moveToCol || startRow != moveToRow){
 		    unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
 			unitsOnMap[startCol][startRow] = null;
 			map[startCol][startRow].setOccupied(false);
