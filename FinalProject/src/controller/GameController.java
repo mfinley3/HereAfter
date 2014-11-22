@@ -37,6 +37,7 @@ public class GameController {
 	private int currCol;
 	private int endRow;
 	private int endCol;
+	private Player currPlayer;
 
 	private GameTypeInterface j;
 	private Object winConditions;
@@ -83,6 +84,14 @@ public class GameController {
 			j.setCanMove(true);
 		turns = 0;
 		playerTurn = true;
+		currPlayer=player1;
+	}
+	
+	public String getCurrPlayerName(){
+		if (playerTurn)
+			return player1.getID();
+		else
+			return "AI Enemy ";
 	}
 
 	/**
