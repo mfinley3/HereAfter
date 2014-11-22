@@ -29,14 +29,14 @@ import controller.GameController;
 public class GraphicalView extends JPanel implements Observer {
 
 	private int clickX, clickY, row, column;
-	private String userName;
 	private GameController controller;
 	private boolean firstClick;
 	private Map map;
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
 	private BufferedImage bridge, corner, mountain, path, tower, wall, waste,
-			water, doctor, engineer, ranger, sniper, soldier, runner;
+			water, doctor, engineer, ranger, sniper, soldier, runner,
+			docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove;
 
 	public GraphicalView() {
 		firstClick = true;
@@ -68,6 +68,12 @@ public class GraphicalView extends JPanel implements Observer {
 			ranger = ImageIO.read(new File("Ranger1.png"));
 			sniper = ImageIO.read(new File("sniper1.PNG"));
 			soldier = ImageIO.read(new File("soldier1.png"));
+			
+			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
+			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
+			rangCantMove = ImageIO.read(new File("Socut1CantMove.png"));
+			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
+			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -229,17 +235,35 @@ public class GraphicalView extends JPanel implements Observer {
 					}
 					
 					if(currentUnits[col][row] instanceof Doctor) {
-						g2.drawImage(doctor, x, y, null);
+						if(currentUnits[col][row].canMove())
+							g2.drawImage(doctor, x, y, null);
+						else
+							g2.drawImage(docCantMove, x, y, null);
 					} else if(currentUnits[col][row] instanceof Engineer) {
-						g2.drawImage(engineer, x, y, null);
+						if(currentUnits[col][row].canMove())
+							g2.drawImage(engineer, x, y, null);
+						else
+							g2.drawImage(engCantMove, x, y, null);
 					} else if(currentUnits[col][row] instanceof Ranger) {
-						g2.drawImage(ranger, x, y, null);
+						if(currentUnits[col][row].canMove())
+							g2.drawImage(ranger, x, y, null);
+						else
+							g2.drawImage(rangCantMove, x, y, null);
 					} else if(currentUnits[col][row] instanceof Sniper) {
-						g2.drawImage(sniper, x, y, null);
+						if(currentUnits[col][row].canMove())
+							g2.drawImage(sniper, x, y, null);
+						else
+							g2.drawImage(snipCantMove, x, y, null);
 					} else if(currentUnits[col][row] instanceof Soldier) {
-						g2.drawImage(soldier, x, y, null);
+						if(currentUnits[col][row].canMove())
+							g2.drawImage(soldier, x, y, null);
+						else
+							g2.drawImage(soldCantMove, x, y, null);
 					} else if(currentUnits[col][row] instanceof RunnerAI) {
-						g2.drawImage(runner, x, y, null);
+						if(currentUnits[col][row].canMove())
+							g2.drawImage(runner, x, y, null);
+						else
+							g2.drawImage(runnerCantMove, x, y, null);
 					}
 					x += 96;
 

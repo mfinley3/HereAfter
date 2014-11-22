@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
@@ -37,11 +38,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class SetupPanel extends JPanel {
+public class SetupPanel extends JPanel implements Observer{
 
 	private BufferedImage background, setUp1, setUp2, soldier, doctor,
 			engineer, ranger, sniper;
-	private JLabel title;
+	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn;
 	private boolean selectLevel, startUp1, selectUnits, selected;
@@ -166,7 +167,7 @@ public class SetupPanel extends JPanel {
 		rangNum.setLocation(470, 375);
 		this.add(rangNum);
 
-		JLabel snip = new JLabel("Snipper");
+		JLabel snip = new JLabel("Sniper");
 		snip.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		snip.setForeground(Color.WHITE);
 		snip.setSize(100, 25);
@@ -384,17 +385,26 @@ public class SetupPanel extends JPanel {
 
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
-		JPanel temp2 = new JPanel();
-		temp2.setOpaque(false);
+		
 
-		buttons.add(temp);
+		JLabel currentUser = new JLabel("Current User:");
+		currentUser.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		currentUser.setForeground(Color.WHITE);
+		
+		currentUserName = new JLabel(userName.getText());
+		currentUserName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		currentUserName.setForeground(Color.WHITE);
+
+
+		buttons.add(currentUser);
+		buttons.add(currentUserName);
 		buttons.add(help);
 		buttons.add(move);
 		buttons.add(attack);
 		buttons.add(item);
 		buttons.add(wait);
 		buttons.add(endTurn);
-		buttons.add(temp2);
+		
 
 		this.add(buttons, BorderLayout.WEST);
 
@@ -529,6 +539,13 @@ public class SetupPanel extends JPanel {
 
 		}
 
+	}
+
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		//currentUserName.setText(controller.getCurrentPlayer());
 	}
 
 }
