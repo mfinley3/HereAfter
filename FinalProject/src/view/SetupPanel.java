@@ -39,13 +39,12 @@ import java.awt.event.MouseMotionListener;
 
 public class SetupPanel extends JPanel {
 
-	
-	private BufferedImage background, setUp1, setUp2, soldier;
-	private ImageIcon doctor, engineer, ranger,sniper;
+	private BufferedImage background, setUp1, setUp2, soldier, doctor,
+			engineer, ranger, sniper;
 	private JLabel title;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn;
-	private boolean selectLevel, startUp1, selectUnits;
+	private boolean selectLevel, startUp1, selectUnits, selected;
 	private GameController controller;
 	private Difficulty difficulty;
 
@@ -61,12 +60,13 @@ public class SetupPanel extends JPanel {
 		try {
 			background = ImageIO.read(new File("unitSelect.jpg"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
-			setUp2 = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
-			doctor = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
-			engineer = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
-			ranger = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
-			sniper = new ImageIcon(ImageIO.read(new File("unitSelect.jpg"))); 
-			soldier = ImageIO.read(new File("soldier1.jpg")); 
+			setUp2 = ImageIO.read(new File(
+					"FinalStartScreenBackgroundDifficulty.png"));
+			doctor = ImageIO.read(new File("Doctor1.png"));
+			engineer = ImageIO.read(new File("Engineer1.png"));
+			ranger = ImageIO.read(new File("Ranger1.png"));
+			sniper = ImageIO.read(new File("sniper1.PNG"));
+			soldier = ImageIO.read(new File("soldier1.png"));
 
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
@@ -75,6 +75,7 @@ public class SetupPanel extends JPanel {
 		startUp1 = true;
 		selectLevel = false;
 		selectUnits = false;
+		selected = true;
 
 		registerListeners();
 
@@ -139,18 +140,18 @@ public class SetupPanel extends JPanel {
 		docNum.setLocation(70, 375);
 		this.add(docNum);
 
-		JLabel eng = new JLabel("Engineer");
-		eng.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		eng.setForeground(Color.WHITE);
-		eng.setSize(100, 25);
-		eng.setLocation(250, 250);
-		this.add(eng);
+		JLabel sold = new JLabel("Soldier");
+		sold.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		sold.setForeground(Color.WHITE);
+		sold.setSize(100, 25);
+		sold.setLocation(250, 250);
+		this.add(sold);
 
-		engNum = new JTextArea();
-		engNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		engNum.setSize(25, 25);
-		engNum.setLocation(270, 375);
-		this.add(engNum);
+		soldNum = new JTextArea();
+		soldNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		soldNum.setSize(25, 25);
+		soldNum.setLocation(270, 375);
+		this.add(soldNum);
 
 		JLabel rang = new JLabel("Ranger");
 		rang.setFont(new Font(Font.SERIF, Font.BOLD, 25));
@@ -178,19 +179,18 @@ public class SetupPanel extends JPanel {
 		snipNum.setLocation(160, 545);
 		this.add(snipNum);
 
-		JLabel sold = new JLabel("Soldier");
-		sold.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		sold.setForeground(Color.WHITE);
-		sold.setSize(100, 25);
-		sold.setLocation(350, 420);
-		this.add(sold);
+		JLabel eng = new JLabel("Engineer");
+		eng.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		eng.setForeground(Color.WHITE);
+		eng.setSize(100, 25);
+		eng.setLocation(350, 420);
+		this.add(eng);
 
-		soldNum = new JTextArea();
-		soldNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		soldNum.setSize(25, 25);
-		soldNum.setLocation(380, 545);
-		this.add(soldNum);
-		
+		engNum = new JTextArea();
+		engNum.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+		engNum.setSize(25, 25);
+		engNum.setLocation(380, 545);
+		this.add(engNum);
 
 	}
 
@@ -199,6 +199,7 @@ public class SetupPanel extends JPanel {
 			// Check that the number of all units adds to 5. if they dont, show
 			// an error message
 			// Once this is confirmed, then we want to create the actual map
+
 			try {
 				String temp = docNum.getText();
 				int docs;
@@ -265,14 +266,14 @@ public class SetupPanel extends JPanel {
 						snips--;
 					}
 
-					
 					controller = new GameController(player, difficulty);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
 					controller.getMap().addObserver((Observer) text);
 					((TextView) text).setController(controller);
+					selected = false;
 					actualMap();
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"The number of units must add up to 5");
@@ -281,7 +282,7 @@ public class SetupPanel extends JPanel {
 				JOptionPane.showMessageDialog(null, userName.getText()
 						+ " did not enter a valid input");
 			}
-			
+
 		}
 	}
 
@@ -307,7 +308,7 @@ public class SetupPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//controller.useItem();
+			// controller.useItem();
 		}
 
 	}
@@ -333,7 +334,7 @@ public class SetupPanel extends JPanel {
 		}
 
 	}
-	
+
 	private class endTurnButtonListener implements ActionListener {
 
 		@Override
@@ -414,11 +415,18 @@ public class SetupPanel extends JPanel {
 		Graphics2D gr = (Graphics2D) g;
 		if (selectUnits) {
 			gr.drawImage(background, 0, 0, null);
+			if (selected) {
+				gr.drawImage(doctor, 35, 260, null);
+				gr.drawImage(engineer, 340, 435, null);
+				gr.drawImage(ranger, 430, 260, null);
+				gr.drawImage(sniper, 125, 435, null);
+				gr.drawImage(soldier, 235, 260, null);
+			}
+
 		} else if (startUp1) {
 			gr.drawImage(setUp1, 0, 0, null);
 		} else if (selectLevel) {
 			gr.drawImage(setUp2, 0, 0, null);
-			gr.drawImage(soldier, 380, 0, null);
 		}
 	}
 
