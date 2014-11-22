@@ -219,9 +219,14 @@ public class GameController {
 		if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 			// if both exist, check if one can move
 			if (inAttackRange(endRow, endCol)) {
-				
 				actAttack();
+				// gameOver();
+				// If no other unit can move, end the turn
+				currUnit.setCanMove(false);
 				tempUnitList.remove(currUnit);
+				currUnit = null;
+				if (tempUnitList.isEmpty())
+					endTurn();
 			}
 				
 			else{
@@ -315,13 +320,6 @@ public class GameController {
 		System.out.println(map.getUnitAt(endRow, endCol).getHealth());
 		
 		targetDead(endRow, endCol);
-
-		// gameOver();
-		// If no other unit can move, end the turn
-		currUnit.setCanMove(false);
-		tempUnitList.remove(currUnit);
-		if (tempUnitList.isEmpty())
-			endTurn();
 	}
 
 	/**
