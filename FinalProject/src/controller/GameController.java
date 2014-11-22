@@ -210,6 +210,7 @@ public class GameController {
 		if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 			// if both exist, check if one can move
 			if (inAttackRange(endRow, endCol)) {
+				
 				actAttack();
 			}
 				

@@ -10,7 +10,7 @@ package model;
  */
 
 public enum Difficulty {
-	EASY(.5), MEDIUM(1.0), HARD(2.0);
+	EASY(1.0), MEDIUM(2.0), HARD(3.0);
 	
 	private double d;
 	

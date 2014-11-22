@@ -43,7 +43,7 @@ public class Map extends Observable {
 		map = new Space[50][50];
 		unitsOnMap= new Unit[50][50];
 
-		if (difficulty == .5) {
+		if (difficulty == 1) {
 			File easyMap = new File("Easy Map.txt");
 			try {
 				scan = new Scanner(easyMap);
@@ -53,7 +53,7 @@ public class Map extends Observable {
 			}
 
 		}
-		if (difficulty == 1) {
+		if (difficulty == 2) {
 			File mediumMap = new File("Medium Map.txt");
 			try {
 				scan = new Scanner(mediumMap);
@@ -63,7 +63,7 @@ public class Map extends Observable {
 			}
 
 		}
-		if (difficulty == 2) {
+		if (difficulty == 3) {
 			File hardMap = new File("Hard Map.txt");
 			try {
 				scan = new Scanner(hardMap);
@@ -199,9 +199,7 @@ public class Map extends Observable {
 	 * @return Unit, Returns the 'full' Unit at requested spot.
 	 */
 	public Unit getUnitAt(int row, int col) {
-		System.out.println("this Happens " + row + ", " + col);
-		System.out.println(unitsOnMap[row][col]);
-		
+	
 		return unitsOnMap[col][row];
 	}
 
