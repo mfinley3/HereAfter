@@ -2,6 +2,7 @@ package view;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Observable;
 import java.util.Observer;
@@ -20,10 +21,18 @@ public class TextView extends JPanel implements Observer{
 	  
 	  //setting up the layout of the text view
 	  public TextView() {
+			this.setLayout(null);
+
+			Dimension maxSize = new Dimension(4800, 4800);
+			this.setPreferredSize(maxSize);
+			this.setVisible(true);
+		  
+		  
 		  
 		  mapText = new JLabel("");
 		  mapText.setBackground(Color.WHITE);
 		  mapText.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+		  mapText.setLocation(0,0);
 		  add(mapText);
 		  
 	  }

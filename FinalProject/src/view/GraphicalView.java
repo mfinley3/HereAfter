@@ -68,6 +68,7 @@ public class GraphicalView extends JPanel implements Observer {
 			ranger = ImageIO.read(new File("Ranger1.png"));
 			sniper = ImageIO.read(new File("sniper1.PNG"));
 			soldier = ImageIO.read(new File("soldier1.png"));
+			runner = ImageIO.read(new File("Zombie.png"));
 			
 			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
 			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
@@ -263,7 +264,7 @@ public class GraphicalView extends JPanel implements Observer {
 						if(currentUnits[col][row].canMove())
 							g2.drawImage(runner, x, y, null);
 						else
-							g2.drawImage(runnerCantMove, x, y, null);
+							g2.drawImage(runner, x, y, null);
 					}
 					x += 96;
 

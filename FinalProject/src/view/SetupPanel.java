@@ -363,7 +363,11 @@ public class SetupPanel extends JPanel implements Observer{
 		scrollPanel.setSize(862, 542);
 		views.add(scrollPanel, "Graphical");
 
-		views.add(text, "Text");
+		JScrollPane scrollPanel1 = new JScrollPane(text);
+		scrollPanel.setSize(862, 542);
+		views.add(scrollPanel1, "Text");
+		
+		
 		this.add(views, BorderLayout.CENTER);
 
 		JPanel buttons = new JPanel();
