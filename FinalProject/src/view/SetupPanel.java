@@ -44,7 +44,7 @@ public class SetupPanel extends JPanel {
 	private ImageIcon doctor, engineer, ranger,sniper;
 	private JLabel title;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
-	private JButton select, wait, item, attack, move, help;
+	private JButton select, wait, item, attack, move, help, endTurn;
 	private boolean selectLevel, startUp1, selectUnits;
 	private GameController controller;
 	private Difficulty difficulty;
@@ -307,7 +307,7 @@ public class SetupPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			controller.useItem();
+			//controller.useItem();
 		}
 
 	}
@@ -330,6 +330,15 @@ public class SetupPanel extends JPanel {
 
 			// JOptionPane.showMessageDialog(null,
 			// "Add instructions to this.  It is in SetupPanel");
+		}
+
+	}
+	
+	private class endTurnButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.endTurn();
 		}
 
 	}
@@ -369,11 +378,11 @@ public class SetupPanel extends JPanel {
 		wait.addActionListener(new waitButtonListener());
 		help = new JButton("How to play");
 		help.addActionListener(new helpButtonListener());
+		endTurn = new JButton("End Turn");
+		endTurn.addActionListener(new endTurnButtonListener());
 
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
-		JPanel temp1 = new JPanel();
-		temp1.setOpaque(false);
 		JPanel temp2 = new JPanel();
 		temp2.setOpaque(false);
 
@@ -383,7 +392,7 @@ public class SetupPanel extends JPanel {
 		buttons.add(attack);
 		buttons.add(item);
 		buttons.add(wait);
-		buttons.add(temp1);
+		buttons.add(endTurn);
 		buttons.add(temp2);
 
 		this.add(buttons, BorderLayout.WEST);
