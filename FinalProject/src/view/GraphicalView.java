@@ -63,8 +63,11 @@ public class GraphicalView extends JPanel implements Observer {
 			wall = ImageIO.read(new File("WallSpace.jpg"));
 			water = ImageIO.read(new File("WaterSpace.jpg"));
 			
+			doctor = ImageIO.read(new File("Doctor1.png"));
+			engineer = ImageIO.read(new File("Engineer1.png"));
+			ranger = ImageIO.read(new File("Ranger1.png"));
+			sniper = ImageIO.read(new File("sniper1.PNG"));
 			soldier = ImageIO.read(new File("soldier1.png"));
-			runner = ImageIO.read(new File("zombie.png"));
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
