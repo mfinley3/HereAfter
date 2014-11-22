@@ -28,6 +28,8 @@ public class HelpWindow extends JFrame implements Runnable {
 	/** The wait. */
 	private JTextArea wait;
 	
+	private JTextArea endTurn;
+	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -46,7 +48,7 @@ public class HelpWindow extends JFrame implements Runnable {
 		this.setVisible(true);
 		this.setLocation(1105, 0);
 		this.setTitle("HereAfter: Help Screen");	
-		this.setLayout(new GridLayout(5,1));
+		this.setLayout(new GridLayout(6,1));
 		
 		goals = new JTextArea();
 		goals.setEditable(false);
@@ -62,9 +64,9 @@ public class HelpWindow extends JFrame implements Runnable {
 		movement.setEditable(false);
 		movement.setBackground(Color.WHITE);
 		movement.setText("MOVEMENT: First select the unit you wish to move, then select the\n"
-					   + "     space in which you'd like the that unit to move to. Once you\n"
-					   + "     have done that, click the 'Move' button on the left-hand side\n"
-					   + "     of the screen.");
+					   + "     space in which you'd like that unit to move to. Once you have\n"
+					   + "     done that, click the 'Move' button on the left-hand side of\n"
+					   + "     the screen.");
 		
 		attacks = new JTextArea();
 		attacks.setEditable(false);
@@ -87,11 +89,18 @@ public class HelpWindow extends JFrame implements Runnable {
 				   + "     current Unit to remain where they are, by clicking the Unit\n"
 				   + "     you'd like to 'Wait', then clicking the 'Wait' button."); 
 		
+		endTurn = new JTextArea();
+		endTurn.setEditable(false);
+		endTurn.setBackground(Color.WHITE);
+		endTurn.setText("END TURN: Used to end your turn early. (Hey, sometimes it's\n"
+				      + "     strategic!)");
+		
 		this.add(goals);
 		this.add(movement);
 		this.add(attacks);
 		this.add(item);
 		this.add(wait);
+		this.add(endTurn);
 	}
 
 }
