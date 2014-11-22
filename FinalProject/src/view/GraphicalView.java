@@ -130,6 +130,8 @@ public class GraphicalView extends JPanel implements Observer {
 					System.out.println("No unit to select; please select a new unit.");
 				
 			} else {
+				if(controller.getCurrentUnit() == null)
+					firstClick = true;
 				if (row >= 0 && row < currentSpaces.length && column >= 0
 						&& column < currentSpaces.length) {
 					controller.setEndRow(row);

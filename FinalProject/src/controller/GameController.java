@@ -159,7 +159,9 @@ public class GameController {
 				+ endRow + ", " + endCol + ")");
 
 		if (currUnit != null) {
-			if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol)==currUnit)
+			if (currUnit.canMove()
+					&& (!map.isOccupied(endRow, endCol) || map.getUnitAt(
+							endRow, endCol) == currUnit)
 					&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 				map.resetMapCanMove();
 				map.moveUnit(currRow, currCol, endRow, endCol);
@@ -211,88 +213,62 @@ public class GameController {
 				boolean canAttack = inAttackRange(endRow, endCol);
 				if (canAttack) {
 					actAttack();
-					map.attacked(currRow,currCol, endRow, endCol);
+					map.attacked(currRow, currCol, endRow, endCol);
 					return canAttack;
 				}
 				
 				else{
-					canAttack = attackHelper(currUnit.getMovement()-1, currRow, currCol);
-					if(canAttack){
-						actAttack();
-						map.attacked(currRow,currCol, endRow, endCol);
-					}
-					return canAttack;
+					System.out.println("Enemy out of attack range.");
+					return false;
 				}
 			}
 
 		}
-		/*
-		 * if (currUnit != null && map.getUnitAt(endRow, endCol) != null) { //
-		 * if both exist, check if one can move if (currUnit.canMove()) {
-		 * boolean canAttack = false; if (map.getSpace(currRow,
-		 * currCol).getCanMoveTo()) { canAttack = true; if
-		 * (inAttackRange(currRow, currCol)) { // If it's in range, just attack
-		 * actAttack(); return canAttack; } else { // Move closer
-		 * attackHelper(currUnit.getMovement(), currRow, currCol); actAttack();
-		 * return canAttack; } } else { canAttack =
-		 * attackHelper(currUnit.getMovement(), currRow, currCol);
-		 * 
-		 * }
-		 * 
-		 * map.getUnitAt(endRow, endCol) .reduceHealth(currUnit.getAttack()); }
-		 * 
-		 * else JOptionPane.showMessageDialog(null,
-		 * "The currently selected unit cannot move."); } else
-		 * JOptionPane.showMessageDialog(null,
-		 * "Current unit or target are not available.");
-		 */
 
 		return false;
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * Move, and then check if the enemy is in range.
-	 * 
-	 * @return If the current unit is in range of the target after a move
-	 */
-	private boolean attackHelper(int movesLeft, int row, int col) {
-		if (movesLeft < 0)
-			return false;
-		else {
-
-			boolean toReturn = this.inAttackRange(endRow, endCol);
-
-			if (toReturn) {
-				map.moveUnit(currRow, currCol, col, row);
-				currCol = col;
-				currRow = row;
-				return true;
-			}
-
-			else {
-				if (row > 0 && endRow < row && !toReturn)
-					toReturn = attackHelper(
-							(movesLeft - 1 - map.getSpace(row - 1, col)
-									.getMoveHinderance()), row - 1, col);
-				if (row < 49 && endRow > row && !toReturn)
-					toReturn = attackHelper(
-							(movesLeft - 1 - map.getSpace(row + 1, col)
-									.getMoveHinderance()), row + 1, col);
-				if (col > 0 && endCol < col && !toReturn)
-					toReturn = attackHelper(
-							(movesLeft - 1 - map.getSpace(row, col - 1)
-									.getMoveHinderance()), row, col - 1);
-				if (col < 49 && endCol > col && !toReturn)
-					toReturn = attackHelper(
-							(movesLeft - 1 - map.getSpace(row, col + 1)
-									.getMoveHinderance()), row, col + 1);
-			}
-
-			return toReturn;
-		}
-	}
+//	/**
+//	 * Move, and then check if the enemy is in range.
+//	 * 
+//	 * @return If the current unit is in range of the target after a move
+//	 */
+//	private boolean attackHelper(int movesLeft, int row, int col) {
+//		if (movesLeft < 0)
+//			return false;
+//		else {
+//
+//			boolean toReturn = this.inAttackRange(endRow, endCol);
+//
+//			if (toReturn) {
+//				map.moveUnit(currRow, currCol, col, row);
+//				currCol = col;
+//				currRow = row;
+//				return true;
+//			}
+//
+//			else {
+//				if (row > 0 && endRow < row && !toReturn)
+//					toReturn = attackHelper(
+//							(movesLeft - 1 - map.getSpace(row - 1, col)
+//									.getMoveHinderance()), row - 1, col);
+//				if (row < 49 && endRow > row && !toReturn)
+//					toReturn = attackHelper(
+//							(movesLeft - 1 - map.getSpace(row + 1, col)
+//									.getMoveHinderance()), row + 1, col);
+//				if (col > 0 && endCol < col && !toReturn)
+//					toReturn = attackHelper(
+//							(movesLeft - 1 - map.getSpace(row, col - 1)
+//									.getMoveHinderance()), row, col - 1);
+//				if (col < 49 && endCol > col && !toReturn)
+//					toReturn = attackHelper(
+//							(movesLeft - 1 - map.getSpace(row, col + 1)
+//									.getMoveHinderance()), row, col + 1);
+//			}
+//
+//			return toReturn;
+//		}
+//	}
 
 	/**
 	 * Simply check if the enemy is in range. Range is based on the four
@@ -611,33 +587,35 @@ public class GameController {
 	 */
 	private boolean targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
-		if(temp!=null){
-		if (!temp.isAlive()) {
-			// TODO Remove them from the map
+		if (temp != null) {
+			if (!temp.isAlive()) {
+				// TODO Remove them from the map
 
-			// Remove them from the associated list
-			if (player1.allAliveUnits().contains(temp))
-				player1.unitKilled(temp);
-			else
-				player2.unitKilled(temp);
+				// Remove them from the associated list
+				if (player1.allAliveUnits().contains(temp))
+					player1.unitKilled(temp);
+				else
+					player2.unitKilled(temp);
 
-			if (tempUnitList.contains(temp))
-				tempUnitList.remove(temp);
-			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType() + " at (" + row
-					+ ", " + col + ") is dead!");
-			System.out.println("Numbers on both sides: " + player1.getAliveNum()+", " + player2.getAliveNum());
-			checkWinConditions();
-			gameOver();
+				if (tempUnitList.contains(temp))
+					tempUnitList.remove(temp);
+				// Check to see if the game is over
+				System.out.println("Unit " + temp.getUnitType() + " at (" + row
+						+ ", " + col + ") is dead!");
+				System.out.println("Numbers on both sides: "
+						+ player1.getAliveNum() + ", " + player2.getAliveNum());
+				checkWinConditions();
+				gameOver();
 
-			return true;
-		}
-		
-		else{
-			map.attacked(currRow,currCol, row, col);
+				return true;
+			}
+
+			else {
+				map.attacked(currRow, currCol, row, col);
+				return false;
+			}
+		} else
 			return false;
-		}}
-		else return false;
 	}
 
 	public boolean isGameOver() {
@@ -663,9 +641,9 @@ public class GameController {
 			// unit
 			// unit is on a tower space. If it is, the game has been won;
 			// return true. Else, return false.
-			if ((map.getSpace(currRow, currCol) instanceof space.TowerSpace
-					&& player1.allAliveUnits().contains(
-							map.getUnitAt(currRow, currCol))) || player2.everyonesDeadDave())
+			if ((map.getSpace(currRow, currCol) instanceof space.TowerSpace && player1
+					.allAliveUnits().contains(map.getUnitAt(currRow, currCol)))
+					|| player2.everyonesDeadDave())
 				winConditions = true;
 			return j.CheckWinCondition(winConditions);
 		} else
