@@ -211,13 +211,16 @@ public class GameController {
 				boolean canAttack = inAttackRange(endRow, endCol);
 				if (canAttack) {
 					actAttack();
+					map.attacked(currRow,currCol, endRow, endCol);
 					return canAttack;
 				}
 				
 				else{
 					canAttack = attackHelper(currUnit.getMovement()-1, currRow, currCol);
-					if(canAttack)
+					if(canAttack){
 						actAttack();
+						map.attacked(currRow,currCol, endRow, endCol);
+					}
 					return canAttack;
 				}
 			}
@@ -624,7 +627,6 @@ public class GameController {
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row
 					+ ", " + col + ") is dead!");
 			System.out.println("Numbers on both sides: " + player1.getAliveNum()+", " + player2.getAliveNum());
-			map.attacked(currRow,currCol, row, col);
 			checkWinConditions();
 			gameOver();
 
