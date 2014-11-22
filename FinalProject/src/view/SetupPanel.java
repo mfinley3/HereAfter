@@ -48,6 +48,7 @@ public class SetupPanel extends JPanel implements Observer {
 	private boolean selectLevel, startUp1, selectUnits, selected;
 	private GameController controller;
 	private Difficulty difficulty;
+	private JPanel mainPanel;
 
 	private JTabbedPane views;
 
@@ -55,7 +56,7 @@ public class SetupPanel extends JPanel implements Observer {
 	private JPanel graphical = new GraphicalView();
 
 	public SetupPanel() {
-
+		
 		this.setLayout(null);
 
 		try {
@@ -77,7 +78,9 @@ public class SetupPanel extends JPanel implements Observer {
 		selectLevel = false;
 		selectUnits = false;
 		selected = true;
-
+		
+		mainPanel = this;
+		
 		registerListeners();
 
 	}
@@ -272,6 +275,7 @@ public class SetupPanel extends JPanel implements Observer {
 					((GraphicalView) graphical).setController(controller);
 					controller.getMap().addObserver((Observer) text);
 					((TextView) text).setController(controller);
+					controller.getMap().addObserver((Observer) mainPanel);
 					selected = false;
 					actualMap();
 
@@ -544,7 +548,8 @@ public class SetupPanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		// currentUserName.setText(controller.getCurrentPlayer());
+		currentUserName.setText(controller.getCurrPlayerName());
+		repaint();
 	}
 
 }
