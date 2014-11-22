@@ -34,26 +34,24 @@ public class GraphicalView extends JPanel implements Observer {
 
 	/** The column. */
 	private int clickX, clickY, row, column;
-	
+
 	/** The controller. */
 	private GameController controller;
-	
+
 	/** The first click. */
 	private boolean firstClick;
-	
+
 	/** The map. */
 	private Map map;
-	
+
 	/** The current spaces. */
 	private Space[][] currentSpaces;
-	
+
 	/** The current units. */
 	private Unit[][] currentUnits;
-	
-	/** The runner cant move. */
-	private BufferedImage bridge, corner, mountain, path, tower, wall, waste,
-			water, doctor, engineer, ranger, sniper, soldier, runner,
-			docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove;
+
+	/** The runner can't move. */
+	private BufferedImage bridge, corner, mountain, path, tower, wall, waste, water, doctor, engineer, ranger, sniper, soldier, runner, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, runSelected;
 
 	/**
 	 * Instantiates a new graphical view.
@@ -82,31 +80,39 @@ public class GraphicalView extends JPanel implements Observer {
 			tower = ImageIO.read(new File("TowerSpace.jpg"));
 			wall = ImageIO.read(new File("WallSpace.jpg"));
 			water = ImageIO.read(new File("WaterSpace.jpg"));
-			
+
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
 			ranger = ImageIO.read(new File("Ranger1.png"));
 			sniper = ImageIO.read(new File("sniper1.PNG"));
 			soldier = ImageIO.read(new File("soldier1.png"));
 			runner = ImageIO.read(new File("Zombie.png"));
-			
+
 			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
 			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
-			rangCantMove = ImageIO.read(new File("Socut1CantMove.png"));
+			rangCantMove = ImageIO.read(new File("Ranger1CantMove.png"));
 			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
 			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
+			runnerCantMove = ImageIO.read(new File("ZombieCantMove.png"));
+
+			docSelected = ImageIO.read(new File("Doctor1Selected.png"));
+			engSelected = ImageIO.read(new File("Engineer1Selected.png"));
+			rangSelected = ImageIO.read(new File("Ranger1Selected.png"));
+			sinpSelected = ImageIO.read(new File("sniper1Selected.png"));
+			soldSelected = ImageIO.read(new File("soldier1Selected.png"));
+			runSelected = ImageIO.read(new File("ZombieSelected.png"));
+
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
-
-		
 
 	}
 
 	/**
 	 * Sets the controller.
 	 *
-	 * @param temp the new controller
+	 * @param temp
+	 *            the new controller
 	 */
 	public void setController(GameController temp) {
 		controller = temp;
@@ -158,24 +164,22 @@ public class GraphicalView extends JPanel implements Observer {
 			if (firstClick) {
 				System.out.println("NESDF");
 				controller.setCurrentUnit(row, column);
-				if(controller.getCurrentUnit()!=null){
-					if(controller.getCurrentUnit().canMove())
+				if (controller.getCurrentUnit() != null) {
+					if (controller.getCurrentUnit().canMove())
 						firstClick = false;
 					else
 						System.out.println("Unit can't move; select a new one.");
-				}
-				else
+				} else
 					System.out.println("No unit to select; please select a new unit.");
-				
+
 			} else {
-				if(controller.getCurrentUnit() == null)
+				if (controller.getCurrentUnit() == null)
 					firstClick = true;
-				if (row >= 0 && row < currentSpaces.length && column >= 0
-						&& column < currentSpaces.length) {
+				if (row >= 0 && row < currentSpaces.length && column >= 0 && column < currentSpaces.length) {
 					controller.setEndRow(row);
 					controller.setEndColumn(column);
 				}
-				
+
 				firstClick = false;
 			}
 		}
@@ -221,7 +225,9 @@ public class GraphicalView extends JPanel implements Observer {
 		}
 	} // end JPanel class
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
@@ -234,7 +240,9 @@ public class GraphicalView extends JPanel implements Observer {
 		firstClick = true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	@Override
@@ -245,60 +253,76 @@ public class GraphicalView extends JPanel implements Observer {
 		int x = 0;
 		int y = 0;
 
-		
-		
 		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-					if(currentSpaces[col][row].getSpaceType().equals("Bridge")) {
+					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						g2.drawImage(bridge, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("Mountain")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
 						g2.drawImage(mountain, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("Path")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
 						g2.drawImage(path, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("Tower")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
 						g2.drawImage(tower, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("Wall")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Wall")) {
 						g2.drawImage(wall, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
 						g2.drawImage(waste, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("Water")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
 						g2.drawImage(water, x, y, null);
-					} else if(currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
 						g2.drawImage(corner, x, y, null);
 					}
-					
-					if(currentUnits[col][row] instanceof Doctor) {
-						if(currentUnits[col][row].canMove())
-							g2.drawImage(doctor, x, y, null);
-						else
-							g2.drawImage(docCantMove, x, y, null);
-					} else if(currentUnits[col][row] instanceof Engineer) {
-						if(currentUnits[col][row].canMove())
-							g2.drawImage(engineer, x, y, null);
-						else
-							g2.drawImage(engCantMove, x, y, null);
-					} else if(currentUnits[col][row] instanceof Ranger) {
-						if(currentUnits[col][row].canMove())
-							g2.drawImage(ranger, x, y, null);
-						else
-							g2.drawImage(rangCantMove, x, y, null);
-					} else if(currentUnits[col][row] instanceof Sniper) {
-						if(currentUnits[col][row].canMove())
-							g2.drawImage(sniper, x, y, null);
-						else
-							g2.drawImage(snipCantMove, x, y, null);
-					} else if(currentUnits[col][row] instanceof Soldier) {
-						if(currentUnits[col][row].canMove())
-							g2.drawImage(soldier, x, y, null);
-						else
-							g2.drawImage(soldCantMove, x, y, null);
-					} else if(currentUnits[col][row] instanceof RunnerAI) {
-						if(currentUnits[col][row].canMove())
-							g2.drawImage(runner, x, y, null);
-						else
-							g2.drawImage(runner, x, y, null);
+
+					if (currentUnits[col][row] == controller.getCurrentUnit()) {
+						if (currentUnits[col][row] instanceof Doctor) {
+							g2.drawImage(docSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Engineer) {
+							g2.drawImage(engSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Ranger) {
+							g2.drawImage(rangSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Sniper) {
+							g2.drawImage(sinpSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Soldier) {
+							g2.drawImage(soldSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof RunnerAI) {
+							g2.drawImage(runSelected, x, y, null);
+						}
+
+					} else {
+
+						if (currentUnits[col][row] instanceof Doctor) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(doctor, x, y, null);
+							else
+								g2.drawImage(docCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Engineer) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(engineer, x, y, null);
+							else
+								g2.drawImage(engCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Ranger) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(ranger, x, y, null);
+							else
+								g2.drawImage(rangCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Sniper) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(sniper, x, y, null);
+							else
+								g2.drawImage(snipCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Soldier) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(soldier, x, y, null);
+							else
+								g2.drawImage(soldCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof RunnerAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(runner, x, y, null);
+							else
+								g2.drawImage(runnerCantMove, x, y, null);
+						}
 					}
 					x += 96;
 

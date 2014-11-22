@@ -268,5 +268,10 @@ public class Map extends Observable {
 		notifyObservers();
 		
 	}
+	
+	public void updateObservers(){
+		setChanged();
+		notifyObservers();
+	}
 
 }
