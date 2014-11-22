@@ -12,49 +12,61 @@ import java.util.ArrayList;
  * @author Chioke
  */
 public abstract class Unit {
-	//small change to fix git not working
-	// Every Unit gets a blank list of items 
+	// small change to fix git not working
+	// Every Unit gets a blank list of items
 	/** The item list. */
 	public ArrayList<Item> itemList = new ArrayList<Item>();
-	
+
 	/** The can move. */
 	private boolean canMove;
 
 	/** The attack. */
 	private int attack;
-	
+
 	/** The defense. */
 	private int defense;
-	
+
 	/** The movement. */
 	private int movement;
-	
+
 	/** The health. */
 	private int health;
-	
+
 	/** The range. */
 	private int range;
-	
+
 	/** The unit type. */
 	private String unitType;
-	
+
 	/** The difficulty. */
 	private Double difficulty;
+
+	private boolean attackSet;
+	private boolean defenseSet;
+	private boolean healthSet;
 
 	/**
 	 * Instantiates a new unit.
 	 *
-	 * @param unitType the unit type
-	 * @param item the item
-	 * @param attack the attack
-	 * @param defense the defense
-	 * @param health the health
-	 * @param movement the movement
-	 * @param range the range
-	 * @param difficulty the difficulty
+	 * @param unitType
+	 *            the unit type
+	 * @param item
+	 *            the item
+	 * @param attack
+	 *            the attack
+	 * @param defense
+	 *            the defense
+	 * @param health
+	 *            the health
+	 * @param movement
+	 *            the movement
+	 * @param range
+	 *            the range
+	 * @param difficulty
+	 *            the difficulty
 	 */
 	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty) {
-		
+
 		this.unitType = unitType;
 		itemList.add(item); // Adds each Unit's given item
 		this.attack = attack;
@@ -63,7 +75,7 @@ public abstract class Unit {
 		this.movement = movement;
 		this.difficulty = difficulty;
 		this.range = range;
-		
+
 	}
 
 	/**
@@ -81,29 +93,31 @@ public abstract class Unit {
 	 * @return the health
 	 */
 	public int getHealth() {
-		// Health level * health modifier
-		int hpMod = 1;
 
-		/*
-		 * If the unitType is an AI, items do not benefit it,
-		 * it only gets its stats changed depending upon the
-		 * chosen game difficulty.
-		 */
-		if (unitType.equals("Runner") || unitType.equals("Spitter")
-				|| unitType.equals("AlphaProtector")) {
-			hpMod *= difficulty;
-			health = health * hpMod;
-		}
+		if (!healthSet) {
+			// Health level * health modifier
+			int hpMod = 1;
 
-		// Only non-AI characters can benefit from items
-		else {
-			for (Item item : itemList) {
-				if ((item.getItemType() == ItemType.HP)) {
-					hpMod++;
-					health = health * hpMod;
-					// Grabbing a health item will replenish your life
+			/*
+			 * If the unitType is an AI, items do not benefit it, it only gets
+			 * its stats changed depending upon the chosen game difficulty.
+			 */
+			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+				hpMod *= difficulty;
+				health = health * hpMod;
+			}
+
+			// Only non-AI characters can benefit from items
+			else {
+				for (Item item : itemList) {
+					if ((item.getItemType() == ItemType.HP)) {
+						hpMod++;
+						health = health * hpMod;
+						// Grabbing a health item will replenish your life
+					}
 				}
 			}
+			healthSet = true;
 		}
 		return health;
 	}
@@ -111,7 +125,8 @@ public abstract class Unit {
 	/**
 	 * Reduce health.
 	 *
-	 * @param damage the damage
+	 * @param damage
+	 *            the damage
 	 */
 	public void reduceHealth(int damage) {
 		if (damage <= getDefense()) {
@@ -127,28 +142,30 @@ public abstract class Unit {
 	 * @return the attack
 	 */
 	public int getAttack() {
-		// attack level * attack modifier
-		int atkMod = 1;
 
-		/*
-		 * If the unitType is an AI, items do not benefit it,
-		 * it only gets its stats changed depending upon the
-		 * chosen game difficulty.
-		 */
-		if (unitType.equals("Runner") || unitType.equals("Spitter")
-				|| unitType.equals("AlphaProtector")) {
-			atkMod *= difficulty;
-			attack *= atkMod;
-		}
+		if (!attackSet) {
+			// attack level * attack modifier
+			int atkMod = 1;
 
-		// Only non-AI characters can benefit from items
-		else {
-			for (Item item : itemList) {
-				if (item.getItemType() == ItemType.ATK) {
-					atkMod++;
-					attack *= atkMod;
+			/*
+			 * If the unitType is an AI, items do not benefit it, it only gets
+			 * its stats changed depending upon the chosen game difficulty.
+			 */
+			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+				atkMod *= difficulty;
+				attack *= atkMod;
+			}
+
+			// Only non-AI characters can benefit from items
+			else {
+				for (Item item : itemList) {
+					if (item.getItemType() == ItemType.ATK) {
+						atkMod++;
+						attack *= atkMod;
+					}
 				}
 			}
+			attackSet = true;
 		}
 		return attack;
 	}
@@ -159,28 +176,30 @@ public abstract class Unit {
 	 * @return the defense
 	 */
 	public int getDefense() {
-		// defense level * defense modifier
-		int defMod = 1;
 
-		/*
-		 * If the unitType is an AI, items do not benefit it,
-		 * it only gets its stats changed depending upon the
-		 * chosen game difficulty.
-		 */
-		if (unitType.equals("Runner") || unitType.equals("Spitter")
-				|| unitType.equals("AlphaProtector")) {
-			defMod *= difficulty;
-			defense *= defMod;
-		}
+		if (!defenseSet) {
+			// defense level * defense modifier
+			int defMod = 1;
 
-		// Only non-AI characters can benefit from items
-		else {
-			for (Item item : itemList) {
-				if ((item.getItemType() == ItemType.DEF)) {
-					defMod++;
-					defense *= defMod;
+			/*
+			 * If the unitType is an AI, items do not benefit it, it only gets
+			 * its stats changed depending upon the chosen game difficulty.
+			 */
+			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+				defMod *= difficulty;
+				defense *= defMod;
+			}
+
+			// Only non-AI characters can benefit from items
+			else {
+				for (Item item : itemList) {
+					if ((item.getItemType() == ItemType.DEF)) {
+						defMod++;
+						defense *= defMod;
+					}
 				}
 			}
+			defenseSet = true;
 		}
 		return defense;
 	}
@@ -190,7 +209,7 @@ public abstract class Unit {
 	 *
 	 * @return the movement
 	 */
-	public int getMovement(){
+	public int getMovement() {
 		return movement;
 	}
 
@@ -206,7 +225,8 @@ public abstract class Unit {
 	/**
 	 * Sets the can move.
 	 *
-	 * @param canMove the new can move
+	 * @param canMove
+	 *            the new can move
 	 */
 	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
@@ -242,16 +262,15 @@ public abstract class Unit {
 
 		return result;
 	}
-	
+
 	/**
 	 * Gets the range.
 	 *
 	 * @return the range
 	 */
-	public int getRange(){
+	public int getRange() {
 		return range;
 	}
-		
 
 } // end of class Unit
 
