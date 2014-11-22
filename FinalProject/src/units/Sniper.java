@@ -3,13 +3,19 @@ package units;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Chioke
+ * The Class Sniper.
  *
+ * @author Chioke
  */
 public class Sniper extends Unit {
 
+	/**
+	 * Instantiates a new sniper.
+	 *
+	 * @param difficulty the difficulty
+	 */
 	public Sniper(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		

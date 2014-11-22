@@ -38,23 +38,49 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SetupPanel.
+ */
 public class SetupPanel extends JPanel implements Observer {
 
+	/** The sniper. */
 	private BufferedImage background, setUp1, setUp2, soldier, doctor,
 			engineer, ranger, sniper;
+	
+	/** The current user name. */
 	private JLabel title, currentUserName;
+	
+	/** The snip num. */
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
+	
+	/** The end turn. */
 	private JButton select, wait, item, attack, move, help, endTurn;
+	
+	/** The selected. */
 	private boolean selectLevel, startUp1, selectUnits, selected;
+	
+	/** The controller. */
 	private GameController controller;
+	
+	/** The difficulty. */
 	private Difficulty difficulty;
+	
+	/** The main panel. */
 	private JPanel mainPanel;
 
+	/** The views. */
 	private JTabbedPane views;
 
+	/** The text. */
 	private JPanel text = new TextView();
+	
+	/** The graphical. */
 	private JPanel graphical = new GraphicalView();
 
+	/**
+	 * Instantiates a new setup panel.
+	 */
 	public SetupPanel() {
 		
 		this.setLayout(null);
@@ -85,6 +111,9 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * Select unit.
+	 */
 	private void selectUnit() {
 
 		title = new JLabel("HereAfter");
@@ -198,7 +227,22 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * The listener interface for receiving selectButton events.
+	 * The class that is interested in processing a selectButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addselectButtonListener<code> method. When
+	 * the selectButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see selectButtonEvent
+	 */
 	private class selectButtonListener implements ActionListener {
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		public void actionPerformed(ActionEvent ae) {
 			// Check that the number of all units adds to 5. if they dont, show
 			// an error message
@@ -291,8 +335,22 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 	}
 
+	/**
+	 * The listener interface for receiving moveButton events.
+	 * The class that is interested in processing a moveButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addmoveButtonListener<code> method. When
+	 * the moveButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see moveButtonEvent
+	 */
 	private class moveButtonListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.move();
@@ -300,8 +358,22 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * The listener interface for receiving attackButton events.
+	 * The class that is interested in processing a attackButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addattackButtonListener<code> method. When
+	 * the attackButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see attackButtonEvent
+	 */
 	private class attackButtonListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.attack();
@@ -309,8 +381,22 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * The listener interface for receiving useItemButton events.
+	 * The class that is interested in processing a useItemButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>adduseItemButtonListener<code> method. When
+	 * the useItemButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see useItemButtonEvent
+	 */
 	private class useItemButtonListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// controller.useItem();
@@ -318,8 +404,22 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * The listener interface for receiving waitButton events.
+	 * The class that is interested in processing a waitButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addwaitButtonListener<code> method. When
+	 * the waitButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see waitButtonEvent
+	 */
 	private class waitButtonListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.unitDoNothing();
@@ -327,8 +427,22 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * The listener interface for receiving helpButton events.
+	 * The class that is interested in processing a helpButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addhelpButtonListener<code> method. When
+	 * the helpButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see helpButtonEvent
+	 */
 	private class helpButtonListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -340,8 +454,22 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * The listener interface for receiving endTurnButton events.
+	 * The class that is interested in processing a endTurnButton
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addendTurnButtonListener<code> method. When
+	 * the endTurnButton event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see endTurnButtonEvent
+	 */
 	private class endTurnButtonListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.endTurn();
@@ -349,6 +477,9 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * Actual map.
+	 */
 	private void actualMap() {
 		this.removeAll();
 		this.setLayout(new BorderLayout());
@@ -414,6 +545,9 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * Register listeners.
+	 */
 	private void registerListeners() {
 
 		MouseListener listener = new ListenToMouse();
@@ -424,6 +558,9 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D gr = (Graphics2D) g;
@@ -459,6 +596,9 @@ public class SetupPanel extends JPanel implements Observer {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
 			int clickX = e.getX();
@@ -518,26 +658,41 @@ public class SetupPanel extends JPanel implements Observer {
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+		 */
 		@Override
 		public void mouseExited(MouseEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+		 */
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+		 */
 		@Override
 		public void mouseMoved(MouseEvent e) {
 
@@ -545,6 +700,9 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub

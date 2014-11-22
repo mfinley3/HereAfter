@@ -1,10 +1,21 @@
 package gametype;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Brian Seaman
+ * The Enum GameTypeEnum.
  *
+ * @author Brian Seaman
  */
 public enum GameTypeEnum {
-	DEATHMATCH, CAPTURE_TOWER, SURVIVE, FOUR_CORNERS, LAST_STAND;
+	
+	/** The deathmatch. */
+	DEATHMATCH, 
+ /** The capture tower. */
+ CAPTURE_TOWER, 
+ /** The survive. */
+ SURVIVE, 
+ /** The four corners. */
+ FOUR_CORNERS, 
+ /** The last stand. */
+ LAST_STAND;
 }

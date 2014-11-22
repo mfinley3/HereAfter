@@ -1,10 +1,17 @@
 package item;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Chioke
+ * The Enum ItemType.
  *
+ * @author Chioke
  */
 public enum ItemType {
-	ATK, DEF, HP;
+	
+	/** The atk. */
+	ATK, 
+ /** The def. */
+ DEF, 
+ /** The hp. */
+ HP;
 }

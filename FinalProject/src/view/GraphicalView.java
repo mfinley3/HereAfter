@@ -26,18 +26,38 @@ import units.Soldier;
 import units.Unit;
 import controller.GameController;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GraphicalView.
+ */
 public class GraphicalView extends JPanel implements Observer {
 
+	/** The column. */
 	private int clickX, clickY, row, column;
+	
+	/** The controller. */
 	private GameController controller;
+	
+	/** The first click. */
 	private boolean firstClick;
+	
+	/** The map. */
 	private Map map;
+	
+	/** The current spaces. */
 	private Space[][] currentSpaces;
+	
+	/** The current units. */
 	private Unit[][] currentUnits;
+	
+	/** The runner cant move. */
 	private BufferedImage bridge, corner, mountain, path, tower, wall, waste,
 			water, doctor, engineer, ranger, sniper, soldier, runner,
 			docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove;
 
+	/**
+	 * Instantiates a new graphical view.
+	 */
 	public GraphicalView() {
 		firstClick = true;
 
@@ -83,6 +103,11 @@ public class GraphicalView extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * Sets the controller.
+	 *
+	 * @param temp the new controller
+	 */
 	public void setController(GameController temp) {
 		controller = temp;
 		map = controller.getMap();
@@ -90,6 +115,9 @@ public class GraphicalView extends JPanel implements Observer {
 		currentUnits = map.getUnits();
 	}
 
+	/**
+	 * The Class ListenToMouse.
+	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
 		/**
@@ -193,6 +221,9 @@ public class GraphicalView extends JPanel implements Observer {
 		}
 	} // end JPanel class
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		map = controller.getMap();
@@ -203,6 +234,9 @@ public class GraphicalView extends JPanel implements Observer {
 		firstClick = true;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

@@ -1,5 +1,6 @@
 package gametype;
 
+// TODO: Auto-generated Javadoc
 /**
  * Game type where the goal is to capture the tower. Get all the living
  * team members to the tower to win.
@@ -9,12 +10,19 @@ package gametype;
  */
 public class CaptureTower implements GameTypeInterface{
 
+	/** The temp. */
 	private boolean temp;
 	
+	/**
+	 * Instantiates a new capture tower.
+	 */
 	public CaptureTower(){
 		temp = false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#CheckWinCondition(java.lang.Object)
+	 */
 	@Override
 	public boolean CheckWinCondition(Object ob) {
 		// The calculations for this one are done in the game.
@@ -22,6 +30,9 @@ public class CaptureTower implements GameTypeInterface{
 		return (boolean)ob;
 	}
 
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#getGoal()
+	 */
 	@Override
 	public String getGoal() {
 		// TODO Auto-generated method stub

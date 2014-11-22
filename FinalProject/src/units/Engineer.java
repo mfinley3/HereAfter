@@ -3,13 +3,19 @@ package units;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Chioke
+ * The Class Engineer.
  *
+ * @author Chioke
  */
 public class Engineer extends Unit {
 
+	/**
+	 * Instantiates a new engineer.
+	 *
+	 * @param difficulty the difficulty
+	 */
 	public Engineer(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		

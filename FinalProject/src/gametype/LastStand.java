@@ -4,8 +4,15 @@ import units.*;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LastStand.
+ */
 public class LastStand implements GameTypeInterface {
 
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#CheckWinCondition(java.lang.Object)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean CheckWinCondition(Object ob) {
@@ -17,6 +24,9 @@ public class LastStand implements GameTypeInterface {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#getGoal()
+	 */
 	@Override
 	public String getGoal() {
 		// TODO Auto-generated method stub

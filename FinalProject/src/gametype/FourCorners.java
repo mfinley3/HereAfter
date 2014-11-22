@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 import space.Space;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Brian Seaman
+ * The Class FourCorners.
  *
+ * @author Brian Seaman
  */
 public class FourCorners implements GameTypeInterface {
 
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#CheckWinCondition(java.lang.Object)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean CheckWinCondition(Object ob) {
@@ -21,6 +25,9 @@ public class FourCorners implements GameTypeInterface {
 			return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#getGoal()
+	 */
 	@Override
 	public String getGoal() {
 		// TODO Auto-generated method stub

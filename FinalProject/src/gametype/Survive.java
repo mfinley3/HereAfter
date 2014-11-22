@@ -1,19 +1,35 @@
 package gametype;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Survive.
+ */
 public class Survive implements GameTypeInterface{
 
+	/** The turns needed. */
 	private int turnsNeeded;
 	
+	/**
+	 * Instantiates a new survive.
+	 *
+	 * @param turnsToSurvive the turns to survive
+	 */
 	public Survive(int turnsToSurvive){
 		turnsNeeded = turnsToSurvive;
 	}
 	
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#CheckWinCondition(java.lang.Object)
+	 */
 	@Override
 	public boolean CheckWinCondition(Object ob) {
 		// TODO Auto-generated method stub
 		return (int)ob >= turnsNeeded;
 	}
 
+	/* (non-Javadoc)
+	 * @see gametype.GameTypeInterface#getGoal()
+	 */
 	@Override
 	public String getGoal() {
 		// TODO Auto-generated method stub

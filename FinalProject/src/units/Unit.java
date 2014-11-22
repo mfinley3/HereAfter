@@ -5,25 +5,54 @@ import item.ItemType;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Chioke
+ * The Class Unit.
  *
+ * @author Chioke
  */
 public abstract class Unit {
 	//small change to fix git not working
 	// Every Unit gets a blank list of items 
+	/** The item list. */
 	public ArrayList<Item> itemList = new ArrayList<Item>();
+	
+	/** The can move. */
 	private boolean canMove;
 
+	/** The attack. */
 	private int attack;
+	
+	/** The defense. */
 	private int defense;
+	
+	/** The movement. */
 	private int movement;
+	
+	/** The health. */
 	private int health;
+	
+	/** The range. */
 	private int range;
+	
+	/** The unit type. */
 	private String unitType;
+	
+	/** The difficulty. */
 	private Double difficulty;
 
+	/**
+	 * Instantiates a new unit.
+	 *
+	 * @param unitType the unit type
+	 * @param item the item
+	 * @param attack the attack
+	 * @param defense the defense
+	 * @param health the health
+	 * @param movement the movement
+	 * @param range the range
+	 * @param difficulty the difficulty
+	 */
 	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty) {
 		
 		this.unitType = unitType;
@@ -37,10 +66,20 @@ public abstract class Unit {
 		
 	}
 
+	/**
+	 * Gets the unit type.
+	 *
+	 * @return the unit type
+	 */
 	public String getUnitType() {
 		return unitType;
 	}
 
+	/**
+	 * Gets the health.
+	 *
+	 * @return the health
+	 */
 	public int getHealth() {
 		// Health level * health modifier
 		int hpMod = 1;
@@ -69,6 +108,11 @@ public abstract class Unit {
 		return health;
 	}
 
+	/**
+	 * Reduce health.
+	 *
+	 * @param damage the damage
+	 */
 	public void reduceHealth(int damage) {
 		if (damage <= getDefense()) {
 			return;
@@ -77,6 +121,11 @@ public abstract class Unit {
 		}
 	}
 
+	/**
+	 * Gets the attack.
+	 *
+	 * @return the attack
+	 */
 	public int getAttack() {
 		// attack level * attack modifier
 		int atkMod = 1;
@@ -104,6 +153,11 @@ public abstract class Unit {
 		return attack;
 	}
 
+	/**
+	 * Gets the defense.
+	 *
+	 * @return the defense
+	 */
 	public int getDefense() {
 		// defense level * defense modifier
 		int defMod = 1;
@@ -131,24 +185,49 @@ public abstract class Unit {
 		return defense;
 	}
 
+	/**
+	 * Gets the movement.
+	 *
+	 * @return the movement
+	 */
 	public int getMovement(){
 		return movement;
 	}
 
+	/**
+	 * Can move.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean canMove() {
 		return canMove;
 	}
 
+	/**
+	 * Sets the can move.
+	 *
+	 * @param canMove the new can move
+	 */
 	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
 	}
 
+	/**
+	 * Checks if is alive.
+	 *
+	 * @return true, if is alive
+	 */
 	public boolean isAlive() {
 		if (getHealth() <= 0)
 			return false;
 		return true;
 	}
 
+	/**
+	 * Gets the stats.
+	 *
+	 * @return the stats
+	 */
 	public String getStats() {
 		String inventory = "";
 		for (Item s : itemList) {
@@ -164,6 +243,11 @@ public abstract class Unit {
 		return result;
 	}
 	
+	/**
+	 * Gets the range.
+	 *
+	 * @return the range
+	 */
 	public int getRange(){
 		return range;
 	}

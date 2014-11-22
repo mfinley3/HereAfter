@@ -4,6 +4,7 @@ package view;
 
 import javax.swing.JFrame;
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * Sets up the GUI. Starts with the options of "New Game", "Continue" or "Quit"
@@ -16,9 +17,15 @@ import javax.swing.JFrame;
 
 public class TRPGGUI extends JFrame {
 	// Random serial number
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -703102129384036053L;
 	
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -27,6 +34,9 @@ public class TRPGGUI extends JFrame {
         });
 	}
 
+	/**
+	 * Instantiates a new trpggui.
+	 */
 	public TRPGGUI() {	
 		
 		this.setSize(998, 660);

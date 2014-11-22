@@ -3,13 +3,19 @@ package units;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Chioke
+ * The Class Soldier.
  *
+ * @author Chioke
  */
 public class Soldier extends Unit {
 	
+	/**
+	 * Instantiates a new soldier.
+	 *
+	 * @param difficulty the difficulty
+	 */
 	public Soldier(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		

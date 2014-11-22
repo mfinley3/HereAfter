@@ -7,20 +7,39 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HelpWindow.
+ */
 public class HelpWindow extends JFrame implements Runnable {
 
+	/** The goals. */
 	private JTextArea goals;
+	
+	/** The movement. */
 	private JTextArea movement;
+	
+	/** The attacks. */
 	private JTextArea attacks;
+	
+	/** The item. */
 	private JTextArea item;
+	
+	/** The wait. */
 	private JTextArea wait;
 	
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		
 	}
 	
+	/**
+	 * Instantiates a new help window.
+	 */
 	public HelpWindow() {
 
 		this.setSize(375, 660);
