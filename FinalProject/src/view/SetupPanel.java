@@ -2,10 +2,12 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -47,7 +50,7 @@ public class SetupPanel extends JPanel implements Observer {
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn;
-	private boolean selectLevel, startUp1, selectUnits, selected;
+	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning;
 	private GameController controller;
 	private Difficulty difficulty;
 	
@@ -56,6 +59,8 @@ public class SetupPanel extends JPanel implements Observer {
 
 	private JPanel text = new TextView();
 	private JPanel graphical = new GraphicalView();
+	
+	private JFrame mainFrame;
 
 	/**
 	 * Instantiates a new setup panel. This loads all of the images that are going to be needed.
@@ -67,8 +72,7 @@ public class SetupPanel extends JPanel implements Observer {
 		try {
 			background = ImageIO.read(new File("unitSelect.jpg"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
-			setUp2 = ImageIO.read(new File(
-					"FinalStartScreenBackgroundDifficulty.png"));
+			setUp2 = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
 			ranger = ImageIO.read(new File("Ranger1.png"));
@@ -288,7 +292,9 @@ public class SetupPanel extends JPanel implements Observer {
 						player.addUnits((Unit) new Sniper(difficulty.getValue()));
 						snips--;
 					}
-
+					gameIsRunning = true;
+					TRPGGUI.canResize();
+					repaint();
 					controller = new GameController(player, difficulty);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
@@ -485,6 +491,17 @@ public class SetupPanel extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D gr = (Graphics2D) g;
+		if(gameIsRunning){
+			Toolkit tk = Toolkit.getDefaultToolkit();
+			Dimension d = tk.getScreenSize();
+			
+			validate();
+			gr.drawImage(background, 0, 0, d.width , d.height, null);
+			selectUnits = false;
+			startUp1 = false;
+			selectLevel = false;
+			
+		}
 		if (selectUnits) {
 			gr.drawImage(background, 0, 0, null);
 			if (selected) {
@@ -500,6 +517,7 @@ public class SetupPanel extends JPanel implements Observer {
 		} else if (selectLevel) {
 			gr.drawImage(setUp2, 0, 0, null);
 		}
+		
 	}
 
 	/**
@@ -608,5 +626,12 @@ public class SetupPanel extends JPanel implements Observer {
 		currentUserName.setText(controller.getCurrPlayerName());
 		repaint();
 	}
+
+	public boolean getGameIsRunning() {
+		// TODO Auto-generated method stub
+		return gameIsRunning;
+	}
+	
+	
 
 }

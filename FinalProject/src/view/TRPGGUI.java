@@ -1,5 +1,11 @@
 package view;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
 import javax.swing.JFrame;
 
 /**
@@ -11,12 +17,14 @@ import javax.swing.JFrame;
  * 
  */
 
-public class TRPGGUI extends JFrame {
+public class TRPGGUI {
 	// Random serial number
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -703102129384036053L;
+	private static JFrame mainFrame = new JFrame(); 
+	private SetupPanel SetupPanel = new SetupPanel();
 	
-
+	
 	/**
 	 * The main method. It creates a new TRPGGUI.
 	 */
@@ -33,16 +41,47 @@ public class TRPGGUI extends JFrame {
 	 */
 	public TRPGGUI() {	
 		
-		this.setSize(998, 660);
-		this.setLocation(100, 10);
+		mainFrame.setSize(996, 669);
+		mainFrame.setLocation(100, 10);
 		
-		setTitle("HereAfter");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setResizable(false);
+		mainFrame.setTitle("HereAfter");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setResizable(false);
 		
-		this.add(new SetupPanel());
-		this.setVisible(true);
-	
+		mainFrame.add(SetupPanel);
+		mainFrame.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+            	SetupPanel.repaint();
+            }
+            
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		mainFrame.setVisible(true);
+
+	}
+
+	public static void canResize() {
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Dimension d = tk.getScreenSize();
+		mainFrame.setSize(d.width - 200, d.height - 100);
+		mainFrame.setResizable(true);
 	}
 
 }
