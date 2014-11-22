@@ -61,10 +61,9 @@ public class GameController {
 		this.map = new Map(i.getValue());
 		this.player1 = player1;
 		this.player2 = new AI(i);
-		
 
 		j = new CaptureTower();
-		//winConditions = false;
+		// winConditions = false;
 
 		Stack<Unit> temp = new Stack<Unit>();
 
@@ -163,42 +162,50 @@ public class GameController {
 	 * @param ec
 	 *            , the ending column
 	 */
-	public boolean move() {
-		System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
+	public void move() {
 
-		if (currUnit != null) {
-			if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
-				map.resetMapCanMove();
-				map.moveUnit(currRow, currCol, endRow, endCol);
+		if (endRow != 51 || endCol != 51) {
+			System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
 
-				// Set the new CurrRow and CurrCol, and check
-				currRow = endRow;
-				currCol = endCol;
-				System.out.println(currRow);
-				System.out.println(currCol);
-				gameOver();
+			if (currUnit != null) {
+				if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
+					map.resetMapCanMove();
+					map.moveUnit(currRow, currCol, endRow, endCol);
 
-				// Take the unit that can no longer move out of the tempUnitList
-				currUnit.setCanMove(false);
-				tempUnitList.remove(currUnit);
-				currUnit = null;
-				map.updateObservers();
-				
-				if (tempUnitList.isEmpty())
-					endTurn();
-				return true;
+					// Set the new CurrRow and CurrCol, and check
+					currRow = endRow;
+					currCol = endCol;
+					System.out.println(currRow);
+					System.out.println(currCol);
+					gameOver();
+
+					endRow = 51;
+					endCol = 51;
+					// Take the unit that can no longer move out of the
+					// tempUnitList
+					currUnit.setCanMove(false);
+					tempUnitList.remove(currUnit);
+					currUnit = null;
+					map.updateObservers();
+
+					if (tempUnitList.isEmpty())
+						endTurn();
+					return;
+				}
 			}
-		}
 
-		if (currUnit == null)
-			JOptionPane.showMessageDialog(null, "Please select a Unit");
-		else if (!currUnit.canMove())
-			JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
-		else if (map.isOccupied(endRow, endCol))
-			JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
-		else if (!map.getSpace(endRow, endCol).getCanMoveTo())
-			JOptionPane.showMessageDialog(null, "Space is out of range.");
-		return false;
+			if (currUnit == null)
+				JOptionPane.showMessageDialog(null, "Please select a Unit");
+			else if (!currUnit.canMove())
+				JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
+			else if (map.isOccupied(endRow, endCol))
+				JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
+			else if (!map.getSpace(endRow, endCol).getCanMoveTo())
+				JOptionPane.showMessageDialog(null, "Space is out of range.");
+			return;
+		} else
+			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
+
 	}
 
 	/**
@@ -215,26 +222,39 @@ public class GameController {
 	 */
 	public void attack() {
 
-		if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
-			// if both exist, check if one can move
-			if (inAttackRange(endRow, endCol)) {
-				actAttack();
-				// gameOver();
-				// If no other unit can move, end the turn
-				currUnit.setCanMove(false);
-				tempUnitList.remove(currUnit);
-				currUnit = null;
-				gameOver();
-				map.updateObservers();
-				if (tempUnitList.isEmpty())
-					endTurn();
-			}
+		if (endRow != 51 || endCol != 51) {
+			if (currUnit != map.getUnitAt(endRow, endCol)) {
+				if (!SameTeam()) {
 
-			else {
-				System.out.println("Enemy out of attack range.");
-			}
+					if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
+						// if both exist, check if one can move
+						if (inAttackRange(endRow, endCol)) {
+							actAttack();
+							// gameOver();
+							// If no other unit can move, end the turn
+							currUnit.setCanMove(false);
+							tempUnitList.remove(currUnit);
+							currUnit = null;
+							endRow = 51;
+							endCol = 51;
+
+							gameOver();
+							map.updateObservers();
+							if (tempUnitList.isEmpty())
+								endTurn();
+						}
+
+						else {
+							System.out.println("Enemy out of attack range.");
+						}
+					} else
+						JOptionPane.showMessageDialog(null, "Nothing to Attack!");
+				} else
+					JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
+			} else
+				JOptionPane.showMessageDialog(null, "You can't attack youself!");
 		} else
-			JOptionPane.showMessageDialog(null, "Nothing to Attack!");
+			JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
 	}
 
 	// /**
@@ -278,6 +298,27 @@ public class GameController {
 	// return toReturn;
 	// }
 	// }
+
+	// check to see if units are on the same team
+	private boolean SameTeam() {
+
+		List<Unit> tempList;
+
+		if (playerTurn) {
+			tempList = player1.getTeam();
+		} else {
+			tempList = player2.getTeam();
+
+		}
+		
+		for (Unit j : tempList) {
+			if (j == map.getUnitAt(endRow, endCol)) {
+				return true;
+			}
+
+		}
+		return false;
+	}
 
 	/**
 	 * Simply check if the enemy is in range. Range is based on the four
@@ -366,27 +407,27 @@ public class GameController {
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
-				JOptionPane.showMessageDialog(null,"Player " + player1.getID() + " won!");
+				JOptionPane.showMessageDialog(null, "Player " + player1.getID() + " won!");
 				System.out.println("Player " + player1.getID() + " won!");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
 				System.out.println("Games you finished: " + player1.getGamesFinished());
 				System.out.println("Your team stats: ");
 				System.out.println(player1.getTeamStats());
-				
+
 				return true;
 			} else if (player1.everyonesDeadDave()) {
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
-				JOptionPane.showMessageDialog(null,"AI won! Better luck next time...");
+				JOptionPane.showMessageDialog(null, "AI won! Better luck next time...");
 				System.out.println("AI won! Better luck next time...");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
 				System.out.println("Games you've finished: " + player1.getGamesFinished());
 				System.out.println("AI team stats: ");
 				System.out.println(player2.getTeamStats());
-				
+
 				return true;
 			} else
 				return false;
@@ -394,7 +435,7 @@ public class GameController {
 
 		return false;
 	}
-	
+
 	/**
 	 * TODO FINISH
 	 * 
@@ -402,8 +443,8 @@ public class GameController {
 	 */
 	public boolean checkWinConditions() {
 		if (j instanceof gametype.CaptureTower) {
-		
-			if ((map.getSpace(currCol, currRow) instanceof space.TowerSpace || player2.everyonesDeadDave())){
+
+			if ((map.getSpace(currCol, currRow) instanceof space.TowerSpace || player2.everyonesDeadDave())) {
 
 				return true;
 			}
@@ -493,7 +534,7 @@ public class GameController {
 				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 				for (Unit i : tempUnitList)
 					i.setCanMove(true);
-				
+
 				map.updateObservers();
 				if (tempUnitList.isEmpty())
 					endTurn();
@@ -517,7 +558,7 @@ public class GameController {
 				System.out.println("Second Player (AI) ends its turn.");
 
 				gameOver();
-				
+
 				map.updateObservers();
 				if (tempUnitList.isEmpty())
 					endTurn();
@@ -638,8 +679,6 @@ public class GameController {
 	public boolean playerTurn() {
 		return playerTurn;
 	}
-
-
 
 	private enum MoveDirection {
 		UP, DOWN, LEFT, RIGHT;
