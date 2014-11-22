@@ -205,27 +205,20 @@ public class GameController {
 	 * @param ec
 	 * @return
 	 */
-	public boolean attack() {
+	public void attack() {
 
 		if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 			// if both exist, check if one can move
-			if (currUnit.canMove()) {
-				boolean canAttack = inAttackRange(endRow, endCol);
-				if (canAttack) {
-					actAttack();
-					map.attacked(currRow, currCol, endRow, endCol);
-					return canAttack;
-				}
-				
-				else{
-					System.out.println("Enemy out of attack range.");
-					return false;
-				}
+			if (inAttackRange(endRow, endCol)) {
+				actAttack();
 			}
-
+				
+			else{
+				System.out.println("Enemy out of attack range.");
+			}
 		}
-
-		return false;
+		else
+			JOptionPane.showMessageDialog(null, "Nothing to Attack!");
 	}
 
 //	/**
@@ -299,11 +292,7 @@ public class GameController {
 				return true;
 		}
 
-		// If the last move set them both equal, check if they are equal
-		if (col == endCol && row == endRow)
-			return true;
-		else
-			return false;
+		return false;
 	}
 
 	/**
@@ -312,9 +301,11 @@ public class GameController {
 	 */
 	private void actAttack() {
 		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
+		System.out.println(map.getUnitAt(endRow, endCol).getHealth());
+		
 		targetDead(endRow, endCol);
 
-		gameOver();
+		// gameOver();
 		// If no other unit can move, end the turn
 		currUnit.setCanMove(false);
 		tempUnitList.remove(currUnit);
@@ -585,11 +576,11 @@ public class GameController {
 	 * @param col
 	 * @return
 	 */
-	private boolean targetDead(int row, int col) {
+	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
-		if (temp != null) {
 			if (!temp.isAlive()) {
 				// TODO Remove them from the map
+				map.removeUnit(col, row);
 
 				// Remove them from the associated list
 				if (player1.allAliveUnits().contains(temp))
@@ -597,25 +588,18 @@ public class GameController {
 				else
 					player2.unitKilled(temp);
 
+				// If the unit is in the temporary list, remove it.
 				if (tempUnitList.contains(temp))
 					tempUnitList.remove(temp);
+				
 				// Check to see if the game is over
 				System.out.println("Unit " + temp.getUnitType() + " at (" + row
 						+ ", " + col + ") is dead!");
 				System.out.println("Numbers on both sides: "
 						+ player1.getAliveNum() + ", " + player2.getAliveNum());
-				checkWinConditions();
-				gameOver();
-
-				return true;
-			}
-
-			else {
-				map.attacked(currRow, currCol, row, col);
-				return false;
-			}
-		} else
-			return false;
+				// checkWinConditions();
+				// gameOver();
+				}
 	}
 
 	public boolean isGameOver() {

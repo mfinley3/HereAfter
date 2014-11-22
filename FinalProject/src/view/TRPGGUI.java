@@ -34,7 +34,7 @@ public class TRPGGUI extends JFrame {
 		
 		setTitle("HereAfter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
+		// this.setResizable(false);
 		
 		this.add(new SetupPanel());
 		this.setVisible(true);
