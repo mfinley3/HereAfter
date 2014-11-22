@@ -262,19 +262,12 @@ public class Map extends Observable {
 			
 	}
 
-	public void attacked(int currRow, int currCol, int row, int col) {
-		// TODO Auto-generated method stub
-		if(unitsOnMap[row][col]!=null){
-			if(!unitsOnMap[row][col].isAlive()){
-				// If the unit at this space is dead, remove him from the map
-				unitsOnMap[row][col] = null;
-				if(enemyList.contains(unitsOnMap[row][col])){
-					enemyList.remove(unitsOnMap[row][col]);
-				}
-			}
-		}
+	public void removeUnit(int row, int col) {
+	
+		unitsOnMap[row][col] = null;
 		setChanged();
 		notifyObservers();
+		
 	}
 
 }
