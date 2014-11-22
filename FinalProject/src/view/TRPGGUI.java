@@ -1,14 +1,10 @@
 package view;
 
-
-
 import javax.swing.JFrame;
 
-// TODO: Auto-generated Javadoc
 /**
  * 
- * Sets up the GUI. Starts with the options of "New Game", "Continue" or "Quit"
- * and dynamically changes while buttons are selected.
+ * Sets up the GUI with the title of the frame.  This is in charge of the entire frame, and is what is run when the game is run.
  * 
  * 
  * @author Katelyn
@@ -22,9 +18,7 @@ public class TRPGGUI extends JFrame {
 	
 
 	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
+	 * The main method. It creates a new TRPGGUI.
 	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -35,7 +29,7 @@ public class TRPGGUI extends JFrame {
 	}
 
 	/**
-	 * Instantiates a new trpggui.
+	 * Instantiates a new TRPG gui, with the title and size
 	 */
 	public TRPGGUI() {	
 		

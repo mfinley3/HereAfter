@@ -13,7 +13,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,48 +37,28 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SetupPanel.
  */
 public class SetupPanel extends JPanel implements Observer {
 
-	/** The sniper. */
 	private BufferedImage background, setUp1, setUp2, soldier, doctor,
 			engineer, ranger, sniper;
-	
-	/** The current user name. */
 	private JLabel title, currentUserName;
-	
-	/** The snip num. */
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
-	
-	/** The end turn. */
 	private JButton select, wait, item, attack, move, help, endTurn;
-	
-	/** The selected. */
 	private boolean selectLevel, startUp1, selectUnits, selected;
-	
-	/** The controller. */
 	private GameController controller;
-	
-	/** The difficulty. */
 	private Difficulty difficulty;
 	
-	/** The main panel. */
 	private JPanel mainPanel;
-
-	/** The views. */
 	private JTabbedPane views;
 
-	/** The text. */
 	private JPanel text = new TextView();
-	
-	/** The graphical. */
 	private JPanel graphical = new GraphicalView();
 
 	/**
-	 * Instantiates a new setup panel.
+	 * Instantiates a new setup panel. This loads all of the images that are going to be needed.
 	 */
 	public SetupPanel() {
 		
@@ -112,7 +91,8 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * Select unit.
+	 * Select unit. This instantiates the splash page for the user to select their units and user name.  It adds 
+	 * a label, picture, and text area for each unit.
 	 */
 	private void selectUnit() {
 
@@ -229,20 +209,15 @@ public class SetupPanel extends JPanel implements Observer {
 
 	/**
 	 * The listener interface for receiving selectButton events.
-	 * The class that is interested in processing a selectButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addselectButtonListener<code> method. When
-	 * the selectButton event occurs, that object's appropriate
-	 * method is invoked.
+	 * This occurs when the "Select" button on the setUp page is pushed.  It will check that 
+	 * the number of units adds up to 5, and that actual numbers are entered for each unit.
+	 * This class creates a new unit for each unit the user selects,
+	 * a new player with those units, a GameController, and sets the graphical and text view to observe the map.
 	 *
 	 * @see selectButtonEvent
 	 */
 	private class selectButtonListener implements ActionListener {
 		
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		public void actionPerformed(ActionEvent ae) {
 			// Check that the number of all units adds to 5. if they dont, show
 			// an error message
@@ -336,21 +311,12 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving moveButton events.
-	 * The class that is interested in processing a moveButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addmoveButtonListener<code> method. When
-	 * the moveButton event occurs, that object's appropriate
-	 * method is invoked.
+	 * If the move button is selected, the move method of controller is called so that the map and units change location.
 	 *
 	 * @see moveButtonEvent
 	 */
 	private class moveButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.move();
@@ -359,21 +325,13 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving attackButton events.
-	 * The class that is interested in processing a attackButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addattackButtonListener<code> method. When
-	 * the attackButton event occurs, that object's appropriate
-	 * method is invoked.
+	 * If the attack button is selected, the attack method of controller is called so that the map and units change, and so that one
+	 * unit can attack and kill the other if possible.
 	 *
 	 * @see attackButtonEvent
 	 */
 	private class attackButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.attack();
@@ -382,21 +340,12 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving useItemButton events.
-	 * The class that is interested in processing a useItemButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>adduseItemButtonListener<code> method. When
-	 * the useItemButton event occurs, that object's appropriate
-	 * method is invoked.
+	 * If the item button is selected, the useItem method will be called from the controller.  This is not implemented yet.
 	 *
 	 * @see useItemButtonEvent
 	 */
 	private class useItemButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// controller.useItem();
@@ -405,21 +354,13 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving waitButton events.
-	 * The class that is interested in processing a waitButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addwaitButtonListener<code> method. When
-	 * the waitButton event occurs, that object's appropriate
-	 * method is invoked.
+	 * If the wait button is selected, the wait method of controller is called so that the map and units change, and so that
+	 * that unit's ability to move is changed to false.
 	 *
 	 * @see waitButtonEvent
 	 */
 	private class waitButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.unitDoNothing();
@@ -428,48 +369,29 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving helpButton events.
-	 * The class that is interested in processing a helpButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addhelpButtonListener<code> method. When
-	 * the helpButton event occurs, that object's appropriate
-	 * method is invoked.
+	 * If the help button is selected, a help window is open that tell you the rules.
 	 *
 	 * @see helpButtonEvent
 	 */
 	private class helpButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			new Thread(new HelpWindow()).start();
-
-			// JOptionPane.showMessageDialog(null,
-			// "Add instructions to this.  It is in SetupPanel");
+			
 		}
 
 	}
 
 	/**
-	 * The listener interface for receiving endTurnButton events.
-	 * The class that is interested in processing a endTurnButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addendTurnButtonListener<code> method. When
-	 * the endTurnButton event occurs, that object's appropriate
-	 * method is invoked.
-	 *
+	 * If the end turn button is selected, the end turn method of controller is called and the team that is allowed
+	 * to be used is the other team. 
+	 * 
 	 * @see endTurnButtonEvent
 	 */
 	private class endTurnButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.endTurn();
@@ -478,7 +400,9 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * Actual map.
+	 * Actual map. This sets up the actual map. It adds the graphical and text views, as well as keeps all of 
+	 * the buttons availible to work. 
+	 * 
 	 */
 	private void actualMap() {
 		this.removeAll();
@@ -546,7 +470,7 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * Register listeners.
+	 * Register listeners.  This registers the mouse listeners.
 	 */
 	private void registerListeners() {
 
@@ -558,9 +482,6 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D gr = (Graphics2D) g;
@@ -586,18 +507,15 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
-		/**
-		 * Event were a mouse button is clicked, Is not used.
-		 * 
-		 * @param evt
-		 *            Takes in a clicked event
-		 */
+
 		public void mouseClicked(MouseEvent evt) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+
+		/**
+		 * If the mouse is pressed, it keeps track of what step in the set up the gui is at.  Depending on that, it will
+		 * change the image that is in the background, and what options are ble to be selected.
 		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -608,7 +526,6 @@ public class SetupPanel extends JPanel implements Observer {
 
 				if (clickX > 685 && clickX < 870 && clickY > 190
 						&& clickY < 230) {
-					// 190x40
 
 					// This means there is a new game
 					// go to the second page with the level options
@@ -619,13 +536,11 @@ public class SetupPanel extends JPanel implements Observer {
 				} else if (clickX > 650 && clickX < 940 && clickY > 250
 						&& clickY < 290) {
 					// This means they want to continue their game
-					// 280x40
 
 					startUp1 = false;
 				} else if (clickX > 750 && clickX < 850 && clickY > 310
 						&& clickY < 350) {
 					// This means they want to quit the game
-					// 90x40
 
 					System.exit(0);
 				}
@@ -658,41 +573,29 @@ public class SetupPanel extends JPanel implements Observer {
 			}
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-		 */
+
 		@Override
 		public void mouseReleased(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-		 */
+
 		@Override
 		public void mouseEntered(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-		 */
 		@Override
 		public void mouseExited(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
-		 */
+
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
-		 */
 		@Override
 		public void mouseMoved(MouseEvent e) {
 
@@ -700,12 +603,8 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		currentUserName.setText(controller.getCurrPlayerName());
 		repaint();
 	}
