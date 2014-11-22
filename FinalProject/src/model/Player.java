@@ -29,11 +29,9 @@ public class Player {
 
 	public String getTeamStats() {
 		// TODO Auto-generated method stub
-		String temp = "";
+		String temp = "\n";
 		for(Unit i: allUnits)
-			temp = temp + i.getStats() + "<br>";
-		temp = temp + "<br>";
-		
+			temp = temp + i.getStats() + "\n";
 		
 		return temp;
 	}

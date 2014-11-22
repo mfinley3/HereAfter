@@ -38,7 +38,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class SetupPanel extends JPanel implements Observer{
+public class SetupPanel extends JPanel implements Observer {
 
 	private BufferedImage background, setUp1, setUp2, soldier, doctor,
 			engineer, ranger, sniper;
@@ -364,10 +364,9 @@ public class SetupPanel extends JPanel implements Observer{
 		views.add(scrollPanel, "Graphical");
 
 		JScrollPane scrollPanel1 = new JScrollPane(text);
-		scrollPanel.setSize(862, 542);
+		scrollPanel1.setSize(862, 542);
 		views.add(scrollPanel1, "Text");
-		
-		
+
 		this.add(views, BorderLayout.CENTER);
 
 		JPanel buttons = new JPanel();
@@ -389,16 +388,14 @@ public class SetupPanel extends JPanel implements Observer{
 
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
-		
 
 		JLabel currentUser = new JLabel("Current User:");
 		currentUser.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		currentUser.setForeground(Color.WHITE);
-		
+
 		currentUserName = new JLabel(userName.getText());
 		currentUserName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		currentUserName.setForeground(Color.WHITE);
-
 
 		buttons.add(currentUser);
 		buttons.add(currentUserName);
@@ -408,7 +405,6 @@ public class SetupPanel extends JPanel implements Observer{
 		buttons.add(item);
 		buttons.add(wait);
 		buttons.add(endTurn);
-		
 
 		this.add(buttons, BorderLayout.WEST);
 
@@ -501,7 +497,7 @@ public class SetupPanel extends JPanel implements Observer{
 				} else if (clickX > 725 && clickX < 875 && clickY > 290
 						&& clickY < 320) {
 					// This means the difficulty is medium
-					difficulty = Difficulty.MEDIUM;
+					difficulty = Difficulty.EASY;
 					selectUnit();
 					selectLevel = false;
 					selectUnits = true;
@@ -509,7 +505,7 @@ public class SetupPanel extends JPanel implements Observer{
 				} else if (clickX > 740 && clickX < 840 && clickY > 340
 						&& clickY < 380) {
 					// This means the difficulty is hard
-					difficulty = Difficulty.HARD;
+					difficulty = Difficulty.EASY;
 					selectUnit();
 					selectLevel = false;
 					selectUnits = true;
@@ -545,11 +541,10 @@ public class SetupPanel extends JPanel implements Observer{
 
 	}
 
-	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		//currentUserName.setText(controller.getCurrentPlayer());
+		// currentUserName.setText(controller.getCurrentPlayer());
 	}
 
 }

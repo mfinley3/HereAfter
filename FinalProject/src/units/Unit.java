@@ -156,10 +156,10 @@ public abstract class Unit {
 		}
 
 		String result = "Unit Type: " + getUnitType();
-		result += "<br>Current Health: " + getHealth();
-		result += "<br>Current Attack Power: " + getAttack();
-		result += "<br>Current Defense Power: " + getDefense();
-		result += "<br>Inventory: " + inventory;
+		result += "\nCurrent Health: " + getHealth();
+		result += "\nCurrent Attack Power: " + getAttack();
+		result += "\nCurrent Defense Power: " + getDefense();
+		result += "\nInventory: " + inventory;
 
 		return result;
 	}
