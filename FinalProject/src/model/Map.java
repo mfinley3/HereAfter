@@ -263,6 +263,7 @@ public class Map extends Observable {
 	public void removeUnit(int row, int col) {
 	
 		unitsOnMap[row][col] = null;
+		map[row][col].setOccupied(false);
 		setChanged();
 		notifyObservers();
 		
