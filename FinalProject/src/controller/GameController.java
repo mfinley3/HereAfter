@@ -221,6 +221,7 @@ public class GameController {
 			if (inAttackRange(endRow, endCol)) {
 				
 				actAttack();
+				tempUnitList.remove(currUnit);
 			}
 				
 			else{
