@@ -5,30 +5,20 @@ import java.util.List;
 
 import units.*;;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Player class. Contains all of the player's units (although
  * not their locations on the field), their stats, if they're alive
- * or dead
+ * or dead.
  * 
  * @author Brian Seaman
  *
  */
 public class Player {
 	
-	/** The games finished. */
 	private int gamesFinished;
-	
-	/** The living team. */
 	private int livingTeam;
-	
-	/** The living units. */
 	private List<Unit> livingUnits;
-	
-	/** The all units. */
 	private List<Unit> allUnits;
-	
-	/** The id. */
 	private String id;
 	
 	/**
@@ -44,12 +34,11 @@ public class Player {
 	}
 
 	/**
-	 * Gets the team stats.
+	 * Gets the team's stats.
 	 *
 	 * @return the team stats
 	 */
 	public String getTeamStats() {
-		// TODO Auto-generated method stub
 		String temp = "\n";
 		for(Unit i: allUnits)
 			temp = temp + i.getStats() + "\n";
@@ -58,55 +47,56 @@ public class Player {
 	}
 	
 	/**
-	 * Gets the team.
+	 * Gets the units of the team that are currently alive.
 	 *
-	 * @return the team
+	 * @return the list of the currently living team members
 	 */
 	public List<Unit> getTeam(){
 		return livingUnits;
 	}
 	
 	/**
-	 * Everyones dead dave.
+	 * Checks to see if all of the player's team is dead by
+	 * checking to see if the LivingUnits list is empty. If it
+	 * is, return true.
 	 *
-	 * @return true, if successful
+	 * @return whether or not the player's team is dead.
 	 */
 	public boolean everyonesDeadDave(){
 		return livingUnits.isEmpty();
 	}
 
 	/**
-	 * All alive units.
+	 * Gets all of the currently living units.
 	 *
 	 * @return the list
 	 */
 	public List<Unit> allAliveUnits() {
-		// TODO Auto-generated method stub
 		return livingUnits;
 	}
 
 	/**
-	 * Gets the id.
+	 * Gets the player's ID (name).
 	 *
-	 * @return the id
+	 * @return The player's ID
 	 */
 	public String getID() {
 		return id;
 	}
 
 	/**
-	 * Sets the id.
+	 * Sets the player's ID (name).
 	 *
-	 * @param id the new id
+	 * @param The new ID
 	 */
 	public void setID(String id) {
 		this.id = id;
 	}
 	
 	/**
-	 * Adds the units.
+	 * Adds units to the Player's team.
 	 *
-	 * @param toAdd the to add
+	 * @param toAdd: unit to add to the the player's team.
 	 */
 	public void addUnits(Unit toAdd){
 		livingUnits.add(toAdd);
@@ -115,18 +105,18 @@ public class Player {
 	}
 	
 	/**
-	 * Gets the alive num.
+	 * Get the total number of alive units left.
 	 *
-	 * @return the alive num
+	 * @return The number of alive members of the team
 	 */
 	public int getAliveNum(){
 		return livingTeam;
 	}
 	
 	/**
-	 * Unit killed.
+	 * Called when a Unit is killed in game. Removes it from the living units.
 	 *
-	 * @param dead the dead
+	 * @param The unit to be removed
 	 */
 	public void unitKilled(Unit dead){
 		livingUnits.remove(dead);
@@ -134,20 +124,19 @@ public class Player {
 	}
 
 	/**
-	 * Gets the games finished.
-	 *
-	 * @return the games finished
+	 * Returns the number of games finished.
+	 * 
+	 * @return The total number of games completed by the player
 	 */
 	public int getGamesFinished() {
-		// TODO Auto-generated method stub
 		return gamesFinished;
 	}
 
 	/**
-	 * Game finished.
+	 * Adds one to the games finished. Will be used when serializable
+	 * in iteration 2.
 	 */
 	public void gameFinished() {
-		// TODO Auto-generated method stub
 		gamesFinished++;
 	}
 }

@@ -9,12 +9,9 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 import model.*;
-import space.Space;
-import space.WallSpace;
 import units.*;
 
 /**
- * TODO Add win conditions and change attack
  * 
  * The controller for a game. Sends messages to map, Saves Data, Loads Data,
  * sets up players, calculate which map is needed, sends messages to the enemy
@@ -42,13 +39,6 @@ public class GameController {
 
 	private GameTypeInterface gameTupe;
 	private Object winConditions;
-
-	/*
-	 * Will work on being able to control each unit on the map. Things included
-	 * in this are making sure units can move, attack, use items and show
-	 * results of the battle along with the user being able to create a new
-	 * game.
-	 */
 
 	/**
 	 * TODO Work on this. Will add a createAI method soon
@@ -150,9 +140,8 @@ public class GameController {
 	}
 
 	/**
-	 * TODO Test and Finish
-	 * 
-	 * Move a selected Unit to a another space.
+	 * Move a selected Unit to a another space. Checks to see if the player
+	 * can move to the targeted space, and if can, move them.
 	 * 
 	 * @param sr
 	 *            , the starting row
@@ -211,9 +200,7 @@ public class GameController {
 
 	}
 
-	/**
-	 * TODO 1) Check if friendly 2) Check within range
-	 * 
+	/** 
 	 * Get it to attack
 	 * 
 	 * 
@@ -224,16 +211,21 @@ public class GameController {
 	 * @return
 	 */
 	public void attack() {
-
+		// Checks to see if the target is in range.
 		if (endRow != 51 || endCol != 51) {
+			
+			// Makes sure that the target is not the current unit
 			if (currUnit != map.getUnitAt(endRow, endCol)) {
+				
+				// Checks to see if on the same side.
 				if (!SameTeam()) {
 
+					// Checks to see if either of the units are false.
 					if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 						// if both exist, check if one can move
 						if (inAttackRange(endRow, endCol)) {
 							actAttack();
-							// gameOver();
+
 							// If no other unit can move, end the turn
 							currUnit.setCanMove(false);
 							tempUnitList.remove(currUnit);
@@ -302,11 +294,16 @@ public class GameController {
 	// }
 	// }
 
-	// check to see if units are on the same team
+	/** 
+	 * Check to see if units are on the same team. If they are, return true.
+	 * 
+	 * @return whether or not the target and the current are on the same team.
+	 */
 	private boolean SameTeam() {
 
 		List<Unit> tempList;
 
+		// Checks the player lists depending on whose turn it is
 		if (playerTurn) {
 			tempList = player1.getTeam();
 		} else {
@@ -314,6 +311,8 @@ public class GameController {
 
 		}
 
+		// Goes through the lists, checking to see if the target unit is in the
+		// temporary list. Return whether or not it is.
 		for (Unit j : tempList) {
 			if (j == map.getUnitAt(endRow, endCol)) {
 				return true;
@@ -394,9 +393,7 @@ public class GameController {
 		}
 	}
 
-	/**
-	 * TODO Test this method
-	 * 
+	/** 
 	 * Checks both of the player's aliveUnits to see if all of their units are
 	 * dead. If either of them are out of units they can move, return true and
 	 * end the game. Checked after every move and attack.
@@ -526,7 +523,8 @@ public class GameController {
 	}
 
 	/**
-	 * When called, ends a turn.
+	 * When called, ends a turn. Checks to see whose turn it is, clears the
+	 * temporary unit list, sets the current unit to null. Sets the can move to false.
 	 * 
 	 */
 	public void endTurn() {
@@ -676,7 +674,6 @@ public class GameController {
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
 		if (!temp.isAlive()) {
-			// TODO Remove them from the map
 			map.removeUnit(col, row);
 
 			// Remove them from the associated list
@@ -704,18 +701,30 @@ public class GameController {
 		return gameOver;
 	}
 
+	/**
+	 * Called upon to check if the player has won. Returns true if the
+	 * player wins the game.
+	 * 
+	 * @return Whether or not the game has won
+	 */
 	public boolean playerWon() {
 		return playerWon;
 	}
 
+	/**
+	 * Checks to see if the Player is currently moving. If the player is, return
+	 * true.
+	 * @return Whether or not the player is moving.
+	 */
 	public boolean playerTurn() {
 		return playerTurn;
 	}
 
 	/**
-	 * A private Enum class, helps with movement. Prevents.
+	 * A private Enum class, helps with movement. Prevents overlap and stack
+	 * overflow during calculating the spaces where the player can move.
 	 * 
-	 * @author Brian
+	 * @author Brian Seaman
 	 *
 	 */
 	private enum MoveDirection {
