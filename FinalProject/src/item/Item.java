@@ -101,7 +101,7 @@ public class Item implements Serializable {
 	}
 	
 	public String toString() {
-		return "Item Name: " + title + "\nItem Type: " + item;
+		return "\n  *Item: " + title + "\n      -Item Type: " + item;
 	}
 
 } // end of class Item

@@ -258,7 +258,7 @@ public abstract class Unit {
 		result += "\nCurrent Health: " + getHealth();
 		result += "\nCurrent Attack Power: " + getAttack();
 		result += "\nCurrent Defense Power: " + getDefense();
-		result += "\nInventory: " + inventory;
+		result += "\nUnit's Inventory: " + inventory + "\n";
 
 		return result;
 	}
