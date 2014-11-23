@@ -253,9 +253,13 @@ public abstract class Unit {
 		for (Item s : itemList) {
 			inventory += s.toString();
 		}
-
+		
+		int displayHealth = getHealth();
+		if(displayHealth <= 0)
+			displayHealth = 0;
+			
 		String result = "Unit Type: " + getUnitType();
-		result += "\nCurrent Health: " + getHealth();
+		result += "\nCurrent Health: " + displayHealth;
 		result += "\nCurrent Attack Power: " + getAttack();
 		result += "\nCurrent Defense Power: " + getDefense();
 		result += "\nUnit's Inventory: " + inventory + "\n";

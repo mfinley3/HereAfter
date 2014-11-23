@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import model.*;
 import space.Space;
+import space.WallSpace;
 import units.*;
 
 /**
@@ -165,44 +166,46 @@ public class GameController {
 	public void move() {
 
 		if (endRow != 51 || endCol != 51) {
-			System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
+			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
+				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
+				if (currUnit != null) {
+					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
+						map.resetMapCanMove();
+						map.moveUnit(currRow, currCol, endRow, endCol);
 
-			if (currUnit != null) {
-				if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
-					map.resetMapCanMove();
-					map.moveUnit(currRow, currCol, endRow, endCol);
+						// Set the new CurrRow and CurrCol, and check
+						currRow = endRow;
+						currCol = endCol;
+						System.out.println(currRow);
+						System.out.println(currCol);
+						gameOver();
 
-					// Set the new CurrRow and CurrCol, and check
-					currRow = endRow;
-					currCol = endCol;
-					System.out.println(currRow);
-					System.out.println(currCol);
-					gameOver();
+						endRow = 51;
+						endCol = 51;
+						// Take the unit that can no longer move out of the
+						// tempUnitList
+						currUnit.setCanMove(false);
+						tempUnitList.remove(currUnit);
+						currUnit = null;
+						map.updateObservers();
 
-					endRow = 51;
-					endCol = 51;
-					// Take the unit that can no longer move out of the
-					// tempUnitList
-					currUnit.setCanMove(false);
-					tempUnitList.remove(currUnit);
-					currUnit = null;
-					map.updateObservers();
-
-					if (tempUnitList.isEmpty())
-						endTurn();
-					return;
+						if (tempUnitList.isEmpty())
+							endTurn();
+						return;
+					}
 				}
-			}
 
-			if (currUnit == null)
-				JOptionPane.showMessageDialog(null, "Please select a Unit");
-			else if (!currUnit.canMove())
-				JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
-			else if (map.isOccupied(endRow, endCol))
-				JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
-			else if (!map.getSpace(endRow, endCol).getCanMoveTo())
-				JOptionPane.showMessageDialog(null, "Space is out of range.");
-			return;
+				if (currUnit == null)
+					JOptionPane.showMessageDialog(null, "Please select a Unit");
+				else if (!currUnit.canMove())
+					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
+				else if (map.isOccupied(endRow, endCol))
+					JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
+				else if (!map.getSpace(endRow, endCol).getCanMoveTo())
+					JOptionPane.showMessageDialog(null, "Space is out of range.");
+				return;
+			} else
+				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
 		} else
 			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
 
@@ -310,7 +313,7 @@ public class GameController {
 			tempList = player2.getTeam();
 
 		}
-		
+
 		for (Unit j : tempList) {
 			if (j == map.getUnitAt(endRow, endCol)) {
 				return true;
@@ -403,12 +406,12 @@ public class GameController {
 
 	public boolean gameOver() {
 		if (!gameOver) {
-			
+
 			if (checkWinConditions()) {
-				for(Unit u : tempUnitList)
+				for (Unit u : tempUnitList)
 					u.setCanMove(false);
 				tempUnitList.clear();
-				
+
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
@@ -422,10 +425,10 @@ public class GameController {
 
 				return true;
 			} else if (player1.everyonesDeadDave()) {
-				for(Unit u : tempUnitList)
+				for (Unit u : tempUnitList)
 					u.setCanMove(false);
 				tempUnitList.clear();
-				
+
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
@@ -547,9 +550,9 @@ public class GameController {
 				map.updateObservers();
 				if (tempUnitList.isEmpty())
 					endTurn();
-				
+
 				currRow = 0;
-				currCol =0;
+				currCol = 0;
 			} else {
 
 				// Remove all of the AI's units from the tempList
@@ -569,8 +572,8 @@ public class GameController {
 
 				System.out.println("Second Player (AI) ends its turn.");
 
-				currCol = currRow =0;
-				
+				currCol = currRow = 0;
+
 				gameOver();
 
 				map.updateObservers();
@@ -598,7 +601,9 @@ public class GameController {
 
 	/**
 	 * Sets the new endColumn. Used in attack and movement.
-	 * @param endRow, the new ending row
+	 * 
+	 * @param endRow
+	 *            , the new ending row
 	 */
 	public void setEndRow(int endRow) {
 		System.out.println("New endRow: " + endRow);
@@ -607,7 +612,9 @@ public class GameController {
 
 	/**
 	 * Sets the new endColumn. Used in attack and movement.
-	 * @param endCol, the new ending column
+	 * 
+	 * @param endCol
+	 *            , the new ending column
 	 */
 	public void setEndColumn(int endCol) {
 		System.out.println("New endCol: " + endCol);
@@ -690,6 +697,7 @@ public class GameController {
 
 	/**
 	 * Checks to see if the game is over. If it is, return true;
+	 * 
 	 * @return if the game is over or not
 	 */
 	public boolean isGameOver() {
@@ -706,6 +714,7 @@ public class GameController {
 
 	/**
 	 * A private Enum class, helps with movement. Prevents.
+	 * 
 	 * @author Brian
 	 *
 	 */
