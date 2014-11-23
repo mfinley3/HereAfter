@@ -17,13 +17,20 @@ Katelyn Hudspeth
 To first get the game running open up the class TRPGUI.java in eclipse and run this java file and once everything has loaded a window will pop up.
 In this new window there will be three options on the right hand side: 'New Game' 'Continue' and 'Quit'. You will want to click on any part of the words 'New Game'.
 After you have clicked on 'New Game' the options will change on the right hand size to the difficulty selection. You will want to click on the word 'Easy' for now. 
-Once you have clicked on 'Easy' you will be taken to a new screen that requires you to enter a username for yourself and then enter a number representing how many of each unit type you want. There are five units to choose from and you can choose a max of five units. Choosing to have one of each unit by entering a 1 in each box will work and  you will have one type of each unit, for now it is recommended that you enter the number 5 into the white box under the soldier unit. Once you have entered a five into the soldier box you may now click on the button at the bottom 'Make team'. This will take you to the map and spawn five soldier units for you to control. Along with clicking the 'Make team' button the window will resize itself so you are able to see a bigger portion of the map. At this point you may resize the screen to your liking so you are able to see both a good amount of the map and the eclipse console at the same time as both will have important information. At this point the game is set up and you are almost ready to play but you should read Information for Game Play first.
+Once you have clicked on 'Easy' you will be taken to a new screen that requires you to enter a username for yourself and then enter a number representing how 
+many of each unit type you want. There are five units to choose from and you can choose a max of five units. Choosing to have one of each unit by entering a 1
+ in each box will work and  you will have one type of each unit, for now it is recommended that you enter the number 5 into the white box under the soldier unit.
+Once you have entered a five into the soldier box you may now click on the button at the bottom 'Make team'. This will take you to the map and spawn five soldier 
+units for you to control. Along with clicking the 'Make team' button the window will resize itself so you are able to see a bigger portion of the map. At this point you 
+may resize the screen to your liking so you are able to see both a good amount of the map and the eclipse console at the same time as both will have important
+information. At this point the game is set up and you are almost ready to play but you should read Information for Game Play first.
 
 **Information for Game Play**
 Some key info you'll want to know: 
 The console will be showing information about what units are being attacked along with where units are moving to.  
-There is a tab near the top right hand side of the map, above the how to play button, this tab will display key information about the current players team. (meaning if it is player ones turn their units info will be shown and if it is player twos turn their units info will be show)
-   The map will highlight the currently selected unit with a blue or red outline depending on the team.
+There is a tab near the top right hand side of the map, above the how to play button, this tab will display key information about the current players team. 
+(meaning if it is player ones turn their units info will be shown and if it is player twos turn their units info will be show)
+The map will highlight the currently selected unit with a blue or red outline depending on the team.
 The map will also gray out units that have already moved for that turn.
 When a new turn starts the players who turn it is will have their units become un-grayed and the other player who is waiting for their turn will have their units grayed. 
 The blue team (player 1) starts in the top right hand corner of the map and the red team  (player 2) starts a little bit Northwest of the bottom left hand corner of the map. 
@@ -64,5 +71,4 @@ tower - this is what the blue team wants to capture
 bridge - no movement affects
 walls - cannot pass through them
 
-**Again it will be necessary to click on the how to play button in game and read the instructions in the pop up window, it is possible to leave this window up throughout the game** 
-
+**Again it will be necessary to click on the how to play button in game and read the instructions in the pop up window, it is possible to leave this window up throughout the game**
