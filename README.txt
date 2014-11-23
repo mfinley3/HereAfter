@@ -42,6 +42,11 @@ Turns will automatically end once all units on a team have moved no need to clic
 Would also recommend looking at the unit information to know the limits and powers of the two units that will be used for now.
 
 **Unit Information**
+Attack: How much damage a unit can do.
+Defense: How much protection a unit has from attacks.
+Health: Remaining units health
+Movement: How far a unit is able to move on the map.
+
 There are only two units that should be used for now. Soldier and zombie.
 Soldier:
 Attack - 30
@@ -70,6 +75,6 @@ path - increases movement by 1: may not actually affect movement yet.
 mountain - move hindrance of 4: should be working
 tower - this is what the blue team wants to capture
 bridge - no movement affects
-walls - cannot pass through them
+walls - cannot walk on them
 
 *Again it will be necessary to click on the how to play button in game and read the instructions in the pop up window, it is possible to leave this window up throughout the game*
