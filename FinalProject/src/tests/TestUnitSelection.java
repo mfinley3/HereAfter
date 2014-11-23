@@ -51,7 +51,7 @@ public class TestUnitSelection {
 		g.setEndRow(2);
 		g.setEndColumn(2);
 		assertTrue(g.getMap().getSpace(2, 2).getCanMoveTo());
-		assertTrue(g.move());
+		g.move();
 		assertFalse(u.canMove());
 		assertFalse(u==g.getUnitOnMap(0, 0));
 		assertTrue(u==g.getUnitOnMap(2,2));
@@ -60,7 +60,7 @@ public class TestUnitSelection {
 		assertTrue(g.getCurrentUnit()==g.getUnitOnMap(1, 0));
 		g.setEndRow(2);
 		g.setEndColumn(2);
-		assertFalse(g.move());
+		g.move();
 		assertTrue(g.getCurrentUnit().canMove());
 	}
 	
@@ -81,53 +81,9 @@ public class TestUnitSelection {
 	public void testAttackAndHeal(){
 		// Test Attack
 		Unit i = new Soldier(Difficulty.EASY.getValue());
-		Unit b = new Soldier(Difficulty.EASY.getValue());
-		Player p = new Player("EB");
-		p.addUnits(b);
-		p.addUnits(i);
-		p.addUnits(new Doctor(Difficulty.EASY.getValue()));
-		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
-		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
-		GameController g = new GameController(p ,Difficulty.EASY);
-		g.setCurrentUnit(1, 0);
-		g.setEndRow(1);
-		g.setEndColumn(0);
-		System.out.println(g.getCurrentUnit().getHealth());
-		assertTrue(g.getCurrentUnit().getHealth()==100);
-		g.setCurrentUnit(0, 0);
-		g.setEndRow(1);
-		g.setEndColumn(0);
+		Unit b = new RunnerAI(Difficulty.EASY.getValue());
 		
-		// Test isAlive
-		
-		g.attack();
-		g.setCurrentUnit(1, 0);
-		System.out.println(g.getCurrentUnit().getHealth());
-		assertTrue(g.getCurrentUnit().getHealth()<100);
-		assertTrue(g.getCurrentUnit().isAlive());
-		g.setCurrentUnit(0, 1);
-		g.attack();
-		
-		g.setCurrentUnit(1, 0);
-		System.out.println(g.getCurrentUnit().getHealth());
-		assertTrue(g.getCurrentUnit().getHealth()<100);
-		assertTrue(g.getCurrentUnit().isAlive());
-		Unit u=g.getCurrentUnit();
-		
-		g.setCurrentUnit(0, 2);
-		g.attack();
-		g.setCurrentUnit(1, 0);
-		System.out.println(g.getCurrentUnit().getHealth());
-		assertTrue(u.getHealth()<100);
-		assertTrue(u.isAlive());
-		
-		g.setCurrentUnit(2, 0);
-		g.attack();
-		g.setCurrentUnit(1, 0);
-		System.out.println(g.getCurrentUnit().getHealth());
-		assertTrue(u.getHealth()<0);
-		assertFalse(u.isAlive());
-		
-		assertTrue(!g.playerTurn());
+		i.reduceHealth(b.getAttack());
+		assertTrue(i.getHealth()<100);
 	}
 }

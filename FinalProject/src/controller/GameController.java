@@ -39,7 +39,7 @@ public class GameController {
 	private int endCol;
 	private Player currPlayer;
 
-	private GameTypeInterface j;
+	private GameTypeInterface gameTupe;
 	private Object winConditions;
 
 	/*
@@ -62,7 +62,7 @@ public class GameController {
 		this.player1 = player1;
 		this.player2 = new AI(i);
 
-		j = new CaptureTower();
+		gameTupe = new CaptureTower();
 		// winConditions = false;
 
 		Stack<Unit> temp = new Stack<Unit>();
@@ -403,7 +403,12 @@ public class GameController {
 
 	public boolean gameOver() {
 		if (!gameOver) {
+			
 			if (checkWinConditions()) {
+				for(Unit u : tempUnitList)
+					u.setCanMove(false);
+				tempUnitList.clear();
+				
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
@@ -417,6 +422,10 @@ public class GameController {
 
 				return true;
 			} else if (player1.everyonesDeadDave()) {
+				for(Unit u : tempUnitList)
+					u.setCanMove(false);
+				tempUnitList.clear();
+				
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
@@ -442,9 +451,9 @@ public class GameController {
 	 * @return Depending on the game type, if the game has been won
 	 */
 	public boolean checkWinConditions() {
-		if (j instanceof gametype.CaptureTower) {
+		if (gameTupe instanceof gametype.CaptureTower) {
 
-			if ((map.getSpace(currCol, currRow) instanceof space.TowerSpace || player2.everyonesDeadDave())) {
+			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2.everyonesDeadDave())) {
 
 				return true;
 			}
@@ -538,6 +547,9 @@ public class GameController {
 				map.updateObservers();
 				if (tempUnitList.isEmpty())
 					endTurn();
+				
+				currRow = 0;
+				currCol =0;
 			} else {
 
 				// Remove all of the AI's units from the tempList
@@ -557,6 +569,8 @@ public class GameController {
 
 				System.out.println("Second Player (AI) ends its turn.");
 
+				currCol = currRow =0;
+				
 				gameOver();
 
 				map.updateObservers();
@@ -582,11 +596,19 @@ public class GameController {
 		return false;
 	}
 
+	/**
+	 * Sets the new endColumn. Used in attack and movement.
+	 * @param endRow, the new ending row
+	 */
 	public void setEndRow(int endRow) {
 		System.out.println("New endRow: " + endRow);
 		this.endRow = endRow;
 	}
 
+	/**
+	 * Sets the new endColumn. Used in attack and movement.
+	 * @param endCol, the new ending column
+	 */
 	public void setEndColumn(int endCol) {
 		System.out.println("New endCol: " + endCol);
 		this.endCol = endCol;
@@ -663,11 +685,13 @@ public class GameController {
 			// Check to see if the game is over
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
 			System.out.println("Numbers on both sides: " + player1.getAliveNum() + ", " + player2.getAliveNum());
-			// checkWinConditions();
-			// gameOver();
 		}
 	}
 
+	/**
+	 * Checks to see if the game is over. If it is, return true;
+	 * @return if the game is over or not
+	 */
 	public boolean isGameOver() {
 		return gameOver;
 	}
@@ -680,6 +704,11 @@ public class GameController {
 		return playerTurn;
 	}
 
+	/**
+	 * A private Enum class, helps with movement. Prevents.
+	 * @author Brian
+	 *
+	 */
 	private enum MoveDirection {
 		UP, DOWN, LEFT, RIGHT;
 	}
