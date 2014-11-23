@@ -4,7 +4,6 @@ import units.*;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class LastStand.
  */

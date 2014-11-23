@@ -1,11 +1,9 @@
 package gametype;
 
-// TODO: Auto-generated Javadoc
 /**
  * Game type where the goal is to capture the tower. Get all the living
  * team members to the tower to win.
  * 
- * @author Brian
  *
  */
 public class CaptureTower implements GameTypeInterface{

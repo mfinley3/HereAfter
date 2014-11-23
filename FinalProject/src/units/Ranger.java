@@ -4,8 +4,6 @@ import item.Item;
 import item.ItemType;
 
 /**
- * @author Chioke
- * 
  * The Class Ranger.
  */
 public class Ranger extends Unit {

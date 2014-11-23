@@ -4,8 +4,6 @@ import item.Item;
 import item.ItemType;
 
 /**
- * @author Chioke
- * 
  * The Class Soldier.
  */
 public class Soldier extends Unit {

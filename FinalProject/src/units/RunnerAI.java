@@ -4,8 +4,6 @@ import item.Item;
 import item.ItemType;
 
 /**
- * @author Chioke
- * 
  * The Class RunnerAI.
  */
 public class RunnerAI extends Unit {

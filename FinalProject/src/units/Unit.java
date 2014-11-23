@@ -6,9 +6,7 @@ import item.ItemType;
 import java.util.ArrayList;
 
 /**
- * @author Chioke
- * 
- *         The Class Unit.
+ * The abstract Unit class. Used in creating new units and keeping track of each of the units stats.
  */
 public abstract class Unit {
 	public ArrayList<Item> itemList = new ArrayList<Item>();

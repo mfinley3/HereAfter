@@ -8,8 +8,6 @@ import units.*;
 /**
  * Going to have a similar design as {@link Player}. In iteration 2, will be able
  * to assign AI behaviors to different units.
- * 
- * @author Brian Seaman
  *
  */
 public class AI {

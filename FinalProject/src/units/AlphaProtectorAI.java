@@ -3,9 +3,7 @@ package units;
 import item.Item;
 import item.ItemType;
 
-/**
- * @author Chioke
- * 
+/** 
  * The Class AlphaProtectorAI.
  */
 public class AlphaProtectorAI extends Unit {

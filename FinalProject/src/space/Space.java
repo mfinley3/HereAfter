@@ -1,6 +1,5 @@
 package space;
 
-// TODO: Auto-generated Javadoc
 /**
  * The abstract space class. Is used to easily create any amount of different types of
  * spaces. Holds all of a spaces information to allow easy addition of new spaces. 

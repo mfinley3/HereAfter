@@ -258,7 +258,6 @@ public class Map extends Observable {
 	 * @return The list of enemy units
 	 */
 	public List<Unit> getEnemyUnits() {
-		// TODO Auto-generated method stub
 		return enemyList;
 	}
 	

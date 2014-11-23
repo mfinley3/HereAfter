@@ -9,8 +9,6 @@ import units.*;;
  * The Player class. Contains all of the player's units (although
  * not their locations on the field), their stats, if they're alive
  * or dead.
- * 
- * @author Brian Seaman
  *
  */
 public class Player {

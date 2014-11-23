@@ -4,8 +4,6 @@ package model;
  * Enum file for AI difficulty. Will be used when creating the enemy mobs and
  * putting them on the map, and while creating them map. Called by the GUI,
  * used in the controller.
- * 
- * @author Brian Seaman
  *
  */
 

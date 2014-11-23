@@ -4,8 +4,7 @@ package item;
 import java.io.Serializable;
 
 /**
- * 
- * @author Chioke
+ * The Item class. Creates and holds all information for items.
  *
  */
 public class Item implements Serializable {

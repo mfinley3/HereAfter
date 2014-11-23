@@ -17,7 +17,6 @@ import units.*;
  * sets up players, calculate which map is needed, sends messages to the enemy
  * team factory, etc.
  * 
- * @author Brian Seaman
  *
  */
 public class GameController {
@@ -140,8 +139,8 @@ public class GameController {
 	}
 
 	/**
-	 * Move a selected Unit to a another space. Checks to see if the player
-	 * can move to the targeted space, and if can, move them.
+	 * Move a selected Unit to a another space. Checks to see if the player can
+	 * move to the targeted space, and if can, move them.
 	 * 
 	 * @param sr
 	 *            , the starting row
@@ -200,7 +199,7 @@ public class GameController {
 
 	}
 
-	/** 
+	/**
 	 * Get it to attack
 	 * 
 	 * 
@@ -213,10 +212,10 @@ public class GameController {
 	public void attack() {
 		// Checks to see if the target is in range.
 		if (endRow != 51 || endCol != 51) {
-			
+
 			// Makes sure that the target is not the current unit
 			if (currUnit != map.getUnitAt(endRow, endCol)) {
-				
+
 				// Checks to see if on the same side.
 				if (!SameTeam()) {
 
@@ -294,7 +293,7 @@ public class GameController {
 	// }
 	// }
 
-	/** 
+	/**
 	 * Check to see if units are on the same team. If they are, return true.
 	 * 
 	 * @return whether or not the target and the current are on the same team.
@@ -393,7 +392,7 @@ public class GameController {
 		}
 	}
 
-	/** 
+	/**
 	 * Checks both of the player's aliveUnits to see if all of their units are
 	 * dead. If either of them are out of units they can move, return true and
 	 * end the game. Checked after every move and attack.
@@ -524,7 +523,8 @@ public class GameController {
 
 	/**
 	 * When called, ends a turn. Checks to see whose turn it is, clears the
-	 * temporary unit list, sets the current unit to null. Sets the can move to false.
+	 * temporary unit list, sets the current unit to null. Sets the can move to
+	 * false.
 	 * 
 	 */
 	public void endTurn() {
@@ -702,8 +702,8 @@ public class GameController {
 	}
 
 	/**
-	 * Called upon to check if the player has won. Returns true if the
-	 * player wins the game.
+	 * Called upon to check if the player has won. Returns true if the player
+	 * wins the game.
 	 * 
 	 * @return Whether or not the game has won
 	 */
@@ -714,6 +714,7 @@ public class GameController {
 	/**
 	 * Checks to see if the Player is currently moving. If the player is, return
 	 * true.
+	 * 
 	 * @return Whether or not the player is moving.
 	 */
 	public boolean playerTurn() {

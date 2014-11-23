@@ -1,8 +1,6 @@
 package units;
 
-/**
- * @author Chioke
- * 
+/** 
  * A factory for creating AI Units.
  */
 public class AIFactory {

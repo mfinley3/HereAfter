@@ -1,6 +1,5 @@
 package space;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class for a Path Space.
  */

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 import space.Space;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FourCorners.
  *
- * @author Brian Seaman
  */
 public class FourCorners implements GameTypeInterface {
 

@@ -12,9 +12,6 @@ import javax.swing.JFrame;
  * 
  * Sets up the GUI with the title of the frame.  This is in charge of the entire frame, and is what is run when the game is run.
  * 
- * 
- * @author Katelyn
- * 
  */
 
 public class TRPGGUI {

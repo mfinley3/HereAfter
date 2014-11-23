@@ -12,9 +12,6 @@ import javax.swing.JTextArea;
 
 import controller.GameController;
 
-
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class TextView.
  */

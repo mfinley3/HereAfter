@@ -1,9 +1,7 @@
 package item;
 
 /**
- * @author Chioke
- * 
- * The Enum ItemType.
+ * The Enum for ItemType.
  */
 public enum ItemType {
 	ATK, DEF, HP;

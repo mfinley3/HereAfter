@@ -1,8 +1,7 @@
 package item;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ItemSpace.
+ * The Class ItemSpace, Not yet used in the game.
  */
 public class ItemSpace {
 

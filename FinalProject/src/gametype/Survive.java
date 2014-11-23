@@ -1,6 +1,5 @@
 package gametype;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Survive.
  */

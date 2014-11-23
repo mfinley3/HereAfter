@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class HelpWindow.
  */

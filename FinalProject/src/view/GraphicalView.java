@@ -26,7 +26,6 @@ import units.Soldier;
 import units.Unit;
 import controller.GameController;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GraphicalView.
  */
