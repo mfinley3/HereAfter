@@ -3,8 +3,9 @@ package units;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Chioke
+ * 
  * The Class AlphaProtectorAI.
  */
 public class AlphaProtectorAI extends Unit {
@@ -19,5 +20,5 @@ public class AlphaProtectorAI extends Unit {
 		super("AlphaProtector", new Item("Big Daddy", ItemType.HP), 35, 65, 100, 1, 2, difficulty);
 		
 	}
-	//7
-}
+
+} // end of AlphaProtectorAI

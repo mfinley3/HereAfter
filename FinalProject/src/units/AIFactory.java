@@ -1,8 +1,9 @@
 package units;
 
-// TODO: Auto-generated Javadoc
 /**
- * A factory for creating AI objects.
+ * @author Chioke
+ * 
+ * A factory for creating AI Units.
  */
 public class AIFactory {
 

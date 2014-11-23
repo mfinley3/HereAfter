@@ -3,11 +3,10 @@ package units;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Sniper.
- *
  * @author Chioke
+ * 
+ * The Class Sniper.
  */
 public class Sniper extends Unit {
 
@@ -21,7 +20,6 @@ public class Sniper extends Unit {
 		
 		// Attack is doubled at creation so Attack is actually 70
 		super("Sniper", new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK), 35, 10, 100, 5, 6, difficulty);
-		
 	}
 
-}
+} // end of Sniper

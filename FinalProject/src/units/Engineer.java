@@ -3,11 +3,10 @@ package units;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Engineer.
- *
  * @author Chioke
+ * 
+ * The Class Engineer.
  */
 public class Engineer extends Unit {
 
@@ -20,7 +19,7 @@ public class Engineer extends Unit {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		
 		// Defense is doubled at creation so Defense is actually 50
-		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 25, 100, 5, 2, difficulty);
-		
+		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 25, 100, 5, 2, difficulty);	
 	}
-}
+	
+} // end of Engineer

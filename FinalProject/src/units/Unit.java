@@ -5,40 +5,22 @@ import item.ItemType;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Unit.
- *
  * @author Chioke
+ * 
+ *         The Class Unit.
  */
 public abstract class Unit {
-	// small change to fix git not working
-	// Every Unit gets a blank list of items
-	/** The item list. */
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 
-	/** The can move. */
 	private boolean canMove;
-
-	/** The attack. */
 	private int attack;
-
-	/** The defense. */
 	private int defense;
-
-	/** The movement. */
 	private int movement;
-
-	/** The health. */
 	private int health;
-
-	/** The range. */
 	private int range;
 
-	/** The unit type. */
 	private String unitType;
-
-	/** The difficulty. */
 	private Double difficulty;
 
 	private boolean attackSet;
@@ -48,34 +30,26 @@ public abstract class Unit {
 	/**
 	 * Instantiates a new unit.
 	 *
-	 * @param unitType
-	 *            the unit type
-	 * @param item
-	 *            the item
-	 * @param attack
-	 *            the attack
-	 * @param defense
-	 *            the defense
-	 * @param health
-	 *            the health
-	 * @param movement
-	 *            the movement
-	 * @param range
-	 *            the range
-	 * @param difficulty
-	 *            the difficulty
+	 * @param unitType		the unit type
+	 * @param item			the given item
+	 * @param attack		the attack power
+	 * @param defense		the defense power
+	 * @param health		the health amount
+	 * @param movement		the amount of movement
+	 * @param range			the range
+	 * @param difficulty	the difficulty
 	 */
-	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty) {
+	public Unit(String unitType, Item item, int attack, int defense,
+			int health, int movement, int range, double difficulty) {
 
 		this.unitType = unitType;
-		itemList.add(item); // Adds each Unit's given item
+		itemList.add(item); // Adds each Unit's given item to their list
 		this.attack = attack;
 		this.defense = defense;
 		this.health = health;
 		this.movement = movement;
 		this.difficulty = difficulty;
 		this.range = range;
-
 	}
 
 	/**
@@ -102,7 +76,8 @@ public abstract class Unit {
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Runner") || unitType.equals("Spitter")
+					|| unitType.equals("AlphaProtector")) {
 				hpMod *= difficulty;
 				health = health * hpMod;
 			}
@@ -113,7 +88,6 @@ public abstract class Unit {
 					if ((item.getItemType() == ItemType.HP)) {
 						hpMod++;
 						health = health * hpMod;
-						// Grabbing a health item will replenish your life
 					}
 				}
 			}
@@ -125,8 +99,7 @@ public abstract class Unit {
 	/**
 	 * Reduce health.
 	 *
-	 * @param damage
-	 *            the damage
+	 * @param damage	the damage
 	 */
 	public void reduceHealth(int damage) {
 		if (damage <= getDefense()) {
@@ -151,7 +124,8 @@ public abstract class Unit {
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Runner") || unitType.equals("Spitter")
+					|| unitType.equals("AlphaProtector")) {
 				atkMod *= difficulty;
 				attack *= atkMod;
 			}
@@ -185,7 +159,8 @@ public abstract class Unit {
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Runner") || unitType.equals("Spitter")
+					|| unitType.equals("AlphaProtector")) {
 				defMod *= difficulty;
 				defense *= defMod;
 			}
@@ -225,8 +200,7 @@ public abstract class Unit {
 	/**
 	 * Sets the can move.
 	 *
-	 * @param canMove
-	 *            the new can move
+	 * @param canMove	the new can move
 	 */
 	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
@@ -253,11 +227,12 @@ public abstract class Unit {
 		for (Item s : itemList) {
 			inventory += s.toString();
 		}
-		
+
+		// This way stats doesn't display negative health.
 		int displayHealth = getHealth();
-		if(displayHealth <= 0)
+		if (displayHealth <= 0)
 			displayHealth = 0;
-			
+
 		String result = "Unit Type: " + getUnitType();
 		result += "\nCurrent Health: " + displayHealth;
 		result += "\nCurrent Attack Power: " + getAttack();

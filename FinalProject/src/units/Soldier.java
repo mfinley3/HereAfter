@@ -3,11 +3,10 @@ package units;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Soldier.
- *
  * @author Chioke
+ * 
+ * The Class Soldier.
  */
 public class Soldier extends Unit {
 	
@@ -21,7 +20,6 @@ public class Soldier extends Unit {
 		
 		// Attack is doubled at creation so Attack is actually 60
 		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 30, 20, 100, 6, 3, difficulty);
-		
 	}
 
-}
+} // end of Soldier

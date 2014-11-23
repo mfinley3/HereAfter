@@ -3,11 +3,10 @@ package units;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Doctor.
- *
  * @author Chioke
+ * 
+ * The Class Doctor.
  */
 public class Doctor extends Unit {
 
@@ -21,6 +20,6 @@ public class Doctor extends Unit {
 		
 		// Health is doubled at creation so Health is actually 200
 		super("Doctor", new Item("Emergency Kit", ItemType.HP), 20, 10, 100, 5, 2, difficulty);
-
 	}
-}
+	
+} // end of Doctor
