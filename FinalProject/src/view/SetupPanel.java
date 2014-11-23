@@ -407,7 +407,7 @@ public class SetupPanel extends JPanel implements Observer {
 
 	/**
 	 * Actual map. This sets up the actual map. It adds the graphical and text views, as well as keeps all of 
-	 * the buttons availible to work. 
+	 * the buttons available to work. 
 	 * 
 	 */
 	private void actualMap() {
@@ -488,6 +488,11 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * This paintComponent changes depending on what the splash screen is.  If it is the screen for the user to select
+	 * their units, then one of each of the units are drawn.  This does not happen however if the splash screen is one
+	 * of the other 2 set up screens to select to have a new game or select the level.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D gr = (Graphics2D) g;
@@ -533,7 +538,7 @@ public class SetupPanel extends JPanel implements Observer {
 
 		/**
 		 * If the mouse is pressed, it keeps track of what step in the set up the gui is at.  Depending on that, it will
-		 * change the image that is in the background, and what options are ble to be selected.
+		 * change the image that is in the background, and what options are able to be selected.
 		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -621,12 +626,20 @@ public class SetupPanel extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * This update is called through the Map.  Every time something happens, the map calls update, and the username
+	 * that is in the upper hand corner changes so that it is the current player.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		currentUserName.setText(controller.getCurrPlayerName());
 		repaint();
 	}
 
+	/**
+	 * This just returns if the game is running or not.
+	 * @return gameIsRunning
+	 */
 	public boolean getGameIsRunning() {
 		// TODO Auto-generated method stub
 		return gameIsRunning;
