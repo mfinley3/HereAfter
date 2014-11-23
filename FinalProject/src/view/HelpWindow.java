@@ -13,34 +13,21 @@ import javax.swing.JTextArea;
  */
 public class HelpWindow extends JFrame implements Runnable {
 
-	/** The goals. */
 	private JTextArea goals;
-	
-	/** The movement. */
 	private JTextArea movement;
-	
-	/** The attacks. */
 	private JTextArea attacks;
-	
-	/** The item. */
 	private JTextArea item;
-	
-	/** The wait. */
 	private JTextArea wait;
-	
 	private JTextArea endTurn;
 	
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public void run() {
 		
 	}
 	
 	/**
-	 * Instantiates a new help window.
+	 * Instantiates a new help window. It creates different inner windows that print out different aspects of the game.  
+	 * This is to help the user understand their goal, and how they are supposed to accomplish it.
 	 */
 	public HelpWindow() {
 

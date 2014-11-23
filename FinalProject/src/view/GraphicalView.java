@@ -32,29 +32,18 @@ import controller.GameController;
  */
 public class GraphicalView extends JPanel implements Observer {
 
-	/** The column. */
 	private int clickX, clickY, row, column;
-
-	/** The controller. */
 	private GameController controller;
-
-	/** The first click. */
 	private boolean firstClick;
-
-	/** The map. */
 	private Map map;
 
-	/** The current spaces. */
 	private Space[][] currentSpaces;
-
-	/** The current units. */
 	private Unit[][] currentUnits;
-
-	/** The runner can't move. */
 	private BufferedImage bridge, corner, mountain, path, tower, wall, waste, water, doctor, engineer, ranger, sniper, soldier, runner, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, runSelected;
 
 	/**
-	 * Instantiates a new graphical view.
+	 * Instantiates a new graphical view.  It also loads all of the images that are going to be used in the game,
+	 * such as the map grounds, and the different units.
 	 */
 	public GraphicalView() {
 		firstClick = true;
@@ -109,7 +98,8 @@ public class GraphicalView extends JPanel implements Observer {
 	}
 
 	/**
-	 * Sets the controller.
+	 * Sets the controller.  It is called my SetupPanel, which sends it the controller so that the Graphical view
+	 * can interact with the controller.
 	 *
 	 * @param temp
 	 *            the new controller
@@ -126,32 +116,20 @@ public class GraphicalView extends JPanel implements Observer {
 	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
-		/**
-		 * Event were a mouse button is clicked, Is not used.
-		 * 
-		 * @param evt
-		 *            Takes in a clicked event
-		 */
 		public void mouseClicked(MouseEvent evt) {
 
 		}
 
-		/**
-		 * Event were the mouse is moved. If the mouse moves and drawing is
-		 * toggled then the shape will be drawn.
-		 * 
-		 * @param evt
-		 *            Takes in a moved event
-		 */
 		public void mouseMoved(MouseEvent evt) {
 
 		}
 
 		/**
-		 * Event were the mouse is pressed. Toggles drawing on and off.
-		 * 
-		 * @param evt
-		 *            Takes in a mouse pressed event.
+		 * When the mouse is pressed, it will take the coordinates of the mouse and divide by 96, which is the number
+		 * of pixels that each space is wide and long.  This way, the row and column in which the user clicked it kept.
+		 * If it is the first click, then it will save that unit as the current unit, sending the controller it's location.
+		 * If it is the second click, that is the destination row and column, which is sent to the controller so that the
+		 * controller can tell the map to change the position of the unit.
 		 */
 		public void mousePressed(MouseEvent evt) {
 
@@ -162,7 +140,6 @@ public class GraphicalView extends JPanel implements Observer {
 			column = clickY / 96;
 
 			if (firstClick) {
-				System.out.println("NESDF");
 				controller.setCurrentUnit(row, column);
 				if (controller.getCurrentUnit() != null) {
 					if (controller.getCurrentUnit().canMove())
@@ -184,22 +161,11 @@ public class GraphicalView extends JPanel implements Observer {
 			}
 		}
 
-		/**
-		 * Event were the mouse entering the screen. Is not used.
-		 * 
-		 * @param evt
-		 *            Takes in a mouse entered event.
-		 */
 		public void mouseEntered(MouseEvent evt) {
 
 		}
 
-		/**
-		 * Event were the mouse is released. Is not used.
-		 * 
-		 * @param evt
-		 *            Takes in a mouse released event.
-		 */
+
 		public void mouseReleased(MouseEvent evt) {
 
 		}
@@ -214,21 +180,13 @@ public class GraphicalView extends JPanel implements Observer {
 
 		}
 
-		/**
-		 * Event were the mouse is dragged. Is not used.
-		 * 
-		 * @param evt
-		 *            Takes in a mouse dragged event.
-		 */
 		public void mouseDragged(MouseEvent evt) {
 
 		}
-	} // end JPanel class
+	} 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	/**
+	 * The map calls notify Observers, and the graphical view will repaint the map to have the changed that occurred.
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -236,14 +194,11 @@ public class GraphicalView extends JPanel implements Observer {
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
 		repaint();
-		System.out.println("firstCLICK");
 		firstClick = true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	/**
+	 * This will first print ever space with the default map background.  It will then print a unit if applicable.
 	 */
 	@Override
 	public void paintComponent(Graphics g) {

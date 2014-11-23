@@ -77,6 +77,10 @@ public class TRPGGUI {
 
 	}
 
+	/**
+	 * This is called once the unit team has been selected, so that the user can make the game bigger, and is 
+	 * able to see more of the map. 
+	 */
 	public static void canResize() {
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension d = tk.getScreenSize();
