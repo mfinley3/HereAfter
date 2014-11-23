@@ -2,12 +2,13 @@ package space;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class WallSpace.
+ * The Class for a WallSpace.
  */
 public class WallSpace extends Space{
 
 	/**
 	 * Instantiates a new wall space.
+	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public WallSpace(){
 		super("Wall", false, false, true, 10000, -10000);

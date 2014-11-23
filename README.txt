@@ -3,7 +3,8 @@ Project Manager: Ben Whitely
 
 Course:  335
 Instructor:  R. Mercer
-Due Date:  ---
+Iteration 1 Due Date:  11/23/14
+Iteration 2 Due Date:    ---
 Description:  A tactical role playing game set in a post-apocalyptic time period
               after massive outbreak infected millions and turned them into monsters.
 Authors:

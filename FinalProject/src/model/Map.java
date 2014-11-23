@@ -17,13 +17,13 @@ import space.TowerSpace;
 import space.WallSpace;
 import space.WastelandSpace;
 import space.WaterSpace;
+
 import units.RunnerAI;
 import units.Unit;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Map class, creates a new map.
- * Also handles moving units, adding units to the map
+ * Also handles moving units, adding/removing units on the map
  * and checking to see if a space is occupied.
  */
 public class Map extends Observable {
@@ -109,7 +109,6 @@ public class Map extends Observable {
 		}
 		
 		addEnemies(difficulty);
-		System.out.println("DONE");
 		setChanged();
 		notifyObservers();
 		
@@ -118,6 +117,11 @@ public class Map extends Observable {
 	//IMPORTANT DO NOT TOUCH - this method is only temporary and is only to only be used for the first iteration.
 	//I will be adding the enemies to the map via a file reader for the second iteration. Meaning this method will be deleted
 	//along with anything inside of it. So I would highly recommend not adding functionality to it because I will just be deleting it.
+	/**
+	 * Adds the enemies to the map.
+	 *
+	 * @param difficulty The difficulty level to set the enemies to.
+	 */
 	private void addEnemies(double difficulty) {
 	
 		enemyList = new ArrayList<Unit>();
@@ -186,6 +190,7 @@ public class Map extends Observable {
 			map[startCol][startRow].setOccupied(false);
 			map[moveToCol][moveToRow].setOccupied(true);
 		}
+		
 		setChanged();
 		notifyObservers();
 
@@ -194,19 +199,18 @@ public class Map extends Observable {
 	/**
 	 * Gets the unit at the requested location.
 	 *
-	 * @param row the row
-	 * @param col the col
-	 * @return Unit, Returns the 'full' Unit at requested spot.
+	 * @param row The row of the requested unit.
+	 * @param col The column of the requested unit.
+	 * @return Returns the 'full' Unit at requested spot.
 	 */
 	public Unit getUnitAt(int row, int col) {
-	
 		return unitsOnMap[col][row];
 	}
 
 	/**
 	 * Method to get the array of spaces in other words the actual map.
 	 *
-	 * @return map, Map is the Space[][].
+	 * @return map Map is the Space[][].
 	 */
 	public Space[][] getSpaces() {
 
@@ -216,7 +220,7 @@ public class Map extends Observable {
 	/**
 	 * Method to get the array of Units in other words the Units on the map.
 	 *
-	 * @return unitsOnMap, unitsOnMap is the Unit[][]
+	 * @return unitsOnMap unitsOnMap is the Unit[][]
 	 */
 	public Unit[][] getUnits() {
 
@@ -228,7 +232,7 @@ public class Map extends Observable {
 	 *
 	 * @param row The row of the requested space.
 	 * @param column the column of the requested space.
-	 * @return true, If the space is occupied.
+	 * @return True If the space is occupied.
 	 */
 	public boolean isOccupied(int row, int column) {
 		if (map[column][row].getOccupied() == true) {
@@ -242,17 +246,25 @@ public class Map extends Observable {
 	 *
 	 * @param row The row of the requested space. 
 	 * @param column The column of the requested space.
-	 * @return the space at the requested spot.
+	 * @return The space at the requested spot.
 	 */
 	public Space getSpace(int row, int column){
 		return map[row][column];
 	}
 
+	/**
+	 * Gets the enemy units.
+	 *
+	 * @return The list of enemy units
+	 */
 	public List<Unit> getEnemyUnits() {
 		// TODO Auto-generated method stub
 		return enemyList;
 	}
 	
+	/**
+	 * Resets all the spaces in map so they can't be moved to.
+	 */
 	public void resetMapCanMove(){
 		for(int i =0; i < map.length; i++)
 			for(int j =0; j < map[i].length; j++)
@@ -260,6 +272,12 @@ public class Map extends Observable {
 			
 	}
 
+	/**
+	 * Removes the unit from the map.
+	 *
+	 * @param row the row of the unit that needs to be removed.
+	 * @param col the column of the unit that needs to be removed.
+	 */
 	public void removeUnit(int row, int col) {
 	
 		unitsOnMap[row][col] = null;
@@ -269,6 +287,9 @@ public class Map extends Observable {
 		
 	}
 	
+	/**
+	 * A method that can be called from any class to get the the GUI to update the map.
+	 */
 	public void updateObservers(){
 		setChanged();
 		notifyObservers();

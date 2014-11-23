@@ -2,41 +2,29 @@ package space;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Space.
+ * The abstract space class. Is used to easily create any amount of different types of
+ * spaces. Holds all of a spaces information to allow easy addition of new spaces. 
  */
 public abstract class Space {
 
-	/** The space type. */
 	private String spaceType;
-	
-	/** The walkable. */
 	private Boolean walkable;
-	
-	/** The occupied. */
 	private Boolean occupied;
-	
-	/** The visable. */
 	private Boolean visable;
-	
-	/** The can move to. */
 	private boolean canMoveTo;
-	
-	/** The move hinderance. */
 	private int moveHinderance;
-	
-	/** The visablity modifier. */
 	private int visablityModifier;
 	
 	
 	/**
 	 * Instantiates a new space.
 	 *
-	 * @param spaceType the space type
-	 * @param walkable the walkable
-	 * @param occupied the occupied
-	 * @param visable the visable
-	 * @param moveHinderance the move hinderance
-	 * @param visablityModifier the visablity modifier
+	 * @param spaceType The space type
+	 * @param walkable The param that gets if the space can be walked on.
+	 * @param occupied If the space is occupied or not.
+	 * @param visable Whether or not the spaces is visible to the player.
+	 * @param moveHinderance The move hindrance of the space.
+	 * @param visablityModifier The visibility modifier of the space.
 	 */
 	public Space (String spaceType, Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance, int visablityModifier){
 		
@@ -52,70 +40,70 @@ public abstract class Space {
 	/**
 	 * Gets the space type.
 	 *
-	 * @return the spaceType
+	 * @return The space type.
 	 */
 	public String getSpaceType() {
 		return spaceType;
 	}
 
 	/**
-	 * Gets the walkable.
+	 * Gets if the space can be walked on or not.
 	 *
-	 * @return the walkable
+	 * @return if the space is walkable or not.
 	 */
 	public Boolean getWalkable() {
 		return walkable;
 	}
 
 	/**
-	 * Gets the move hinderance.
+	 * Gets the move hindrance of the space.
 	 *
-	 * @return the moveHinderance
+	 * @return The move Hindrance of the space.
 	 */
 	public int getMoveHinderance() {
 		return moveHinderance;
 	}
 
 	/**
-	 * Gets the occupied.
+	 * Gets if the space occupied or not.
 	 *
-	 * @return the occupied
+	 * @return true, if the space is occupied.
 	 */
 	public Boolean getOccupied() {
 		return occupied;
 	}
 
 	/**
-	 * Sets the occupied.
+	 * Sets the space to be occupied or not.
 	 *
-	 * @param occupied the occupied to set
+	 * @param Occupied is what the spaces occupied variable needs to be changed to.
 	 */
 	public void setOccupied(Boolean occupied) {
 		this.occupied = occupied;
 	}
 
 	/**
-	 * Gets the visable.
+	 * Gets whether or not the space is visible.
 	 *
-	 * @return the visible
+	 * @return if the space is visible or not.
 	 */
 	public Boolean getVisable() {
 		return visable;
 	}
 
 	/**
-	 * Sets the visable.
+	 * Sets the space to be visible or not.
 	 *
-	 * @param visable the visible to set
+	 * @param visable is what the spaces visible variable needs to be changed to.
 	 */
 	public void setVisable(Boolean visable) {
 		this.visable = visable;
 	}
 
 	/**
-	 * Gets the visablity modifier.
+	 * Gets the visibility modifier.
 	 *
-	 * @return the visablityModifier
+	 * @return the visibility Modifier of the space
 	 */
 	public int getVisablityModifier() {
 		return visablityModifier;
@@ -125,7 +113,7 @@ public abstract class Space {
 	 * Sets if a current unit can move to this spot. Is called before
 	 * and after a move occurs or a unit is selected/deselected.
 	 *
-	 * @param canMove the new can move to
+	 * @param canMove The new can move to.
 	 */
 	public void setCanMoveTo(boolean canMove){
 		
@@ -135,7 +123,7 @@ public abstract class Space {
 	/**
 	 * Gets the can move to.
 	 *
-	 * @return the can move to
+	 * @return if the space can be moved to.
 	 */
 	public boolean getCanMoveTo(){
 		return canMoveTo;
