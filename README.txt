@@ -69,6 +69,6 @@ path - increases movement by 1: may not actually affect movement yet.
 mountain - move hindrance of 4: should be working
 tower - this is what the blue team wants to capture
 bridge - no movement affects
-walls - cannot pass through them
+walls - cannot walk on them
 
 *Again it will be necessary to click on the how to play button in game and read the instructions in the pop up window, it is possible to leave this window up throughout the game*
