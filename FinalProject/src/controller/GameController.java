@@ -360,7 +360,7 @@ public class GameController {
 	 */
 	private void actAttack() {
 		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
-		System.out.println(map.getUnitAt(endRow, endCol).getHealth());
+		System.out.println("The attacked " + map.getUnitAt(endRow, endCol).getUnitType() + " was left with " + map.getUnitAt(endRow, endCol).getHealth() + " health after the attack");
 
 		targetDead(endRow, endCol);
 	}
@@ -688,7 +688,7 @@ public class GameController {
 
 			// Check to see if the game is over
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
-			System.out.println("Numbers on both sides: " + player1.getAliveNum() + ", " + player2.getAliveNum());
+			System.out.println("Number of units remaining on both sides: Player One - " + player1.getAliveNum() + ", Player Two - " + player2.getAliveNum());
 		}
 	}
 
