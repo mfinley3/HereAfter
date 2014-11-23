@@ -71,4 +71,4 @@ tower - this is what the blue team wants to capture
 bridge - no movement affects
 walls - cannot pass through them
 
-**Again it will be necessary to click on the how to play button in game and read the instructions in the pop up window, it is possible to leave this window up throughout the game**
+*Again it will be necessary to click on the how to play button in game and read the instructions in the pop up window, it is possible to leave this window up throughout the game*
