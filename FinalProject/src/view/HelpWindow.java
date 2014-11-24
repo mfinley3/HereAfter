@@ -17,6 +17,7 @@ public class HelpWindow extends JFrame implements Runnable {
 	private JTextArea attacks;
 	private JTextArea item;
 	private JTextArea wait;
+	private JTextArea turns;
 	private JTextArea endTurn;
 	
 	@Override
@@ -30,11 +31,11 @@ public class HelpWindow extends JFrame implements Runnable {
 	 */
 	public HelpWindow() {
 
-		this.setSize(375, 660);
+		this.setSize(400, 750);
 		this.setVisible(true);
-		this.setLocation(1105, 0);
+		this.setLocation(900, 0);
 		this.setTitle("HereAfter: Help Screen");	
-		this.setLayout(new GridLayout(6,1));
+		this.setLayout(new GridLayout(7,1));
 		
 		goals = new JTextArea();
 		goals.setEditable(false);
@@ -75,6 +76,14 @@ public class HelpWindow extends JFrame implements Runnable {
 				   + "     current Unit to remain where they are, by clicking the Unit\n"
 				   + "     you'd like to 'Wait', then clicking the 'Wait' button."); 
 		
+		turns = new JTextArea();
+		turns.setEditable(false);
+		turns.setBackground(Color.WHITE);
+		turns.setText("TURNS: Each player will get a chance to take thier turn. Starting \n" 
+				   + "     with player one (the blue team). Once all of a players living units \n"
+				   + "     have moved or the end turn button is clicked it will automatically \n"
+				   + "     change to the other players turn \n"); 
+		
 		endTurn = new JTextArea();
 		endTurn.setEditable(false);
 		endTurn.setBackground(Color.WHITE);
@@ -86,6 +95,7 @@ public class HelpWindow extends JFrame implements Runnable {
 		this.add(attacks);
 		this.add(item);
 		this.add(wait);
+		this.add(turns);
 		this.add(endTurn);
 	}
 
