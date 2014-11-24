@@ -67,7 +67,6 @@ Item: HP Boost: Not yet implemented
 Would also recommend looking at space information to understand how spaces affect you. 
 
 **Space Information**
-
 There are a few types of spaces each affects movement in some way.
 Wasteland - no movement affects
 water - move hindrance of 5: may not actually hinder movement yet. 
