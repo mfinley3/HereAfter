@@ -15,7 +15,7 @@ Chioke Aarhus
 Katelyn Hudspeth
 
 **Instructions**
-To first get the game running open up the class TRPGUI.java in eclipse and run this java file and once everything has loaded a window will pop up.
+To first get the game running open up the class TRPGUI.java located in the 'view' package using eclipse and run this java file and once everything has loaded a window will pop up.
 In this new window there will be three options on the right hand side: 'New Game' 'Continue' and 'Quit'. You will want to click on any part of the words 'New Game'.
 After you have clicked on 'New Game' the options will change on the right hand size to the difficulty selection. You will want to click on the word 'Easy' for now. 
 Once you have clicked on 'Easy' you will be taken to a new screen that requires you to enter a username for yourself and then enter a number representing how 
@@ -39,7 +39,9 @@ The blue teams goal is to kill all of the zombies or capture one square of the t
 The red team or the zombies goal is to kill all of the blue teams units without dying or giving up the tower they spawn by. 
 To learn the basic commands and how to get units to execute them it is essential you click on the 'How to play' button on the right hand side of the game map.
 Turns will automatically end once all units on a team have moved no need to click the end turn button unless you want to end the turn early. 
+Each unit currently can either attack, move or wait currently. They cannot do more than one thing in a turn so choose how to approach enemies carefully.
 Would also recommend looking at the unit information to know the limits and powers of the two units that will be used for now.
+The name of the user whose turn it is will appear in the top left hand corner of the window once the game has started and will change after a turn has ended.
 
 **Unit Information**
 Attack: How much damage a unit can do.
