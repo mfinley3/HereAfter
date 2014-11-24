@@ -41,6 +41,7 @@ To learn the basic commands and how to get units to execute them it is essential
 Turns will automatically end once all units on a team have moved no need to click the end turn button unless you want to end the turn early. 
 Each unit currently can either attack, move or wait currently. They cannot do more than one thing in a turn so choose how to approach enemies carefully.
 Would also recommend looking at the unit information to know the limits and powers of the two units that will be used for now.
+The name of the user whose turn it is will appear in the top left hand corner of the window once the game has started and will change after a turn has ended.
 
 **Unit Information**
 Attack: How much damage a unit can do.
