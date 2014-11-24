@@ -15,7 +15,7 @@ Chioke Aarhus
 Katelyn Hudspeth
 
 **Instructions**
-To first get the game running open up the class TRPGUI.java in eclipse and run this java file and once everything has loaded a window will pop up.
+To first get the game running open up the class TRPGUI.java located in the 'view' package using eclipse and run this java file and once everything has loaded a window will pop up.
 In this new window there will be three options on the right hand side: 'New Game' 'Continue' and 'Quit'. You will want to click on any part of the words 'New Game'.
 After you have clicked on 'New Game' the options will change on the right hand size to the difficulty selection. You will want to click on the word 'Easy' for now. 
 Once you have clicked on 'Easy' you will be taken to a new screen that requires you to enter a username for yourself and then enter a number representing how 
