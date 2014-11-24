@@ -39,6 +39,7 @@ The blue teams goal is to kill all of the zombies or capture one square of the t
 The red team or the zombies goal is to kill all of the blue teams units without dying or giving up the tower they spawn by. 
 To learn the basic commands and how to get units to execute them it is essential you click on the 'How to play' button on the right hand side of the game map.
 Turns will automatically end once all units on a team have moved no need to click the end turn button unless you want to end the turn early. 
+Each unit currently can either attack, move or wait currently. They cannot do more than one thing in a turn so choose how to approach enemies carefully.
 Would also recommend looking at the unit information to know the limits and powers of the two units that will be used for now.
 
 **Unit Information**
