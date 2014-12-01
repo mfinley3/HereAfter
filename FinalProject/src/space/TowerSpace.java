@@ -10,7 +10,7 @@ public class TowerSpace extends Space {
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public TowerSpace() {
-		super("Tower", true, false, true, 0, 1000);
+		super("Tower", true, false, true, 1, 1000);
 		
 	}
 

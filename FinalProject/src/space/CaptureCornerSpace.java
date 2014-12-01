@@ -10,7 +10,7 @@ public class CaptureCornerSpace extends Space{
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public CaptureCornerSpace() {
-		super("CaptureCorner", true, false, true, 0, 2);
+		super("CaptureCorner", true, false, true, 1, 2);
 		
 	}
 

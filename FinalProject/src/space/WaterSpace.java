@@ -10,7 +10,7 @@ public class WaterSpace extends Space{
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public WaterSpace() {
-		super("Water", true, false, true, 0, -3);
+		super("Water", true, false, true, 5, -3);
 		
 	}
 

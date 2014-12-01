@@ -99,7 +99,8 @@ public class GameController {
 				currRow = row;
 				currCol = col;
 				setCanMove(row, col, true);
-				System.out.println("New CurrUnit " + currUnit.getUnitType() + " at: (" + currRow + ", " + currCol + ")");
+				System.out.println("New CurrUnit " + currUnit.getUnitType()
+						+ " at: (" + currRow + ", " + currCol + ")");
 				map.updateObservers();
 				return true;
 			}
@@ -155,9 +156,13 @@ public class GameController {
 
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
-				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
+				System.out.println("(" + currRow + ", " + currCol
+						+ ") Move to (" + endRow + ", " + endCol + ")");
 				if (currUnit != null) {
-					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
+					if (currUnit.canMove()
+							&& (!map.isOccupied(endRow, endCol) || map
+									.getUnitAt(endRow, endCol) == currUnit)
+							&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 						map.resetMapCanMove();
 						map.moveUnit(currRow, currCol, endRow, endCol);
 
@@ -186,16 +191,21 @@ public class GameController {
 				if (currUnit == null)
 					JOptionPane.showMessageDialog(null, "Please select a Unit");
 				else if (!currUnit.canMove())
-					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
+					JOptionPane.showMessageDialog(null,
+							"Unit can't move anymore. Select a new unit.");
 				else if (map.isOccupied(endRow, endCol))
-					JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
+					JOptionPane.showMessageDialog(null,
+							"Space is occupied, you can't move there");
 				else if (!map.getSpace(endRow, endCol).getCanMoveTo())
-					JOptionPane.showMessageDialog(null, "Space is out of range.");
+					JOptionPane.showMessageDialog(null,
+							"Space is out of range.");
 				return;
 			} else
-				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
+				JOptionPane.showMessageDialog(null,
+						"You can't move on top of walls!");
 		} else
-			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
+			JOptionPane.showMessageDialog(null,
+					"Pick a space to move to before you try moving...");
 
 	}
 
@@ -220,7 +230,8 @@ public class GameController {
 				if (!SameTeam()) {
 
 					// Checks to see if either of the units are false.
-					if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
+					if (currUnit != null
+							&& map.getUnitAt(endRow, endCol) != null) {
 						// if both exist, check if one can move
 						if (inAttackRange(endRow, endCol)) {
 							actAttack();
@@ -242,13 +253,17 @@ public class GameController {
 							System.out.println("Enemy out of attack range.");
 						}
 					} else
-						JOptionPane.showMessageDialog(null, "Nothing to Attack!");
+						JOptionPane.showMessageDialog(null,
+								"Nothing to Attack!");
 				} else
-					JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
+					JOptionPane.showMessageDialog(null,
+							"You cannot attack your own teammates...");
 			} else
-				JOptionPane.showMessageDialog(null, "You can't attack youself!");
+				JOptionPane
+						.showMessageDialog(null, "You can't attack youself!");
 		} else
-			JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
+			JOptionPane.showMessageDialog(null,
+					"Pick a unit to attack before you try attacking...");
 	}
 
 	// /**
@@ -359,7 +374,10 @@ public class GameController {
 	 */
 	private void actAttack() {
 		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
-		System.out.println("The attacked " + map.getUnitAt(endRow, endCol).getUnitType() + " was left with " + map.getUnitAt(endRow, endCol).getHealth() + " health after the attack");
+		System.out.println("The attacked "
+				+ map.getUnitAt(endRow, endCol).getUnitType()
+				+ " was left with " + map.getUnitAt(endRow, endCol).getHealth()
+				+ " health after the attack");
 
 		targetDead(endRow, endCol);
 	}
@@ -411,11 +429,13 @@ public class GameController {
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
-				JOptionPane.showMessageDialog(null, "Player " + player1.getID() + " won!");
+				JOptionPane.showMessageDialog(null, "Player " + player1.getID()
+						+ " won!");
 				System.out.println("Player " + player1.getID() + " won!");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you finished: " + player1.getGamesFinished());
+				System.out.println("Games you finished: "
+						+ player1.getGamesFinished());
 				System.out.println("Your team stats: ");
 				System.out.println(player1.getTeamStats());
 
@@ -428,11 +448,13 @@ public class GameController {
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
-				JOptionPane.showMessageDialog(null, "AI won! Better luck next time...");
+				JOptionPane.showMessageDialog(null,
+						"AI won! Better luck next time...");
 				System.out.println("AI won! Better luck next time...");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you've finished: " + player1.getGamesFinished());
+				System.out.println("Games you've finished: "
+						+ player1.getGamesFinished());
 				System.out.println("AI team stats: ");
 				System.out.println(player2.getTeamStats());
 
@@ -452,7 +474,8 @@ public class GameController {
 	public boolean checkWinConditions() {
 		if (gameTupe instanceof gametype.CaptureTower) {
 
-			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2.everyonesDeadDave())) {
+			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2
+					.everyonesDeadDave())) {
 
 				return true;
 			}
@@ -629,16 +652,22 @@ public class GameController {
 	private void setCanMove(int row, int col, boolean set) {
 		map.getSpace(currRow, currCol).setCanMoveTo(true);
 		if (row < 49)
-			canMoveHelper(currUnit.getMovement() - 1, row + 1, col, MoveDirection.DOWN);
+			canMoveHelper(currUnit.getMovement(), row + 1, col,
+					MoveDirection.DOWN);
 		if (row > 0)
-			canMoveHelper(currUnit.getMovement() - 1, row - 1, col, MoveDirection.UP);
+			canMoveHelper(currUnit.getMovement(), row - 1, col,
+					MoveDirection.UP);
 		if (col < 49)
-			canMoveHelper(currUnit.getMovement() - 1, row, col + 1, MoveDirection.RIGHT);
+			canMoveHelper(currUnit.getMovement(), row, col + 1,
+					MoveDirection.RIGHT);
 		if (col > 0)
-			canMoveHelper(currUnit.getMovement() - 1, row, col - 1, MoveDirection.LEFT);
+			canMoveHelper(currUnit.getMovement(), row, col - 1,
+					MoveDirection.LEFT);
 	}
 
 	/**
+	 * TODO Reduce the amount I can
+	 * 
 	 * Helper method for setCanMove.
 	 * 
 	 * @param movesAvail
@@ -646,20 +675,27 @@ public class GameController {
 	 * @param col
 	 */
 	private void canMoveHelper(int movesAvail, int row, int col, MoveDirection m) {
-
-		movesAvail = movesAvail - map.getSpace(row, col).getMoveHinderance();
-		if (movesAvail < 0 || map.getSpace(row, col).getCanMoveTo()) {
+		// if(!map.getSpace(row, col).getWalkable())
+		// System.out.println(map.getSpace(row, col).getMoveHinderance());
+		if (movesAvail < map.getSpace(row, col).getMoveHinderance()) {
+			// || map.getSpace(row, col).getCanMoveTo()
 			return;
 		} else {
+			movesAvail = movesAvail
+					- map.getSpace(row, col).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
 			if (row < 49 && m != MoveDirection.UP)
-				canMoveHelper(movesAvail - 1, row + 1, col, m);
+				if (map.getSpace(row + 1, col).getWalkable())
+					canMoveHelper(movesAvail, row + 1, col, m);
 			if (row > 0 && m != MoveDirection.DOWN)
-				canMoveHelper(movesAvail - 1, row - 1, col, m);
+				if (map.getSpace(row - 1, col).getWalkable())
+					canMoveHelper(movesAvail, row - 1, col, m);
 			if (col < 49 && m != MoveDirection.LEFT)
-				canMoveHelper(movesAvail - 1, row, col + 1, m);
+				if (map.getSpace(row, col + 1).getWalkable())
+					canMoveHelper(movesAvail, row, col + 1, m);
 			if (col > 0 && m != MoveDirection.RIGHT)
-				canMoveHelper(movesAvail - 1, row, col - 1, m);
+				if (map.getSpace(row, col - 1).getWalkable())
+					canMoveHelper(movesAvail, row, col - 1, m);
 		}
 	}
 
@@ -687,8 +723,13 @@ public class GameController {
 				tempUnitList.remove(temp);
 
 			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
-			System.out.println("Number of units remaining on both sides: Player One - " + player1.getAliveNum() + ", Player Two - " + player2.getAliveNum());
+			System.out.println("Unit " + temp.getUnitType() + " at (" + row
+					+ ", " + col + ") is dead!");
+			System.out
+					.println("Number of units remaining on both sides: Player One - "
+							+ player1.getAliveNum()
+							+ ", Player Two - "
+							+ player2.getAliveNum());
 		}
 	}
 
@@ -729,6 +770,6 @@ public class GameController {
 	 *
 	 */
 	private enum MoveDirection {
-		UP, DOWN, LEFT, RIGHT;
+		UP, DOWN, LEFT, RIGHT; // NOX, NOY;
 	}
 }

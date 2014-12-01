@@ -10,7 +10,7 @@ public class MountainSpace extends Space{
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public MountainSpace() {
-		super("Mountain", true, false, true, 3, 5);
+		super("Mountain", true, false, true, 4, 5);
 		
 	}
 

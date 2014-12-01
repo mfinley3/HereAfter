@@ -10,7 +10,7 @@ public class BridgeSpace extends Space{
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public BridgeSpace() {
-		super("Bridge", true, false, true, 0, 0);
+		super("Bridge", true, false, true, 1, 0);
 		
 	}
 

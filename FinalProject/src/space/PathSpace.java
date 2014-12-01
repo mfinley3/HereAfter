@@ -10,7 +10,7 @@ public class PathSpace extends Space{
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public PathSpace() {
-		super("Path", true, false, true, -1, 0);
+		super("Path", true, false, true, 1, 0);
 		
 	}
 
