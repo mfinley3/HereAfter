@@ -98,7 +98,7 @@ public class GameController {
 				currUnit = map.getUnitAt(row, col);
 				currRow = row;
 				currCol = col;
-				setCanMove(row, col, true);
+				setCanMove(row, col);
 				System.out.println("New CurrUnit " + currUnit.getUnitType()
 						+ " at: (" + currRow + ", " + currCol + ")");
 				map.updateObservers();
@@ -153,15 +153,14 @@ public class GameController {
 	 *            , the ending column
 	 */
 	public void move() {
-
+		// Check to see if the end Row and End Col point to something
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
 				System.out.println("(" + currRow + ", " + currCol
 						+ ") Move to (" + endRow + ", " + endCol + ")");
 				if (currUnit != null) {
 					if (currUnit.canMove()
-							&& (!map.isOccupied(endRow, endCol) || map
-									.getUnitAt(endRow, endCol) == currUnit)
+							&& (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol)==currUnit)
 							&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 						map.resetMapCanMove();
 						map.moveUnit(currRow, currCol, endRow, endCol);
@@ -649,24 +648,29 @@ public class GameController {
 	 * @param currRow
 	 * @param currCol
 	 */
-	private void setCanMove(int row, int col, boolean set) {
+	private void setCanMove(int row, int col) {
 		map.getSpace(currRow, currCol).setCanMoveTo(true);
+
 		if (row < 49)
-			canMoveHelper(currUnit.getMovement(), row + 1, col,
-					MoveDirection.DOWN);
+			if (map.getSpace(row + 1, col).getWalkable())
+				canMoveHelper(currUnit.getMovement(), row + 1, col,
+						MoveDirection.DOWN);
 		if (row > 0)
-			canMoveHelper(currUnit.getMovement(), row - 1, col,
-					MoveDirection.UP);
+			if (map.getSpace(row - 1, col).getWalkable())
+				canMoveHelper(currUnit.getMovement(), row - 1, col,
+						MoveDirection.UP);
 		if (col < 49)
-			canMoveHelper(currUnit.getMovement(), row, col + 1,
-					MoveDirection.RIGHT);
+			if (map.getSpace(row, col + 1).getWalkable())
+				canMoveHelper(currUnit.getMovement(), row, col + 1,
+						MoveDirection.RIGHT);
 		if (col > 0)
-			canMoveHelper(currUnit.getMovement(), row, col - 1,
-					MoveDirection.LEFT);
+			if (map.getSpace(row, col - 1).getWalkable())
+				canMoveHelper(currUnit.getMovement(), row, col - 1,
+						MoveDirection.LEFT);
 	}
 
 	/**
-	 * TODO Reduce the amount I can
+	 * TODO Get it working
 	 * 
 	 * Helper method for setCanMove.
 	 * 
@@ -675,14 +679,9 @@ public class GameController {
 	 * @param col
 	 */
 	private void canMoveHelper(int movesAvail, int row, int col, MoveDirection m) {
-		// if(!map.getSpace(row, col).getWalkable())
-		// System.out.println(map.getSpace(row, col).getMoveHinderance());
-		if (movesAvail < map.getSpace(row, col).getMoveHinderance()) {
-			// || map.getSpace(row, col).getCanMoveTo()
-			return;
-		} else {
-			movesAvail = movesAvail
-					- map.getSpace(row, col).getMoveHinderance();
+		
+		if (movesAvail >= map.getSpace(row, col).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
+			movesAvail = movesAvail-map.getSpace(row, col).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
 			if (row < 49 && m != MoveDirection.UP)
 				if (map.getSpace(row + 1, col).getWalkable())
