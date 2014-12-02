@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import space.WallSpace;
 import space.WastelandSpace;
 import space.WaterSpace;
 import units.AlphaProtectorAI;
+import units.CarrierAI;
 import units.ZombieAI;
 import units.SpitterAI;
 import units.Unit;
@@ -34,6 +36,7 @@ public class Map extends Observable {
 	private Unit[][] unitsOnMap;
 	private Scanner scan;
 	private List<Unit> enemyList;
+	private List<Point> goodUnitPositions;
 
 	/**
 	 * Instantiates a new map.
@@ -81,6 +84,7 @@ public class Map extends Observable {
 				for (int n = 0; n < map.length; n++) {
 
 					String mapLetterEquivalence = scan.next();
+					System.out.print(mapLetterEquivalence);
 
 					if (mapLetterEquivalence.equals("W"))
 						map[m][n] = new WastelandSpace();
@@ -155,6 +159,13 @@ public class Map extends Observable {
 		unitsOnMap[43][38] = new SpitterAI(difficulty);
 		map[43][38].setOccupied(true);
 		enemyList.add(unitsOnMap[43][38]);
+		unitsOnMap[44][38] = new CarrierAI(difficulty);
+		map[44][38].setOccupied(true);
+		enemyList.add(unitsOnMap[44][38]);
+		//IMPORTANT READ ABOVE
+		unitsOnMap[45][38] = new CarrierAI(difficulty);
+		map[45][38].setOccupied(true);
+		enemyList.add(unitsOnMap[45][38]);
 
 	}
 
@@ -165,12 +176,15 @@ public class Map extends Observable {
 	 */
 	public void addUnitsToMap(Stack<Unit> unitList) {
 
+		goodUnitPositions = new ArrayList<Point>();
+		
 		int k = 0;
 		int r = 2;
 
 		while (!unitList.isEmpty()) {
 			unitsOnMap[k][r] = unitList.pop();
 			map[k][r].setOccupied(true);
+			goodUnitPositions.add(new Point(k,r));
 			if (r != 0) {
 				r--;
 			} else {
@@ -197,11 +211,25 @@ public class Map extends Observable {
 			unitsOnMap[startCol][startRow] = null;
 			map[startCol][startRow].setOccupied(false);
 			map[moveToCol][moveToRow].setOccupied(true);
+			for(Point p: goodUnitPositions){
+				if(p.getX() == startCol && p.getY() == startRow){
+					goodUnitPositions.remove(p);
+					goodUnitPositions.add(new Point(moveToCol,moveToRow));
+					break;
+				}
+			}
 		}
 		
 		setChanged();
 		notifyObservers();
 
+	}
+
+	/**
+	 * @return the goodUnitPositions
+	 */
+	public List<Point> getGoodUnitPositions() {
+		return goodUnitPositions;
 	}
 
 	/**

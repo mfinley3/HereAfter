@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import model.Map;
 import space.Space;
 import units.AlphaProtectorAI;
+import units.CarrierAI;
 import units.Doctor;
 import units.Engineer;
 import units.Ranger;
@@ -44,7 +45,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
-	private BufferedImage bridge, corner, mountain, path, tower, wall, waste, water, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected;
+	private BufferedImage bridge, corner, mountain, path, tower, wall, waste, water, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
 
 	/**
 	 * Instantiates a new graphical view.  It also loads all of the images that are going to be used in the game,
@@ -84,6 +85,7 @@ public class GraphicalView extends JPanel implements Observer {
 			alpha = ImageIO.read(new File("AlphaProtector.png"));
 			zDog = ImageIO.read(new File("zDog.png"));
 			spitter = ImageIO.read(new File("Spitter.png"));
+			carrier = ImageIO.read(new File("carrier.png"));
 
 			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
 			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
@@ -94,6 +96,7 @@ public class GraphicalView extends JPanel implements Observer {
 			alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
 			zDogCantMove = ImageIO.read(new File("zDogCantMove.png"));
 			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
+			carrierCantMove = ImageIO.read(new File("carrierCantMove.png"));
 			
 			docSelected = ImageIO.read(new File("Doctor1Selected.png"));
 			engSelected = ImageIO.read(new File("Engineer1Selected.png"));
@@ -104,6 +107,7 @@ public class GraphicalView extends JPanel implements Observer {
 			alphaSelected = ImageIO.read(new File("AlphaProtectorSelected.png"));
 			zDogSelected = ImageIO.read(new File("zDogSelected.png"));
 			spitterSelected = ImageIO.read(new File("SpitterSelected.png"));
+			carrierSelected = ImageIO.read(new File("carrierSelected.png"));
 			
 
 		} catch (IOException e) {
@@ -264,6 +268,8 @@ public class GraphicalView extends JPanel implements Observer {
 							g2.drawImage(zDogSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof SpitterAI) {
 							g2.drawImage(spitterSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof CarrierAI) {
+							g2.drawImage(carrierSelected, x, y, null);
 						}
 
 					} else {
@@ -313,6 +319,11 @@ public class GraphicalView extends JPanel implements Observer {
 								g2.drawImage(spitter, x, y, null);
 							else
 								g2.drawImage(spitterCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof CarrierAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(carrier, x, y, null);
+							else
+								g2.drawImage(carrierCantMove, x, y, null);
 						}
 						
 					}
