@@ -39,13 +39,13 @@ public class Map extends Observable {
 	 *
 	 * @param difficulty Takes in a double representing the difficulty. Is used to pick what map to make.
 	 */
-	public Map(double difficulty) {
+	public Map(double difficulty, String gameType) {
 
 		map = new Space[50][50];
 		unitsOnMap= new Unit[50][50];
 
-		if (difficulty == 1) {
-			File easyMap = new File("Easy Map.txt");
+		if (gameType.equalsIgnoreCase("Tower")) {
+			File easyMap = new File("Tower.txt");
 			try {
 				scan = new Scanner(easyMap);
 			} catch (FileNotFoundException e) {
@@ -54,7 +54,7 @@ public class Map extends Observable {
 			}
 
 		}
-		if (difficulty == 2) {
+		if (gameType.equalsIgnoreCase("Corner")) {
 			File mediumMap = new File("Medium Map.txt");
 			try {
 				scan = new Scanner(mediumMap);
@@ -64,7 +64,7 @@ public class Map extends Observable {
 			}
 
 		}
-		if (difficulty == 3) {
+		if (gameType.equalsIgnoreCase("Survive")) {
 			File hardMap = new File("Hard Map.txt");
 			try {
 				scan = new Scanner(hardMap);
