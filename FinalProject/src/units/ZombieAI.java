@@ -15,7 +15,7 @@ public class ZombieAI extends Unit {
 	 */
 	public ZombieAI(double difficulty) {
 		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
-		super("Zombie", new Item("Emergency Kit", ItemType.HP), 45, 20, 100, 5, 1, difficulty);
+		super("Zombie", new Item("None", ItemType.NONE), 45, 20, 100, 5, 1, difficulty);
 	}
 
 } // end of RunnerAI

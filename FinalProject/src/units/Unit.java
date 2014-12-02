@@ -74,10 +74,8 @@ public abstract class Unit {
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter")
-					|| unitType.equals("AlphaProtector")) {
-				hpMod *= difficulty;
-				health = health * hpMod;
+			if (itemList.get(0).equals(ItemType.NONE)){
+				
 			}
 
 			// Only non-AI characters can benefit from items

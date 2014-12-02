@@ -10,7 +10,7 @@ public class WallSpace extends Space{
 	 * SpaceType/IsTheSpaceWalkable/IsThe spaceOccupied/IsTheSpaceVisible/MoveHindranceOfTheSpace/VisiablityOfTheSpace
 	 */
 	public WallSpace(){
-		super("Wall", false, false, true, 10000, -10000);
+		super("Wall", true, false, true, 10000, -10000);
 		
 	}
 

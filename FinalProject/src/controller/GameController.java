@@ -712,7 +712,7 @@ public class GameController {
 	private void canMoveHelper(int movesAvail, int row, int col) {
 		
 		if (movesAvail >= map.getSpace(col, row).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
-			movesAvail = movesAvail-map.getSpace(row, col).getMoveHinderance();
+			movesAvail = movesAvail-map.getSpace(col, row).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
 			if (row < 49)
 				if (map.getSpace(row + 1, col).getWalkable())
