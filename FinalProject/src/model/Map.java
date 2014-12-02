@@ -140,6 +140,10 @@ public class Map extends Observable {
 		map[40][40].setOccupied(true);
 		enemyList.add(unitsOnMap[40][40]);
 		//IMPORTANT READ ABOVE
+		unitsOnMap[40][41] = new SpitterAI(difficulty);
+		map[40][41].setOccupied(true);
+		enemyList.add(unitsOnMap[40][41]);
+		//IMPORTANT READ ABOVE
 		unitsOnMap[41][38] = new ZombieDogAI(difficulty);
 		map[41][38].setOccupied(true);
 		enemyList.add(unitsOnMap[41][38]);
@@ -147,9 +151,11 @@ public class Map extends Observable {
 		unitsOnMap[42][38] = new ZombieDogAI(difficulty);
 		map[42][38].setOccupied(true);
 		enemyList.add(unitsOnMap[42][38]);
+		//IMPORTANT READ ABOVE
+		unitsOnMap[43][38] = new SpitterAI(difficulty);
+		map[43][38].setOccupied(true);
+		enemyList.add(unitsOnMap[43][38]);
 
-		
-		
 	}
 
 	/**
