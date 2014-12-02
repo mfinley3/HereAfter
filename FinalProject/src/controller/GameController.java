@@ -47,8 +47,8 @@ public class GameController {
 	 * @param player1
 	 * @param i
 	 */
-	public GameController(Player player1, Difficulty i) {
-		this.map = new Map(i.getValue());
+	public GameController(Player player1, Difficulty i, String gameT) {
+		this.map = new Map(i.getValue(), gameT);
 		this.player1 = player1;
 		this.player2 = new AI(i);
 
