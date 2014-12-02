@@ -4,5 +4,5 @@ package item;
  * The Enum for ItemType.
  */
 public enum ItemType {
-	ATK, DEF, HP;
+	ATK, DEF, HP, NONE;
 }
