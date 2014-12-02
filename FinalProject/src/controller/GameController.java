@@ -652,21 +652,17 @@ public class GameController {
 		map.getSpace(currRow, currCol).setCanMoveTo(true);
 
 		if (row < 49)
-			if (map.getSpace(row + 1, col).getWalkable())
-				canMoveHelper(currUnit.getMovement(), row + 1, col,
-						MoveDirection.DOWN);
+			if (map.getSpace(row + 1, currCol).getWalkable())
+				canMoveHelper(currUnit.getMovement(), row + 1, col);
 		if (row > 0)
 			if (map.getSpace(row - 1, col).getWalkable())
-				canMoveHelper(currUnit.getMovement(), row - 1, col,
-						MoveDirection.UP);
+				canMoveHelper(currUnit.getMovement(), row - 1, col);
 		if (col < 49)
 			if (map.getSpace(row, col + 1).getWalkable())
-				canMoveHelper(currUnit.getMovement(), row, col + 1,
-						MoveDirection.RIGHT);
+				canMoveHelper(currUnit.getMovement(), row, col + 1);
 		if (col > 0)
 			if (map.getSpace(row, col - 1).getWalkable())
-				canMoveHelper(currUnit.getMovement(), row, col - 1,
-						MoveDirection.LEFT);
+				canMoveHelper(currUnit.getMovement(), row, col - 1);
 	}
 
 	/**
@@ -678,23 +674,23 @@ public class GameController {
 	 * @param row
 	 * @param col
 	 */
-	private void canMoveHelper(int movesAvail, int row, int col, MoveDirection m) {
+	private void canMoveHelper(int movesAvail, int row, int col) {
 		
-		if (movesAvail >= map.getSpace(row, col).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
+		if (movesAvail >= map.getSpace(col, row).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
 			movesAvail = movesAvail-map.getSpace(row, col).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
-			if (row < 49 && m != MoveDirection.UP)
+			if (row < 49)
 				if (map.getSpace(row + 1, col).getWalkable())
-					canMoveHelper(movesAvail, row + 1, col, m);
-			if (row > 0 && m != MoveDirection.DOWN)
+					canMoveHelper(movesAvail, row + 1, col);
+			if (row > 0)
 				if (map.getSpace(row - 1, col).getWalkable())
-					canMoveHelper(movesAvail, row - 1, col, m);
-			if (col < 49 && m != MoveDirection.LEFT)
+					canMoveHelper(movesAvail, row - 1, col);
+			if (col < 49)
 				if (map.getSpace(row, col + 1).getWalkable())
-					canMoveHelper(movesAvail, row, col + 1, m);
-			if (col > 0 && m != MoveDirection.RIGHT)
+					canMoveHelper(movesAvail, row, col + 1);
+			if (col > 0)
 				if (map.getSpace(row, col - 1).getWalkable())
-					canMoveHelper(movesAvail, row, col - 1, m);
+					canMoveHelper(movesAvail, row, col - 1);
 		}
 	}
 
