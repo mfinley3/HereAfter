@@ -1,8 +1,11 @@
 package view;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -305,8 +308,19 @@ public class GraphicalView extends JPanel implements Observer {
 								g2.drawImage(spitterCantMove, x, y, null);
 						}
 					}
+					
+					///////
+					// TODO Display which spaces can be moved to
+					if(currentSpaces[col][row].getCanMoveTo()){
+						g2.setColor(Color.green);
+						Stroke oldStroke = g2.getStroke();
+						g2.setStroke(new BasicStroke(2));
+						g2.drawRect(x, y, 96, 96);
+						g2.setStroke(oldStroke);
+					}
+					/////////
+					
 					x += 96;
-
 				}
 				y += 96;
 			}
