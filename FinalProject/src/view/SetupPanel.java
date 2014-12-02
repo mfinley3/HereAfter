@@ -45,14 +45,15 @@ import java.awt.event.MouseMotionListener;
  */
 public class SetupPanel extends JPanel implements Observer {
 
-	private BufferedImage background, setUp1, setUp2, soldier, doctor,
+	private BufferedImage background, setUp1, setUpLevel, setUpType, soldier, doctor,
 			engineer, ranger, sniper;
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn;
-	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning;
+	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning, selectType;
 	private GameController controller;
 	private Difficulty difficulty;
+	private String type;
 	
 	private JPanel mainPanel;
 	private JTabbedPane views;
@@ -72,13 +73,13 @@ public class SetupPanel extends JPanel implements Observer {
 		try {
 			background = ImageIO.read(new File("unitSelect.jpg"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
-			setUp2 = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
+			setUpLevel = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
 			ranger = ImageIO.read(new File("Ranger1.png"));
 			sniper = ImageIO.read(new File("sniper1.PNG"));
 			soldier = ImageIO.read(new File("soldier1.png"));
-
+			setUpType = ImageIO.read(new File("GameTypeSelection.png"));
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -86,6 +87,7 @@ public class SetupPanel extends JPanel implements Observer {
 		startUp1 = true;
 		selectLevel = false;
 		selectUnits = false;
+		selectType = false;
 		selected = true;
 		
 		mainPanel = this;
@@ -295,7 +297,7 @@ public class SetupPanel extends JPanel implements Observer {
 					gameIsRunning = true;
 					TRPGGUI.canResize();
 					repaint();
-					controller = new GameController(player, difficulty);
+					controller = new GameController(player, difficulty, type);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
 					controller.getMap().addObserver((Observer) text);
@@ -505,6 +507,7 @@ public class SetupPanel extends JPanel implements Observer {
 			selectUnits = false;
 			startUp1 = false;
 			selectLevel = false;
+			selectType = false;
 			
 		}
 		if (selectUnits) {
@@ -520,7 +523,9 @@ public class SetupPanel extends JPanel implements Observer {
 		} else if (startUp1) {
 			gr.drawImage(setUp1, 0, 0, null);
 		} else if (selectLevel) {
-			gr.drawImage(setUp2, 0, 0, null);
+			gr.drawImage(setUpLevel, 0, 0, null);
+		} else if(selectType) {
+			gr.drawImage(setUpType, 0, 0, null);
 		}
 		
 	}
@@ -552,7 +557,7 @@ public class SetupPanel extends JPanel implements Observer {
 
 					// This means there is a new game
 					// go to the second page with the level options
-					selectLevel = true;
+					selectType = true;
 					startUp1 = false;
 
 					repaint();
@@ -567,7 +572,33 @@ public class SetupPanel extends JPanel implements Observer {
 
 					System.exit(0);
 				}
-			} else if (selectLevel) {
+			} else if(selectType) {
+				if (clickX > 630 && clickX < 960 && clickY > 230
+						&& clickY < 270) {
+					// This means they select "Capture the tower"
+					// go to the page with the level options
+					selectType = false;
+					selectLevel = true;
+					type = "tower";
+					repaint();
+				} else if (clickX > 635 && clickX < 960 && clickY > 280
+						&& clickY < 320) {
+					// This means they select "Seize the corners"
+					selectType = false;
+					selectLevel = true;
+					type = "corner";
+					repaint();
+					} else if (clickX > 710 && clickX < 880 && clickY > 330
+						&& clickY < 370) {
+					// This means they select "Survival"
+					selectType = false;
+					selectLevel = true;
+					type = "survive";
+					repaint();
+				}
+			}
+			
+			else if (selectLevel) {
 				if (clickX > 750 && clickX < 850 && clickY > 235
 						&& clickY < 275) {
 					// This means the difficulty is easy
