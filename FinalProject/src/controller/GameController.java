@@ -36,7 +36,7 @@ public class GameController {
 	private int endCol;
 	private Player currPlayer;
 
-	private GameTypeInterface gameTupe;
+	private GameTypeInterface gameType;
 	private Object winConditions;
 
 	/**
@@ -52,11 +52,16 @@ public class GameController {
 		this.player1 = player1;
 		this.player2 = new AI(i);
 
-		gameTupe = new CaptureTower();
+		if(gameT.equalsIgnoreCase("corner"))
+			gameType = new FourCorners();
+		else if (gameT.equalsIgnoreCase("survive"))
+			gameType = new Survive(10);
+		else
+			gameType = new CaptureTower();
 		// winConditions = false;
 
 		Stack<Unit> temp = new Stack<Unit>();
-
+		
 		// Put the player's units into a stack and put it into the Map
 		for (Unit k : player1.getTeam()) {
 			k.setCanMove(true);
@@ -471,7 +476,7 @@ public class GameController {
 	 * @return Depending on the game type, if the game has been won
 	 */
 	public boolean checkWinConditions() {
-		if (gameTupe instanceof gametype.CaptureTower) {
+		if (gameType instanceof gametype.CaptureTower) {
 
 			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2
 					.everyonesDeadDave())) {

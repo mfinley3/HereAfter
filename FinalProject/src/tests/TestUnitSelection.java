@@ -17,7 +17,7 @@ public class TestUnitSelection {
 		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
 		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 
-		GameController g = new GameController(p, Difficulty.EASY);
+		GameController g = new GameController(p, Difficulty.EASY, "tower");
 		System.out.println(g.getMap().toString());
 		Unit u = g.getUnitOnMap(2, 0);
 		assertTrue(u!=null);
@@ -42,7 +42,7 @@ public class TestUnitSelection {
 		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
 		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 		
-		GameController g = new GameController(p, Difficulty.EASY);
+		GameController g = new GameController(p, Difficulty.EASY, "tower");
 		Unit u = g.getUnitOnMap(0, 0);
 		assertTrue(u!=null);
 		g.setCurrentUnit(0, 0);
@@ -73,7 +73,7 @@ public class TestUnitSelection {
 		p.addUnits(new Ranger(Difficulty.EASY.getValue()));
 		p.addUnits(new Sniper(Difficulty.EASY.getValue()));
 		
-		GameController g = new GameController(p, Difficulty.EASY);
+		GameController g = new GameController(p, Difficulty.EASY, "tower");
 		g.setCurrentUnit(0, 0);
 	}
 	
