@@ -17,12 +17,14 @@ import javax.swing.JPanel;
 
 import model.Map;
 import space.Space;
+import units.AlphaProtectorAI;
 import units.Doctor;
 import units.Engineer;
 import units.Ranger;
 import units.RunnerAI;
 import units.Sniper;
 import units.Soldier;
+import units.SpitterAI;
 import units.Unit;
 import controller.GameController;
 
@@ -38,7 +40,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
-	private BufferedImage bridge, corner, mountain, path, tower, wall, waste, water, doctor, engineer, ranger, sniper, soldier, runner, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, runSelected;
+	private BufferedImage bridge, corner, mountain, path, tower, wall, waste, water, doctor, engineer, ranger, sniper, soldier, runner, alpha, spitter, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, runnerCantMove, alphaCantMove, spitterCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, runSelected, alphaSelected, spitterSelected;
 
 	/**
 	 * Instantiates a new graphical view.  It also loads all of the images that are going to be used in the game,
@@ -74,27 +76,38 @@ public class GraphicalView extends JPanel implements Observer {
 			ranger = ImageIO.read(new File("Ranger1.png"));
 			sniper = ImageIO.read(new File("sniper1.PNG"));
 			soldier = ImageIO.read(new File("soldier1.png"));
-			runner = ImageIO.read(new File("Zombie.png"));
+			runner = ImageIO.read(new File("Runner.png"));
+			alpha = ImageIO.read(new File("AlphaProtector.png"));
+			spitter = ImageIO.read(new File("Spitter.png"));
 
 			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
 			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
 			rangCantMove = ImageIO.read(new File("Ranger1CantMove.png"));
 			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
 			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
-			runnerCantMove = ImageIO.read(new File("ZombieCantMove.png"));
-
+			runnerCantMove = ImageIO.read(new File("RunnerCantMove.png"));
+			alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
+			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
+			
 			docSelected = ImageIO.read(new File("Doctor1Selected.png"));
 			engSelected = ImageIO.read(new File("Engineer1Selected.png"));
 			rangSelected = ImageIO.read(new File("Ranger1Selected.png"));
 			sinpSelected = ImageIO.read(new File("sniper1Selected.png"));
 			soldSelected = ImageIO.read(new File("soldier1Selected.png"));
-			runSelected = ImageIO.read(new File("ZombieSelected.png"));
+			runSelected = ImageIO.read(new File("RunnerSelected.png"));
+			alphaSelected = ImageIO.read(new File("AlphaProtectorSelected.png"));
+			spitterSelected = ImageIO.read(new File("SpitterSelected.png"));
+			
 
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
 
 	}
+	
+	public static String baseDir = System.getProperty("user.dir")
+			+ System.getProperty("file.separator") + "Images"
+			+ System.getProperty("file.separator");
 
 	/**
 	 * Sets the controller.  It is called my SetupPanel, which sends it the controller so that the Graphical view
@@ -242,6 +255,10 @@ public class GraphicalView extends JPanel implements Observer {
 							g2.drawImage(soldSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof RunnerAI) {
 							g2.drawImage(runSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
+							g2.drawImage(alphaSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof SpitterAI) {
+							g2.drawImage(spitterSelected, x, y, null);
 						}
 
 					} else {
@@ -276,6 +293,16 @@ public class GraphicalView extends JPanel implements Observer {
 								g2.drawImage(runner, x, y, null);
 							else
 								g2.drawImage(runnerCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(alpha, x, y, null);
+							else
+								g2.drawImage(alphaCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof SpitterAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(spitter, x, y, null);
+							else
+								g2.drawImage(spitterCantMove, x, y, null);
 						}
 					}
 					x += 96;
