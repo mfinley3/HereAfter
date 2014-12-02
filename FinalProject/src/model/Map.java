@@ -21,6 +21,7 @@ import units.AlphaProtectorAI;
 import units.ZombieAI;
 import units.SpitterAI;
 import units.Unit;
+import units.ZombieDogAI;
 
 /**
  * The Map class, creates a new map.
@@ -139,11 +140,11 @@ public class Map extends Observable {
 		map[40][40].setOccupied(true);
 		enemyList.add(unitsOnMap[40][40]);
 		//IMPORTANT READ ABOVE
-		unitsOnMap[41][38] = new SpitterAI(difficulty);
+		unitsOnMap[41][38] = new ZombieDogAI(difficulty);
 		map[41][38].setOccupied(true);
 		enemyList.add(unitsOnMap[41][38]);
 		//IMPORTANT READ ABOVE
-		unitsOnMap[42][38] = new SpitterAI(difficulty);
+		unitsOnMap[42][38] = new ZombieDogAI(difficulty);
 		map[42][38].setOccupied(true);
 		enemyList.add(unitsOnMap[42][38]);
 
