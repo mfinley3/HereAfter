@@ -311,7 +311,7 @@ public class GraphicalView extends JPanel implements Observer {
 					
 					///////
 					// TODO Display which spaces can be moved to
-					if(currentSpaces[col][row].getCanMoveTo()){
+					if(currentSpaces[row][col].getCanMoveTo()){
 						g2.setColor(Color.green);
 						Stroke oldStroke = g2.getStroke();
 						g2.setStroke(new BasicStroke(2));
