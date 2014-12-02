@@ -9,6 +9,7 @@ import java.util.Stack;
 import javax.swing.JOptionPane;
 
 import model.*;
+import space.*;
 import units.*;
 
 /**
@@ -480,11 +481,40 @@ public class GameController {
 
 			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2
 					.everyonesDeadDave())) {
-
 				return true;
 			}
-			return false;
-		} else
+			else
+				return false;
+		} else if (gameType instanceof gametype.Survive){
+			if(!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))
+				return true;
+			else
+				return false;
+		}
+		
+		// TODO finish working on this
+		else if (gameType instanceof gametype.FourCorners){
+			winConditions = new ArrayList<Space>();
+			if(!((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
+				((ArrayList<Space>)winConditions).add(map.getSpace(0, 0));
+			if(!((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
+				((ArrayList<Space>)winConditions).add(map.getSpace(49, 0));
+			if(!((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
+				((ArrayList<Space>)winConditions).add(map.getSpace(0, 49));
+			if(!((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured())
+				((ArrayList<Space>)winConditions).add(map.getSpace(49, 49));
+			
+			if(gameType.CheckWinCondition(winConditions) && !player1.everyonesDeadDave()){
+				((ArrayList<Space>)winConditions).clear();
+				return true;
+			}
+			else{
+				((ArrayList<Space>)winConditions).clear();
+				return false;
+			}
+		}
+		
+		else
 			return false;
 	}
 
