@@ -24,7 +24,7 @@ import units.AlphaProtectorAI;
 import units.Doctor;
 import units.Engineer;
 import units.Ranger;
-import units.RunnerAI;
+import units.ZombieAI;
 import units.Sniper;
 import units.Soldier;
 import units.SpitterAI;
@@ -256,7 +256,7 @@ public class GraphicalView extends JPanel implements Observer {
 							g2.drawImage(sinpSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof Soldier) {
 							g2.drawImage(soldSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof RunnerAI) {
+						} else if (currentUnits[col][row] instanceof ZombieAI) {
 							g2.drawImage(runSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
 							g2.drawImage(alphaSelected, x, y, null);
@@ -291,7 +291,7 @@ public class GraphicalView extends JPanel implements Observer {
 								g2.drawImage(soldier, x, y, null);
 							else
 								g2.drawImage(soldCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof RunnerAI) {
+						} else if (currentUnits[col][row] instanceof ZombieAI) {
 							if (currentUnits[col][row].canMove())
 								g2.drawImage(runner, x, y, null);
 							else

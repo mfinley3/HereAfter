@@ -18,7 +18,7 @@ import space.WallSpace;
 import space.WastelandSpace;
 import space.WaterSpace;
 import units.AlphaProtectorAI;
-import units.RunnerAI;
+import units.ZombieAI;
 import units.SpitterAI;
 import units.Unit;
 
@@ -131,11 +131,11 @@ public class Map extends Observable {
 		map[40][38].setOccupied(true);
 		enemyList.add(unitsOnMap[40][38]);
 		//IMPORTANT READ ABOVE
-		unitsOnMap[40][39] = new RunnerAI(difficulty);
+		unitsOnMap[40][39] = new ZombieAI(difficulty);
 		map[40][39].setOccupied(true);
 		enemyList.add(unitsOnMap[40][39]);
 		//IMPORTANT READ ABOVE
-		unitsOnMap[40][40] = new RunnerAI(difficulty);
+		unitsOnMap[40][40] = new ZombieAI(difficulty);
 		map[40][40].setOccupied(true);
 		enemyList.add(unitsOnMap[40][40]);
 		//IMPORTANT READ ABOVE
