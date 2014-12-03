@@ -26,44 +26,47 @@ import units.Unit;
 import units.ZombieDogAI;
 
 /**
- * The Map class, creates a new map.
- * Also handles moving units, adding/removing units on the map
- * and checking to see if a space is occupied.
+ * The Map class, creates a new map. Also handles moving units, adding/removing
+ * units on the map and checking to see if a space is occupied.
  */
 public class Map extends Observable {
 
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
-	private Scanner scan;
+	private Scanner mapScan;
 	private List<Unit> enemyList;
 	private List<Point> goodUnitPositions;
+	private Scanner unitScan;
 
 	/**
-	 * Instantiates a new map.
+	 * Instantiates a new map by reading in a text file that is determined by a variable sent in.
 	 *
-	 * @param difficulty Takes in a double representing the difficulty. Is used to pick what map to make.
+	 * @param difficulty
+	 *            Takes in a double representing the difficulty. Is used to pick
+	 *            what map to make.
 	 */
 	public Map(double difficulty, String gameType) {
 
 		map = new Space[50][50];
-		unitsOnMap= new Unit[50][50];
+		unitsOnMap = new Unit[50][50];
+		System.out.print(gameType);
 
 		if (gameType.equalsIgnoreCase("Tower")) {
 			File easyMap = new File("Tower.txt");
 			try {
-				scan = new Scanner(easyMap);
+				mapScan = new Scanner(easyMap);
 			} catch (FileNotFoundException e) {
-				
+
 				e.printStackTrace();
 			}
 
 		}
 		if (gameType.equalsIgnoreCase("Corner")) {
-			File mediumMap = new File("Medium Map.txt");
+			File mediumMap = new File("Corner.txt");
 			try {
-				scan = new Scanner(mediumMap);
+				mapScan = new Scanner(mediumMap);
 			} catch (FileNotFoundException e) {
-				
+
 				e.printStackTrace();
 			}
 
@@ -71,20 +74,19 @@ public class Map extends Observable {
 		if (gameType.equalsIgnoreCase("Survive")) {
 			File hardMap = new File("Hard Map.txt");
 			try {
-				scan = new Scanner(hardMap);
+				mapScan = new Scanner(hardMap);
 			} catch (FileNotFoundException e) {
-				
+
 				e.printStackTrace();
 			}
 
 		}
 
-		while (scan.hasNext()){
+		while (mapScan.hasNext()) {
 			for (int m = 0; m < map.length; m++) {
 				for (int n = 0; n < map.length; n++) {
 
-					String mapLetterEquivalence = scan.next();
-					System.out.print(mapLetterEquivalence);
+					String mapLetterEquivalence = mapScan.next();
 
 					if (mapLetterEquivalence.equals("W"))
 						map[m][n] = new WastelandSpace();
@@ -113,78 +115,111 @@ public class Map extends Observable {
 				}
 			}
 		}
-		
-		addEnemies(difficulty);
+
+		addEnemies(difficulty, gameType);
 		setChanged();
 		notifyObservers();
-		
+
 	}
 
-	//IMPORTANT DO NOT TOUCH - this method is only temporary and is only to only be used for the first iteration.
-	//I will be adding the enemies to the map via a file reader for the second iteration. Meaning this method will be deleted
-	//along with anything inside of it. So I would highly recommend not adding functionality to it because I will just be deleting it.
 	/**
-	 * Adds the enemies to the map.
+	 * Adds the enemies to the map by reading locations from a text file determined by the game type.
 	 *
-	 * @param difficulty The difficulty level to set the enemies to.
+	 * @param difficulty
+	 *            The difficulty level to set the enemies to.
 	 */
-	private void addEnemies(double difficulty) {
-	
+	private void addEnemies(double difficulty, String gameType) {
+
 		enemyList = new ArrayList<Unit>();
-		//IMPORTANT READ ABOVE
-		unitsOnMap[40][38] = new AlphaProtectorAI(difficulty);
-		map[40][38].setOccupied(true);
-		enemyList.add(unitsOnMap[40][38]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[40][39] = new ZombieAI(difficulty);
-		map[40][39].setOccupied(true);
-		enemyList.add(unitsOnMap[40][39]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[40][40] = new ZombieAI(difficulty);
-		map[40][40].setOccupied(true);
-		enemyList.add(unitsOnMap[40][40]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[40][41] = new SpitterAI(difficulty);
-		map[40][41].setOccupied(true);
-		enemyList.add(unitsOnMap[40][41]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[41][38] = new ZombieDogAI(difficulty);
-		map[41][38].setOccupied(true);
-		enemyList.add(unitsOnMap[41][38]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[42][38] = new ZombieDogAI(difficulty);
-		map[42][38].setOccupied(true);
-		enemyList.add(unitsOnMap[42][38]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[43][38] = new SpitterAI(difficulty);
-		map[43][38].setOccupied(true);
-		enemyList.add(unitsOnMap[43][38]);
-		unitsOnMap[44][38] = new CarrierAI(difficulty);
-		map[44][38].setOccupied(true);
-		enemyList.add(unitsOnMap[44][38]);
-		//IMPORTANT READ ABOVE
-		unitsOnMap[45][38] = new CarrierAI(difficulty);
-		map[45][38].setOccupied(true);
-		enemyList.add(unitsOnMap[45][38]);
+
+		if (gameType.equalsIgnoreCase("Tower")) {
+			File TowerEnemies = new File("TowerEnemies.txt");
+			try {
+				unitScan = new Scanner(TowerEnemies);
+			} catch (FileNotFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+		if (gameType.equalsIgnoreCase("Corner")) {
+			File mediumMap = new File("CornerEnemies.txt");
+			try {
+				unitScan = new Scanner(mediumMap);
+			} catch (FileNotFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+		if (gameType.equalsIgnoreCase("Survive")) {
+			File hardMap = new File("Hard Map.txt");
+			try {
+				unitScan = new Scanner(hardMap);
+			} catch (FileNotFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+		while (unitScan.hasNext()) {
+			for (int m = 0; m < map.length; m++) {
+				for (int n = 0; n < map.length; n++) {
+
+					String unitLetterEquivalence = unitScan.next();
+
+					if (unitLetterEquivalence.equals("Z")) {
+						unitsOnMap[m][n] = new ZombieAI(difficulty);
+						map[m][n].setOccupied(true);
+						enemyList.add(unitsOnMap[m][n]);
+					}
+
+					if (unitLetterEquivalence.equals("A")) {
+						unitsOnMap[m][n] = new AlphaProtectorAI(difficulty);
+						map[m][n].setOccupied(true);
+						enemyList.add(unitsOnMap[m][n]);
+					}
+
+					if (unitLetterEquivalence.equals("C")) {
+						unitsOnMap[m][n] = new CarrierAI(difficulty);
+						map[m][n].setOccupied(true);
+						enemyList.add(unitsOnMap[m][n]);
+					}
+
+					if (unitLetterEquivalence.equals("D")) {
+						unitsOnMap[m][n] = new ZombieDogAI(difficulty);
+						map[m][n].setOccupied(true);
+						enemyList.add(unitsOnMap[m][n]);
+					}
+
+					if (unitLetterEquivalence.equals("S")) {
+						unitsOnMap[m][n] = new SpitterAI(difficulty);
+						map[m][n].setOccupied(true);
+						enemyList.add(unitsOnMap[m][n]);
+					}
+				}
+			}
+		}
 
 	}
 
 	/**
 	 * Adds the players picked units to map.
 	 *
-	 * @param unitList The list of units to be added to the map.
+	 * @param unitList
+	 *            The list of units to be added to the map.
 	 */
 	public void addUnitsToMap(Stack<Unit> unitList) {
 
 		goodUnitPositions = new ArrayList<Point>();
-		
+
 		int k = 0;
 		int r = 2;
 
 		while (!unitList.isEmpty()) {
 			unitsOnMap[k][r] = unitList.pop();
 			map[k][r].setOccupied(true);
-			goodUnitPositions.add(new Point(k,r));
+			goodUnitPositions.add(new Point(k, r));
 			if (r != 0) {
 				r--;
 			} else {
@@ -200,26 +235,30 @@ public class Map extends Observable {
 	/**
 	 * When called it moves the selected unit to the selected spot.
 	 *
-	 * @param startRow the start row used to pick the unit to move.
-	 * @param startCol the start col used to pick the unit to move.
-	 * @param moveToRow the move to row used to pick the space to move the unit to.
-	 * @param moveToCol the move to col used to pick the space to move the unit to.
+	 * @param startRow
+	 *            the start row used to pick the unit to move.
+	 * @param startCol
+	 *            the start col used to pick the unit to move.
+	 * @param moveToRow
+	 *            the move to row used to pick the space to move the unit to.
+	 * @param moveToCol
+	 *            the move to col used to pick the space to move the unit to.
 	 */
 	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
-		if(startCol != moveToCol || startRow != moveToRow){
-		    unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
+		if (startCol != moveToCol || startRow != moveToRow) {
+			unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
 			unitsOnMap[startCol][startRow] = null;
 			map[startCol][startRow].setOccupied(false);
 			map[moveToCol][moveToRow].setOccupied(true);
-			for(Point p: goodUnitPositions){
-				if(p.getX() == startCol && p.getY() == startRow){
+			for (Point p : goodUnitPositions) {
+				if (p.getX() == startCol && p.getY() == startRow) {
 					goodUnitPositions.remove(p);
-					goodUnitPositions.add(new Point(moveToCol,moveToRow));
+					goodUnitPositions.add(new Point(moveToCol, moveToRow));
 					break;
 				}
 			}
 		}
-		
+
 		setChanged();
 		notifyObservers();
 
@@ -235,8 +274,10 @@ public class Map extends Observable {
 	/**
 	 * Gets the unit at the requested location.
 	 *
-	 * @param row The row of the requested unit.
-	 * @param col The column of the requested unit.
+	 * @param row
+	 *            The row of the requested unit.
+	 * @param col
+	 *            The column of the requested unit.
 	 * @return Returns the 'full' Unit at requested spot.
 	 */
 	public Unit getUnitAt(int row, int col) {
@@ -266,8 +307,10 @@ public class Map extends Observable {
 	/**
 	 * Checks if the requested space is occupied.
 	 *
-	 * @param row The row of the requested space.
-	 * @param column the column of the requested space.
+	 * @param row
+	 *            The row of the requested space.
+	 * @param column
+	 *            the column of the requested space.
 	 * @return True If the space is occupied.
 	 */
 	public boolean isOccupied(int row, int column) {
@@ -276,15 +319,17 @@ public class Map extends Observable {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Gets the space in the map at the requested spot.
 	 *
-	 * @param row The row of the requested space. 
-	 * @param column The column of the requested space.
+	 * @param row
+	 *            The row of the requested space.
+	 * @param column
+	 *            The column of the requested space.
 	 * @return The space at the requested spot.
 	 */
-	public Space getSpace(int row, int column){
+	public Space getSpace(int row, int column) {
 		return map[row][column];
 	}
 
@@ -296,36 +341,39 @@ public class Map extends Observable {
 	public List<Unit> getEnemyUnits() {
 		return enemyList;
 	}
-	
+
 	/**
 	 * Resets all the spaces in map so they can't be moved to.
 	 */
-	public void resetMapCanMove(){
-		for(int i =0; i < map.length; i++)
-			for(int j =0; j < map[i].length; j++)
+	public void resetMapCanMove() {
+		for (int i = 0; i < map.length; i++)
+			for (int j = 0; j < map[i].length; j++)
 				map[i][j].setCanMoveTo(false);
-			
+
 	}
 
 	/**
 	 * Removes the unit from the map.
 	 *
-	 * @param row the row of the unit that needs to be removed.
-	 * @param col the column of the unit that needs to be removed.
+	 * @param row
+	 *            the row of the unit that needs to be removed.
+	 * @param col
+	 *            the column of the unit that needs to be removed.
 	 */
 	public void removeUnit(int row, int col) {
-	
+
 		unitsOnMap[row][col] = null;
 		map[row][col].setOccupied(false);
 		setChanged();
 		notifyObservers();
-		
+
 	}
-	
+
 	/**
-	 * A method that can be called from any class to get the the GUI to update the map.
+	 * A method that can be called from any class to get the the GUI to update
+	 * the map.
 	 */
-	public void updateObservers(){
+	public void updateObservers() {
 		setChanged();
 		notifyObservers();
 	}
