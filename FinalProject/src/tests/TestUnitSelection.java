@@ -81,7 +81,7 @@ public class TestUnitSelection {
 	public void testAttackAndHeal(){
 		// Test Attack
 		Unit i = new Soldier(Difficulty.EASY.getValue());
-		Unit b = new RunnerAI(Difficulty.EASY.getValue());
+		Unit b = new ZombieDogAI(Difficulty.EASY.getValue());
 		
 		i.reduceHealth(b.getAttack());
 		assertTrue(i.getHealth()<100);
