@@ -26,40 +26,90 @@ public class AIPathFinder
     * eventually become part of the solution PATH.
     *  @param aiRow		row index of current location
     *  @param aiCol	column index of current location
-    *  @return true		if the map has been solved
+    *  @return true		if the AI is near the player
     */
-   public boolean traverse(int aiRow, int aiCol)
+   public boolean traverse(int aiRow, int aiCol, int plyrRow, int plyrCol)
    {
-      boolean isFinished = false;
+      boolean isNearPlayer = false;
       
-      if (gameMap.validPosition(aiRow, aiCol))
+      if (validPosition(aiRow, aiCol, plyrRow, plyrCol))
       {
-         gameMap.tryPosition(aiRow, aiCol); // mark this cell as tried for the algorithm
+			gameMap.tryPosition(aiRow, aiCol); // mark this cell as tried for
+												// the algorithm
+
+			/*
+			 * AI location move to nearest player location. Keep count of AI
+			 * movement length/attack range
+			 */
+			if ((aiRow == plyrRow || aiRow == plyrRow - 1 || aiRow == plyrRow + 1)
+					&& (aiCol == plyrCol || aiCol == plyrCol - 1 || aiCol == plyrCol + 1))
+				isNearPlayer = true; // the AI is near the target
+			
+			else {
+				isNearPlayer = traverse(aiRow + 1, aiCol, plyrRow, plyrCol); // moves down
+
+				if (!isNearPlayer)
+					isNearPlayer = traverse(aiRow, aiCol + 1, plyrRow, plyrCol); // moves right
+
+				if (!isNearPlayer)
+					isNearPlayer = traverse(aiRow - 1, aiCol, plyrRow, plyrCol); // moves up
+
+				if (!isNearPlayer)
+					isNearPlayer = traverse(aiRow, aiCol - 1, plyrRow, plyrCol); // moves left
+			}
          
-         /*
-          * AI location move to nearest player location
-          * Keep count of AI movement length/attack range
-          */
-         if (aiRow == gameMap.getRows()-1 && aiCol == gameMap.getColumns()-1)
-            isFinished = true; // the maze is solved
-         else
-         {
-            isFinished = traverse(aiRow+1, aiCol); // down
-            
-            if (!isFinished)
-               isFinished = traverse(aiRow, aiCol+1); // right
-            
-            if (!isFinished)
-               isFinished = traverse(aiRow-1, aiCol);  // up
-            
-            if (!isFinished)
-               isFinished = traverse(aiRow, aiCol-1); // left
+         if (isNearPlayer) { // if AI can make it near or nearer to the player, move it
+            //currAI.move(aiRow, aiCol);
          }
          
-         if (isFinished) // this location is part of the final path
-            gameMap.markPath(aiRow, aiCol);
       }
-      return isFinished;
+      return isNearPlayer; // Returns the boolean of if the AI moved or not.
    }
    
+   /**
+	 * Determines if a specific location is valid. A valid location is one that
+	 * is on the grid, is not blocked, and has not been TRIED.
+	 * 
+	 * @param row
+	 *            the row to be checked
+	 * @param column
+	 *            the column to be checked
+	 * @return true if the location is valid
+	 */
+	public boolean validPosition(int aiRow, int aiCol, int plyrRow, int plyrCol) {
+		boolean result = false;
+
+		// check if locations are in the bounds of the matrix
+		if ((aiRow >= 0) && (aiRow < 50) &&
+				(aiCol >= 0) && (aiCol < 50) &&
+				(plyrRow >= 0) && (plyrRow < 50) &&
+				(plyrCol >= 0) && (plyrCol < 50)) {
+
+			/*
+			 * TODO:
+			 * 	1. Check if occupied
+			 * 	2. Not a wall
+			 * 	3. Check if in boundaries of AI movement?
+			 */
+
+			/*if (gameMap[row][column].equals("W") || grid[row][column].equals("P") || grid[row][column].equals("B")) {
+				result = true;
+			}*/
+		}
+
+		return result;
+	}
+	
+	/**
+	 * Marks the specified position in the maze as TRIED
+	 * 
+	 * @param row
+	 *            the index of the row to try
+	 * @param col
+	 *            the index of the column to try
+	 */
+	public void tryPosition(int row, int col) {
+		grid[row][col] = TRIED;
+	}
+
 } //end of class
