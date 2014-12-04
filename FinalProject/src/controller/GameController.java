@@ -2,6 +2,7 @@ package controller;
 
 import gametype.*;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -80,6 +81,8 @@ public class GameController {
 		turns = 0;
 		playerTurn = true;
 		currPlayer = player1;
+		
+		//TODO: Give the enemy units behaviors.
 	}
 
 	public String getCurrPlayerName() {
@@ -474,6 +477,9 @@ public class GameController {
 	/**
 	 * TODO FINISH
 	 * 
+	 * Determine if a game of a particular type has been won.
+	 * Sends the relevant information to the right file to check.
+	 * 
 	 * @return Depending on the game type, if the game has been won
 	 */
 	public boolean checkWinConditions() {
@@ -608,6 +614,8 @@ public class GameController {
 
 				currRow = 0;
 				currCol = 0;
+				
+				// TODO: Update the enemy's with the player's current locations
 			} else {
 
 				// Remove all of the AI's units from the tempList
@@ -791,15 +799,37 @@ public class GameController {
 	public boolean playerTurn() {
 		return playerTurn;
 	}
-
+	
 	/**
+	 * TODO Test
+	 * 
+	 * Gets the point locations of all of the player locations. Used with
+	 * enemy AI, gives them a list of targets that they can move to.
+	 * 
+	 * @return A List of Points with all of the locations of monsters.
+	 */
+	public List<Point> getPlayerUnits(){
+		return map.getGoodUnitPositions();
+	}
+	
+	/**
+	 * TODO Write this
+	 * Method for automatically moving the enemy AI. Moves them toward the closest
+	 * human based on their behavior. If they are near enough to a player's unit,
+	 * attack.
+	 */
+	public void enemyTurn(){
+		// TODO FINISH
+	}
+
+	/*
 	 * A private Enum class, helps with movement. Prevents overlap and stack
 	 * overflow during calculating the spaces where the player can move.
 	 * 
 	 * @author Brian Seaman
 	 *
 	 */
-	private enum MoveDirection {
+	/*private enum MoveDirection {
 		UP, DOWN, LEFT, RIGHT; // NOX, NOY;
-	}
+	}*/
 }

@@ -295,8 +295,6 @@ public class SetupPanel extends JPanel implements Observer {
 						snips--;
 					}
 					gameIsRunning = true;
-					TRPGGUI.canResize();
-					repaint();
 					controller = new GameController(player, difficulty, type);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
@@ -305,6 +303,7 @@ public class SetupPanel extends JPanel implements Observer {
 					controller.getMap().addObserver((Observer) mainPanel);
 					selected = false;
 					actualMap();
+					TRPGGUI.canResize();
 
 				} else {
 					JOptionPane.showMessageDialog(null,
