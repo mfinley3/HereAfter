@@ -1,5 +1,7 @@
 package units;
 
+import model.Map;
+
 /**
  * MazeSolver attempts to recursively traverse a Maze. The goal is to get from the
  * given starting position to the bottom right, following a path of 1’s. Arbitrary
@@ -9,12 +11,12 @@ package units;
  */
 public class AIPathFinder
 {
-   private AIMap gameMap;
+   private Map gameMap;
    
    /**
     * Constructor for the AIPathFinder class.
     */
-   public AIPathFinder(AIMap gameMap) {
+   public AIPathFinder(Map gameMap) {
       this.gameMap = gameMap;
    }
    
