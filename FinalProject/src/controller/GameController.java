@@ -31,6 +31,7 @@ public class GameController {
 	private boolean playerTurn;
 	private boolean gameOver;
 	private boolean playerWon;
+	private AIPathFinder aiMove;
 
 	private int currRow;
 	private int currCol;
@@ -83,6 +84,7 @@ public class GameController {
 		currPlayer = player1;
 		
 		//TODO: Give the enemy units behaviors.
+		aiMove = new AIPathFinder(map);
 	}
 
 	public String getCurrPlayerName() {
@@ -822,6 +824,16 @@ public class GameController {
 		// TODO FINISH
 	}
 
+	public void enemyMove(Point p){
+		/* TODO: Add these things
+		 * 1) Nearest Player Method
+		 * 2) List of Enemy Unit Locations
+		 * 3) Player's XY values
+		 * 4) Send these params to AIPathfinder.traverse():
+		 * 		AiROW, AI COLUMN, PlayerPointLIst
+		 */
+	}
+	
 	/*
 	 * A private Enum class, helps with movement. Prevents overlap and stack
 	 * overflow during calculating the spaces where the player can move.
