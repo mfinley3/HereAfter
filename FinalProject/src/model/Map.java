@@ -41,6 +41,7 @@ public class Map extends Observable {
 	private List<Point> enemyUnitPositions;
 	private Scanner unitScan;
 	private Boolean isPlayerTurn;
+	private String gameType;
 
 	/**
 	 * Instantiates a new map by reading in a text file that is determined by a
@@ -52,6 +53,7 @@ public class Map extends Observable {
 	 */
 	public Map(double difficulty, String gameType) {
 		isPlayerTurn = true;
+		this.gameType = gameType;
 		map = new Space[50][50];
 		unitsOnMap = new Unit[50][50];
 		System.out.print(gameType);
@@ -127,7 +129,7 @@ public class Map extends Observable {
 			}
 		}
 
-		addEnemies(difficulty, gameType);
+		addEnemies(difficulty);
 		setChanged();
 		notifyObservers();
 
@@ -140,7 +142,7 @@ public class Map extends Observable {
 	 * @param difficulty
 	 *            The difficulty level to set the enemies to.
 	 */
-	private void addEnemies(double difficulty, String gameType) {
+	private void addEnemies(double difficulty) {
 
 		enemyList = new ArrayList<Unit>();
 		enemyUnitPositions = new ArrayList<Point>();
@@ -230,6 +232,24 @@ public class Map extends Observable {
 
 		goodUnitPositions = new ArrayList<Point>();
 
+		if (gameType.equalsIgnoreCase("Survive")) {
+			
+			int k = 1;
+			int r = 3;
+
+			while (!unitList.isEmpty()) {
+				unitsOnMap[k][r] = unitList.pop();
+				map[k][r].setOccupied(true);
+				goodUnitPositions.add(new Point(k, r));
+				if (r != 1) {
+					r--;
+				} else {
+					k++;
+				}
+
+			}
+			
+		}
 		int k = 0;
 		int r = 2;
 
