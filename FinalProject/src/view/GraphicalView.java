@@ -45,7 +45,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
-	private BufferedImage bridge, corner, mountain, path, indoorPath, tower, wall, indoorWall, waste, water, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
+	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
 
 	/**
 	 * Instantiates a new graphical view.  It also loads all of the images that are going to be used in the game,
@@ -68,11 +68,13 @@ public class GraphicalView extends JPanel implements Observer {
 
 		try {
 			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
+			indoorWaste = ImageIO.read(new File("IndoorWasteLandSpace.jpg"));
 			bridge = ImageIO.read(new File("BridgeSpace.jpg"));
 			corner = ImageIO.read(new File("CornerSpace.jpg"));
 			mountain = ImageIO.read(new File("MountainSpace.jpg"));
 			path = ImageIO.read(new File("PathSpace.jpg"));
-			indoorPath = ImageIO.read(new File("IndoorPath.png"));
+			indoorPathSpace = ImageIO.read(new File("IndoorPathSpace.png"));
+			indoorPath = ImageIO.read(new File("IndoorPath.jpg"));
 			tower = ImageIO.read(new File("TowerSpace.jpg"));
 			wall = ImageIO.read(new File("WallSpace.jpg"));
 			indoorWall = ImageIO.read(new File("IndoorWall.png"));
@@ -236,12 +238,14 @@ public class GraphicalView extends JPanel implements Observer {
 					
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						g2.drawImage(bridge, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
-						g2.drawImage(indoorPath, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
+						g2.drawImage(indoorPathSpace, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
 						g2.drawImage(mountain, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
 						g2.drawImage(path, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
+						g2.drawImage(indoorPath, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
 						g2.drawImage(tower, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWall")) {
@@ -250,6 +254,8 @@ public class GraphicalView extends JPanel implements Observer {
 						g2.drawImage(wall, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
 						g2.drawImage(waste, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
+						g2.drawImage(indoorWaste, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
 						g2.drawImage(water, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {

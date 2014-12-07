@@ -11,8 +11,10 @@ import java.util.Stack;
 
 import space.BridgeSpace;
 import space.CaptureCornerSpace;
+import space.IndoorPath;
 import space.IndoorPathSpace;
 import space.IndoorWallSpace;
+import space.IndoorWastelandSpace;
 import space.MountainSpace;
 import space.PathSpace;
 import space.Space;
@@ -98,11 +100,17 @@ public class Map extends Observable {
 					if (mapLetterEquivalence.equals("W"))
 						map[m][n] = new WastelandSpace();
 
+					if (mapLetterEquivalence.equals("H"))
+						map[m][n] = new IndoorWastelandSpace();
+					
 					if (mapLetterEquivalence.equals("P"))
 						map[m][n] = new PathSpace();
 					
 					if (mapLetterEquivalence.equals("Y"))
 						map[m][n] = new IndoorWallSpace();
+					
+					if (mapLetterEquivalence.equals("O"))
+						map[m][n] = new IndoorPath();
 					
 					if (mapLetterEquivalence.equals("J"))
 						map[m][n] = new IndoorPathSpace();
@@ -168,7 +176,7 @@ public class Map extends Observable {
 
 		}
 		if (gameType.equalsIgnoreCase("Survive")) {
-			File hardMap = new File("TowerEnemies.txt");
+			File hardMap = new File("SurvivalEnemies.txt");
 			try {
 				unitScan = new Scanner(hardMap);
 			} catch (FileNotFoundException e) {
