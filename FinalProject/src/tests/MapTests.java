@@ -18,7 +18,7 @@ public class MapTests {
 	@Test
 	public void testMapSetup() {
 
-		Map testMap = new Map(.5);
+		Map testMap = new Map(.5, "");
 		Space[][] testSpaceMap = testMap.getSpaces();
 
 		// tests one of each space type on the map
@@ -96,7 +96,7 @@ public class MapTests {
 	@Test
 	public void testIsOccupied() {
 
-		Map testMap = new Map(.5);
+		Map testMap = new Map(.5, "");
 		Space[][] testSpaceMap = testMap.getSpaces();
 
 		Stack<Unit> unitList = new Stack<Unit>();
