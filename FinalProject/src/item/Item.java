@@ -103,4 +103,9 @@ public class Item implements Serializable {
 		return "\n  *Item: " + title + "\n      -Item Type: " + item;
 	}
 
+	public int useItem() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 } // end of class Item

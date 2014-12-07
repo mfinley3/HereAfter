@@ -246,6 +246,29 @@ public abstract class Unit {
 	public int getRange() {
 		return range;
 	}
-
+	
+	
+	
+	
+	/**
+	 * Adds the item to the unit's inventory
+	 * @param item
+	 */
+	public void addItem(Item item){
+			itemList.add(item);
+	}
+	
+	/**
+	 * Gets an item from the inventory depending on desired type and uses it.
+	 * If that type is not in the person's inventory, return null.
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public Item removeItem(ItemType item){
+		Item used = null;
+		return used;
+	}
+	
 } // end of class Unit
 
