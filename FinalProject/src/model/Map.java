@@ -38,7 +38,7 @@ public class Map extends Observable {
 	private List<Point> goodUnitPositions;
 	private List<Point> enemyUnitPositions;
 	private Scanner unitScan;
-	private Boolean isPlayerTurn = true;
+	private Boolean isPlayerTurn;
 
 	/**
 	 * Instantiates a new map by reading in a text file that is determined by a
@@ -134,6 +134,7 @@ public class Map extends Observable {
 	 */
 	private void addEnemies(double difficulty, String gameType) {
 
+		setIsPlayerTurn();
 		enemyList = new ArrayList<Unit>();
 		enemyUnitPositions = new ArrayList<Point>();
 
