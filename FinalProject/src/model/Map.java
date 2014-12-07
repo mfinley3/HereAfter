@@ -50,7 +50,6 @@ public class Map extends Observable {
 	 */
 	public Map(double difficulty, String gameType) {
 		isPlayerTurn = true;
-
 		map = new Space[50][50];
 		unitsOnMap = new Unit[50][50];
 		System.out.print(gameType);
@@ -135,7 +134,6 @@ public class Map extends Observable {
 	 */
 	private void addEnemies(double difficulty, String gameType) {
 
-		setIsPlayerTurn();
 		enemyList = new ArrayList<Unit>();
 		enemyUnitPositions = new ArrayList<Point>();
 
