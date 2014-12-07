@@ -41,6 +41,7 @@ public class GameController {
 
 	private GameTypeInterface gameType;
 	private Object winConditions;
+	private List<Point> playerLocals;
 
 	/**
 	 * TODO Work on this. Will add a createAI method soon
@@ -243,7 +244,7 @@ public class GameController {
 					if (currUnit != null
 							&& map.getUnitAt(endRow, endCol) != null) {
 						// if both exist, check if one can move
-						if (inAttackRange(endRow, endCol)) {
+						if (inAttackRange(currRow, currCol)) {
 							actAttack();
 
 							// If no other unit can move, end the turn
@@ -253,6 +254,8 @@ public class GameController {
 							endRow = 51;
 							endCol = 51;
 
+							map.resetMapCanMove();
+							
 							gameOver();
 							map.updateObservers();
 							if (tempUnitList.isEmpty())
@@ -260,6 +263,8 @@ public class GameController {
 						}
 
 						else {
+							JOptionPane.showMessageDialog(null,
+									"Enemy out of attack Range.");
 							System.out.println("Enemy out of attack range.");
 						}
 					} else
@@ -586,6 +591,70 @@ public class GameController {
 		return map;
 	}
 
+	
+	/* \/**
+ 	 *
+	 * When called, ends a turn. Checks to see whose turn it is, clears the
+	 * temporary unit list, sets the current unit to null. Sets the can move to
+	 * false.
+	 */ /*
+	 
+	public void endTurn() {
+		map.resetMapCanMove();
+		if (!gameOver) {
+			if (playerTurn) {
+				// Remove all of the player's units from tempList
+				playerTurn = false;
+				for (Unit i : tempUnitList)
+					i.setCanMove(false);
+				tempUnitList.clear();
+				currUnit = null;
+
+				System.out.println("Player 1 ends turn.");
+
+				// Switch to AI
+				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
+				for (Unit i : tempUnitList)
+					i.setCanMove(true);
+
+				map.updateObservers();
+				if (tempUnitList.isEmpty())
+					endTurn();
+
+				currRow = 0;
+				currCol = 0;
+				
+				// TODO: Update the enemy's with the player's current locations
+			} else {
+
+				// Remove all of the AI's units from the tempList
+				playerTurn = true;
+
+				//
+				for (Unit i : tempUnitList)
+					i.setCanMove(false);
+				tempUnitList.clear();
+				currUnit = null;
+
+				// Switch to player, add one to turns
+				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
+				for (Unit i : tempUnitList)
+					i.setCanMove(true);
+				turns++;
+
+				System.out.println("Second Player (AI) ends its turn.");
+
+				currCol = currRow = 0;
+
+				gameOver();
+
+				map.updateObservers();
+				if (tempUnitList.isEmpty())
+					endTurn();
+			}
+		}
+	}*/
+	
 	/**
 	 * When called, ends a turn. Checks to see whose turn it is, clears the
 	 * temporary unit list, sets the current unit to null. Sets the can move to
@@ -609,8 +678,10 @@ public class GameController {
 				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 				for (Unit i : tempUnitList)
 					i.setCanMove(true);
+				
+				enemyTurn();
 
-				map.updateObservers();
+				//map.updateObservers();
 				if (tempUnitList.isEmpty())
 					endTurn();
 
@@ -802,6 +873,15 @@ public class GameController {
 		return playerTurn;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * TODO Test
 	 * 
@@ -814,16 +894,35 @@ public class GameController {
 		return map.getGoodUnitPositions();
 	}
 	
+	public void enemyTurn(){
+		// TODO FINISH
+		
+		if(!playerTurn){
+			// Goes through each member of the AI. Checks to see if there are
+			// any enemies within range.
+			
+			
+			// if so, attack.
+			
+			// If not, then move the AI closer to the player.
+			
+			// TODO: empty curr list once all of the Ai has moved
+			for(Unit u : tempUnitList){
+				u.setCanMove(false);
+			}
+			
+			tempUnitList.clear();
+			
+			endTurn();
+		}
+	}
+
 	/**
 	 * TODO Write this
 	 * Method for automatically moving the enemy AI. Moves them toward the closest
 	 * human based on their behavior. If they are near enough to a player's unit,
 	 * attack.
 	 */
-	public void enemyTurn(){
-		// TODO FINISH
-	}
-
 	public void enemyMove(Point p){
 		/* TODO: Add these things
 		 * 1) Nearest Player Method
@@ -832,6 +931,34 @@ public class GameController {
 		 * 4) Send these params to AIPathfinder.traverse():
 		 * 		AiROW, AI COLUMN, PlayerPointLIst
 		 */
+		// TODO Talk to Mike about getting a findEnemy method
+		
+		playerLocals = getPlayerUnits();
+		
+		
+	}
+	
+	/**
+	 * Finds the nearest player location point closest to an enemy unit.
+	 * Returns the nearest point based on how many moves would be needed to make it.
+	 * 
+	 * @param enemyLoc
+	 * @return
+	 */
+	public Point nearestPlayerUnit(Point enemyLoc){
+		int spaceNear = 0;
+		int tempSN = 0;
+		Point toReturn = null;
+		
+		for(Point p: playerLocals){
+			tempSN = Math.abs(enemyLoc.x - p.x) + Math.abs(enemyLoc.y - p.y);
+			if(tempSN < spaceNear || spaceNear ==0){
+				spaceNear = tempSN;
+				toReturn = p;
+			}
+		}
+		
+		return toReturn;
 	}
 	
 	/*
