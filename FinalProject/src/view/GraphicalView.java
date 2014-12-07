@@ -227,6 +227,7 @@ public class GraphicalView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		//Graphics2D.scale(2.0, 2.0);
 
 		int x = 0;
 		int y = 0;

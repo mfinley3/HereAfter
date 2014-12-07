@@ -45,6 +45,7 @@ public class GameController {
 	private List<Point> enemyLocals;
 	
 	private boolean moveOn;
+	
 
 	/**
 	 * TODO Work on this. Will add a createAI method soon
@@ -176,6 +177,9 @@ public class GameController {
 				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
 				if (currUnit != null) {
 					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
+						
+						moveOn = false;
+						
 						map.resetMapCanMove();
 						map.moveUnit(currRow, currCol, endRow, endCol);
 
@@ -194,9 +198,11 @@ public class GameController {
 
 						// Take the unit that can no longer move out of the
 						// tempUnitList
+						if(!moveOn){
 						currUnit.setCanMove(false);
 						tempUnitList.remove(currUnit);
 						currUnit = null;
+						}
 						map.updateObservers();
 
 						if (tempUnitList.isEmpty())
@@ -225,11 +231,15 @@ public class GameController {
 
 		for (Point p : enemyLocals) {
 
-			if (inAttackRange((int) p.getX(), (int) p.getY())) {
-				int answer = JOptionPane.showConfirmDialog(null, "A unit is in your attack range. Would you like to attack?", "Attack?", JOptionPane.YES_NO_OPTION);
+			if (inAttackRange((int) p.getY(), (int) p.getX())) {
+				int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
-					JOptionPane.showMessageDialog(null, "Pick a Unit in your range to attack");
 					
+					moveOn = true;
+					
+					endCol = (int) p.getX();
+					endRow = (int) p.getY();
+					attack();
 					break;
 					
 				}
