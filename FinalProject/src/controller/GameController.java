@@ -393,10 +393,7 @@ public class GameController {
 	 */
 	private void actAttack() {
 		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
-		System.out.println("The attacked "
-				+ map.getUnitAt(endRow, endCol).getUnitType()
-				+ " was left with " + map.getUnitAt(endRow, endCol).getHealth()
-				+ " health after the attack");
+		
 
 		targetDead(endRow, endCol);
 	}
@@ -829,6 +826,26 @@ public class GameController {
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
 		if (!temp.isAlive()) {
+			
+			if(playerTurn){
+				
+			JOptionPane.showMessageDialog(null,"The attacked "
+					+ map.getUnitAt(row, col).getUnitType() +
+					 " was left with no health and has died!" +'\n' + "Number of units remaining on both sides: "
+							+ player1.getID() +" - " + player1.getAliveNum()
+							+ ", Zombies - "
+							+ (player2.getAliveNum() - 1));
+			
+			} else {
+				
+				JOptionPane.showMessageDialog(null,"The attacked "
+						+ map.getUnitAt(row, col).getUnitType() +
+						 " was left with no health and has died!" +'\n' + "Number of units remaining on both sides: "
+								+ player1.getID() +" - " + (player1.getAliveNum() - 1)
+								+ ", Zombies - "
+								+ (player2.getAliveNum()));
+			}
+			
 			map.removeUnit(col, row);
 
 			// Remove them from the associated list
@@ -844,11 +861,12 @@ public class GameController {
 			// Check to see if the game is over
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row
 					+ ", " + col + ") is dead!");
-			System.out
-					.println("Number of units remaining on both sides: Player One - "
-							+ player1.getAliveNum()
-							+ ", Player Two - "
-							+ player2.getAliveNum());
+			
+		} else {
+			JOptionPane.showMessageDialog(null,"The attacked "
+					+ map.getUnitAt(endRow, endCol).getUnitType()
+					+ " was left with " + map.getUnitAt(endRow, endCol).getHealth()
+					+ " health after the attack!");
 		}
 	}
 
