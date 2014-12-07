@@ -84,6 +84,7 @@ public class AIPathFinder
 	public boolean validPosition(int tgtRow, int tgtCol) {
 		boolean result = false;
 		int moveHindrance =  gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
+		
 		// Check if locations are in the bounds of the map
 		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0 ) {
 			result = false;
@@ -112,14 +113,13 @@ public class AIPathFinder
 		//gameMap. = TRIED;
 		
 		/*
-		 * TODO: 1. Check if occupied 2. Not a wall 3. Check if in
-		 * boundaries of AI movement?
-		 */
-
-		/*
-		 * if (gameMap[row][column].equals("W") ||
-		 * grid[row][column].equals("P") || grid[row][column].equals("B")) {
-		 * result = true; }
+		 * This method was used to initially relabel the map.
+		 * When I first wrote the code, it worked by labels, if something was
+		 * not a Wasteland space or something of that sort, the recursive method
+		 * would know to just keep going on to fully "try" each position for a
+		 * possible solution. With me being able to actually relabel parts of
+		 * our current map, I'm afraid the recursive algorithm won't work in
+		 * the desired way.
 		 */
 	}
 
