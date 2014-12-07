@@ -36,10 +36,13 @@ public class Map extends Observable {
 	private Scanner mapScan;
 	private List<Unit> enemyList;
 	private List<Point> goodUnitPositions;
+	private List<Point> enemyUnitPositions;
 	private Scanner unitScan;
+	private Boolean isPlayerTurn = true;
 
 	/**
-	 * Instantiates a new map by reading in a text file that is determined by a variable sent in.
+	 * Instantiates a new map by reading in a text file that is determined by a
+	 * variable sent in.
 	 *
 	 * @param difficulty
 	 *            Takes in a double representing the difficulty. Is used to pick
@@ -123,7 +126,8 @@ public class Map extends Observable {
 	}
 
 	/**
-	 * Adds the enemies to the map by reading locations from a text file determined by the game type.
+	 * Adds the enemies to the map by reading locations from a text file
+	 * determined by the game type.
 	 *
 	 * @param difficulty
 	 *            The difficulty level to set the enemies to.
@@ -131,6 +135,7 @@ public class Map extends Observable {
 	private void addEnemies(double difficulty, String gameType) {
 
 		enemyList = new ArrayList<Unit>();
+		enemyUnitPositions = new ArrayList<Point>();
 
 		if (gameType.equalsIgnoreCase("Tower")) {
 			File TowerEnemies = new File("TowerEnemies.txt");
@@ -172,35 +177,39 @@ public class Map extends Observable {
 						unitsOnMap[m][n] = new ZombieAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
+						enemyUnitPositions.add(new Point(m, n));
 					}
 
 					if (unitLetterEquivalence.equals("A")) {
 						unitsOnMap[m][n] = new AlphaProtectorAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
+						enemyUnitPositions.add(new Point(m, n));
 					}
 
 					if (unitLetterEquivalence.equals("C")) {
 						unitsOnMap[m][n] = new CarrierAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
+						enemyUnitPositions.add(new Point(m, n));
 					}
 
 					if (unitLetterEquivalence.equals("D")) {
 						unitsOnMap[m][n] = new ZombieDogAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
+						enemyUnitPositions.add(new Point(m, n));
 					}
 
 					if (unitLetterEquivalence.equals("S")) {
 						unitsOnMap[m][n] = new SpitterAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
+						enemyUnitPositions.add(new Point(m, n));
 					}
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -245,16 +254,30 @@ public class Map extends Observable {
 	 *            the move to col used to pick the space to move the unit to.
 	 */
 	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
+		
 		if (startCol != moveToCol || startRow != moveToRow) {
 			unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
 			unitsOnMap[startCol][startRow] = null;
 			map[startCol][startRow].setOccupied(false);
 			map[moveToCol][moveToRow].setOccupied(true);
-			for (Point p : goodUnitPositions) {
-				if (p.getX() == startCol && p.getY() == startRow) {
-					goodUnitPositions.remove(p);
-					goodUnitPositions.add(new Point(moveToCol, moveToRow));
-					break;
+
+			if (isPlayerTurn) {
+				for (Point p : goodUnitPositions) {
+					if (p.getX() == startCol && p.getY() == startRow) {
+						goodUnitPositions.remove(p);
+						goodUnitPositions.add(new Point(moveToCol, moveToRow));
+						break;
+					}
+				}
+				
+			} else {
+
+				for (Point p : enemyUnitPositions) {
+					if (p.getX() == startCol && p.getY() == startRow) {
+						enemyUnitPositions.remove(p);
+						enemyUnitPositions.add(new Point(moveToCol, moveToRow));
+						break;
+					}
 				}
 			}
 		}
@@ -269,6 +292,13 @@ public class Map extends Observable {
 	 */
 	public List<Point> getGoodUnitPositions() {
 		return goodUnitPositions;
+	}
+	
+	/**
+	 * @return the enemyUnitPositions
+	 */
+	public List<Point> getEnemyUnitPositions() {
+		return enemyUnitPositions;
 	}
 
 	/**
@@ -364,9 +394,38 @@ public class Map extends Observable {
 
 		unitsOnMap[row][col] = null;
 		map[row][col].setOccupied(false);
+		
+
+		if (!isPlayerTurn) {
+			for (Point p : goodUnitPositions) {
+				if (p.getX() == col && p.getY() == row) {
+					goodUnitPositions.remove(p);
+					break;
+				}
+			}
+			
+		} else {
+
+			for (Point p : enemyUnitPositions) {
+				if (p.getX() == col && p.getY() == row) {
+					enemyUnitPositions.remove(p);
+					break;
+				}
+			}
+		}
+		
+		
 		setChanged();
 		notifyObservers();
 
+	}
+
+	/**
+	 * @param isPlayerTurn
+	 *            the isPlayerTurn to set
+	 */
+	public void setIsPlayerTurn() {
+		isPlayerTurn = !isPlayerTurn;
 	}
 
 	/**
