@@ -3,6 +3,7 @@ package controller;
 import gametype.*;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -22,7 +23,7 @@ import item.*;
  * 
  *
  */
-public class GameController {
+public class GameController implements Serializable{
 	private Player player1;
 	private AI player2;
 	private Map map;
@@ -46,10 +47,9 @@ public class GameController {
 	private List<Point> enemyLocals;
 
 	private boolean moveOn;
+	private Item[][] mines;
 
-	/**
-	 * TODO Work on this. Will add a createAI method soon
-	 * 
+	/** 
 	 * Constructor for one player.
 	 * 
 	 * @param player1
@@ -88,11 +88,13 @@ public class GameController {
 		playerTurn = true;
 		currPlayer = player1;
 
-		// TODO: Give the enemy units behaviors.
+		// Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
 
 		enemyLocals = map.getEnemyUnitPositions();
 		playerLocals = map.getGoodUnitPositions();
+		
+		mines = new Item[50][50];
 	}
 
 	public String getCurrPlayerName() {
@@ -439,7 +441,7 @@ public class GameController {
 	/**
 	 * TODO Finish this method.
 	 */
-	public boolean currUnitHasItem(ItemType item){
+	public boolean currUnitHasItem(ItemType item) {
 		return currUnit.hasItem(item);
 	}
 
@@ -450,18 +452,37 @@ public class GameController {
 	 * 
 	 * @return if the item was used.
 	 */
-	public boolean useItem() {
-		if (false)
-			return false;
-		else {
-			// If attack item, use on target space
+	public boolean useItem(ItemType i) {
+		Item j = currUnit.removeItem(i);
 
-			// If health item, use on target space/self
+		if (j != null) {
 
-			// If defense item, use on target space/self
+			if (j instanceof UsableItem){
+				// If it is a mine, place it on the map.
+				if(j.getItemType() == ItemType.MINE){
+					// TODO Place mine on space
+				}
+				
+				// If health item, use on target space/self
+				else if(j.getItemType() == ItemType.MEDKIT){
+					// TODO Place mine on space
+					Object[] options = {"Self", "Target", "Cancel"};
+					int answer = JOptionPane.showOptionDialog(null, "Who to heal?", "Would you like to heal the target or the current unit?", JOptionPane.YES_NO_CANCEL_OPTION,  JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+				}
 
-			return true;
+				// If it's a grenade, use on target space.
+				else if(j.getItemType() == ItemType.GRENADE){
+					// TODO Place mine on space
+				}
+				
+				return true;
+			}
+			else
+				return false;
 		}
+
+		else
+			return false;
 	}
 
 	/**
@@ -544,12 +565,11 @@ public class GameController {
 				return false;
 		}
 
-		// TODO finish working on this
 		else if (gameType instanceof gametype.FourCorners) {
 			winConditions = new ArrayList<Space>();
-			
+
 			boolean toReturn = true;
-			
+
 			if (!((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
 				toReturn = false;
 			else if (!((CaptureCornerSpace) map.getSpace(49, 0))
@@ -652,7 +672,6 @@ public class GameController {
 		 * 
 		 * currRow = 0; currCol = 0;
 		 * 
-		 * // TODO: Update the enemy's with the player's current locations }
 		 * else {
 		 * 
 		 * // Remove all of the AI's units from the tempList playerTurn = true;
@@ -741,7 +760,7 @@ public class GameController {
 		}
 	}
 
-	/**
+	/*
 	 * TODO Check item type, see if it is on same side
 	 * 
 	 * Heal a friendly unit. Checks to see if on the same side, and if the unit
@@ -752,10 +771,11 @@ public class GameController {
 	 * @param ec
 	 *            , target col
 	 * @return can heal, or can't heal
-	 */
+	 
 	public boolean heal(int targetRow, int targetCol) {
 		return false;
 	}
+	*/
 
 	/**
 	 * Sets the new endColumn. Used in attack and movement.
