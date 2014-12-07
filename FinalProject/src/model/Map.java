@@ -3,6 +3,7 @@ package model;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -39,15 +40,15 @@ import units.ZombieDogAI;
  * The Map class, creates a new map. Also handles moving units, adding/removing
  * units on the map and checking to see if a space is occupied.
  */
-public class Map extends Observable {
+public class Map extends Observable implements Serializable {
 
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
-	private Scanner mapScan;
+	private transient Scanner mapScan;
 	private List<Unit> enemyList;
 	private List<Point> goodUnitPositions;
 	private List<Point> enemyUnitPositions;
-	private Scanner unitScan;
+	private transient Scanner unitScan;
 	private Boolean isPlayerTurn;
 	private String gameType;
 

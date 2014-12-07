@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import units.*;;
  * or dead.
  *
  */
-public class Player {
+public class Player implements Serializable{
 	
 	private int gamesFinished;
 	private int livingTeam;

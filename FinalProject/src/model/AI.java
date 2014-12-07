@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import units.*;
  * to assign AI behaviors to different units.
  *
  */
-public class AI {
+public class AI implements Serializable{
 
 	private List<Unit> livingUnits;
 	private List<Unit> allUnits;

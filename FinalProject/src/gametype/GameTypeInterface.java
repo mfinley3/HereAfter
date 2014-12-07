@@ -1,9 +1,11 @@
 package gametype;
 
+import java.io.Serializable;
+
 /**
  * The Interface GameTypeInterface.
  */
-public interface GameTypeInterface {
+public interface GameTypeInterface extends Serializable{
 	
 	/**
 	 * Check win condition.

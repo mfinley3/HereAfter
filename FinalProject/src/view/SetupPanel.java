@@ -10,7 +10,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -413,7 +415,7 @@ public class SetupPanel extends JPanel implements Observer {
 		int answer = JOptionPane.showOptionDialog(null, "Where would you like to save?", "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION,  JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		
 		if(answer == JOptionPane.YES_OPTION){
-			save("SaveStateOne");
+			saveData("SaveStateOne");
 		}
 		else if(answer == JOptionPane.NO_OPTION){
 			
@@ -427,10 +429,25 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 	
 
-	private void save(String string) {
-		// TODO Auto-generated method stub
-		
+	private void saveData(String saveName) {
+		try {
+
+			if(saveName.equals("SaveStateOne")){
+			FileOutputStream outStream = new FileOutputStream("SaveStateOne.data");
+			ObjectOutputStream outObject = new ObjectOutputStream(outStream);
+			outObject.writeObject(controller);
+			outObject.close();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
 	}
+
+	
 
 	/**
 	 * If the end turn button is selected, the end turn method of controller is

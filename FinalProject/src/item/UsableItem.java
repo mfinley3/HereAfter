@@ -1,6 +1,8 @@
 package item;
 
-public class UsableItem extends Item{
+import java.io.Serializable;
+
+public class UsableItem extends Item implements Serializable{
 	
 	private ItemType item;
 	private int points;

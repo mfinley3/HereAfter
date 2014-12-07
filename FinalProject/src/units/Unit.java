@@ -2,12 +2,13 @@ package units;
 
 import item.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * The abstract Unit class. Used in creating new units and keeping track of each of the units stats.
  */
-public abstract class Unit {
+public abstract class Unit implements Serializable{
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 
 	private boolean canMove;
