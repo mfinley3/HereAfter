@@ -45,16 +45,15 @@ import java.awt.event.MouseMotionListener;
  */
 public class SetupPanel extends JPanel implements Observer {
 
-	private BufferedImage background, setUp1, setUpLevel, setUpType, soldier, doctor,
-			engineer, ranger, sniper;
+	private BufferedImage background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper;
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
-	private JButton select, wait, item, attack, move, help, endTurn;
-	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning, selectType;
+	private JButton select, wait, item, attack, move, help, endTurn, save;
+	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning, selectType, loadGame;
 	private GameController controller;
 	private Difficulty difficulty;
 	private String type;
-	
+
 	private JPanel mainPanel;
 	private JTabbedPane views;
 
@@ -62,18 +61,21 @@ public class SetupPanel extends JPanel implements Observer {
 	private JPanel graphical = new GraphicalView();
 	private JPanel textMap = new MapView();
 	private JPanel UnitLocations = new UnitLocations();
-	
+	private JPanel loadGameView = new LoadGameView();
+
 	private JFrame mainFrame;
 
 	/**
-	 * Instantiates a new setup panel. This loads all of the images that are going to be needed.
+	 * Instantiates a new setup panel. This loads all of the images that are
+	 * going to be needed.
 	 */
 	public SetupPanel() {
-		
+
 		this.setLayout(null);
 
 		try {
 			background = ImageIO.read(new File("unitSelect.jpg"));
+			loadPage = ImageIO.read(new File("LoadGameScreen.png"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
 			setUpLevel = ImageIO.read(new File("FinalStartScreenBackgroundDifficulty.png"));
 			doctor = ImageIO.read(new File("Doctor1.png"));
@@ -91,16 +93,17 @@ public class SetupPanel extends JPanel implements Observer {
 		selectUnits = false;
 		selectType = false;
 		selected = true;
-		
+
 		mainPanel = this;
-		
+
 		registerListeners();
 
 	}
 
 	/**
-	 * Select unit. This instantiates the splash page for the user to select their units and user name.  It adds 
-	 * a label, picture, and text area for each unit.
+	 * Select unit. This instantiates the splash page for the user to select
+	 * their units and user name. It adds a label, picture, and text area for
+	 * each unit.
 	 */
 	private void selectUnit() {
 
@@ -118,16 +121,14 @@ public class SetupPanel extends JPanel implements Observer {
 		userNameLabel.setLocation(15, 100);
 		this.add(userNameLabel);
 
-		JLabel selectLabel = new JLabel(
-				"Select your units.  Enter a number between 0 and 5 for ");
+		JLabel selectLabel = new JLabel("Select your units.  Enter a number between 0 and 5 for ");
 		selectLabel.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		selectLabel.setForeground(Color.WHITE);
 		selectLabel.setSize(900, 25);
 		selectLabel.setLocation(15, 170);
 		this.add(selectLabel);
 
-		JLabel selectLabel2 = new JLabel(
-				"each type of unit.  Can have up to 5 units total.");
+		JLabel selectLabel2 = new JLabel("each type of unit.  Can have up to 5 units total.");
 		selectLabel2.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		selectLabel2.setForeground(Color.WHITE);
 		selectLabel2.setSize(900, 25);
@@ -216,16 +217,17 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving selectButton events.
-	 * This occurs when the "Select" button on the setUp page is pushed.  It will check that 
-	 * the number of units adds up to 5, and that actual numbers are entered for each unit.
-	 * This class creates a new unit for each unit the user selects,
-	 * a new player with those units, a GameController, and sets the graphical and text view to observe the map.
+	 * The listener interface for receiving selectButton events. This occurs
+	 * when the "Select" button on the setUp page is pushed. It will check that
+	 * the number of units adds up to 5, and that actual numbers are entered for
+	 * each unit. This class creates a new unit for each unit the user selects,
+	 * a new player with those units, a GameController, and sets the graphical
+	 * and text view to observe the map.
 	 *
 	 * @see selectButtonEvent
 	 */
 	private class selectButtonListener implements ActionListener {
-		
+
 		public void actionPerformed(ActionEvent ae) {
 			// Check that the number of all units adds to 5. if they dont, show
 			// an error message
@@ -279,13 +281,11 @@ public class SetupPanel extends JPanel implements Observer {
 						docs--;
 					}
 					while (solds != 0) {
-						player.addUnits((Unit) new Soldier(difficulty
-								.getValue()));
+						player.addUnits((Unit) new Soldier(difficulty.getValue()));
 						solds--;
 					}
 					while (engs != 0) {
-						player.addUnits((Unit) new Engineer(difficulty
-								.getValue()));
+						player.addUnits((Unit) new Engineer(difficulty.getValue()));
 						engs--;
 					}
 					while (rangs != 0) {
@@ -303,26 +303,25 @@ public class SetupPanel extends JPanel implements Observer {
 					controller.getMap().addObserver((Observer) text);
 					((TextView) text).setController(controller);
 					controller.getMap().addObserver((Observer) mainPanel);
-					controller.getMap().addObserver((Observer) UnitLocations);					
-					
+					controller.getMap().addObserver((Observer) UnitLocations);
+
 					selected = false;
 					actualMap();
 					TRPGGUI.canResize();
 
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"The number of units must add up to 5");
+					JOptionPane.showMessageDialog(null, "The number of units must add up to 5");
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, userName.getText()
-						+ " did not enter a valid input");
+				JOptionPane.showMessageDialog(null, userName.getText() + " did not enter a valid input");
 			}
 
 		}
 	}
 
 	/**
-	 * If the move button is selected, the move method of controller is called so that the map and units change location.
+	 * If the move button is selected, the move method of controller is called
+	 * so that the map and units change location.
 	 *
 	 * @see moveButtonEvent
 	 */
@@ -336,8 +335,9 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * If the attack button is selected, the attack method of controller is called so that the map and units change, and so that one
-	 * unit can attack and kill the other if possible.
+	 * If the attack button is selected, the attack method of controller is
+	 * called so that the map and units change, and so that one unit can attack
+	 * and kill the other if possible.
 	 *
 	 * @see attackButtonEvent
 	 */
@@ -351,7 +351,8 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * If the item button is selected, the useItem method will be called from the controller.  This is not implemented yet.
+	 * If the item button is selected, the useItem method will be called from
+	 * the controller. This is not implemented yet.
 	 *
 	 * @see useItemButtonEvent
 	 */
@@ -365,8 +366,9 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * If the wait button is selected, the wait method of controller is called so that the map and units change, and so that
-	 * that unit's ability to move is changed to false.
+	 * If the wait button is selected, the wait method of controller is called
+	 * so that the map and units change, and so that that unit's ability to move
+	 * is changed to false.
 	 *
 	 * @see waitButtonEvent
 	 */
@@ -380,7 +382,8 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * If the help button is selected, a help window is open that tell you the rules.
+	 * If the help button is selected, a help window is open that tell you the
+	 * rules.
 	 *
 	 * @see helpButtonEvent
 	 */
@@ -390,14 +393,48 @@ public class SetupPanel extends JPanel implements Observer {
 		public void actionPerformed(ActionEvent e) {
 
 			new Thread(new HelpWindow()).start();
-			
+
 		}
 
 	}
+	private class saveButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			saveTheGame();
+		}
+		
+
+	}
+	public void saveTheGame() {
+		
+		Object[] options = {"Save 1", "Save 2","Save 3", "Cancel"};
+		int answer = JOptionPane.showOptionDialog(null, "Where would you like to save?", "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION,  JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+		
+		if(answer == JOptionPane.YES_OPTION){
+			save("SaveStateOne");
+		}
+		else if(answer == JOptionPane.NO_OPTION){
+			
+		}
+		else if(answer == JOptionPane.CANCEL_OPTION){
+			
+		}
+		else {
+			
+		}
+	}
+	
+
+	private void save(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
-	 * If the end turn button is selected, the end turn method of controller is called and the team that is allowed
-	 * to be used is the other team. 
+	 * If the end turn button is selected, the end turn method of controller is
+	 * called and the team that is allowed to be used is the other team.
 	 * 
 	 * @see endTurnButtonEvent
 	 */
@@ -411,8 +448,8 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * Actual map. This sets up the actual map. It adds the graphical and text views, as well as keeps all of 
-	 * the buttons available to work. 
+	 * Actual map. This sets up the actual map. It adds the graphical and text
+	 * views, as well as keeps all of the buttons available to work.
 	 * 
 	 */
 	private void actualMap() {
@@ -439,11 +476,11 @@ public class SetupPanel extends JPanel implements Observer {
 
 		views.add(textMap, "Map");
 		views.add(UnitLocations, "UnitLocations");
-		
+
 		this.add(views, BorderLayout.CENTER);
 
 		JPanel buttons = new JPanel();
-		buttons.setLayout(new GridLayout(8, 1));
+		buttons.setLayout(new GridLayout(9, 1));
 		buttons.setOpaque(false);
 
 		move = new JButton("Move");
@@ -458,7 +495,9 @@ public class SetupPanel extends JPanel implements Observer {
 		help.addActionListener(new helpButtonListener());
 		endTurn = new JButton("End Turn");
 		endTurn.addActionListener(new endTurnButtonListener());
-
+		save = new JButton("Save And Quit");
+		save.addActionListener(new saveButtonListener());
+		
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
 
@@ -478,13 +517,15 @@ public class SetupPanel extends JPanel implements Observer {
 		buttons.add(item);
 		buttons.add(wait);
 		buttons.add(endTurn);
+		buttons.add(save);
 
 		this.add(buttons, BorderLayout.WEST);
 
 	}
 
+
 	/**
-	 * Register listeners.  This registers the mouse listeners.
+	 * Register listeners. This registers the mouse listeners.
 	 */
 	private void registerListeners() {
 
@@ -497,25 +538,29 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * This paintComponent changes depending on what the splash screen is.  If it is the screen for the user to select
-	 * their units, then one of each of the units are drawn.  This does not happen however if the splash screen is one
-	 * of the other 2 set up screens to select to have a new game or select the level.
+	 * This paintComponent changes depending on what the splash screen is. If it
+	 * is the screen for the user to select their units, then one of each of the
+	 * units are drawn. This does not happen however if the splash screen is one
+	 * of the other 2 set up screens to select to have a new game or select the
+	 * level.
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D gr = (Graphics2D) g;
-		if(gameIsRunning){
+		if (gameIsRunning) {
 			Toolkit tk = Toolkit.getDefaultToolkit();
 			Dimension d = tk.getScreenSize();
-			
+
 			validate();
-			gr.drawImage(background, 0, 0, d.width , d.height, null);
+			gr.drawImage(background, 0, 0, d.width, d.height, null);
 			selectUnits = false;
 			startUp1 = false;
 			selectLevel = false;
 			selectType = false;
-			
+			loadGame = false;
+
 		}
+
 		if (selectUnits) {
 			gr.drawImage(background, 0, 0, null);
 			if (selected) {
@@ -526,14 +571,16 @@ public class SetupPanel extends JPanel implements Observer {
 				gr.drawImage(soldier, 235, 260, null);
 			}
 
+		} else if (loadGame) {
+			gr.drawImage(loadPage, 0, 0, null);
 		} else if (startUp1) {
 			gr.drawImage(setUp1, 0, 0, null);
 		} else if (selectLevel) {
 			gr.drawImage(setUpLevel, 0, 0, null);
-		} else if(selectType) {
+		} else if (selectType) {
 			gr.drawImage(setUpType, 0, 0, null);
 		}
-		
+
 	}
 
 	/**
@@ -541,15 +588,14 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
-
 		public void mouseClicked(MouseEvent evt) {
 
 		}
 
-
 		/**
-		 * If the mouse is pressed, it keeps track of what step in the set up the gui is at.  Depending on that, it will
-		 * change the image that is in the background, and what options are able to be selected.
+		 * If the mouse is pressed, it keeps track of what step in the set up
+		 * the gui is at. Depending on that, it will change the image that is in
+		 * the background, and what options are able to be selected.
 		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -558,8 +604,7 @@ public class SetupPanel extends JPanel implements Observer {
 
 			if (startUp1) {
 
-				if (clickX > 685 && clickX < 870 && clickY > 190
-						&& clickY < 230) {
+				if (clickX > 685 && clickX < 870 && clickY > 190 && clickY < 230) {
 
 					// This means there is a new game
 					// go to the second page with the level options
@@ -567,65 +612,66 @@ public class SetupPanel extends JPanel implements Observer {
 					startUp1 = false;
 
 					repaint();
-				} else if (clickX > 650 && clickX < 940 && clickY > 250
-						&& clickY < 290) {
+				} else if (clickX > 650 && clickX < 940 && clickY > 250 && clickY < 290) {
 					// This means they want to continue their game
 
+					loadGame = true;
 					startUp1 = false;
-				} else if (clickX > 750 && clickX < 850 && clickY > 310
-						&& clickY < 350) {
+					selectLevel = false;
+					selectType = false;
+					gameIsRunning = false;
+					repaint();
+
+				} else if (clickX > 750 && clickX < 850 && clickY > 310 && clickY < 350) {
 					// This means they want to quit the game
 
 					System.exit(0);
 				}
-			} else if(selectType) {
-				if (clickX > 630 && clickX < 960 && clickY > 230
-						&& clickY < 270) {
+			} else if (selectType) {
+				if (clickX > 630 && clickX < 960 && clickY > 230 && clickY < 270) {
 					// This means they select "Capture the tower"
 					// go to the page with the level options
 					selectType = false;
 					selectLevel = true;
 					type = "tower";
 					repaint();
-				} else if (clickX > 635 && clickX < 960 && clickY > 280
-						&& clickY < 320) {
+
+				} else if (clickX > 635 && clickX < 960 && clickY > 280 && clickY < 320) {
 					// This means they select "Seize the corners"
 					selectType = false;
 					selectLevel = true;
 					type = "corner";
 					repaint();
-					} else if (clickX > 710 && clickX < 880 && clickY > 330
-						&& clickY < 370) {
+
+				} else if (clickX > 710 && clickX < 880 && clickY > 330 && clickY < 370) {
 					// This means they select "Survival"
 					selectType = false;
 					selectLevel = true;
 					type = "survive";
 					repaint();
+
 				}
-				
+
 				((MapView) textMap).setGameType(type);
-				
+
 			}
-			
+
 			else if (selectLevel) {
-				if (clickX > 750 && clickX < 850 && clickY > 235
-						&& clickY < 275) {
+				if (clickX > 750 && clickX < 850 && clickY > 235 && clickY < 275) {
 					// This means the difficulty is easy
 					difficulty = Difficulty.EASY;
 					selectUnit();
 					selectLevel = false;
 					selectUnits = true;
 					repaint();
-				} else if (clickX > 725 && clickX < 875 && clickY > 290
-						&& clickY < 320) {
+				} else if (clickX > 725 && clickX < 875 && clickY > 290 && clickY < 320) {
 					// This means the difficulty is medium
 					difficulty = Difficulty.EASY;
 					selectUnit();
 					selectLevel = false;
 					selectUnits = true;
 					repaint();
-				} else if (clickX > 740 && clickX < 840 && clickY > 340
-						&& clickY < 380) {
+				} else if (clickX > 740 && clickX < 840 && clickY > 340 && clickY < 380) {
 					// This means the difficulty is hard
 					difficulty = Difficulty.EASY;
 					selectUnit();
@@ -633,15 +679,23 @@ public class SetupPanel extends JPanel implements Observer {
 					selectUnits = true;
 					repaint();
 				}
+			} else if (loadGame) {
+				if (clickX > 58 && clickX < 432 && clickY > 210 && clickY < 255) {
+					System.out.print("Worked");
+				} else if (clickX > 58 && clickX < 440 && clickY > 315 && clickY < 358) {
+					System.out.print("Worked2");
+				}  else if (clickX > 58 && clickX < 492 && clickY > 415 && clickY < 466) {
+					System.out.print("Worked3");
+				}
+				
+
 			}
 		}
-
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 
 		}
-
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
@@ -652,7 +706,6 @@ public class SetupPanel extends JPanel implements Observer {
 		public void mouseExited(MouseEvent e) {
 
 		}
-
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
@@ -667,8 +720,9 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * This update is called through the Map.  Every time something happens, the map calls update, and the username
-	 * that is in the upper hand corner changes so that it is the current player.
+	 * This update is called through the Map. Every time something happens, the
+	 * map calls update, and the username that is in the upper hand corner
+	 * changes so that it is the current player.
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
@@ -678,13 +732,12 @@ public class SetupPanel extends JPanel implements Observer {
 
 	/**
 	 * This just returns if the game is running or not.
+	 * 
 	 * @return gameIsRunning
 	 */
 	public boolean getGameIsRunning() {
 		// TODO Auto-generated method stub
 		return gameIsRunning;
 	}
-	
-	
 
 }
