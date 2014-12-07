@@ -24,6 +24,7 @@ import units.AlphaProtectorAI;
 import units.CarrierAI;
 import units.Doctor;
 import units.Engineer;
+import units.Hole;
 import units.Ranger;
 import units.ZombieAI;
 import units.Sniper;
@@ -45,7 +46,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
-	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
+	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
 
 	/**
 	 * Instantiates a new graphical view.  It also loads all of the images that are going to be used in the game,
@@ -79,6 +80,7 @@ public class GraphicalView extends JPanel implements Observer {
 			wall = ImageIO.read(new File("WallSpace.jpg"));
 			indoorWall = ImageIO.read(new File("IndoorWall.png"));
 			water = ImageIO.read(new File("WaterSpace.jpg"));
+			hole =ImageIO.read(new File("HoleSpace.png"));
 
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
@@ -227,7 +229,9 @@ public class GraphicalView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		//Graphics2D.scale(2.0, 2.0);
+		//g2.translate(w/2, h/2);
+		//g2.scale(.5, .5);
+		//g2.translate(-w/2, -h/2);
 
 		int x = 0;
 		int y = 0;
@@ -284,6 +288,8 @@ public class GraphicalView extends JPanel implements Observer {
 							g2.drawImage(spitterSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof CarrierAI) {
 							g2.drawImage(carrierSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Hole) {
+							g2.drawImage(hole, x, y, null);
 						}
 
 					} else {
@@ -338,6 +344,11 @@ public class GraphicalView extends JPanel implements Observer {
 								g2.drawImage(carrier, x, y, null);
 							else
 								g2.drawImage(carrierCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Hole) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(hole, x, y, null);
+							else
+								g2.drawImage(hole, x, y, null);
 						}
 						
 					}

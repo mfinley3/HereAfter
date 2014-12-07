@@ -26,6 +26,7 @@ import units.AlphaProtectorAI;
 import units.CarrierAI;
 import units.Doctor;
 import units.Engineer;
+import units.Hole;
 import units.Ranger;
 import units.Sniper;
 import units.Soldier;
@@ -210,6 +211,13 @@ public class Map extends Observable {
 						enemyUnitPositions.add(new Point(m, n));
 					}
 
+					if (unitLetterEquivalence.equals("G")) {
+						unitsOnMap[m][n] = new Hole(difficulty);
+						map[m][n].setOccupied(true);
+						enemyList.add(unitsOnMap[m][n]);
+						enemyUnitPositions.add(new Point(m, n));
+					} 
+					
 					if (unitLetterEquivalence.equals("C")) {
 						unitsOnMap[m][n] = new CarrierAI(difficulty);
 						map[m][n].setOccupied(true);
@@ -506,6 +514,8 @@ public class Map extends Observable {
 					textMap += "[" + "G" + "]  ";
 				if (unitsOnMap[i][j] instanceof AlphaProtectorAI)
 					textMap += "[" + "A" + "]  ";
+				if (unitsOnMap[i][j] instanceof Hole)
+					textMap += "[" + "H" + "]  ";
 				if (unitsOnMap[i][j] == null)
 					textMap += "[" + " " + "]  ";
 				
