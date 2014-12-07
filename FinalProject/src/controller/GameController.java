@@ -665,7 +665,9 @@ public class GameController {
 		map.resetMapCanMove();
 		if (!gameOver) {
 			if (playerTurn) {
-				// Remove all of the player's units from tempList
+				map.setIsPlayerTurn();
+				
+				// Remove all of the player's units from tempList				
 				playerTurn = false;
 				for (Unit i : tempUnitList)
 					i.setCanMove(false);
@@ -679,11 +681,8 @@ public class GameController {
 				for (Unit i : tempUnitList)
 					i.setCanMove(true);
 				
-				enemyTurn();
-
 				//map.updateObservers();
-				if (tempUnitList.isEmpty())
-					endTurn();
+				enemyTurn();
 
 				currRow = 0;
 				currCol = 0;
@@ -693,7 +692,8 @@ public class GameController {
 
 				// Remove all of the AI's units from the tempList
 				playerTurn = true;
-
+				map.setIsPlayerTurn();
+				
 				//
 				for (Unit i : tempUnitList)
 					i.setCanMove(false);

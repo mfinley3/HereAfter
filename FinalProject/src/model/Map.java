@@ -49,6 +49,7 @@ public class Map extends Observable {
 	 *            what map to make.
 	 */
 	public Map(double difficulty, String gameType) {
+		isPlayerTurn = true;
 
 		map = new Space[50][50];
 		unitsOnMap = new Unit[50][50];
