@@ -43,6 +43,8 @@ public class GameController {
 	private Object winConditions;
 	private List<Point> playerLocals;
 	private List<Point> enemyLocals;
+	
+	private boolean moveOn;
 
 	/**
 	 * TODO Work on this. Will add a createAI method soon
@@ -57,7 +59,7 @@ public class GameController {
 		this.player1 = player1;
 		this.player2 = new AI(i);
 
-		if(gameT.equalsIgnoreCase("corner"))
+		if (gameT.equalsIgnoreCase("corner"))
 			gameType = new FourCorners();
 		else if (gameT.equalsIgnoreCase("survive"))
 			gameType = new Survive(10);
@@ -66,7 +68,7 @@ public class GameController {
 		// winConditions = false;
 
 		Stack<Unit> temp = new Stack<Unit>();
-		
+
 		// Put the player's units into a stack and put it into the Map
 		for (Unit k : player1.getTeam()) {
 			k.setCanMove(true);
@@ -84,10 +86,10 @@ public class GameController {
 		turns = 0;
 		playerTurn = true;
 		currPlayer = player1;
-		
-		//TODO: Give the enemy units behaviors.
+
+		// TODO: Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
-		
+
 		enemyLocals = map.getEnemyUnitPositions();
 		playerLocals = map.getGoodUnitPositions();
 	}
@@ -115,8 +117,7 @@ public class GameController {
 				currRow = row;
 				currCol = col;
 				setCanMove(row, col);
-				System.out.println("New CurrUnit " + currUnit.getUnitType()
-						+ " at: (" + currRow + ", " + currCol + ")");
+				System.out.println("New CurrUnit " + currUnit.getUnitType() + " at: (" + currRow + ", " + currCol + ")");
 				map.updateObservers();
 				return true;
 			}
@@ -172,12 +173,9 @@ public class GameController {
 		// Check to see if the end Row and End Col point to something
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
-				System.out.println("(" + currRow + ", " + currCol
-						+ ") Move to (" + endRow + ", " + endCol + ")");
+				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
 				if (currUnit != null) {
-					if (currUnit.canMove()
-							&& (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol)==currUnit)
-							&& map.getSpace(endRow, endCol).getCanMoveTo()) {
+					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
 						map.resetMapCanMove();
 						map.moveUnit(currRow, currCol, endRow, endCol);
 
@@ -187,9 +185,13 @@ public class GameController {
 						System.out.println(currRow);
 						System.out.println(currCol);
 						gameOver();
-
+						
+						if(playerTurn)						
+						attackAfterMove();
+						
 						endRow = 51;
 						endCol = 51;
+
 						// Take the unit that can no longer move out of the
 						// tempUnitList
 						currUnit.setCanMove(false);
@@ -206,24 +208,37 @@ public class GameController {
 				if (currUnit == null)
 					JOptionPane.showMessageDialog(null, "Please select a Unit");
 				else if (!currUnit.canMove())
-					JOptionPane.showMessageDialog(null,
-							"Unit can't move anymore. Select a new unit.");
+					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
 				else if (map.isOccupied(endRow, endCol))
-					JOptionPane.showMessageDialog(null,
-							"Space is occupied, you can't move there");
+					JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
 				else if (!map.getSpace(endRow, endCol).getCanMoveTo())
-					JOptionPane.showMessageDialog(null,
-							"Space is out of range.");
+					JOptionPane.showMessageDialog(null, "Space is out of range.");
 				return;
 			} else
-				JOptionPane.showMessageDialog(null,
-						"You can't move on top of walls!");
+				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
 		} else
-			JOptionPane.showMessageDialog(null,
-					"Pick a space to move to before you try moving...");
+			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
 
 	}
 
+	private void attackAfterMove() {
+
+		for (Point p : enemyLocals) {
+
+			if (inAttackRange((int) p.getX(), (int) p.getY())) {
+				int answer = JOptionPane.showConfirmDialog(null, "A unit is in your attack range. Would you like to attack?", "Attack?", JOptionPane.YES_NO_OPTION);
+				if (answer == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(null, "Pick a Unit in your range to attack");
+					
+					break;
+					
+				}
+				break;
+			}
+		}
+
+	}
+	
 	/**
 	 * Get it to attack
 	 * 
@@ -245,8 +260,7 @@ public class GameController {
 				if (!SameTeam()) {
 
 					// Checks to see if either of the units are false.
-					if (currUnit != null
-							&& map.getUnitAt(endRow, endCol) != null) {
+					if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 						// if both exist, check if one can move
 						if (inAttackRange(currRow, currCol)) {
 							actAttack();
@@ -259,7 +273,7 @@ public class GameController {
 							endCol = 51;
 
 							map.resetMapCanMove();
-							
+
 							gameOver();
 							map.updateObservers();
 							if (tempUnitList.isEmpty())
@@ -267,22 +281,17 @@ public class GameController {
 						}
 
 						else {
-							JOptionPane.showMessageDialog(null,
-									"Enemy out of attack Range.");
+							JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
 							System.out.println("Enemy out of attack range.");
 						}
 					} else
-						JOptionPane.showMessageDialog(null,
-								"Nothing to Attack!");
+						JOptionPane.showMessageDialog(null, "Nothing to Attack!");
 				} else
-					JOptionPane.showMessageDialog(null,
-							"You cannot attack your own teammates...");
+					JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
 			} else
-				JOptionPane
-						.showMessageDialog(null, "You can't attack youself!");
+				JOptionPane.showMessageDialog(null, "You can't attack youself!");
 		} else
-			JOptionPane.showMessageDialog(null,
-					"Pick a unit to attack before you try attacking...");
+			JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
 	}
 
 	// /**
@@ -393,7 +402,6 @@ public class GameController {
 	 */
 	private void actAttack() {
 		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
-		
 
 		targetDead(endRow, endCol);
 	}
@@ -445,13 +453,11 @@ public class GameController {
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
-				JOptionPane.showMessageDialog(null, "Player " + player1.getID()
-						+ " won!");
+				JOptionPane.showMessageDialog(null, "Player " + player1.getID() + " won!");
 				System.out.println("Player " + player1.getID() + " won!");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you finished: "
-						+ player1.getGamesFinished());
+				System.out.println("Games you finished: " + player1.getGamesFinished());
 				System.out.println("Your team stats: ");
 				System.out.println(player1.getTeamStats());
 
@@ -464,13 +470,11 @@ public class GameController {
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
-				JOptionPane.showMessageDialog(null,
-						"AI won! Better luck next time...");
+				JOptionPane.showMessageDialog(null, "AI won! Better luck next time...");
 				System.out.println("AI won! Better luck next time...");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you've finished: "
-						+ player1.getGamesFinished());
+				System.out.println("Games you've finished: " + player1.getGamesFinished());
 				System.out.println("AI team stats: ");
 				System.out.println(player2.getTeamStats());
 
@@ -485,49 +489,46 @@ public class GameController {
 	/**
 	 * TODO FINISH
 	 * 
-	 * Determine if a game of a particular type has been won.
-	 * Sends the relevant information to the right file to check.
+	 * Determine if a game of a particular type has been won. Sends the relevant
+	 * information to the right file to check.
 	 * 
 	 * @return Depending on the game type, if the game has been won
 	 */
 	public boolean checkWinConditions() {
 		if (gameType instanceof gametype.CaptureTower) {
 
-			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2
-					.everyonesDeadDave())) {
+			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2.everyonesDeadDave())) {
 				return true;
-			}
-			else
+			} else
 				return false;
-		} else if (gameType instanceof gametype.Survive){
-			if(!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))
+		} else if (gameType instanceof gametype.Survive) {
+			if (!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))
 				return true;
 			else
 				return false;
 		}
-		
+
 		// TODO finish working on this
-		else if (gameType instanceof gametype.FourCorners){
+		else if (gameType instanceof gametype.FourCorners) {
 			winConditions = new ArrayList<Space>();
-			if(!((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
-				((ArrayList<Space>)winConditions).add(map.getSpace(0, 0));
-			if(!((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
-				((ArrayList<Space>)winConditions).add(map.getSpace(49, 0));
-			if(!((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
-				((ArrayList<Space>)winConditions).add(map.getSpace(0, 49));
-			if(!((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured())
-				((ArrayList<Space>)winConditions).add(map.getSpace(49, 49));
-			
-			if(gameType.CheckWinCondition(winConditions) && !player1.everyonesDeadDave()){
-				((ArrayList<Space>)winConditions).clear();
+			if (!((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
+				((ArrayList<Space>) winConditions).add(map.getSpace(0, 0));
+			if (!((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
+				((ArrayList<Space>) winConditions).add(map.getSpace(49, 0));
+			if (!((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
+				((ArrayList<Space>) winConditions).add(map.getSpace(0, 49));
+			if (!((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured())
+				((ArrayList<Space>) winConditions).add(map.getSpace(49, 49));
+
+			if (gameType.CheckWinCondition(winConditions) && !player1.everyonesDeadDave()) {
+				((ArrayList<Space>) winConditions).clear();
 				return true;
-			}
-			else{
-				((ArrayList<Space>)winConditions).clear();
+			} else {
+				((ArrayList<Space>) winConditions).clear();
 				return false;
 			}
 		}
-		
+
 		else
 			return false;
 	}
@@ -592,70 +593,50 @@ public class GameController {
 		return map;
 	}
 
-	
-	/* \/**
- 	 *
+	/*
+	 * \/**
+	 * 
 	 * When called, ends a turn. Checks to see whose turn it is, clears the
 	 * temporary unit list, sets the current unit to null. Sets the can move to
 	 * false.
-	 */ /*
-	 
-	public void endTurn() {
-		map.resetMapCanMove();
-		if (!gameOver) {
-			if (playerTurn) {
-				// Remove all of the player's units from tempList
-				playerTurn = false;
-				for (Unit i : tempUnitList)
-					i.setCanMove(false);
-				tempUnitList.clear();
-				currUnit = null;
+	 *//*
+		 * 
+		 * public void endTurn() { map.resetMapCanMove(); if (!gameOver) { if
+		 * (playerTurn) { // Remove all of the player's units from tempList
+		 * playerTurn = false; for (Unit i : tempUnitList) i.setCanMove(false);
+		 * tempUnitList.clear(); currUnit = null;
+		 * 
+		 * System.out.println("Player 1 ends turn.");
+		 * 
+		 * // Switch to AI tempUnitList = new
+		 * ArrayList<Unit>(player2.allAliveUnits()); for (Unit i : tempUnitList)
+		 * i.setCanMove(true);
+		 * 
+		 * map.updateObservers(); if (tempUnitList.isEmpty()) endTurn();
+		 * 
+		 * currRow = 0; currCol = 0;
+		 * 
+		 * // TODO: Update the enemy's with the player's current locations }
+		 * else {
+		 * 
+		 * // Remove all of the AI's units from the tempList playerTurn = true;
+		 * 
+		 * // for (Unit i : tempUnitList) i.setCanMove(false);
+		 * tempUnitList.clear(); currUnit = null;
+		 * 
+		 * // Switch to player, add one to turns tempUnitList = new
+		 * ArrayList<Unit>(player1.allAliveUnits()); for (Unit i : tempUnitList)
+		 * i.setCanMove(true); turns++;
+		 * 
+		 * System.out.println("Second Player (AI) ends its turn.");
+		 * 
+		 * currCol = currRow = 0;
+		 * 
+		 * gameOver();
+		 * 
+		 * map.updateObservers(); if (tempUnitList.isEmpty()) endTurn(); } } }
+		 */
 
-				System.out.println("Player 1 ends turn.");
-
-				// Switch to AI
-				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
-				for (Unit i : tempUnitList)
-					i.setCanMove(true);
-
-				map.updateObservers();
-				if (tempUnitList.isEmpty())
-					endTurn();
-
-				currRow = 0;
-				currCol = 0;
-				
-				// TODO: Update the enemy's with the player's current locations
-			} else {
-
-				// Remove all of the AI's units from the tempList
-				playerTurn = true;
-
-				//
-				for (Unit i : tempUnitList)
-					i.setCanMove(false);
-				tempUnitList.clear();
-				currUnit = null;
-
-				// Switch to player, add one to turns
-				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
-				for (Unit i : tempUnitList)
-					i.setCanMove(true);
-				turns++;
-
-				System.out.println("Second Player (AI) ends its turn.");
-
-				currCol = currRow = 0;
-
-				gameOver();
-
-				map.updateObservers();
-				if (tempUnitList.isEmpty())
-					endTurn();
-			}
-		}
-	}*/
-	
 	/**
 	 * When called, ends a turn. Checks to see whose turn it is, clears the
 	 * temporary unit list, sets the current unit to null. Sets the can move to
@@ -667,8 +648,8 @@ public class GameController {
 		if (!gameOver) {
 			if (playerTurn) {
 				map.setIsPlayerTurn();
-				
-				// Remove all of the player's units from tempList				
+
+				// Remove all of the player's units from tempList
 				playerTurn = false;
 				for (Unit i : tempUnitList)
 					i.setCanMove(false);
@@ -676,27 +657,27 @@ public class GameController {
 				currUnit = null;
 
 				System.out.println("Player 1 ends turn.");
-				
-				playerLocals = map.getGoodUnitPositions();	
+
+				playerLocals = map.getGoodUnitPositions();
 
 				// Switch to AI
 				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 				for (Unit i : tempUnitList)
 					i.setCanMove(true);
-				
-				//map.updateObservers();
+
+				map.updateObservers();
 				enemyTurn();
 
 				currRow = 0;
 				currCol = 0;
-				
+
 				// TODO: Update the enemy's with the player's current locations
 			} else {
 
 				// Remove all of the AI's units from the tempList
 				playerTurn = true;
 				map.setIsPlayerTurn();
-				
+
 				//
 				for (Unit i : tempUnitList)
 					i.setCanMove(false);
@@ -704,7 +685,7 @@ public class GameController {
 				currUnit = null;
 
 				enemyLocals = map.getEnemyUnitPositions();
-				
+
 				// Switch to player, add one to turns
 				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
 				for (Unit i : tempUnitList)
@@ -796,9 +777,9 @@ public class GameController {
 	 * @param col
 	 */
 	private void canMoveHelper(int movesAvail, int row, int col) {
-		
+
 		if (movesAvail >= map.getSpace(col, row).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
-			movesAvail = movesAvail-map.getSpace(col, row).getMoveHinderance();
+			movesAvail = movesAvail - map.getSpace(col, row).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
 			if (row < 49)
 				if (map.getSpace(row + 1, col).getWalkable())
@@ -826,26 +807,16 @@ public class GameController {
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
 		if (!temp.isAlive()) {
-			
-			if(playerTurn){
-				
-			JOptionPane.showMessageDialog(null,"The attacked "
-					+ map.getUnitAt(row, col).getUnitType() +
-					 " was left with no health and has died!" +'\n' + "Number of units remaining on both sides: "
-							+ player1.getID() +" - " + player1.getAliveNum()
-							+ ", Zombies - "
-							+ (player2.getAliveNum() - 1));
-			
+
+			if (playerTurn) {
+
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + player1.getAliveNum() + ", Zombies - " + (player2.getAliveNum() - 1));
+
 			} else {
-				
-				JOptionPane.showMessageDialog(null,"The attacked "
-						+ map.getUnitAt(row, col).getUnitType() +
-						 " was left with no health and has died!" +'\n' + "Number of units remaining on both sides: "
-								+ player1.getID() +" - " + (player1.getAliveNum() - 1)
-								+ ", Zombies - "
-								+ (player2.getAliveNum()));
+
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + (player1.getAliveNum() - 1) + ", Zombies - " + (player2.getAliveNum()));
 			}
-			
+
 			map.removeUnit(col, row);
 
 			// Remove them from the associated list
@@ -859,14 +830,10 @@ public class GameController {
 				tempUnitList.remove(temp);
 
 			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType() + " at (" + row
-					+ ", " + col + ") is dead!");
-			
+			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
+
 		} else {
-			JOptionPane.showMessageDialog(null,"The attacked "
-					+ map.getUnitAt(endRow, endCol).getUnitType()
-					+ " was left with " + map.getUnitAt(endRow, endCol).getHealth()
-					+ " health after the attack!");
+			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(endRow, endCol).getUnitType() + " was left with " + map.getUnitAt(endRow, endCol).getHealth() + " health after the attack!");
 		}
 	}
 
@@ -898,116 +865,104 @@ public class GameController {
 	public boolean playerTurn() {
 		return playerTurn;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * TODO Test
 	 * 
-	 * Gets the point locations of all of the player locations. Used with
-	 * enemy AI, gives them a list of targets that they can move to.
+	 * Gets the point locations of all of the player locations. Used with enemy
+	 * AI, gives them a list of targets that they can move to.
 	 * 
 	 * @return A List of Points with all of the locations of monsters.
 	 */
-	public List<Point> getPlayerUnits(){
+	public List<Point> getPlayerUnits() {
 		return map.getGoodUnitPositions();
 	}
-	
+
 	/**
 	 * 
 	 */
-	public void enemyTurn(){
+	public void enemyTurn() {
 		// TODO FINISH
-		
-		if(!playerTurn){
+
+		if (!playerTurn) {
 			Point temp = null;
-			
-			for(Point u : enemyLocals){
-				// Goes through each member of the AI. Checks to see if there are
+
+			for (Point u : enemyLocals) {
+				// Goes through each member of the AI. Checks to see if there
+				// are
 				// any enemies within range.
 				temp = this.nearestPlayerUnit(u);
 				this.setCurrentUnit(u.y, u.x);
 				this.endRow = temp.y;
 				this.endCol = temp.x;
 				// if so, attack.
-				if(this.inAttackRange(currRow, currCol)){
-					
+				if (this.inAttackRange(currRow, currCol)) {
+
 				}
 				// If not, then move the AI closer to the player.
-			
+
 				else
 					enemyMove(u);
-				
-			// TODO: empty curr list once all of the Ai has moved
+
+				// TODO: empty curr list once all of the Ai has moved
 				map.getUnitAt(u.y, u.x).setCanMove(false);
 				tempUnitList.remove(map.getUnitAt(u.y, u.x));
 			}
-			
+
 			tempUnitList.clear();
-			
+
 			endTurn();
 		}
 	}
 
 	/**
-	 * TODO Write this
-	 * Method for automatically moving the enemy AI. Moves them toward the closest
-	 * human based on their behavior. If they are near enough to a player's unit,
-	 * attack.
+	 * TODO Write this Method for automatically moving the enemy AI. Moves them
+	 * toward the closest human based on their behavior. If they are near enough
+	 * to a player's unit, attack.
 	 */
-	public void enemyMove(Point em){
-		/* TODO: Add these things
-		 * 1) Nearest Player Method
-		 * 2) List of Enemy Unit Locations
-		 * 3) Player's XY values
-		 * 4) Send these params to AIPathfinder.traverse():
-		 * 		AiROW, AI COLUMN, PlayerPointLIst
+	public void enemyMove(Point em) {
+		/*
+		 * TODO: Add these things 1) Nearest Player Method 2) List of Enemy Unit
+		 * Locations 3) Player's XY values 4) Send these params to
+		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
 		 */
-		
+
 		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
-		
+
 		aiMove.traverse(p.x, p.y, em.x, em.y, 7);
 	}
-	
+
 	/**
-	 * Finds the nearest player location point closest to an enemy unit.
-	 * Returns the nearest point based on how many moves would be needed to make it.
+	 * Finds the nearest player location point closest to an enemy unit. Returns
+	 * the nearest point based on how many moves would be needed to make it.
 	 * 
 	 * @param enemyLoc
 	 * @return
 	 */
-	public Point nearestPlayerUnit(Point enemyLoc){
+	public Point nearestPlayerUnit(Point enemyLoc) {
 		int spaceNear = 0;
 		int tempSN = 0;
 		Point toReturn = null;
-		
-		for(Point p: playerLocals){
+
+		for (Point p : playerLocals) {
 			tempSN = Math.abs(enemyLoc.x - p.x) + Math.abs(enemyLoc.y - p.y);
-			if(tempSN < spaceNear || spaceNear ==0){
+			if (tempSN < spaceNear || spaceNear == 0) {
 				spaceNear = tempSN;
 				toReturn = p;
 			}
 		}
-		
+
 		return toReturn;
 	}
-	
+
 	/*
 	 * A private Enum class, helps with movement. Prevents overlap and stack
 	 * overflow during calculating the spaces where the player can move.
 	 * 
 	 * @author Brian Seaman
-	 *
 	 */
-	/*private enum MoveDirection {
-		UP, DOWN, LEFT, RIGHT; // NOX, NOY;
-	}*/
+	/*
+	 * private enum MoveDirection { UP, DOWN, LEFT, RIGHT; // NOX, NOY; }
+	 */
 }
