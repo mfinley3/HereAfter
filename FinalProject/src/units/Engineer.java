@@ -1,7 +1,6 @@
 package units;
 
-import item.Item;
-import item.ItemType;
+import item.*;
 
 /**
  * The Class Engineer.
@@ -18,6 +17,8 @@ public class Engineer extends Unit {
 		
 		// Defense is doubled at creation so Defense is actually 50
 		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 25, 100, 5, 2, difficulty);	
+		this.addItem(new UsableItem("Salvaged Mine", ItemType.MINE));
+		this.addItem(new UsableItem("Homemade Mine", ItemType.MINE));
 	}
 	
 } // end of Engineer

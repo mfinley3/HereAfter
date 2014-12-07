@@ -1,7 +1,6 @@
 package units;
 
-import item.Item;
-import item.ItemType;
+import item.*;
 
 /**
  * The Class Ranger.

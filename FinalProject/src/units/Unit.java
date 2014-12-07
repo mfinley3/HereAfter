@@ -1,7 +1,6 @@
 package units;
 
-import item.Item;
-import item.ItemType;
+import item.*;
 
 import java.util.ArrayList;
 
@@ -233,6 +232,8 @@ public abstract class Unit {
 		result += "\nCurrent Health: " + displayHealth;
 		result += "\nCurrent Attack Power: " + getAttack();
 		result += "\nCurrent Defense Power: " + getDefense();
+		result += "\nCurrent Movement: " + getMovement();
+		result += "\nCurrent Range: " + getRange();
 		result += "\nUnit's Inventory: " + inventory + "\n";
 
 		return result;
@@ -249,16 +250,30 @@ public abstract class Unit {
 	
 	
 	
+	/**
+	 * TODO Test
+	 * Goes through itemList to see if the unit has the specific item.
+	 * @param item
+	 * @return
+	 */
+	public boolean hasItem(ItemType item){
+		for(Item i :itemList)
+			if(i.getItemType() == item)
+				return true;
+		return false;
+	}
 	
 	/**
+	 * TODO Test
 	 * Adds the item to the unit's inventory
 	 * @param item
 	 */
 	public void addItem(Item item){
-			itemList.add(item);
+		itemList.add(item);
 	}
 	
 	/**
+	 * TODO test
 	 * Gets an item from the inventory depending on desired type and uses it.
 	 * If that type is not in the person's inventory, return null.
 	 * 
@@ -267,6 +282,16 @@ public abstract class Unit {
 	 */
 	public Item removeItem(ItemType item){
 		Item used = null;
+		
+		for(Item j : itemList){
+			if(used == null && item == j.getItemType()){
+				used = j;
+				break;
+			}
+		}
+		
+		itemList.remove(used);
+		
 		return used;
 	}
 	
