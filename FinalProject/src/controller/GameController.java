@@ -929,8 +929,10 @@ public class GameController {
 
 		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
-
-		aiMove.traverse(p.x, p.y, em.x, em.y, 7);
+		
+		// Added '7' as a placeholder for unit movement.
+		//aiMove.traverse(p.x, p.y, em.x, em.y, 7);
+		map.moveUnit(p.x, p.y, aiMove.traverse(p.x, p.y, em.x, em.y, 7).x, aiMove.traverse(p.x, p.y, em.x, em.y, 7).y);
 	}
 
 	/**

@@ -28,41 +28,42 @@ public class AIPathFinder
     *  @param currCol	column index of current location
     *  @return true		if the current location is 'near' the other
     */
-   public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol, int aiMovement)
-   {
-      boolean isNearPlayer = false;
-      
-      moveRange = aiMovement;
-      
-		while (moveRange > 0 || (isNearPlayer == false)) {
-			
-			if (validPosition(plyrRow, plyrCol)) {
-				
-				if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1)
-						&& (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
-					isNearPlayer = true; // the AI is near the target location
+	public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol, int aiMovement) {
+		boolean isNearPlayer = false;
+		moveRange = aiMovement;
 
-				else {
-					// moves up
-					traverse(currRow - 1, currCol, plyrRow, plyrCol, moveRange); 
+		if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1)
+				&& (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
+			isNearPlayer = true; // the AI is near the target location
 
-					// moves left
-					if (!isNearPlayer)
-						traverse(currRow, currCol - 1, plyrRow, plyrCol, moveRange);
+		else {
+			// moves up
+			if (validPosition(currRow - 1, currCol)) {
+				traverse(currRow - 1, currCol, plyrRow, plyrCol, moveRange);
+				System.out.println("up: " + moveRange);
+			}
 
-					// moves down
-					if (!isNearPlayer)
-						traverse(currRow + 1, currCol, plyrRow, plyrCol, moveRange);
+			// moves left
+			if (!isNearPlayer && validPosition(currRow, currCol - 1)) {
+				traverse(currRow, currCol - 1, plyrRow, plyrCol, moveRange);
+				System.out.println("left: " + moveRange);
+			}
 
-					// moves right
-					if (!isNearPlayer)
-						traverse(currRow, currCol + 1, plyrRow, plyrCol, moveRange);
-				}
+			// moves down
+			if (!isNearPlayer && validPosition(currRow + 1, currCol)) {
+				traverse(currRow + 1, currCol, plyrRow, plyrCol, moveRange);
+				System.out.println("down: " + moveRange);
+			}
+
+			// moves right
+			if (!isNearPlayer && validPosition(currRow, currCol + 1)) {
+				traverse(currRow, currCol + 1, plyrRow, plyrCol, moveRange);
+				System.out.println("right: " + moveRange);
 			}
 		}
-		
-      return new Point(currRow, currCol); // Returns the Point of where the AI should move.
-   }
+		return new Point(currRow, currCol); // Returns the Point of where the AI
+											// should move.
+	}
    
    /**
 	 * Determines if a specific location is valid. A valid location is one that
@@ -74,23 +75,26 @@ public class AIPathFinder
 	 */
 	public boolean validPosition(int tgtRow, int tgtCol) {
 		boolean valid = false;
-		int moveHindrance =  gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
-		
+
 		// Check if locations are in the bounds of the map
-		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0 ) {
+		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0) {
 			valid = false;
 		}
-		
-		// Check if walkable
-		if (gameMap.getSpace(tgtRow, tgtCol).getWalkable()) {
-			
-			// Check for hindrance
-			if (moveRange - moveHindrance > 0) {
-				moveRange = moveRange - moveHindrance;
-				valid = true;
+
+		else {
+			int moveHindrance = gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
+
+			// Check if walkable
+			if (gameMap.getSpace(tgtRow, tgtCol).getWalkable()) {
+
+				// Check for hindrance
+				if (moveRange - moveHindrance > 0) {
+					moveRange = moveRange - moveHindrance;
+					System.out.println("valid: " + moveRange);
+					valid = true;
+				}
 			}
 		}
-		
 		return valid;
 	}
 	
