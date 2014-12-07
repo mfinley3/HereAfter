@@ -12,9 +12,7 @@ import model.Map;
 public class AIPathFinder
 {
    private Map gameMap;
-   private int aiRow;
-   private int aiCol;
-   private int aiMovement;
+   private int moveRange;
    
    /**
     * Constructor for the AIPathFinder class.
@@ -30,44 +28,39 @@ public class AIPathFinder
     *  @param currCol	column index of current location
     *  @return true		if the current location is 'near' the other
     */
-   public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol)
+   public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol, int aiMovement)
    {
       boolean isNearPlayer = false;
-      /*
-       * The initial start location is where the AI is
-       * until it is moved after finding the best path.
-       */
-      aiRow = currRow;
-      aiCol = currCol;
-      aiMovement = gameMap.getUnitAt(aiRow, aiCol).getMovement();
       
-      if (validPosition(plyrRow, plyrCol))
-      {
-    	  // mark the spot as tried for the algorithm
-    	  // gameMap.tryPosition(startRow, startCol);
-
-			/*
-			 * AI location move to nearest player location. Keep count of AI
-			 * movement length/attack range
-			 */
-			if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1)
-					&& (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
-				isNearPlayer = true; // the AI is near the target
+      moveRange = aiMovement;
+      
+		while (moveRange > 0 || (isNearPlayer == false)) {
 			
-			else {
-				traverse(currRow - 1, currCol, plyrRow, plyrCol); // moves up
-
-				if (!isNearPlayer)
-					traverse(currRow, currCol - 1, plyrRow, plyrCol); // moves left
+			if (validPosition(plyrRow, plyrCol)) {
 				
-				if (!isNearPlayer)
-					traverse(currRow + 1, currCol, plyrRow, plyrCol); // moves down
+				if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1)
+						&& (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
+					isNearPlayer = true; // the AI is near the target location
 
-				if (!isNearPlayer)
-					traverse(currRow, currCol + 1, plyrRow, plyrCol); // moves right
-			} 
-      }
-      
+				else {
+					// moves up
+					traverse(currRow - 1, currCol, plyrRow, plyrCol, moveRange); 
+
+					// moves left
+					if (!isNearPlayer)
+						traverse(currRow, currCol - 1, plyrRow, plyrCol, moveRange);
+
+					// moves down
+					if (!isNearPlayer)
+						traverse(currRow + 1, currCol, plyrRow, plyrCol, moveRange);
+
+					// moves right
+					if (!isNearPlayer)
+						traverse(currRow, currCol + 1, plyrRow, plyrCol, moveRange);
+				}
+			}
+		}
+		
       return new Point(currRow, currCol); // Returns the Point of where the AI should move.
    }
    
@@ -80,25 +73,25 @@ public class AIPathFinder
 	 * @return true 	if the location is valid
 	 */
 	public boolean validPosition(int tgtRow, int tgtCol) {
-		boolean result = false;
+		boolean valid = false;
 		int moveHindrance =  gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
 		
 		// Check if locations are in the bounds of the map
 		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0 ) {
-			result = false;
+			valid = false;
 		}
 		
 		// Check if walkable
 		if (gameMap.getSpace(tgtRow, tgtCol).getWalkable()) {
 			
 			// Check for hindrance
-			if (aiMovement - moveHindrance > 0) {
-				aiMovement = aiMovement - moveHindrance;
-				result = true;
+			if (moveRange - moveHindrance > 0) {
+				moveRange = moveRange - moveHindrance;
+				valid = true;
 			}
 		}
 		
-		return result;
+		return valid;
 	}
 	
 	/**
