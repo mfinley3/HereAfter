@@ -60,6 +60,8 @@ public class SetupPanel extends JPanel implements Observer {
 
 	private JPanel text = new TextView();
 	private JPanel graphical = new GraphicalView();
+	private JPanel textMap = new MapView();
+	private JPanel UnitLocations = new UnitLocations();
 	
 	private JFrame mainFrame;
 
@@ -301,6 +303,8 @@ public class SetupPanel extends JPanel implements Observer {
 					controller.getMap().addObserver((Observer) text);
 					((TextView) text).setController(controller);
 					controller.getMap().addObserver((Observer) mainPanel);
+					controller.getMap().addObserver((Observer) UnitLocations);					
+					
 					selected = false;
 					actualMap();
 					TRPGGUI.canResize();
@@ -433,6 +437,9 @@ public class SetupPanel extends JPanel implements Observer {
 		scrollPanel1.setSize(862, 542);
 		views.add(scrollPanel1, "Text");
 
+		views.add(textMap, "Map");
+		views.add(UnitLocations, "UnitLocations");
+		
 		this.add(views, BorderLayout.CENTER);
 
 		JPanel buttons = new JPanel();
@@ -595,6 +602,9 @@ public class SetupPanel extends JPanel implements Observer {
 					type = "survive";
 					repaint();
 				}
+				
+				((MapView) textMap).setGameType(type);
+				
 			}
 			
 			else if (selectLevel) {

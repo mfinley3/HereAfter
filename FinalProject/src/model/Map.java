@@ -24,6 +24,11 @@ import space.WastelandSpace;
 import space.WaterSpace;
 import units.AlphaProtectorAI;
 import units.CarrierAI;
+import units.Doctor;
+import units.Engineer;
+import units.Ranger;
+import units.Sniper;
+import units.Soldier;
 import units.ZombieAI;
 import units.SpitterAI;
 import units.Unit;
@@ -471,6 +476,70 @@ public class Map extends Observable {
 	public void updateObservers() {
 		setChanged();
 		notifyObservers();
+	}
+	
+	public String toString() {
+		String textMap = "";
+		
+		
+		//map.getSpace(endCol, endRow)
+		for (int i = 0; i < 50; i++) {
+			for (int j = 0; j < 50; j++) {
+
+				if (unitsOnMap[i][j] instanceof Sniper)
+					textMap += "[" + "N" + "]  ";
+				if (unitsOnMap[i][j] instanceof Soldier)
+					textMap += "[" + "O" + "]  ";
+				if (unitsOnMap[i][j] instanceof Doctor)
+					textMap += "[" + "D" + "]  ";
+				if (unitsOnMap[i][j] instanceof Engineer)
+					textMap += "[" + "E" + "]  ";
+				if (unitsOnMap[i][j] instanceof Ranger)
+					textMap += "[" + "R" + "]  ";
+				if (unitsOnMap[i][j] instanceof SpitterAI)
+					textMap += "[" + "P" + "]  ";
+				if (unitsOnMap[i][j] instanceof CarrierAI)
+					textMap += "[" + "C" + "]  ";
+				if (unitsOnMap[i][j] instanceof ZombieAI)
+					textMap += "[" + "Z" + "]  ";
+				if (unitsOnMap[i][j] instanceof ZombieDogAI)
+					textMap += "[" + "G" + "]  ";
+				if (unitsOnMap[i][j] instanceof AlphaProtectorAI)
+					textMap += "[" + "A" + "]  ";
+				if (unitsOnMap[i][j] == null)
+					textMap += "[" + " " + "]  ";
+				
+//				if (map[i][j] instanceof WastelandSpace)
+//					textMap += "[" + "W" + "]  ";
+//				if (map[i][j] instanceof IndoorWastelandSpace)
+//					textMap += "[" + "H" + "]  ";
+//				if (map[i][j] instanceof PathSpace)
+//					textMap += "[" + "P" + "]  ";
+//				if (map[i][j] instanceof IndoorWallSpace)
+//					textMap += "[" + "Y" + "]  ";
+//				if (map[i][j] instanceof IndoorPath)
+//					textMap += "[" + "O" + "]  ";
+//				if (map[i][j] instanceof IndoorPathSpace)
+//					textMap += "[" + "J" + "]  ";
+//				if (map[i][j] instanceof WaterSpace)
+//					textMap += "[" + "R" + "]  ";
+//				if (map[i][j] instanceof WallSpace)
+//					textMap += "[" + "U" + "]  ";
+//				if (map[i][j] instanceof BridgeSpace)
+//					textMap += "[" + "B" + "]  ";
+//				if (map[i][j] instanceof MountainSpace)
+//					textMap += "[" + "M" + "]  ";
+//				if (map[i][j] instanceof TowerSpace)
+//					textMap += "[" + "T" + "]  ";
+//				if (map[i][j] instanceof CaptureCornerSpace)
+//					textMap += "[" + "C" + "]  ";
+				
+			}
+			textMap += "\n";
+		}
+
+		return textMap;
+		
 	}
 
 }
