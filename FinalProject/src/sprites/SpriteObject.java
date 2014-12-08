@@ -117,10 +117,8 @@ public abstract class SpriteObject {
 	 * Stop moving the SpriteObject
 	 */
 	public void moveStop(){
-		if (sprite.getState() != Sprite.State.IDLE){
 			sprite.setState(Sprite.State.IDLE);
 			nextFrame();
-		}
 	}
 	
 	/**
