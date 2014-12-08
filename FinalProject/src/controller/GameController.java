@@ -1092,8 +1092,7 @@ public class GameController implements Serializable {
 
 		// Added '7' as a placeholder for unit movement.
 		// aiMove.traverse(p.x, p.y, em.x, em.y, 7);
-		map.moveUnit(p.x, p.y, aiMove.traverse(p.x, p.y, em.x, em.y, 7).x,
-				aiMove.traverse(p.x, p.y, em.x, em.y, 7).y);
+		aiMove.traverse(em.y, em.x, p.y, p.x, 7);
 	}
 
 	/**
