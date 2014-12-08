@@ -32,7 +32,7 @@ public class AIPathFinder implements Serializable{
 	 *            column index of current location
 	 * @return true if the current location is 'near' the other
 	 */
-	public Point traverse(int plyrRow, int plyrCol, int currRow, int currCol, int aiMovement) {
+	public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol, int aiMovement) {
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
 		
