@@ -32,9 +32,12 @@ public class AIPathFinder implements Serializable{
 	 *            column index of current location
 	 * @return true if the current location is 'near' the other
 	 */
-	public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol, int aiMovement) {
+	public Point traverse(int plyrRow, int plyrCol, int currRow, int currCol, int aiMovement) {
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
+		
+		System.out.println("AI: " + currRow + ", " + currCol + ": " + aiMovement);
+		System.out.println("\tTarget: " + plyrRow + ", " + plyrCol);
 
 		if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1) && (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
@@ -43,25 +46,21 @@ public class AIPathFinder implements Serializable{
 			// moves up
 			if (validPosition(currRow - 1, currCol)) {
 				traverse(currRow - 1, currCol, plyrRow, plyrCol, moveRange);
-				System.out.println("up: " + moveRange);
 			}
 
 			// moves left
 			if (!isNearPlayer && validPosition(currRow, currCol - 1)) {
 				traverse(currRow, currCol - 1, plyrRow, plyrCol, moveRange);
-				System.out.println("left: " + moveRange);
 			}
 
 			// moves down
 			if (!isNearPlayer && validPosition(currRow + 1, currCol)) {
 				traverse(currRow + 1, currCol, plyrRow, plyrCol, moveRange);
-				System.out.println("down: " + moveRange);
 			}
 
 			// moves right
 			if (!isNearPlayer && validPosition(currRow, currCol + 1)) {
 				traverse(currRow, currCol + 1, plyrRow, plyrCol, moveRange);
-				System.out.println("right: " + moveRange);
 			}
 		}
 		return new Point(currRow, currCol); // Returns the Point of where the AI
@@ -95,7 +94,6 @@ public class AIPathFinder implements Serializable{
 				// Check for hindrance
 				if (moveRange - moveHindrance > 0) {
 					moveRange = moveRange - moveHindrance;
-					System.out.println("valid: " + moveRange);
 					valid = true;
 				}
 			}
@@ -131,53 +129,3 @@ public class AIPathFinder implements Serializable{
 	}
 
 } // end of class
-
-/**
- * Attempts to recursively traverse the map. Inserts special characters
- * indicating locations that have been TRIED and that eventually become part of
- * the solution PATH.
- * 
- * @param startRow
- *            row index of current location
- * @param startCol
- *            column index of current location
- * @return true if the AI is near the player
- */
-/*
- * public boolean traverse(int startRow, int startCol, int plyrRow, int plyrCol)
- * { boolean isNearPlayer = false;
- * 
- * The initial start location is where the AI is until it is moved after finding
- * the best path.
- * 
- * aiRow = startRow; aiCol = startCol; aiMovement = gameMap.getUnitAt(aiRow,
- * aiCol).getMovement();
- * 
- * if (validPosition(plyrRow, plyrCol)) { // mark the spot as tried for the
- * algorithm // gameMap.tryPosition(startRow, startCol);
- * 
- * 
- * AI location move to nearest player location. Keep count of AI movement
- * length/attack range
- * 
- * if ((startRow == plyrRow || startRow == plyrRow - 1 || startRow == plyrRow +
- * 1) && (startCol == plyrCol || startCol == plyrCol - 1 || startCol == plyrCol
- * + 1)) isNearPlayer = true; // the AI is near the target
- * 
- * else { isNearPlayer = traverse(startRow - 1, startCol, plyrRow, plyrCol); //
- * moves up
- * 
- * if (!isNearPlayer) isNearPlayer = traverse(startRow, startCol - 1, plyrRow,
- * plyrCol); // moves left
- * 
- * if (!isNearPlayer) isNearPlayer = traverse(startRow + 1, startCol, plyrRow,
- * plyrCol); // moves down
- * 
- * if (!isNearPlayer) isNearPlayer = traverse(startRow, startCol + 1, plyrRow,
- * plyrCol); // moves right }
- * 
- * if (isNearPlayer) { // if AI can make it near or nearer to the player, move
- * it gameMap }
- * 
- * } return isNearPlayer; // Returns the boolean of if the AI moved or not. }
- */
