@@ -12,7 +12,7 @@ public class CaptureCornerSpace extends Space{
 	 */
 	public CaptureCornerSpace() {
 		super("CaptureCorner", true, false, true, 1, 2);
-		
+		hasBeenCaptured = false;
 	}
 	/**
 	 * @return the hasBeenCaptured
@@ -26,5 +26,4 @@ public class CaptureCornerSpace extends Space{
 	public void setHasBeenCaptured(Boolean hasBeenCaptured) {
 		this.hasBeenCaptured = hasBeenCaptured;
 	}
-
 }

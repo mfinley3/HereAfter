@@ -95,6 +95,8 @@ public class GameController implements Serializable {
 		playerLocals = map.getGoodUnitPositions();
 
 		mines = new Item[50][50];
+		
+		checkWinConditions();
 	}
 
 	public String getCurrPlayerName() {
@@ -649,23 +651,24 @@ public class GameController implements Serializable {
 		}
 
 		else if (gameType instanceof gametype.FourCorners) {
-			winConditions = new ArrayList<Space>();
+			if(map.getSpace(0, 0).getOccupied())
+				((CaptureCornerSpace) map.getSpace(0,0)).setHasBeenCaptured(true);
+			if(map.getSpace(0, 49).getOccupied())
+				((CaptureCornerSpace) map.getSpace(0,49)).setHasBeenCaptured(true);
+			if(map.getSpace(49, 0).getOccupied())
+				((CaptureCornerSpace) map.getSpace(49,0)).setHasBeenCaptured(true);
+			if(map.getSpace(49, 49).getOccupied())
+				((CaptureCornerSpace) map.getSpace(49,49)).setHasBeenCaptured(true);
 
-			boolean toReturn = true;
-
-			if (!((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
-				toReturn = false;
-			else if (!((CaptureCornerSpace) map.getSpace(49, 0))
-					.getHasBeenCaptured())
-				toReturn = false;
-			else if (!((CaptureCornerSpace) map.getSpace(0, 49))
-					.getHasBeenCaptured())
-				toReturn = false;
-			else if (!((CaptureCornerSpace) map.getSpace(49, 49))
-					.getHasBeenCaptured())
-				toReturn = false;
-
-			return toReturn;
+			if (((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
+				if (((CaptureCornerSpace) map.getSpace(49, 0))
+						.getHasBeenCaptured())
+					if (((CaptureCornerSpace) map.getSpace(0, 49))
+							.getHasBeenCaptured())
+						if (((CaptureCornerSpace) map.getSpace(49, 49))
+								.getHasBeenCaptured())
+							return true;
+			return false;
 		}
 
 		else
@@ -805,9 +808,6 @@ public class GameController implements Serializable {
 
 				map.updateObservers();
 				enemyTurn();
-
-				currRow = 0;
-				currCol = 0;
 
 				// TODO: Update the enemy's with the player's current locations
 			} else {
