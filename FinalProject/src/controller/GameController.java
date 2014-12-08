@@ -23,7 +23,7 @@ import item.*;
  * 
  *
  */
-public class GameController implements Serializable{
+public class GameController implements Serializable {
 	private Player player1;
 	private AI player2;
 	private Map map;
@@ -49,7 +49,7 @@ public class GameController implements Serializable{
 	private boolean moveOn;
 	private Item[][] mines;
 
-	/** 
+	/**
 	 * Constructor for one player.
 	 * 
 	 * @param player1
@@ -93,7 +93,7 @@ public class GameController implements Serializable{
 
 		enemyLocals = map.getEnemyUnitPositions();
 		playerLocals = map.getGoodUnitPositions();
-		
+
 		mines = new Item[50][50];
 	}
 
@@ -453,59 +453,119 @@ public class GameController implements Serializable{
 	 * @return if the item was used.
 	 */
 	public boolean useItem(ItemType i) {
-		Item j = currUnit.removeItem(i);
+		if (currUnit != null) {
+			Item j = currUnit.removeItem(i);
 
-		if (j != null) {
+			if (j != null) {
 
-			if (j instanceof UsableItem){
-				// If it is a mine, place it on the map.
-				if(j.getItemType() == ItemType.MINE){
-					// TODO Place mine on space
-				}
-				
-				// If health item, use on target space/self
-				else if(j.getItemType() == ItemType.MEDKIT){
-					// TODO Place mine on space
-					Object[] options = {"Self", "Target", "Cancel"};
-					int answer = JOptionPane.showOptionDialog(null, "Who to heal?", "Would you like to heal the target or the current unit?", JOptionPane.YES_NO_CANCEL_OPTION,  JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-					
-					if(answer == JOptionPane.YES_OPTION){
-						currUnit.restoreHealth(j.useItem());
-						currUnit.setCanMove(false);
-						tempUnitList.remove(currUnit);
-						gameOver();
-						if(tempUnitList.isEmpty())
-							endTurn();
+				if (j instanceof UsableItem) {
+					// If it is a mine, place it on the map.
+					if (j.getItemType() == ItemType.MINE) {
+						// TODO Place mine on space
+						mines[currCol][currRow] = j;
 					}
-					
-					else if(answer == JOptionPane.NO_OPTION){
-						map.getUnitAt(endRow, endCol).restoreHealth(j.useItem());
-						currUnit.setCanMove(false);
-						tempUnitList.remove(currUnit);
-						gameOver();
-						if(tempUnitList.isEmpty())
-							endTurn();
-					}
-					
-					else{
-						// Put it back
-						currUnit.addItem(j);
-					}
-				}
 
-				// If it's a grenade, use on target space.
-				else if(j.getItemType() == ItemType.GRENADE){
-					// TODO Place mine on space
-				}
-				
-				return true;
+					// If health item, use on target space/self
+					else if (j.getItemType() == ItemType.MEDKIT) {
+						// TODO Place mine on space
+						Object[] options = { "Self", "Target", "Cancel" };
+						int answer = JOptionPane
+								.showOptionDialog(
+										null,
+										"Who to heal?",
+										"Would you like to heal the target or the current unit?",
+										JOptionPane.YES_NO_CANCEL_OPTION,
+										JOptionPane.WARNING_MESSAGE, null,
+										options, options[1]);
+
+						if (answer == JOptionPane.YES_OPTION) {
+							currUnit.restoreHealth(j.useItem());
+							currUnit.setCanMove(false);
+							tempUnitList.remove(currUnit);
+							gameOver();
+							if (tempUnitList.isEmpty())
+								endTurn();
+						}
+
+						else if (answer == JOptionPane.NO_OPTION) {
+							map.getUnitAt(endRow, endCol).restoreHealth(
+									j.useItem());
+							currUnit.setCanMove(false);
+							tempUnitList.remove(currUnit);
+							gameOver();
+							if (tempUnitList.isEmpty())
+								endTurn();
+						}
+
+						else {
+							// Put it back
+							currUnit.addItem(j);
+							return false;
+						}
+					}
+
+					// If it's a grenade, use on target space.
+					// TODO Add range functionality
+
+					else if (j.getItemType() == ItemType.GRENADE) {
+						// TODO Throw the Grenade
+						if (endRow != currRow || endCol != currCol) {
+							blowShitUp(j.useItem(), endRow, endCol, 2);
+							currUnit.setCanMove(false);
+							tempUnitList.remove(currUnit);
+							gameOver();
+							if (tempUnitList.isEmpty())
+								endTurn();
+						}
+
+						else {
+							currUnit.addItem(j);
+							return false;
+						}
+					}
+
+					return true;
+				} else
+					return false;
 			}
+
 			else
 				return false;
 		}
 
 		else
 			return false;
+	}
+
+	/**
+	 * TODO Finish and Test Blow those zombies up, kid. Just try not to blow
+	 * yourself up.
+	 * 
+	 * @param it
+	 *          , the ItemType of the explosive used
+	 */
+	private void blowShitUp(int it, int row, int col, int spacesLeft) {
+		if (map.getSpace(row, col).getOccupied()) {
+			map.getUnitAt(row, col).reduceHealth(it);
+			targetDead(row, col);
+			gameOver();
+		}
+
+		// Recurse
+		if (spacesLeft > 0) {
+			if (row < 49)
+				if (map.getSpace(row + 1, col).getWalkable())
+					blowShitUp(it, row + 1, col, spacesLeft - 1);
+			if (row > 0)
+				if (map.getSpace(row - 1, col).getWalkable())
+					blowShitUp(it, row - 1, col, spacesLeft - 1);
+			if (col < 49)
+				if (map.getSpace(row, col + 1).getWalkable())
+					blowShitUp(it, row, col+1, spacesLeft - 1);
+			if (col > 0)
+				if (map.getSpace(row, col - 1).getWalkable())
+					blowShitUp(it, row, col-1, spacesLeft - 1);
+		}
 	}
 
 	/**
@@ -789,16 +849,14 @@ public class GameController implements Serializable{
 	 * Heal a friendly unit. Checks to see if on the same side, and if the unit
 	 * can heal.
 	 * 
-	 * @param er
-	 *            , target row
-	 * @param ec
-	 *            , target col
+	 * @param er , target row
+	 * 
+	 * @param ec , target col
+	 * 
 	 * @return can heal, or can't heal
-	 
-	public boolean heal(int targetRow, int targetCol) {
-		return false;
-	}
-	*/
+	 * 
+	 * public boolean heal(int targetRow, int targetCol) { return false; }
+	 */
 
 	/**
 	 * Sets the new endColumn. Used in attack and movement.
@@ -833,7 +891,7 @@ public class GameController implements Serializable{
 		map.getSpace(currRow, currCol).setCanMoveTo(true);
 
 		if (row < 49)
-			if (map.getSpace(row + 1, currCol).getWalkable())
+			if (map.getSpace(row + 1, col).getWalkable())
 				canMoveHelper(currUnit.getMovement(), row + 1, col);
 		if (row > 0)
 			if (map.getSpace(row - 1, col).getWalkable())
@@ -1060,12 +1118,11 @@ public class GameController implements Serializable{
 
 		return toReturn;
 	}
-	
-	
+
 	/**
 	 * TODO
 	 */
-	public void setCurrentPlayer(Player p){
+	public void setCurrentPlayer(Player p) {
 		currPlayer = p;
 	}
 
