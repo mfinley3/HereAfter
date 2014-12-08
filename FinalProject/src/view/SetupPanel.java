@@ -10,8 +10,10 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Observable;
 import java.util.Observer;
@@ -20,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -51,7 +54,7 @@ public class SetupPanel extends JPanel implements Observer {
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn, save;
-	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning, selectType, loadGame;
+	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning, selectType, loadGame, dataWasLoaded;
 	private GameController controller;
 	private Difficulty difficulty;
 	private String type;
@@ -63,9 +66,10 @@ public class SetupPanel extends JPanel implements Observer {
 	private JPanel graphical = new GraphicalView();
 	private JPanel textMap = new MapView();
 	private JPanel UnitLocations = new UnitLocations();
-	private JPanel loadGameView = new LoadGameView();
 
 	private JFrame mainFrame;
+	public String playerName;
+	private Player player;
 
 	/**
 	 * Instantiates a new setup panel. This loads all of the images that are
@@ -276,7 +280,8 @@ public class SetupPanel extends JPanel implements Observer {
 				}
 
 				if (docs + solds + engs + rangs + snips == 5) {
-					Player player = new Player(userName.getText());
+					playerName = userName.getText();
+					player = new Player(playerName);
 
 					while (docs != 0) {
 						player.addUnits((Unit) new Doctor(difficulty.getValue()));
@@ -399,55 +404,6 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	private class saveButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			saveTheGame();
-		}
-		
-
-	}
-	public void saveTheGame() {
-		
-		Object[] options = {"Save 1", "Save 2","Save 3", "Cancel"};
-		int answer = JOptionPane.showOptionDialog(null, "Where would you like to save?", "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION,  JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-		
-		if(answer == JOptionPane.YES_OPTION){
-			saveData("SaveStateOne");
-		}
-		else if(answer == JOptionPane.NO_OPTION){
-			
-		}
-		else if(answer == JOptionPane.CANCEL_OPTION){
-			
-		}
-		else {
-			
-		}
-	}
-	
-
-	private void saveData(String saveName) {
-		try {
-
-			if(saveName.equals("SaveStateOne")){
-			FileOutputStream outStream = new FileOutputStream("SaveStateOne.data");
-			ObjectOutputStream outObject = new ObjectOutputStream(outStream);
-			outObject.writeObject(controller);
-			outObject.close();
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
-
-	}
-
-	
 
 	/**
 	 * If the end turn button is selected, the end turn method of controller is
@@ -470,6 +426,7 @@ public class SetupPanel extends JPanel implements Observer {
 	 * 
 	 */
 	private void actualMap() {
+
 		this.removeAll();
 		this.setLayout(new BorderLayout());
 		revalidate();
@@ -514,7 +471,7 @@ public class SetupPanel extends JPanel implements Observer {
 		endTurn.addActionListener(new endTurnButtonListener());
 		save = new JButton("Save And Quit");
 		save.addActionListener(new saveButtonListener());
-		
+
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
 
@@ -522,12 +479,17 @@ public class SetupPanel extends JPanel implements Observer {
 		currentUser.setFont(new Font(Font.SERIF, Font.BOLD, 25));
 		currentUser.setForeground(Color.WHITE);
 
-		currentUserName = new JLabel(userName.getText());
-		currentUserName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		currentUserName.setForeground(Color.WHITE);
+		if (!dataWasLoaded) {
+			currentUserName = new JLabel(userName.getText());
 
+			currentUserName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+			currentUserName.setForeground(Color.WHITE);
+
+		}
 		buttons.add(currentUser);
-		buttons.add(currentUserName);
+		if (!dataWasLoaded) {
+			buttons.add(currentUserName);
+		}
 		buttons.add(help);
 		buttons.add(move);
 		buttons.add(attack);
@@ -537,9 +499,11 @@ public class SetupPanel extends JPanel implements Observer {
 		buttons.add(save);
 
 		this.add(buttons, BorderLayout.WEST);
-
+		if (dataWasLoaded) {
+			revalidate();
+			repaint();
+		}
 	}
-
 
 	/**
 	 * Register listeners. This registers the mouse listeners.
@@ -698,13 +662,16 @@ public class SetupPanel extends JPanel implements Observer {
 				}
 			} else if (loadGame) {
 				if (clickX > 58 && clickX < 432 && clickY > 210 && clickY < 255) {
-					System.out.print("Worked");
+					LoadData("SaveStateOne");
 				} else if (clickX > 58 && clickX < 440 && clickY > 315 && clickY < 358) {
-					System.out.print("Worked2");
-				}  else if (clickX > 58 && clickX < 492 && clickY > 415 && clickY < 466) {
-					System.out.print("Worked3");
+					LoadData("SaveStateTwo");
+				} else if (clickX > 58 && clickX < 492 && clickY > 415 && clickY < 466) {
+					LoadData("SaveStateThree");
+				} else if (clickX > 61 && clickX < 503 && clickY > 522 && clickY < 557) {
+					gameIsRunning = false;
+					startUp1 = true;
+					TRPGGUI.dispose();
 				}
-				
 
 			}
 		}
@@ -743,7 +710,11 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		currentUserName.setText(controller.getCurrPlayerName());
+		if (!dataWasLoaded) {
+			currentUserName.setText(controller.getCurrPlayerName());
+
+		}
+
 		repaint();
 	}
 
@@ -755,6 +726,130 @@ public class SetupPanel extends JPanel implements Observer {
 	public boolean getGameIsRunning() {
 		// TODO Auto-generated method stub
 		return gameIsRunning;
+	}
+
+	private class saveButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			saveTheGame();
+		}
+
+	}
+
+	public void saveTheGame() {
+
+		Object[] options = { "Save 1", "Save 2", "Save 3", "Cancel" };
+		int answer = JOptionPane.showOptionDialog(null, "Where would you like to save?", "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+		boolean quit = false;
+		if (answer == JOptionPane.YES_OPTION) {
+			saveData("SaveStateOne");
+			quit = true;
+		} else if (answer == JOptionPane.NO_OPTION) {
+			saveData("SaveStateTwo");
+			quit = true;
+		} else if (answer == JOptionPane.CANCEL_OPTION) {
+			saveData("SaveStateThree");
+			quit = true;
+		} else {
+
+		}
+		
+		if(quit){
+			
+			this.removeAll();
+			gameIsRunning = false;
+			startUp1 = true;
+			TRPGGUI.dispose();
+		    
+		}
+	}
+
+	private void saveData(String saveName) {
+		try {
+
+			if (saveName.equals("SaveStateOne")) {
+				FileOutputStream outStream = new FileOutputStream("SaveStateOne.data");
+				ObjectOutputStream outObject = new ObjectOutputStream(outStream);
+				outObject.writeObject(controller);
+				outObject.writeObject(type);
+				outObject.writeObject(player);
+				outObject.close();
+			}
+			if (saveName.equals("SaveStateTwo")) {
+				FileOutputStream outStream = new FileOutputStream("SaveStateTwo.data");
+				ObjectOutputStream outObject = new ObjectOutputStream(outStream);
+				outObject.writeObject(controller);
+				outObject.writeObject(type);
+				outObject.writeObject(player);
+				outObject.close();
+			}
+			if (saveName.equals("SaveStateThree")) {
+				FileOutputStream outStream = new FileOutputStream("SaveStateThree.data");
+				ObjectOutputStream outObject = new ObjectOutputStream(outStream);
+				outObject.writeObject(controller);
+				outObject.writeObject(type);
+				outObject.writeObject(player);
+				outObject.close();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+	}
+
+	public void LoadData(String saveStateName) {
+		try {
+
+			if (saveStateName.equals("SaveStateOne")) {
+				FileInputStream inStream = new FileInputStream("SaveStateOne.data");
+				ObjectInputStream inObject = new ObjectInputStream(inStream);
+				controller = (GameController) inObject.readObject();
+				type = (String) inObject.readObject();
+				player = (Player) inObject.readObject();
+			}
+
+			if (saveStateName.equals("SaveStateTwo")) {
+				FileInputStream inStream = new FileInputStream("SaveStateTwo.data");
+				ObjectInputStream inObject = new ObjectInputStream(inStream);
+				controller = (GameController) inObject.readObject();
+				type = (String) inObject.readObject();
+				player = (Player) inObject.readObject();
+			}
+
+			if (saveStateName.equals("SaveStateThree")) {
+				FileInputStream inStream = new FileInputStream("SaveStateThree.data");
+				ObjectInputStream inObject = new ObjectInputStream(inStream);
+				controller = (GameController) inObject.readObject();
+				type = (String) inObject.readObject();
+				player = (Player) inObject.readObject();
+			}
+
+			controller.getMap().addObserver((Observer) graphical);
+			((GraphicalView) graphical).setController(controller);
+			controller.getMap().addObserver((Observer) text);
+			((TextView) text).setController(controller);
+			controller.getMap().addObserver((Observer) mainPanel);
+			controller.getMap().addObserver((Observer) UnitLocations);
+			controller.setCurrentPlayer(player);
+			controller.setPlayerTurn(true);
+			((MapView) textMap).setGameType(type);
+
+		} catch (Exception e) {
+
+			System.out.println("Unable to load data");
+
+		}
+		gameIsRunning = true;
+		dataWasLoaded = true;
+		selected = false;
+		actualMap();
+		TRPGGUI.canResize();
+
 	}
 
 }

@@ -1065,8 +1065,13 @@ public class GameController implements Serializable{
 	/**
 	 * TODO
 	 */
-	public void setCurrentPlayer(Player p){
-		currPlayer = p;
+	public void setCurrentPlayer(Player player){
+		currPlayer = player; 
+	}
+	
+	public void setPlayerTurn(boolean whosTurn){
+		playerTurn = whosTurn;
+		
 	}
 
 	/*

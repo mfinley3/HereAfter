@@ -5,8 +5,11 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -18,8 +21,8 @@ public class TRPGGUI {
 	// Random serial number
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -703102129384036053L;
-	private static JFrame mainFrame = new JFrame(); 
-	private SetupPanel SetupPanel = new SetupPanel();
+	private static JFrame mainFrame;
+	private SetupPanel SetupPanel;
 	
 	
 	/**
@@ -37,6 +40,8 @@ public class TRPGGUI {
 	 * Instantiates a new TRPG gui, with the title and size
 	 */
 	public TRPGGUI() {	
+		mainFrame  = new JFrame(); 
+		SetupPanel = new SetupPanel();
 		
 		mainFrame.setSize(996, 669);
 		mainFrame.setLocation(100, 10);
@@ -85,4 +90,10 @@ public class TRPGGUI {
 		mainFrame.setResizable(true);
 	}
 
+	public static void dispose() {
+		mainFrame.dispose();
+		new TRPGGUI();
+		
+	}
+	
 }

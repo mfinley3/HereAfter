@@ -18,6 +18,7 @@ public class Player implements Serializable{
 	private int livingTeam;
 	private List<Unit> livingUnits;
 	private List<Unit> allUnits;
+
 	private String id;
 	
 	/**
