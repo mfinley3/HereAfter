@@ -296,5 +296,13 @@ public abstract class Unit implements Serializable{
 		return used;
 	}
 	
+	/**
+	 * Called when a unit is healed by another. Raises the units current health back up.
+	 * Won't exceed the max health.
+	 */
+	public void restoreHealth(int i){
+		health = health + i;
+	}
+	
 } // end of class Unit
 

@@ -468,6 +468,29 @@ public class GameController implements Serializable{
 					// TODO Place mine on space
 					Object[] options = {"Self", "Target", "Cancel"};
 					int answer = JOptionPane.showOptionDialog(null, "Who to heal?", "Would you like to heal the target or the current unit?", JOptionPane.YES_NO_CANCEL_OPTION,  JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+					
+					if(answer == JOptionPane.YES_OPTION){
+						currUnit.restoreHealth(j.useItem());
+						currUnit.setCanMove(false);
+						tempUnitList.remove(currUnit);
+						gameOver();
+						if(tempUnitList.isEmpty())
+							endTurn();
+					}
+					
+					else if(answer == JOptionPane.NO_OPTION){
+						map.getUnitAt(endRow, endCol).restoreHealth(j.useItem());
+						currUnit.setCanMove(false);
+						tempUnitList.remove(currUnit);
+						gameOver();
+						if(tempUnitList.isEmpty())
+							endTurn();
+					}
+					
+					else{
+						// Put it back
+						currUnit.addItem(j);
+					}
 				}
 
 				// If it's a grenade, use on target space.
@@ -1036,6 +1059,14 @@ public class GameController implements Serializable{
 		}
 
 		return toReturn;
+	}
+	
+	
+	/**
+	 * TODO
+	 */
+	public void setCurrentPlayer(Player p){
+		currPlayer = p;
 	}
 
 	/*
