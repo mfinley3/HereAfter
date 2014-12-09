@@ -36,8 +36,8 @@ public class AIPathFinder implements Serializable{
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
 		
-		System.out.println("AI: " + currRow + ", " + currCol + ": " + aiMovement);
-		System.out.println("\tTarget: " + plyrRow + ", " + plyrCol);
+		System.out.println("Current AI Location: " + currRow + ", " + currCol + ": " + moveRange);
+		System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
 
 		if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1) && (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
@@ -63,6 +63,7 @@ public class AIPathFinder implements Serializable{
 				traverse(currRow, currCol + 1, plyrRow, plyrCol, moveRange);
 			}
 		}
+
 		return new Point(currRow, currCol); // Returns the Point of where the AI
 											// should move.
 	}
@@ -99,33 +100,6 @@ public class AIPathFinder implements Serializable{
 			}
 		}
 		return valid;
-	}
-
-	/**
-	 * Marks the specified position in the maze as TRIED
-	 * 
-	 * @param row
-	 *            the index of the row to try
-	 * @param col
-	 *            the index of the column to try
-	 */
-	public void tryPosition(int row, int col) {
-		// gameMap. = TRIED;
-
-		/*
-		 * This method was used to initially relabel the map. When I first wrote
-		 * the code, it worked by labels, if something was not a Wasteland space
-		 * or something of that sort, the recursive method would know to just
-		 * keep going on to fully "try" each position for a possible solution.
-		 * With me being able to actually relabel parts of our current map, I'm
-		 * afraid the recursive algorithm won't work in the desired way.
-		 */
-
-		/*
-		 * set up a method in space: isTried Usually set to false, but this
-		 * would set it to true so it knows what has been 'tried' or not to keep
-		 * going.
-		 */
 	}
 
 } // end of class

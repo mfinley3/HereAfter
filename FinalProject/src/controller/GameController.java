@@ -176,7 +176,7 @@ public class GameController implements Serializable {
 	 *            , the ending column
 	 */
 	public void move() {
-		// Check to see if the end Row and End Col point to something
+		// Check to see if the end Row and end Col point to something
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
 				System.out.println("(" + currRow + ", " + currCol
@@ -1057,16 +1057,21 @@ public class GameController implements Serializable {
 				this.endCol = temp.x;
 				// if so, attack.
 				if (this.inAttackRange(currRow, currCol)) {
-
+					
 				}
+				
 				// If not, then move the AI closer to the player.
 
 				else
 					enemyMove(u);
-
-				// TODO: empty curr list once all of the Ai has moved
+				
+				System.out.println("Location trying to 'get': " + u.y + ", " + u.x);
+				
 				map.getUnitAt(u.y, u.x).setCanMove(false);
 				tempUnitList.remove(map.getUnitAt(u.y, u.x));
+				// TODO: empty curr list once all of the Ai has moved
+				//map.getUnitAt(u.y, u.x).setCanMove(false);
+				//tempUnitList.remove(map.getUnitAt(u.y, u.x));
 			}
 
 			tempUnitList.clear();
@@ -1087,12 +1092,26 @@ public class GameController implements Serializable {
 		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
 		 */
 
+		/*playerLocals = getPlayerUnits();
+		
+		for (Point p : playerLocals) {
+			p = nearestPlayerUnit(em);
+			this.setCurrentUnit(em.y, em.x);
+			this.endRow = aiMove.traverse(em.y, em.x, p.y, p.x, 1).y;
+			this.endCol = aiMove.traverse(em.y, em.x, p.y, p.x, 1).x;
+			map.moveUnit(em.y, em.x, endRow, endCol);
+		}*/
+			
 		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
 
 		// Added '7' as a placeholder for unit movement.
-		// aiMove.traverse(p.x, p.y, em.x, em.y, 7);
-		aiMove.traverse(em.y, em.x, p.y, p.x, 7);
+		// aiMove.traverse(em.y, em.x, p.y, p.x, 7)
+		// map.moveUnit(currRow, currCol, endRow, endCol);
+		int rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).y;
+		int colValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).x;
+
+		map.moveUnit(em.y, em.x, rowValue, colValue);
 	}
 
 	/**
