@@ -48,9 +48,12 @@ public class GraphicalView extends JPanel implements Observer {
 	private Unit[][] currentUnits;
 	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
 
+	private double scaleFactor = 1;
+
 	/**
-	 * Instantiates a new graphical view.  It also loads all of the images that are going to be used in the game,
-	 * such as the map grounds, and the different units.
+	 * Instantiates a new graphical view. It also loads all of the images that
+	 * are going to be used in the game, such as the map grounds, and the
+	 * different units.
 	 */
 	public GraphicalView() {
 		firstClick = true;
@@ -80,7 +83,7 @@ public class GraphicalView extends JPanel implements Observer {
 			wall = ImageIO.read(new File("WallSpace.jpg"));
 			indoorWall = ImageIO.read(new File("IndoorWall.png"));
 			water = ImageIO.read(new File("WaterSpace.jpg"));
-			hole =ImageIO.read(new File("HoleSpace.png"));
+			hole = ImageIO.read(new File("HoleSpace.png"));
 
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
@@ -103,7 +106,7 @@ public class GraphicalView extends JPanel implements Observer {
 			zDogCantMove = ImageIO.read(new File("zDogCantMove.png"));
 			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
 			carrierCantMove = ImageIO.read(new File("carrierCantMove.png"));
-			
+
 			docSelected = ImageIO.read(new File("Doctor1Selected.png"));
 			engSelected = ImageIO.read(new File("Engineer1Selected.png"));
 			rangSelected = ImageIO.read(new File("Ranger1Selected.png"));
@@ -114,7 +117,6 @@ public class GraphicalView extends JPanel implements Observer {
 			zDogSelected = ImageIO.read(new File("zDogSelected.png"));
 			spitterSelected = ImageIO.read(new File("SpitterSelected.png"));
 			carrierSelected = ImageIO.read(new File("carrierSelected.png"));
-			
 
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
@@ -123,8 +125,8 @@ public class GraphicalView extends JPanel implements Observer {
 	}
 
 	/**
-	 * Sets the controller.  It is called my SetupPanel, which sends it the controller so that the Graphical view
-	 * can interact with the controller.
+	 * Sets the controller. It is called my SetupPanel, which sends it the
+	 * controller so that the Graphical view can interact with the controller.
 	 *
 	 * @param temp
 	 *            the new controller
@@ -150,46 +152,52 @@ public class GraphicalView extends JPanel implements Observer {
 		}
 
 		/**
-		 * When the mouse is pressed, it will take the coordinates of the mouse and divide by 96, which is the number
-		 * of pixels that each space is wide and long.  This way, the row and column in which the user clicked it kept.
-		 * If it is the first click, then it will save that unit as the current unit, sending the controller it's location.
-		 * If it is the second click, that is the destination row and column, which is sent to the controller so that the
-		 * controller can tell the map to change the position of the unit.
+		 * When the mouse is pressed, it will take the coordinates of the mouse
+		 * and divide by 96, which is the number of pixels that each space is
+		 * wide and long. This way, the row and column in which the user clicked
+		 * it kept. If it is the first click, then it will save that unit as the
+		 * current unit, sending the controller it's location. If it is the
+		 * second click, that is the destination row and column, which is sent
+		 * to the controller so that the controller can tell the map to change
+		 * the position of the unit.
 		 */
 		public void mousePressed(MouseEvent evt) {
 
-			clickX = evt.getX();
-			clickY = evt.getY();
+			try {
+				clickX = evt.getX();
+				clickY = evt.getY();
 
-			row = clickX / 96;
-			column = clickY / 96;
+				row = clickX / (int) (96 * scaleFactor);
+				column = clickY / (int) (96 * scaleFactor);
 
-			if (firstClick) {
-				controller.setCurrentUnit(row, column);
-				if (controller.getCurrentUnit() != null) {
-					if (controller.getCurrentUnit().canMove())
-						firstClick = false;
-					else
-						System.out.println("Unit can't move; select a new one.");
-				} else
-					System.out.println("No unit to select; please select a new unit.");
+				if (firstClick) {
+					controller.setCurrentUnit(row, column);
+					if (controller.getCurrentUnit() != null) {
+						if (controller.getCurrentUnit().canMove())
+							firstClick = false;
+						else
+							System.out.println("Unit can't move; select a new one.");
+					} else
+						System.out.println("No unit to select; please select a new unit.");
 
-			} else {
-				if (controller.getCurrentUnit() == null)
-					firstClick = true;
-				if (row >= 0 && row < currentSpaces.length && column >= 0 && column < currentSpaces.length) {
-					controller.setEndRow(row);
-					controller.setEndColumn(column);
+				} else {
+					if (controller.getCurrentUnit() == null)
+						firstClick = true;
+					if (row >= 0 && row < currentSpaces.length && column >= 0 && column < currentSpaces.length) {
+						controller.setEndRow(row);
+						controller.setEndColumn(column);
+					}
+
+					firstClick = false;
 				}
+			} catch (ArrayIndexOutOfBoundsException e) {
 
-				firstClick = false;
 			}
 		}
 
 		public void mouseEntered(MouseEvent evt) {
 
 		}
-
 
 		public void mouseReleased(MouseEvent evt) {
 
@@ -208,10 +216,11 @@ public class GraphicalView extends JPanel implements Observer {
 		public void mouseDragged(MouseEvent evt) {
 
 		}
-	} 
+	}
 
 	/**
-	 * The map calls notify Observers, and the graphical view will repaint the map to have the changed that occurred.
+	 * The map calls notify Observers, and the graphical view will repaint the
+	 * map to have the changed that occurred.
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -223,15 +232,19 @@ public class GraphicalView extends JPanel implements Observer {
 	}
 
 	/**
-	 * This will first print ever space with the default map background.  It will then print a unit if applicable.
+	 * This will first print ever space with the default map background. It will
+	 * then print a unit if applicable.
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		//g2.translate(w/2, h/2);
-		//g2.scale(.5, .5);
-		//g2.translate(-w/2, -h/2);
+		// g2.translate(w/2, h/2);
+		g2.scale(1 * scaleFactor, 1 * scaleFactor);
+		Dimension maxSize = new Dimension((int) (4800 * scaleFactor), (int) (4800 * scaleFactor));
+		this.setPreferredSize(maxSize);
+		this.revalidate();
+		// g2.translate(-w/2, -h/2);
 
 		int x = 0;
 		int y = 0;
@@ -240,7 +253,7 @@ public class GraphicalView extends JPanel implements Observer {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-					
+
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						g2.drawImage(bridge, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
@@ -350,24 +363,36 @@ public class GraphicalView extends JPanel implements Observer {
 							else
 								g2.drawImage(hole, x, y, null);
 						}
-						
+
 					}
-					
-					///////
+
+					// /////
 					// TODO Display which spaces can be moved to
-					if(currentSpaces[row][col].getCanMoveTo()){
+					if (currentSpaces[row][col].getCanMoveTo()) {
 						g2.setColor(Color.green);
 						Stroke oldStroke = g2.getStroke();
-						g2.setStroke(new BasicStroke(2));
+						g2.setStroke(new BasicStroke((float) (2 / scaleFactor)));
 						g2.drawRect(x, y, 96, 96);
 						g2.setStroke(oldStroke);
 					}
-					/////////
-					
+					// ///////
+
 					x += 96;
 				}
 				y += 96;
 			}
 		}
+	}
+
+	public void setZoomInScale() {
+		scaleFactor = (scaleFactor * 2);
+	}
+
+	public void setZoomOutScale() {
+		scaleFactor = (scaleFactor / 2);
+	}
+
+	public double getScaleFactor() {
+		return scaleFactor;
 	}
 }

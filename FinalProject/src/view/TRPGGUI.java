@@ -95,5 +95,10 @@ public class TRPGGUI {
 		new TRPGGUI();
 		
 	}
+
+	public static void validate() {
+		mainFrame.validate();
+		
+	}
 	
 }
