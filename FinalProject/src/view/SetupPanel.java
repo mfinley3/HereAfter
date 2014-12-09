@@ -1,5 +1,8 @@
 package view;
 
+
+import item.ItemType;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,7 +59,7 @@ import java.awt.event.MouseMotionListener;
  */
 public class SetupPanel extends JPanel implements Observer {
 
-	private BufferedImage background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy ,helpIcon;
+	private BufferedImage background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy, helpIcon;
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn, save;
@@ -67,14 +70,16 @@ public class SetupPanel extends JPanel implements Observer {
 
 	private JScrollPane scrollPanel;
 	private JTabbedPane views;
-	
+
 	private JPanel text = new TextView();
 	private JPanel graphical = new GraphicalView();
 	private JPanel textMap = new MapView();
 	private JPanel UnitLocations = new UnitLocations();
-	
+
 	public String playerName;
 	private Player player;
+
+	private double scaleFactor;
 	
 	JMenuBar menuBar;
 	JMenu zoom, saveMenu, helpMenu;
@@ -102,7 +107,7 @@ public class SetupPanel extends JPanel implements Observer {
 			zoomInImg = ImageIO.read(new File("zoomIn.png"));
 			zoomOutImg = ImageIO.read(new File("zoomOut.png"));
 			floppy = ImageIO.read(new File("floppydisk.png"));
-			helpIcon  = ImageIO.read(new File("helpIcon.png"));
+			helpIcon = ImageIO.read(new File("helpIcon.png"));
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -377,9 +382,27 @@ public class SetupPanel extends JPanel implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// controller.useItem();
-		}
+			if (!(controller.getCurrentUnit() == null)) {
+				Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
+				int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+				
+				if (answer == JOptionPane.YES_OPTION) {
+					controller.useItem(ItemType.MEDKIT); 
+					
+				} else if (answer == JOptionPane.NO_OPTION) {
+					controller.useItem(ItemType.MINE); 
+					
+				} else if (answer == JOptionPane.CANCEL_OPTION) {
+					controller.useItem(ItemType.GRENADE); 
+					
+				} else {
+					
+				}
 
+			} else {
+				JOptionPane.showMessageDialog(null, "Please select a unit you wish to have use an item first.");
+			}
+		}
 	}
 
 	/**
@@ -429,57 +452,56 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	
-	private class thisMenuListner implements MenuListener {
 
+	private class thisMenuListner implements MenuListener {
 
 		@Override
 		public void menuCanceled(MenuEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void menuDeselected(MenuEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void menuSelected(MenuEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
+
 	private class ZoomInListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			if(((GraphicalView) graphical).getScaleFactor() == 4){
+
+			if (((GraphicalView) graphical).getScaleFactor() == 4) {
 				JOptionPane.showMessageDialog(null, "Cannot zoom in any more. It is already hard to see the map! It would make it way too hard to see the game!", "Can't Zoom In", JOptionPane.OK_OPTION);
 			} else {
-			
-			
-			((GraphicalView) graphical).setZoomInScale();
-			graphical.repaint();
+
+				((GraphicalView) graphical).setZoomInScale();
+				graphical.repaint();
 
 			}
 		}
 
 	}
-	
+
 	private class ZoomOutListener implements ActionListener {
 
-		@Override	
+		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(((GraphicalView) graphical).getScaleFactor() == .25){
+			if (((GraphicalView) graphical).getScaleFactor() == .25) {
 				JOptionPane.showMessageDialog(null, "Cannot zoom out any more. It would make it too hard to see the game!", "Can't Zoom Out", JOptionPane.OK_OPTION);
 			} else {
-			((GraphicalView) graphical).setZoomOutScale();
-			graphical.repaint();			
-			
+				((GraphicalView) graphical).setZoomOutScale();
+				graphical.repaint();
+
 			}
 		}
 
@@ -500,20 +522,20 @@ public class SetupPanel extends JPanel implements Observer {
 		JPanel northLayout = new JPanel();
 		northLayout.setLayout(new BorderLayout());
 		northLayout.setOpaque(false);
-		
+
 		menuBar = new JMenuBar();
 		menuBar.setOpaque(false);
-		
+
 		setUpMenuBar();
-				
+
 		title = new JLabel("HereAfter");
 		title.setFont(new Font(Font.SERIF, Font.BOLD, 50));
 		title.setForeground(Color.WHITE);
 		title.setSize(250, 70);
-		
-		northLayout.add(menuBar,BorderLayout.NORTH);
+
+		northLayout.add(menuBar, BorderLayout.NORTH);
 		northLayout.add(title, BorderLayout.CENTER);
-		
+
 		this.add(northLayout, BorderLayout.NORTH);
 		views = new JTabbedPane();
 
@@ -542,12 +564,12 @@ public class SetupPanel extends JPanel implements Observer {
 		item.addActionListener(new useItemButtonListener());
 		wait = new JButton("Wait");
 		wait.addActionListener(new waitButtonListener());
-		//help = new JButton("How to play");
-		//help.addActionListener(new helpButtonListener());
+		// help = new JButton("How to play");
+		// help.addActionListener(new helpButtonListener());
 		endTurn = new JButton("End Turn");
 		endTurn.addActionListener(new endTurnButtonListener());
-		//save = new JButton("Save And Quit");
-		//save.addActionListener(new saveButtonListener());
+		// save = new JButton("Save And Quit");
+		// save.addActionListener(new saveButtonListener());
 
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
@@ -567,13 +589,13 @@ public class SetupPanel extends JPanel implements Observer {
 		if (!dataWasLoaded) {
 			buttons.add(currentUserName);
 		}
-		//buttons.add(help);
+		// buttons.add(help);
 		buttons.add(move);
 		buttons.add(attack);
 		buttons.add(item);
 		buttons.add(wait);
 		buttons.add(endTurn);
-		//buttons.add(save);
+		// buttons.add(save);
 
 		this.add(buttons, BorderLayout.WEST);
 		if (dataWasLoaded) {
@@ -583,47 +605,47 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	private void setUpMenuBar() {
-		
+
 		saveMenu = new JMenu("Save");
 		saveMenu.addMenuListener(new thisMenuListner());
 		saveMenu.setForeground(Color.WHITE);
 		saveMenu.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
 		menuBar.add(saveMenu);
 
-		saveAndContinue = new JMenuItem("Save and continue", new ImageIcon(floppy));
+		saveAndContinue = new JMenuItem("Save and Continue", new ImageIcon(floppy));
 		saveAndContinue.addActionListener(new saveContinueButtonListener());
 		saveMenu.add(saveAndContinue);
-		
+
 		saveAndQuit = new JMenuItem("Save and Quit", new ImageIcon(floppy));
 		saveAndQuit.addActionListener(new saveQuitButtonListener());
 		saveMenu.add(saveAndQuit);
-		
+
 		zoom = new JMenu("Zoom");
 		zoom.addMenuListener(new thisMenuListner());
 		zoom.setForeground(Color.WHITE);
 		zoom.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
 
 		menuBar.add(zoom);
-		
-		zoomIn = new JMenuItem("ZoomIn" , new ImageIcon(zoomInImg));
+
+		zoomIn = new JMenuItem("Zoom In", new ImageIcon(zoomInImg));
 		zoomIn.addActionListener(new ZoomInListener());
 		zoom.add(zoomIn);
-		
-		zoomOut = new JMenuItem("zoomOut", new ImageIcon(zoomOutImg));
+
+		zoomOut = new JMenuItem("Zoom Out", new ImageIcon(zoomOutImg));
 		zoomOut.addActionListener(new ZoomOutListener());
 		zoom.add(zoomOut);
-		
+
 		helpMenu = new JMenu("Help");
 		helpMenu.addMenuListener(new thisMenuListner());
 		helpMenu.setForeground(Color.WHITE);
 		helpMenu.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
 
 		menuBar.add(helpMenu);
-		
+
 		helpWindow = new JMenuItem("General Help", new ImageIcon(helpIcon));
 		helpWindow.addActionListener(new helpButtonListener());
 		helpMenu.add(helpWindow);
-		
+
 	}
 
 	/**
@@ -858,7 +880,7 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	
+
 	private class saveContinueButtonListener implements ActionListener {
 
 		@Override
@@ -872,13 +894,13 @@ public class SetupPanel extends JPanel implements Observer {
 	public void saveTheGame(boolean quit) {
 
 		Object[] options = { "Save 1", "Save 2", "Save 3", "Cancel" };
-		int answer = JOptionPane.showOptionDialog(null, "Where would you like to save?", "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+		int answer = JOptionPane.showOptionDialog(null, "Where would you like to save?", "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 		int slotNumber = 0;
-		
+
 		if (answer == JOptionPane.YES_OPTION) {
 			saveData("SaveStateOne");
 			slotNumber = 1;
-			
+
 		} else if (answer == JOptionPane.NO_OPTION) {
 			saveData("SaveStateTwo");
 			slotNumber = 2;
@@ -888,31 +910,33 @@ public class SetupPanel extends JPanel implements Observer {
 		} else {
 			quit = false;
 		}
-		
-		if(quit){
-			
+
+		if (quit) {
+
 			this.removeAll();
 			gameIsRunning = false;
 			startUp1 = true;
-			if(slotNumber == 1 || slotNumber == 2 || slotNumber == 3)
-				JOptionPane.showMessageDialog(null, "Game Saved Successfully! Saved in save state " + slotNumber, "Game Saved", JOptionPane.PLAIN_MESSAGE);
+			if (slotNumber == 1 || slotNumber == 2 || slotNumber == 3)
+				JOptionPane.showMessageDialog(null, "Game Saved Successfully! Saved in save state " + slotNumber, "Game Saved", JOptionPane.INFORMATION_MESSAGE);
 			slotNumber = 0;
 			TRPGGUI.dispose();
-		    
+
 		}
-		if(slotNumber == 1 || slotNumber == 2 || slotNumber == 3)
-		JOptionPane.showMessageDialog(null, "Game Saved Successfully! Saved in save state " + slotNumber, "Game Saved", JOptionPane.PLAIN_MESSAGE);
+		if (slotNumber == 1 || slotNumber == 2 || slotNumber == 3)
+			JOptionPane.showMessageDialog(null, "Game Saved Successfully! Saved in save state " + slotNumber, "Game Saved", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void saveData(String saveName) {
 		try {
 
+			scaleFactor = ((GraphicalView) graphical).getScaleFactor();
 			if (saveName.equals("SaveStateOne")) {
 				FileOutputStream outStream = new FileOutputStream("SaveStateOne.data");
 				ObjectOutputStream outObject = new ObjectOutputStream(outStream);
 				outObject.writeObject(controller);
 				outObject.writeObject(type);
 				outObject.writeObject(player);
+				outObject.writeObject(scaleFactor);
 				outObject.close();
 			}
 			if (saveName.equals("SaveStateTwo")) {
@@ -921,6 +945,7 @@ public class SetupPanel extends JPanel implements Observer {
 				outObject.writeObject(controller);
 				outObject.writeObject(type);
 				outObject.writeObject(player);
+				outObject.writeObject(scaleFactor);
 				outObject.close();
 			}
 			if (saveName.equals("SaveStateThree")) {
@@ -929,6 +954,7 @@ public class SetupPanel extends JPanel implements Observer {
 				outObject.writeObject(controller);
 				outObject.writeObject(type);
 				outObject.writeObject(player);
+				outObject.writeObject(scaleFactor);
 				outObject.close();
 			}
 
@@ -949,6 +975,7 @@ public class SetupPanel extends JPanel implements Observer {
 				controller = (GameController) inObject.readObject();
 				type = (String) inObject.readObject();
 				player = (Player) inObject.readObject();
+				scaleFactor = (double) inObject.readObject();
 			}
 
 			if (saveStateName.equals("SaveStateTwo")) {
@@ -957,6 +984,7 @@ public class SetupPanel extends JPanel implements Observer {
 				controller = (GameController) inObject.readObject();
 				type = (String) inObject.readObject();
 				player = (Player) inObject.readObject();
+				scaleFactor = (double) inObject.readObject();
 			}
 
 			if (saveStateName.equals("SaveStateThree")) {
@@ -965,6 +993,7 @@ public class SetupPanel extends JPanel implements Observer {
 				controller = (GameController) inObject.readObject();
 				type = (String) inObject.readObject();
 				player = (Player) inObject.readObject();
+				scaleFactor = (double) inObject.readObject();
 			}
 
 			controller.getMap().addObserver((Observer) graphical);
@@ -975,17 +1004,20 @@ public class SetupPanel extends JPanel implements Observer {
 			controller.setCurrentPlayer(player);
 			controller.setPlayerTurn(true);
 			((MapView) textMap).setGameType(type);
+			((GraphicalView) graphical).setScaleFactor(scaleFactor);
+			
+			gameIsRunning = true;
+			dataWasLoaded = true;
+			selected = false;
+			actualMap();
+			TRPGGUI.canResize();
 
 		} catch (Exception e) {
 
-			System.out.println("Unable to load data");
+			JOptionPane.showMessageDialog(null, "Unable to load the selected data. There is either no save in this slot or the data is currupt.", "Unable to load Data", JOptionPane.WARNING_MESSAGE);
 
 		}
-		gameIsRunning = true;
-		dataWasLoaded = true;
-		selected = false;
-		actualMap();
-		TRPGGUI.canResize();
+		
 
 	}
 

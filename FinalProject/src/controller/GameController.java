@@ -97,7 +97,7 @@ public class GameController implements Serializable {
 		playerLocals = map.getGoodUnitPositions();
 
 		mines = new Item[50][50];
-		
+
 		checkWinConditions();
 	}
 
@@ -124,8 +124,7 @@ public class GameController implements Serializable {
 				currRow = row;
 				currCol = col;
 				setCanMove(row, col);
-				System.out.println("New CurrUnit " + currUnit.getUnitType()
-						+ " at: (" + currRow + ", " + currCol + ")");
+				System.out.println("New CurrUnit " + currUnit.getUnitType() + " at: (" + currRow + ", " + currCol + ")");
 				map.updateObservers();
 				return true;
 			}
@@ -181,13 +180,9 @@ public class GameController implements Serializable {
 		// Check to see if the end Row and end Col point to something
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
-				System.out.println("(" + currRow + ", " + currCol
-						+ ") Move to (" + endRow + ", " + endCol + ")");
+				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
 				if (currUnit != null) {
-					if (currUnit.canMove()
-							&& (!map.isOccupied(endRow, endCol) || map
-									.getUnitAt(endRow, endCol) == currUnit)
-							&& map.getSpace(endRow, endCol).getCanMoveTo()) {
+					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
 
 						moveOn = false;
 
@@ -225,21 +220,16 @@ public class GameController implements Serializable {
 				if (currUnit == null)
 					JOptionPane.showMessageDialog(null, "Please select a Unit");
 				else if (!currUnit.canMove())
-					JOptionPane.showMessageDialog(null,
-							"Unit can't move anymore. Select a new unit.");
+					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
 				else if (map.isOccupied(endRow, endCol))
-					JOptionPane.showMessageDialog(null,
-							"Space is occupied, you can't move there");
+					JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
 				else if (!map.getSpace(endRow, endCol).getCanMoveTo())
-					JOptionPane.showMessageDialog(null,
-							"Space is out of range.");
+					JOptionPane.showMessageDialog(null, "Space is out of range.");
 				return;
 			} else
-				JOptionPane.showMessageDialog(null,
-						"You can't move on top of walls!");
+				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
 		} else
-			JOptionPane.showMessageDialog(null,
-					"Pick a space to move to before you try moving...");
+			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
 
 	}
 
@@ -248,11 +238,7 @@ public class GameController implements Serializable {
 		for (Point p : enemyLocals) {
 
 			if (inAttackRange((int) p.getY(), (int) p.getX())) {
-				int answer = JOptionPane
-						.showConfirmDialog(
-								null,
-								"There are possible Units to attack in range. Would you like to attack one of them?",
-								"Attack?", JOptionPane.YES_NO_OPTION);
+				int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
 				if (answer == JOptionPane.YES_OPTION) {
 
 					moveOn = true;
@@ -290,8 +276,7 @@ public class GameController implements Serializable {
 				if (!SameTeam()) {
 
 					// Checks to see if either of the units are false.
-					if (currUnit != null
-							&& map.getUnitAt(endRow, endCol) != null) {
+					if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
 						// if both exist, check if one can move
 						if (inAttackRange(currRow, currCol)) {
 							actAttack();
@@ -312,22 +297,17 @@ public class GameController implements Serializable {
 						}
 
 						else {
-							JOptionPane.showMessageDialog(null,
-									"Enemy out of attack Range.");
+							JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
 							System.out.println("Enemy out of attack range.");
 						}
 					} else
-						JOptionPane.showMessageDialog(null,
-								"Nothing to Attack!");
+						JOptionPane.showMessageDialog(null, "Nothing to Attack!");
 				} else
-					JOptionPane.showMessageDialog(null,
-							"You cannot attack your own teammates...");
+					JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
 			} else
-				JOptionPane
-						.showMessageDialog(null, "You can't attack youself!");
+				JOptionPane.showMessageDialog(null, "You can't attack youself!");
 		} else
-			JOptionPane.showMessageDialog(null,
-					"Pick a unit to attack before you try attacking...");
+			JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
 	}
 
 	// /**
@@ -456,34 +436,29 @@ public class GameController implements Serializable {
 	 * 
 	 * @return if the item was used.
 	 */
-	public boolean useItem(ItemType i) {
-		if (currUnit != null) {
-			Item j = currUnit.removeItem(i);
+	public void useItem(ItemType item) {
 
-			if (j != null) {
+		if (currUnit.hasItem(item)) {
 
-				if (j instanceof UsableItem) {
+			Item itemBeingUsed = currUnit.removeItem(item);
+
+			if (itemBeingUsed != null) {
+
+				if (itemBeingUsed instanceof UsableItem) {
 					// If it is a mine, place it on the map.
-					if (j.getItemType() == ItemType.MINE) {
+					if (itemBeingUsed.getItemType() == ItemType.MINE) {
 						// TODO Place mine on space
-						mines[currCol][currRow] = j;
+						mines[currCol][currRow] = itemBeingUsed;
 					}
 
 					// If health item, use on target space/self
-					else if (j.getItemType() == ItemType.MEDKIT) {
+					else if (itemBeingUsed.getItemType() == ItemType.MEDKIT) {
 						// TODO Place mine on space
 						Object[] options = { "Self", "Target", "Cancel" };
-						int answer = JOptionPane
-								.showOptionDialog(
-										null,
-										"Who to heal?",
-										"Would you like to heal the target or the current unit?",
-										JOptionPane.YES_NO_CANCEL_OPTION,
-										JOptionPane.WARNING_MESSAGE, null,
-										options, options[1]);
+						int answer = JOptionPane.showOptionDialog(null, "Who to heal?", "Would you like to heal the target or the current unit?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 						if (answer == JOptionPane.YES_OPTION) {
-							currUnit.restoreHealth(j.useItem());
+							currUnit.restoreHealth(itemBeingUsed.useItem());
 							currUnit.setCanMove(false);
 							tempUnitList.remove(currUnit);
 							gameOver();
@@ -492,8 +467,7 @@ public class GameController implements Serializable {
 						}
 
 						else if (answer == JOptionPane.NO_OPTION) {
-							map.getUnitAt(endRow, endCol).restoreHealth(
-									j.useItem());
+							map.getUnitAt(endRow, endCol).restoreHealth(itemBeingUsed.useItem());
 							currUnit.setCanMove(false);
 							tempUnitList.remove(currUnit);
 							gameOver();
@@ -503,18 +477,18 @@ public class GameController implements Serializable {
 
 						else {
 							// Put it back
-							currUnit.addItem(j);
-							return false;
+							currUnit.addItem(itemBeingUsed);
+							
 						}
 					}
 
 					// If it's a grenade, use on target space.
 					// TODO Add range functionality
 
-					else if (j.getItemType() == ItemType.GRENADE) {
+					else if (itemBeingUsed.getItemType() == ItemType.GRENADE) {
 						// TODO Throw the Grenade
 						if (endRow != currRow || endCol != currCol) {
-							blowShitUp(j.useItem(), endRow, endCol, 2);
+							blowShitUp(itemBeingUsed.useItem(), endRow, endCol, 2);
 							currUnit.setCanMove(false);
 							tempUnitList.remove(currUnit);
 							gameOver();
@@ -523,22 +497,23 @@ public class GameController implements Serializable {
 						}
 
 						else {
-							currUnit.addItem(j);
-							return false;
+							currUnit.addItem(itemBeingUsed);
+
 						}
 					}
 
-					return true;
-				} else
-					return false;
+				} else {
+
+				}
+
+			} else {
+
 			}
 
-			else
-				return false;
+		} else {
+			JOptionPane.showMessageDialog(null, "The unit you selected does not have that item.");
 		}
 
-		else
-			return false;
 	}
 
 	/**
@@ -546,7 +521,7 @@ public class GameController implements Serializable {
 	 * yourself up.
 	 * 
 	 * @param it
-	 *          , the ItemType of the explosive used
+	 *            , the ItemType of the explosive used
 	 */
 	private void blowShitUp(int it, int row, int col, int spacesLeft) {
 		if (map.getSpace(row, col).getOccupied()) {
@@ -565,10 +540,10 @@ public class GameController implements Serializable {
 					blowShitUp(it, row - 1, col, spacesLeft - 1);
 			if (col < 49)
 				if (map.getSpace(row, col + 1).getWalkable())
-					blowShitUp(it, row, col+1, spacesLeft - 1);
+					blowShitUp(it, row, col + 1, spacesLeft - 1);
 			if (col > 0)
 				if (map.getSpace(row, col - 1).getWalkable())
-					blowShitUp(it, row, col-1, spacesLeft - 1);
+					blowShitUp(it, row, col - 1, spacesLeft - 1);
 		}
 	}
 
@@ -591,13 +566,11 @@ public class GameController implements Serializable {
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
-				JOptionPane.showMessageDialog(null, "Player " + player1.getID()
-						+ " won!");
+				JOptionPane.showMessageDialog(null, "Player " + player1.getID() + " won!");
 				System.out.println("Player " + player1.getID() + " won!");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you finished: "
-						+ player1.getGamesFinished());
+				System.out.println("Games you finished: " + player1.getGamesFinished());
 				System.out.println("Your team stats: ");
 				System.out.println(player1.getTeamStats());
 
@@ -610,13 +583,11 @@ public class GameController implements Serializable {
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
-				JOptionPane.showMessageDialog(null,
-						"AI won! Better luck next time...");
+				JOptionPane.showMessageDialog(null, "AI won! Better luck next time...");
 				System.out.println("AI won! Better luck next time...");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you've finished: "
-						+ player1.getGamesFinished());
+				System.out.println("Games you've finished: " + player1.getGamesFinished());
 				System.out.println("AI team stats: ");
 				System.out.println(player2.getTeamStats());
 
@@ -639,36 +610,31 @@ public class GameController implements Serializable {
 	public boolean checkWinConditions() {
 		if (gameType instanceof gametype.CaptureTower) {
 
-			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2
-					.everyonesDeadDave())) {
+			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2.everyonesDeadDave())) {
 				return true;
 			} else
 				return false;
 		} else if (gameType instanceof gametype.Survive) {
-			if (!player1.everyonesDeadDave()
-					&& gameType.CheckWinCondition(turns))
+			if (!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))
 				return true;
 			else
 				return false;
 		}
 
 		else if (gameType instanceof gametype.FourCorners) {
-			if(map.getSpace(0, 0).getOccupied())
-				((CaptureCornerSpace) map.getSpace(0,0)).setHasBeenCaptured(true);
-			if(map.getSpace(0, 49).getOccupied())
-				((CaptureCornerSpace) map.getSpace(0,49)).setHasBeenCaptured(true);
-			if(map.getSpace(49, 0).getOccupied())
-				((CaptureCornerSpace) map.getSpace(49,0)).setHasBeenCaptured(true);
-			if(map.getSpace(49, 49).getOccupied())
-				((CaptureCornerSpace) map.getSpace(49,49)).setHasBeenCaptured(true);
+			if (map.getSpace(0, 0).getOccupied())
+				((CaptureCornerSpace) map.getSpace(0, 0)).setHasBeenCaptured(true);
+			if (map.getSpace(0, 49).getOccupied())
+				((CaptureCornerSpace) map.getSpace(0, 49)).setHasBeenCaptured(true);
+			if (map.getSpace(49, 0).getOccupied())
+				((CaptureCornerSpace) map.getSpace(49, 0)).setHasBeenCaptured(true);
+			if (map.getSpace(49, 49).getOccupied())
+				((CaptureCornerSpace) map.getSpace(49, 49)).setHasBeenCaptured(true);
 
 			if (((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
-				if (((CaptureCornerSpace) map.getSpace(49, 0))
-						.getHasBeenCaptured())
-					if (((CaptureCornerSpace) map.getSpace(0, 49))
-							.getHasBeenCaptured())
-						if (((CaptureCornerSpace) map.getSpace(49, 49))
-								.getHasBeenCaptured())
+				if (((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
+					if (((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
+						if (((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured())
 							return true;
 			return false;
 		}
@@ -917,10 +883,8 @@ public class GameController implements Serializable {
 	 */
 	private void canMoveHelper(int movesAvail, int row, int col) {
 
-		if (movesAvail >= map.getSpace(col, row).getMoveHinderance()
-				&& map.getSpace(row, col).getWalkable()) {
-			movesAvail = movesAvail
-					- map.getSpace(col, row).getMoveHinderance();
+		if (movesAvail >= map.getSpace(col, row).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
+			movesAvail = movesAvail - map.getSpace(col, row).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
 			if (row < 49)
 				if (map.getSpace(row + 1, col).getWalkable())
@@ -951,27 +915,11 @@ public class GameController implements Serializable {
 
 			if (playerTurn) {
 
-				JOptionPane.showMessageDialog(
-						null,
-						"The attacked " + map.getUnitAt(row, col).getUnitType()
-								+ " was left with no health and has died!"
-								+ '\n'
-								+ "Number of units remaining on both sides: "
-								+ player1.getID() + " - "
-								+ player1.getAliveNum() + ", Zombies - "
-								+ (player2.getAliveNum() - 1));
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + player1.getAliveNum() + ", Zombies - " + (player2.getAliveNum() - 1));
 
 			} else {
 
-				JOptionPane.showMessageDialog(
-						null,
-						"The attacked " + map.getUnitAt(row, col).getUnitType()
-								+ " was left with no health and has died!"
-								+ '\n'
-								+ "Number of units remaining on both sides: "
-								+ player1.getID() + " - "
-								+ (player1.getAliveNum() - 1) + ", Zombies - "
-								+ (player2.getAliveNum()));
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + (player1.getAliveNum() - 1) + ", Zombies - " + (player2.getAliveNum()));
 			}
 
 			map.removeUnit(col, row);
@@ -987,15 +935,10 @@ public class GameController implements Serializable {
 				tempUnitList.remove(temp);
 
 			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType() + " at (" + row
-					+ ", " + col + ") is dead!");
+			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
 
 		} else {
-			JOptionPane.showMessageDialog(null, "The attacked "
-					+ map.getUnitAt(endRow, endCol).getUnitType()
-					+ " was left with "
-					+ map.getUnitAt(endRow, endCol).getHealth()
-					+ " health after the attack!");
+			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(endRow, endCol).getUnitType() + " was left with " + map.getUnitAt(endRow, endCol).getHealth() + " health after the attack!");
 		}
 	}
 
@@ -1058,21 +1001,21 @@ public class GameController implements Serializable {
 				this.endCol = temp.x;
 				// if so, attack.
 				if (this.inAttackRange(currRow, currCol)) {
-					
+
 				}
-				
+
 				// If not, then move the AI closer to the player.
 
 				else
 					enemyMove(u);
-				
+
 				System.out.println("Location initially trying to remove unit from: " + u.y + ", " + u.x);
 				// Values given from traverse are below
 				System.out.println("Should be: " + rowValue + ", " + colValue);
-				
+
 				// TODO: empty curr list once all of the Ai has moved
-				//map.getUnitAt(u.y, u.x).setCanMove(false);
-				//tempUnitList.remove(map.getUnitAt(u.y, u.x));
+				// map.getUnitAt(u.y, u.x).setCanMove(false);
+				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
 				map.getUnitAt(rowValue, colValue).setCanMove(false);
 				tempUnitList.remove(map.getUnitAt(rowValue, colValue));
 			}
@@ -1094,18 +1037,18 @@ public class GameController implements Serializable {
 		 * Locations 3) Player's XY values 4) Send these params to
 		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
 		 */
-			
+
 		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
 
 		// Added '7' as a placeholder for unit movement.
 		// aiMove.traverse(em.y, em.x, p.y, p.x, 7);
-		
+
 		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).x;
 		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).y;
 
 		map.moveUnit(em.y, em.x, rowValue, colValue);
-		System.out.println("Location being sent: " + em.y + ", " + em.x + " | "+ rowValue + ", " + colValue);
+		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
 	}
 
 	/**
@@ -1135,13 +1078,13 @@ public class GameController implements Serializable {
 	 * TODO
 	 */
 
-	public void setCurrentPlayer(Player player){
-		currPlayer = player; 
+	public void setCurrentPlayer(Player player) {
+		currPlayer = player;
 	}
-	
-	public void setPlayerTurn(boolean whosTurn){
+
+	public void setPlayerTurn(boolean whosTurn) {
 		playerTurn = whosTurn;
-		
+
 	}
 
 	/*

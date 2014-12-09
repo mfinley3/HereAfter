@@ -448,7 +448,7 @@ public class Map extends Observable implements Serializable {
 
 		if (!isPlayerTurn) {
 			for (Point p : goodUnitPositions) {
-				if (p.getX() == col && p.getY() == row) {
+				if (p.getX() == row && p.getY() == col) {
 					goodUnitPositions.remove(p);
 					break;
 				}
@@ -457,7 +457,7 @@ public class Map extends Observable implements Serializable {
 		} else {
 
 			for (Point p : enemyUnitPositions) {
-				if (p.getX() == col && p.getY() == row) {
+				if (p.getX() == row && p.getY() == col) {
 					enemyUnitPositions.remove(p);
 					break;
 				}

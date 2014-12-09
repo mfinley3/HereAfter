@@ -395,4 +395,8 @@ public class GraphicalView extends JPanel implements Observer {
 	public double getScaleFactor() {
 		return scaleFactor;
 	}
+
+	public void setScaleFactor(double scaleFactor) {
+		this.scaleFactor = 	scaleFactor;	
+	}
 }
