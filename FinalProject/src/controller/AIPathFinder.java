@@ -14,6 +14,7 @@ import model.Map;
 public class AIPathFinder implements Serializable{
 	private Map gameMap;
 	private int moveRange;
+	private int row, col;
 
 	/**
 	 * Constructor for the AIPathFinder class.
@@ -36,8 +37,8 @@ public class AIPathFinder implements Serializable{
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
 		
-		System.out.println("Current AI Location: " + currRow + ", " + currCol + ": " + moveRange);
-		System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
+		//System.out.println("Current AI Location: " + currRow + ", " + currCol + ": " + moveRange);
+		//System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
 
 		if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1) && (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
@@ -64,7 +65,7 @@ public class AIPathFinder implements Serializable{
 			}
 		}
 
-		return new Point(currRow, currCol); // Returns the Point of where the AI
+		return new Point(row, col); // Returns the Point of where the AI
 											// should move.
 	}
 
@@ -96,6 +97,8 @@ public class AIPathFinder implements Serializable{
 				if (moveRange - moveHindrance > 0) {
 					moveRange = moveRange - moveHindrance;
 					valid = true;
+					row = tgtRow;
+					col = tgtCol;
 				}
 			}
 		}

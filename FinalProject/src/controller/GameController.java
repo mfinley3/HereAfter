@@ -48,6 +48,8 @@ public class GameController implements Serializable {
 
 	private boolean moveOn;
 	private Item[][] mines;
+	private int rowValue;
+	private int colValue;
 
 	/**
 	 * Constructor for one player.
@@ -1049,8 +1051,7 @@ public class GameController implements Serializable {
 
 			for (Point u : enemyLocals) {
 				// Goes through each member of the AI. Checks to see if there
-				// are
-				// any enemies within range.
+				// are any enemies within range.
 				temp = this.nearestPlayerUnit(u);
 				this.setCurrentUnit(u.y, u.x);
 				this.endRow = temp.y;
@@ -1065,13 +1066,15 @@ public class GameController implements Serializable {
 				else
 					enemyMove(u);
 				
-				System.out.println("Location trying to 'get': " + u.y + ", " + u.x);
+				System.out.println("Location initially trying to remove unit from: " + u.y + ", " + u.x);
+				// Values given from traverse are below
+				System.out.println("Should be: " + rowValue + ", " + colValue);
 				
-				map.getUnitAt(u.y, u.x).setCanMove(false);
-				tempUnitList.remove(map.getUnitAt(u.y, u.x));
 				// TODO: empty curr list once all of the Ai has moved
 				//map.getUnitAt(u.y, u.x).setCanMove(false);
 				//tempUnitList.remove(map.getUnitAt(u.y, u.x));
+				map.getUnitAt(rowValue, colValue).setCanMove(false);
+				tempUnitList.remove(map.getUnitAt(rowValue, colValue));
 			}
 
 			tempUnitList.clear();
@@ -1091,27 +1094,18 @@ public class GameController implements Serializable {
 		 * Locations 3) Player's XY values 4) Send these params to
 		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
 		 */
-
-		/*playerLocals = getPlayerUnits();
-		
-		for (Point p : playerLocals) {
-			p = nearestPlayerUnit(em);
-			this.setCurrentUnit(em.y, em.x);
-			this.endRow = aiMove.traverse(em.y, em.x, p.y, p.x, 1).y;
-			this.endCol = aiMove.traverse(em.y, em.x, p.y, p.x, 1).x;
-			map.moveUnit(em.y, em.x, endRow, endCol);
-		}*/
 			
 		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
 
 		// Added '7' as a placeholder for unit movement.
-		// aiMove.traverse(em.y, em.x, p.y, p.x, 7)
-		// map.moveUnit(currRow, currCol, endRow, endCol);
-		int rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).y;
-		int colValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).x;
+		// aiMove.traverse(em.y, em.x, p.y, p.x, 7);
+		
+		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).x;
+		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).y;
 
 		map.moveUnit(em.y, em.x, rowValue, colValue);
+		System.out.println("Location being sent: " + em.y + ", " + em.x + " | "+ rowValue + ", " + colValue);
 	}
 
 	/**
