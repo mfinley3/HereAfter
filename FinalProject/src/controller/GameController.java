@@ -1000,6 +1000,9 @@ public class GameController implements Serializable {
 	 */
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
+		if(map.getUnitAt(row, col) instanceof Hole){
+			map.coverUpHole(row, col);
+		}
 		if (!temp.isAlive()) {
 
 			if (playerTurn) {

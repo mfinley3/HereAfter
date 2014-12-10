@@ -12,6 +12,7 @@ import java.util.Stack;
 
 import space.BridgeSpace;
 import space.CaptureCornerSpace;
+import space.HoleCovered;
 import space.IndoorPath;
 import space.IndoorPathSpace;
 import space.IndoorWallSpace;
@@ -619,6 +620,12 @@ public class Map extends Observable implements Serializable {
 
 		return textMap;
 
+	}
+	
+	public void coverUpHole(int row, int col){
+		map[row][col] = new HoleCovered();
+		setChanged();
+		notifyObservers();
 	}
 
 }
