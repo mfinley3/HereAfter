@@ -1173,11 +1173,8 @@ public class GameController implements Serializable {
 		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
 
-		// Added '7' as a placeholder for unit movement.
-		// aiMove.traverse(em.y, em.x, p.y, p.x, 7);
-
-		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).x;
-		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, 7).y;
+		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
+		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).y;
 
 		map.moveUnit(em.y, em.x, rowValue, colValue);
 		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
