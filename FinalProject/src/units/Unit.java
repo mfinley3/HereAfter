@@ -137,7 +137,9 @@ public abstract class Unit implements Serializable {
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Zombie") || unitType.equals("Spitter")
+					|| unitType.equals("AlphaProtector")
+					|| unitType.equals("ZDog") || unitType.equals("Carrier")) {
 				atkMod *= difficulty;
 				attack *= atkMod;
 			}
@@ -171,7 +173,9 @@ public abstract class Unit implements Serializable {
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Zombie") || unitType.equals("Spitter")
+					|| unitType.equals("AlphaProtector")
+					|| unitType.equals("ZDog") || unitType.equals("Carrier")) {
 				defMod *= difficulty;
 				defense *= defMod;
 			}
