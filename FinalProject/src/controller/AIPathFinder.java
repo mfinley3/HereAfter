@@ -14,7 +14,7 @@ import model.Map;
 public class AIPathFinder implements Serializable{
 	private Map gameMap;
 	private int moveRange;
-	private int row, col;
+	private int row = 0, col = 0;
 
 	/**
 	 * Constructor for the AIPathFinder class.
@@ -27,46 +27,75 @@ public class AIPathFinder implements Serializable{
 	 * Attempts to recursively traverse the game map from the first given X & Y
 	 * locations to the next pair
 	 * 
-	 * @param currRow
+	 * @param currAIRow
 	 *            row index of current location
-	 * @param currCol
+	 * @param currAICol
 	 *            column index of current location
 	 * @return true if the current location is 'near' the other
 	 */
-	public Point traverse(int currRow, int currCol, int plyrRow, int plyrCol, int aiMovement) {
+	public Point traverse(int currAIRow, int currAICol, int plyrRow, int plyrCol, int aiMovement) {
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
 		
 		//System.out.println("Current AI Location: " + currRow + ", " + currCol + ": " + moveRange);
 		//System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
 
-		if ((currRow == plyrRow || currRow == plyrRow - 1 || currRow == plyrRow + 1) && (currCol == plyrCol || currCol == plyrCol - 1 || currCol == plyrCol + 1))
+		if ((currAIRow == plyrRow || currAIRow == plyrRow - 1 || currAIRow == plyrRow + 1) && (currAICol == plyrCol || currAICol == plyrCol - 1 || currAICol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
 
 		else {
+			
 			// moves up
-			if (validPosition(currRow - 1, currCol)) {
-				traverse(currRow - 1, currCol, plyrRow, plyrCol, moveRange);
+			if (!isNearPlayer && currAIRow > plyrRow) {
+				if (validPosition(currAIRow - 1, currAICol)) {
+					traverse(currAIRow - 1, currAICol, plyrRow, plyrCol, moveRange);
+				}
 			}
 
 			// moves left
-			if (!isNearPlayer && validPosition(currRow, currCol - 1)) {
-				traverse(currRow, currCol - 1, plyrRow, plyrCol, moveRange);
+			if (!isNearPlayer && currAICol > plyrCol) {
+				if (validPosition(currAIRow, currAICol - 1)) {
+					traverse(currAIRow, currAICol - 1, plyrRow, plyrCol, moveRange);
+				}
 			}
-
+				
 			// moves down
-			if (!isNearPlayer && validPosition(currRow + 1, currCol)) {
-				traverse(currRow + 1, currCol, plyrRow, plyrCol, moveRange);
+			if (!isNearPlayer && currAIRow < plyrRow) {
+				if (validPosition(currAIRow + 1, currAICol)) {
+					traverse(currAIRow + 1, currAICol, plyrRow, plyrCol, moveRange);
+				}
 			}
 
 			// moves right
-			if (!isNearPlayer && validPosition(currRow, currCol + 1)) {
-				traverse(currRow, currCol + 1, plyrRow, plyrCol, moveRange);
+			if (!isNearPlayer && currAICol < plyrCol) {
+				if (validPosition(currAIRow, currAICol + 1)) {
+					traverse(currAIRow, currAICol + 1, plyrRow, plyrCol, moveRange);
+				}
 			}
+				
+			/*// moves up
+			if (!isNearPlayer && validPosition(currAIRow - 1, currAICol)) {
+				traverse(currAIRow - 1, currAICol, plyrRow, plyrCol, moveRange);
+			}
+
+			// moves left
+			if (!isNearPlayer && validPosition(currAIRow, currAICol - 1)) {
+				traverse(currAIRow, currAICol - 1, plyrRow, plyrCol, moveRange);
+			}
+
+			// moves down
+			if (!isNearPlayer && validPosition(currAIRow + 1, currAICol)) {
+				traverse(currAIRow + 1, currAICol, plyrRow, plyrCol, moveRange);
+			}
+
+			// moves right
+			if (!isNearPlayer && validPosition(currAIRow, currAICol + 1)) {
+				traverse(currAIRow, currAICol + 1, plyrRow, plyrCol, moveRange);
+			}*/
 		}
 
 		return new Point(row, col); // Returns the Point of where the AI
-											// should move.
+										// should move.
 	}
 
 	/**
@@ -83,7 +112,7 @@ public class AIPathFinder implements Serializable{
 		boolean valid = false;
 
 		// Check if locations are in the bounds of the map
-		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0) {
+		if (tgtRow > 50 || tgtRow < 0 || tgtCol > 50 || tgtCol < 0) {
 			valid = false;
 		}
 
@@ -91,10 +120,10 @@ public class AIPathFinder implements Serializable{
 			int moveHindrance = gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
 
 			// Check if walkable
-			if (gameMap.getSpace(tgtRow, tgtCol).getWalkable()) {
-
+			if (gameMap.getSpace(tgtRow, tgtCol).getWalkable() && !gameMap.getSpace(tgtRow, tgtCol).getOccupied()) {
+				
 				// Check for hindrance
-				if (moveRange - moveHindrance > 0) {
+				if (moveRange - moveHindrance >= 0) {
 					moveRange = moveRange - moveHindrance;
 					valid = true;
 					row = tgtRow;
