@@ -484,6 +484,10 @@ public class GameController implements Serializable {
 	 * @return if the item was used.
 	 */
 	public void useItem(ItemType item) {
+		/*
+		 * TODO Finish this!
+		 * Doesn't know what to do with each one. Fix it.
+		 */
 
 		if (currUnit.hasItem(item)) {
 

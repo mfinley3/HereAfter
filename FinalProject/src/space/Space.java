@@ -15,7 +15,7 @@ public abstract class Space implements Serializable{
 	private boolean canMoveTo;
 	private int moveHinderance;
 	private int visablityModifier;
-	
+	private boolean hasMine;
 	
 	/**
 	 * Instantiates a new space.
@@ -28,7 +28,7 @@ public abstract class Space implements Serializable{
 	 * @param visablityModifier The visibility modifier of the space.
 	 */
 	public Space (String spaceType, Boolean walkable, Boolean occupied, Boolean visable, int moveHinderance, int visablityModifier){
-		
+		this.hasMine = false;
 		this.spaceType = spaceType;
 		this.walkable = walkable;
 		this.occupied = occupied;
@@ -128,5 +128,20 @@ public abstract class Space implements Serializable{
 	 */
 	public boolean getCanMoveTo(){
 		return canMoveTo;
+	}
+	
+	/**
+	 * Checks to see if the space has a mine.
+	 * @return if a mine is placed at that space.
+	 */
+	public boolean hasMine(){
+		return hasMine;
+	}
+	
+	/**
+	 * Sets if it has a mine. Called when adding and removing a mine.
+	 */
+	public void setHasMine(boolean hasMine){
+		this.hasMine = hasMine;
 	}
 }
