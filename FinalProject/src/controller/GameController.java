@@ -195,6 +195,9 @@ public class GameController implements Serializable {
 						map.resetMapCanMove();
 						map.moveUnit(currRow, currCol, endRow, endCol);
 
+						if (playerTurn)
+							pickUpItem();
+
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
 						currCol = endCol;
@@ -236,6 +239,41 @@ public class GameController implements Serializable {
 				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
 		} else
 			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
+
+	}
+
+	private void pickUpItem() {
+
+		Item[][] itemsOnMap = map.getItems();
+
+		if (!(itemsOnMap[endCol][endRow] == null)) {
+
+			if (itemsOnMap[endCol][endRow] instanceof RandomItem) {
+				
+				Item newItem = RandomItem.generateItem();
+				if (newItem.getItemType() == ItemType.MEDKIT)
+					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic medkit!");
+				if (newItem.getItemType() == ItemType.MINE)
+					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic mine!");
+				if (newItem.getItemType() == ItemType.GRENADE)
+					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic grenade!");
+				currUnit.addItem(newItem);
+
+			} else {
+
+				Item newItem = RandomBoost.generateBoost();
+				if (newItem.getItemType() == ItemType.HP)
+					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up an HP boost!");
+				if (newItem.getItemType() == ItemType.ATK)
+					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up an attack boost!");
+				if (newItem.getItemType() == ItemType.DEF)
+					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a defense boost!");
+				
+				currUnit.addItem(newItem);
+				currUnit.UpdateBoosts();
+			}
+			map.removeItem(endRow, endCol);
+		}
 
 	}
 
@@ -649,7 +687,8 @@ public class GameController implements Serializable {
 			if (!testing) {
 				if (map.getSpace(0, 0).getOccupied()) {
 					((CaptureCornerSpace) map.getSpace(0, 0)).setHasBeenCaptured(true);
-					//JOptionPane.showMessageDialog(null, "Northwest Tower captured.");
+					// JOptionPane.showMessageDialog(null,
+					// "Northwest Tower captured.");
 				}
 				if (map.getSpace(0, 49).getOccupied()) {
 					((CaptureCornerSpace) map.getSpace(0, 49)).setHasBeenCaptured(true);
@@ -1000,7 +1039,7 @@ public class GameController implements Serializable {
 	 */
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
-		if(map.getUnitAt(row, col) instanceof Hole){
+		if (map.getUnitAt(row, col) instanceof Hole) {
 			map.coverUpHole(row, col);
 		}
 		if (!temp.isAlive()) {

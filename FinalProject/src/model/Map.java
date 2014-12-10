@@ -1,5 +1,9 @@
 package model;
 
+import item.Item;
+import item.RandomBoost;
+import item.RandomItem;
+
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,6 +49,7 @@ public class Map extends Observable implements Serializable {
 
 	private Space[][] map;
 	private Unit[][] unitsOnMap;
+	private Item[][] itemsOnMap;
 	private transient Scanner mapScan;
 	private List<Unit> enemyList;
 	private List<Point> goodUnitPositions;
@@ -52,6 +57,7 @@ public class Map extends Observable implements Serializable {
 	private transient Scanner unitScan;
 	private Boolean isPlayerTurn;
 	private String gameType;
+	private transient Scanner itemScan;
 
 	/**
 	 * Instantiates a new map by reading in a text file that is determined by a
@@ -66,6 +72,7 @@ public class Map extends Observable implements Serializable {
 		this.gameType = gameType;
 		map = new Space[50][50];
 		unitsOnMap = new Unit[50][50];
+		itemsOnMap = new Item[50][50];
 		System.out.print(gameType);
 
 		if (gameType.equalsIgnoreCase("Tower")) {
@@ -182,6 +189,7 @@ public class Map extends Observable implements Serializable {
 		}
 
 		addEnemies(difficulty, testingMode);
+		addItems(testingMode);
 		setChanged();
 		notifyObservers();
 
@@ -244,17 +252,17 @@ public class Map extends Observable implements Serializable {
 		}
 		if (gameType.equalsIgnoreCase("Survive")) {
 			if (!testingMode) {
-				File hardMap = new File("SurvivalEnemies.txt");
+				File SurviveEnemies = new File("SurvivalEnemies.txt");
 				try {
-					unitScan = new Scanner(hardMap);
+					unitScan = new Scanner(SurviveEnemies);
 				} catch (FileNotFoundException e) {
 
 					e.printStackTrace();
 				}
 			} else {
-				File CornerEnemies = new File("SurvivalEnemiesTest.txt");
+				File SurviveEnemies = new File("SurvivalEnemiesTest.txt");
 				try {
-					unitScan = new Scanner(CornerEnemies);
+					unitScan = new Scanner(SurviveEnemies);
 				} catch (FileNotFoundException e) {
 
 					e.printStackTrace();
@@ -309,6 +317,91 @@ public class Map extends Observable implements Serializable {
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						enemyUnitPositions.add(new Point(m, n));
+					}
+				}
+			}
+		}
+	}
+	
+	private void addItems(boolean testingMode) {
+		if (gameType.equalsIgnoreCase("Tower")) {
+
+			if (!testingMode) {
+				File TowerItems = new File("TowerItems.txt");
+
+				try {
+					itemScan = new Scanner(TowerItems);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+			} else {
+				File TowerTestItems = new File("NoItems.txt");
+				try {
+					itemScan = new Scanner(TowerTestItems);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+			}
+		}
+		if (gameType.equalsIgnoreCase("Corner")) {
+
+			if (!testingMode) {
+				File CornerItems = new File("CornerItems.txt");
+				try {
+					itemScan = new Scanner(CornerItems);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+			} else {
+				File CornerItemsTest = new File("NoItems.txt");
+				try {
+					itemScan = new Scanner(CornerItemsTest);
+
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
+			}
+		}
+		if (gameType.equalsIgnoreCase("Survive")) {
+
+			if (!testingMode) {
+				File SurvivalItems = new File("SurvivalItems.txt");
+				try {
+					itemScan = new Scanner(SurvivalItems);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
+			} else {
+				File SurvivalItems = new File("SurvivalItemsTest.txt");
+				try {
+					itemScan = new Scanner(SurvivalItems);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
+			}
+
+		}
+		
+		while (itemScan.hasNext()) {
+			for (int m = 0; m < map.length; m++) {
+				for (int n = 0; n < map.length; n++) {
+
+					String itemLetterEquivalence = itemScan.next();
+
+					if (itemLetterEquivalence.equals("I")) {
+						itemsOnMap[m][n] = new RandomItem();
+					}
+					if (itemLetterEquivalence.equals("B")) {
+						itemsOnMap[m][n] = new RandomBoost();
 					}
 				}
 			}
@@ -446,6 +539,10 @@ public class Map extends Observable implements Serializable {
 		return map;
 	}
 
+	public Item[][] getItems() {
+		return itemsOnMap;
+	}
+	
 	/**
 	 * Method to get the array of Units in other words the Units on the map.
 	 *
@@ -627,5 +724,8 @@ public class Map extends Observable implements Serializable {
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	public void removeItem(int row, int col){
+		itemsOnMap[col][row] = null;
+	}
 }

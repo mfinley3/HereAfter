@@ -1,5 +1,9 @@
 package view;
 
+import item.Item;
+import item.RandomBoost;
+import item.RandomItem;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,7 +50,8 @@ public class GraphicalView extends JPanel implements Observer {
 
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
-	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
+	private Item[][] currentItems;
+	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected, randomItem, randomBoost;
 
 	private double scaleFactor = 1;
 	private String type;
@@ -87,6 +92,9 @@ public class GraphicalView extends JPanel implements Observer {
 			hole = ImageIO.read(new File("HoleSpace.png"));
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
 			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
+			
+			randomItem = ImageIO.read(new File("RandomItem.png"));
+			randomBoost = ImageIO.read(new File("RandomBoost.png"));
 
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
@@ -139,6 +147,7 @@ public class GraphicalView extends JPanel implements Observer {
 		map = controller.getMap();
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
+		currentItems = map.getItems();
 	}
 
 	/**
@@ -230,6 +239,7 @@ public class GraphicalView extends JPanel implements Observer {
 		map = controller.getMap();
 		currentSpaces = map.getSpaces();
 		currentUnits = map.getUnits();
+		currentItems = map.getItems();
 		repaint();
 		firstClick = true;
 	}
@@ -282,13 +292,21 @@ public class GraphicalView extends JPanel implements Observer {
 					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
 						g2.drawImage(corner, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
-						if(!type.equalsIgnoreCase("survive")){
-						g2.drawImage(holeCovered, x, y, null);
+						if (!type.equalsIgnoreCase("survive")) {
+							g2.drawImage(holeCovered, x, y, null);
 						} else {
 							g2.drawImage(holeCoveredIndoor, x, y, null);
 						}
 					}
-					
+
+					if (currentItems != null) {
+						if (currentItems[col][row] instanceof RandomItem) {
+							g2.drawImage(randomItem, x, y, null);
+						} else if (currentItems[col][row] instanceof RandomBoost) {
+							g2.drawImage(randomBoost, x, y, null);
+						}
+					}
+
 					if (currentUnits[col][row] == controller.getCurrentUnit()) {
 						if (currentUnits[col][row] instanceof Doctor) {
 							g2.drawImage(docSelected, x, y, null);
@@ -312,8 +330,8 @@ public class GraphicalView extends JPanel implements Observer {
 							g2.drawImage(carrierSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof Hole) {
 							g2.drawImage(hole, x, y, null);
-							
-									}
+
+						}
 
 					} else {
 

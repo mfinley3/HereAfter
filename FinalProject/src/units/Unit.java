@@ -6,9 +6,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The abstract Unit class. Used in creating new units and keeping track of each of the units stats.
+ * The abstract Unit class. Used in creating new units and keeping track of each
+ * of the units stats.
  */
-public abstract class Unit implements Serializable{
+public abstract class Unit implements Serializable {
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 
 	private boolean canMove;
@@ -18,6 +19,10 @@ public abstract class Unit implements Serializable{
 	private int health;
 	private int range;
 
+	private int baseAttack;
+	private int baseDefense;
+	private int baseHealth;
+	
 	private String unitType;
 	private Double difficulty;
 
@@ -28,18 +33,29 @@ public abstract class Unit implements Serializable{
 	/**
 	 * Instantiates a new unit.
 	 *
-	 * @param unitType		the unit type
-	 * @param item			the given item
-	 * @param attack		the attack power
-	 * @param defense		the defense power
-	 * @param health		the health amount
-	 * @param movement		the amount of movement
-	 * @param range			the range
-	 * @param difficulty	the difficulty
+	 * @param unitType
+	 *            the unit type
+	 * @param item
+	 *            the given item
+	 * @param attack
+	 *            the attack power
+	 * @param defense
+	 *            the defense power
+	 * @param health
+	 *            the health amount
+	 * @param movement
+	 *            the amount of movement
+	 * @param range
+	 *            the range
+	 * @param difficulty
+	 *            the difficulty
 	 */
-	public Unit(String unitType, Item item, int attack, int defense,
-			int health, int movement, int range, double difficulty) {
+	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty) {
 
+		this.baseAttack = attack;
+		this.baseDefense = defense;
+		this.baseHealth = health;
+		
 		this.unitType = unitType;
 		itemList.add(item); // Adds each Unit's given item to their list
 		this.attack = attack;
@@ -74,8 +90,8 @@ public abstract class Unit implements Serializable{
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (itemList.get(0).equals(ItemType.NONE)){
-				
+			if (itemList.get(0).equals(ItemType.NONE)) {
+
 			}
 
 			// Only non-AI characters can benefit from items
@@ -95,7 +111,8 @@ public abstract class Unit implements Serializable{
 	/**
 	 * Reduce health.
 	 *
-	 * @param damage	the damage
+	 * @param damage
+	 *            the damage
 	 */
 	public void reduceHealth(int damage) {
 		if (damage <= getDefense()) {
@@ -120,8 +137,7 @@ public abstract class Unit implements Serializable{
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter")
-					|| unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
 				atkMod *= difficulty;
 				attack *= atkMod;
 			}
@@ -155,8 +171,7 @@ public abstract class Unit implements Serializable{
 			 * If the unitType is an AI, items do not benefit it, it only gets
 			 * its stats changed depending upon the chosen game difficulty.
 			 */
-			if (unitType.equals("Runner") || unitType.equals("Spitter")
-					|| unitType.equals("AlphaProtector")) {
+			if (unitType.equals("Runner") || unitType.equals("Spitter") || unitType.equals("AlphaProtector")) {
 				defMod *= difficulty;
 				defense *= defMod;
 			}
@@ -196,7 +211,8 @@ public abstract class Unit implements Serializable{
 	/**
 	 * Sets the can move.
 	 *
-	 * @param canMove	the new can move
+	 * @param canMove
+	 *            the new can move
 	 */
 	public void setCanMove(boolean canMove) {
 		this.canMove = canMove;
@@ -248,61 +264,86 @@ public abstract class Unit implements Serializable{
 	public int getRange() {
 		return range;
 	}
-	
-	
-	
+
 	/**
-	 * TODO Test
-	 * Goes through itemList to see if the unit has the specific item.
-	 * @param item
-	 * @return
-	 */
-	public boolean hasItem(ItemType item){
-		for(Item i :itemList)
-			if(i.getItemType() == item)
-				return true;
-		return false;
-	}
-	
-	/**
-	 * TODO Test
-	 * Adds the item to the unit's inventory
-	 * @param item
-	 */
-	public void addItem(Item item){
-		itemList.add(item);
-	}
-	
-	/**
-	 * TODO test
-	 * Gets an item from the inventory depending on desired type and uses it.
-	 * If that type is not in the person's inventory, return null.
+	 * TODO Test Goes through itemList to see if the unit has the specific item.
 	 * 
 	 * @param item
 	 * @return
 	 */
-	public Item removeItem(ItemType item){
+	public boolean hasItem(ItemType item) {
+		for (Item i : itemList)
+			if (i.getItemType() == item)
+				return true;
+		return false;
+	}
+
+	/**
+	 * TODO Test Adds the item to the unit's inventory
+	 * 
+	 * @param item
+	 */
+	public void addItem(Item item) {
+		itemList.add(item);
+	}
+
+	/**
+	 * TODO test Gets an item from the inventory depending on desired type and
+	 * uses it. If that type is not in the person's inventory, return null.
+	 * 
+	 * @param item
+	 * @return
+	 */
+	public Item removeItem(ItemType item) {
 		Item used = null;
-		
-		for(Item j : itemList){
-			if(used == null && item == j.getItemType()){
+
+		for (Item j : itemList) {
+			if (used == null && item == j.getItemType()) {
 				used = j;
 				break;
 			}
 		}
-		
+
 		itemList.remove(used);
-		
+
 		return used;
 	}
-	
+
 	/**
-	 * Called when a unit is healed by another. Raises the units current health back up.
-	 * Won't exceed the max health.
+	 * Called when a unit is healed by another. Raises the units current health
+	 * back up. Won't exceed the max health.
 	 */
-	public void restoreHealth(int i){
+	public void restoreHealth(int i) {
 		health = health + i;
 	}
-	
+
+	public Object getItemList() {
+		// TODO Auto-generated method stub
+		return itemList;
+	}
+
+	public void UpdateBoosts() {
+		int defMod = 1;
+		int atkMod = 1;
+		int HPMod = 1;
+		
+		for (Item item : itemList) {
+			if ((item.getItemType() == ItemType.DEF)) {
+				defMod++;
+			}
+			if ((item.getItemType() == ItemType.ATK)) {
+				atkMod++;
+			}
+
+			if ((item.getItemType() == ItemType.HP)) {
+				HPMod++;
+			}
+			defense = (defMod * baseDefense);
+			attack = (atkMod * baseAttack);
+			health = (HPMod * baseHealth);
+		}
+
+	}
+
 } // end of class Unit
 
