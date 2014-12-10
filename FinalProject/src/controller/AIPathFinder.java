@@ -37,11 +37,15 @@ public class AIPathFinder implements Serializable{
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
 		
-		//System.out.println("Current AI Location: " + currRow + ", " + currCol + ": " + moveRange);
+		System.out.println("Current AI Location: " + currAIRow + ", " + currAICol + ": " + moveRange);
 		//System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
 
 		if ((currAIRow == plyrRow || currAIRow == plyrRow - 1 || currAIRow == plyrRow + 1) && (currAICol == plyrCol || currAICol == plyrCol - 1 || currAICol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
+		
+		if (moveRange == 0) {
+			return new Point(currAIRow, currAICol);
+		}
 
 		else {
 			
@@ -72,28 +76,8 @@ public class AIPathFinder implements Serializable{
 					traverse(currAIRow, currAICol + 1, plyrRow, plyrCol, moveRange);
 				}
 			}
-				
-			/*// moves up
-			if (!isNearPlayer && validPosition(currAIRow - 1, currAICol)) {
-				traverse(currAIRow - 1, currAICol, plyrRow, plyrCol, moveRange);
-			}
-
-			// moves left
-			if (!isNearPlayer && validPosition(currAIRow, currAICol - 1)) {
-				traverse(currAIRow, currAICol - 1, plyrRow, plyrCol, moveRange);
-			}
-
-			// moves down
-			if (!isNearPlayer && validPosition(currAIRow + 1, currAICol)) {
-				traverse(currAIRow + 1, currAICol, plyrRow, plyrCol, moveRange);
-			}
-
-			// moves right
-			if (!isNearPlayer && validPosition(currAIRow, currAICol + 1)) {
-				traverse(currAIRow, currAICol + 1, plyrRow, plyrCol, moveRange);
-			}*/
+			
 		}
-
 		return new Point(row, col); // Returns the Point of where the AI
 										// should move.
 	}
@@ -110,8 +94,46 @@ public class AIPathFinder implements Serializable{
 	 */
 	public boolean validPosition(int tgtRow, int tgtCol) {
 		boolean valid = false;
+		
+		// Check if walkable
+		// if (gameMap.getSpace(tgtRow, tgtCol).getWalkable() &&
+		// !gameMap.getSpace(tgtRow, tgtCol).getOccupied() &&
+		// !gameMap.getSpace(tgtRow, tgtCol).getSpaceType().equals("Wall")) {
+		if (moveRange >= gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance()
+				&& gameMap.getSpace(tgtRow, tgtCol).getWalkable()) {
 
-		// Check if locations are in the bounds of the map
+			moveRange = moveRange - gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
+
+			//System.out.println("\t\tHinderance: " + gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance());
+			gameMap.getSpace(tgtRow, tgtCol).setCanMoveTo(true);
+
+			if (tgtRow < 49 && tgtRow > 0) {
+				if (gameMap.getSpace(tgtRow + 1, tgtCol).getWalkable()
+						&& gameMap.getSpace(tgtRow - 1, tgtCol).getWalkable()) {
+					valid = true;
+					row = tgtRow;
+					col = tgtCol;
+				}
+			}
+
+			if (tgtRow > 0 && tgtCol < 49) {
+				if (gameMap.getSpace(tgtRow - 1, tgtCol).getWalkable()
+						&& gameMap.getSpace(tgtRow, tgtCol + 1).getWalkable()) {
+					valid = true;
+					row = tgtRow;
+					col = tgtCol;
+				}
+			}
+
+			/*
+			 * System.out.println(moveRange);
+			 * valid = true;
+			 * row = tgtRow;
+			 * col = tgtCol;
+			 */
+		}
+		
+			/*// Check if locations are in the bounds of the map
 		if (tgtRow > 50 || tgtRow < 0 || tgtCol > 50 || tgtCol < 0) {
 			valid = false;
 		}
@@ -120,7 +142,7 @@ public class AIPathFinder implements Serializable{
 			int moveHindrance = gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
 
 			// Check if walkable
-			if (gameMap.getSpace(tgtRow, tgtCol).getWalkable() && !gameMap.getSpace(tgtRow, tgtCol).getOccupied()) {
+			if (gameMap.getSpace(tgtRow, tgtCol).getWalkable() && !gameMap.getSpace(tgtRow, tgtCol).getOccupied() && !gameMap.getSpace(tgtRow, tgtCol).getSpaceType().equals("Wall")) {
 				
 				// Check for hindrance
 				if (moveRange - moveHindrance >= 0) {
@@ -130,7 +152,7 @@ public class AIPathFinder implements Serializable{
 					col = tgtCol;
 				}
 			}
-		}
+		} */
 		return valid;
 	}
 

@@ -14,7 +14,7 @@ public class ZombieAI extends Unit {
 	 * @param difficulty the difficulty
 	 */
 	public ZombieAI(double difficulty) {
-		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		super("Zombie", new Item("None", ItemType.NONE), 45, 20, 100, 5, 1, difficulty);
 	}
 

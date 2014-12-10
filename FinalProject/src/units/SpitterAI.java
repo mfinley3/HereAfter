@@ -14,7 +14,7 @@ public class SpitterAI extends Unit {
 	 * @param difficulty the difficulty
 	 */
 	public SpitterAI(double difficulty) {
-		// unitType, their given item, attack, defense, health, movement, difficulty multiplier
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		super("Spitter", new Item("None", ItemType.NONE), 40, 40, 100, 6, 3, difficulty);
 	}
 
