@@ -1117,7 +1117,7 @@ public class GameController implements Serializable {
 	/**
 	 * 
 	 */
-	public void enemyTurn() {
+	public synchronized void enemyTurn() {
 		// TODO FINISH
 
 		if (!playerTurn) {
@@ -1161,8 +1161,9 @@ public class GameController implements Serializable {
 	 * TODO Write this Method for automatically moving the enemy AI. Moves them
 	 * toward the closest human based on their behavior. If they are near enough
 	 * to a player's unit, attack.
+	 * @return 
 	 */
-	public void enemyMove(Point em) {
+	public synchronized void enemyMove(Point em) {
 		/*
 		 * TODO: Add these things 1) Nearest Player Method 2) List of Enemy Unit
 		 * Locations 3) Player's XY values 4) Send these params to
