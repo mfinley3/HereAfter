@@ -59,7 +59,7 @@ import java.awt.event.MouseMotionListener;
  */
 public class SetupPanel extends JPanel implements Observer {
 
-	private BufferedImage background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy, helpIcon;
+	private BufferedImage unitHelpIcon, itemHelpIcon, spaceHelpIcon, background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy, helpIcon;
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn, save;
@@ -83,8 +83,8 @@ public class SetupPanel extends JPanel implements Observer {
 	private double scaleFactor;
 	
 	JMenuBar menuBar;
-	JMenu zoom, saveMenu, helpMenu;
-	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow;
+	JMenu zoom, saveMenu, helpMenu, gamePlayHelp;
+	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow, unitHelp, itemHelp, spaceHelp;
 
 	/**
 	 * Instantiates a new setup panel. This loads all of the images that are
@@ -95,6 +95,7 @@ public class SetupPanel extends JPanel implements Observer {
 		this.setLayout(null);
 
 		try {
+			
 			background = ImageIO.read(new File("unitSelect.jpg"));
 			loadPage = ImageIO.read(new File("LoadGameScreen.png"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
@@ -109,6 +110,10 @@ public class SetupPanel extends JPanel implements Observer {
 			zoomOutImg = ImageIO.read(new File("zoomOut.png"));
 			floppy = ImageIO.read(new File("floppydisk.png"));
 			helpIcon = ImageIO.read(new File("helpIcon.png"));
+			itemHelpIcon = ImageIO.read(new File("ItemHelpIcon.png"));
+			spaceHelpIcon = ImageIO.read(new File("MountainSpaceHelpIcon.jpg"));
+			unitHelpIcon = ImageIO.read(new File("UnitHelpIcon.png"));
+			
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -440,7 +445,39 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
+	
+	private class unitHelpButtonListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			new Thread(new UnitHelpWindow()).start();
+
+		}
+
+	}
+
+	private class itemHelpButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			new Thread(new ItemHelpWindow()).start();
+
+		}
+
+	}
+	
+	private class spaceHelpButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			new Thread(new SpaceHelpWindow()).start();
+
+		}
+
+	}
 	/**
 	 * If the end turn button is selected, the end turn method of controller is
 	 * called and the team that is allowed to be used is the other team.
@@ -648,7 +685,22 @@ public class SetupPanel extends JPanel implements Observer {
 		helpWindow = new JMenuItem("General Help", new ImageIcon(helpIcon));
 		helpWindow.addActionListener(new helpButtonListener());
 		helpMenu.add(helpWindow);
-
+		
+		gamePlayHelp = new JMenu("Game Play Help");
+		gamePlayHelp.addMenuListener(new thisMenuListner());
+		helpMenu.add(gamePlayHelp);
+		
+		unitHelp = new JMenuItem("Unit Help", new ImageIcon(unitHelpIcon));//new ImageIcon(helpIcon));
+		unitHelp.addActionListener(new unitHelpButtonListener());
+		gamePlayHelp.add(unitHelp);
+		
+		itemHelp = new JMenuItem("Item Help", new ImageIcon(itemHelpIcon));//new ImageIcon(helpIcon));
+		itemHelp.addActionListener(new itemHelpButtonListener());
+		gamePlayHelp.add(itemHelp);
+		
+		spaceHelp = new JMenuItem("Space Help", new ImageIcon(spaceHelpIcon));//new ImageIcon(helpIcon));
+		spaceHelp.addActionListener(new spaceHelpButtonListener());
+		gamePlayHelp.add(spaceHelp);
 	}
 
 	/**
