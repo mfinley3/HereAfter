@@ -46,9 +46,10 @@ public class GraphicalView extends JPanel implements Observer {
 
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
-	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
+	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected;
 
 	private double scaleFactor = 1;
+	private String type;
 
 	/**
 	 * Instantiates a new graphical view. It also loads all of the images that
@@ -85,6 +86,7 @@ public class GraphicalView extends JPanel implements Observer {
 			water = ImageIO.read(new File("WaterSpace.jpg"));
 			hole = ImageIO.read(new File("HoleSpace.png"));
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
+			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
 
 			doctor = ImageIO.read(new File("Doctor1.png"));
 			engineer = ImageIO.read(new File("Engineer1.png"));
@@ -280,9 +282,13 @@ public class GraphicalView extends JPanel implements Observer {
 					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
 						g2.drawImage(corner, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+						if(!type.equalsIgnoreCase("survive")){
 						g2.drawImage(holeCovered, x, y, null);
+						} else {
+							g2.drawImage(holeCoveredIndoor, x, y, null);
+						}
 					}
-
+					
 					if (currentUnits[col][row] == controller.getCurrentUnit()) {
 						if (currentUnits[col][row] instanceof Doctor) {
 							g2.drawImage(docSelected, x, y, null);
@@ -306,7 +312,8 @@ public class GraphicalView extends JPanel implements Observer {
 							g2.drawImage(carrierSelected, x, y, null);
 						} else if (currentUnits[col][row] instanceof Hole) {
 							g2.drawImage(hole, x, y, null);
-						}
+							
+									}
 
 					} else {
 
@@ -400,6 +407,11 @@ public class GraphicalView extends JPanel implements Observer {
 	}
 
 	public void setScaleFactor(double scaleFactor) {
-		this.scaleFactor = 	scaleFactor;	
+		this.scaleFactor = scaleFactor;
+	}
+
+	public void setGameType(String type) {
+		this.type = type;
+
 	}
 }

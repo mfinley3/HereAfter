@@ -623,7 +623,7 @@ public class Map extends Observable implements Serializable {
 	}
 	
 	public void coverUpHole(int row, int col){
-		map[row][col] = new HoleCovered();
+		map[col][row] = new HoleCovered();
 		setChanged();
 		notifyObservers();
 	}

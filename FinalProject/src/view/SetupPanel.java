@@ -327,6 +327,7 @@ public class SetupPanel extends JPanel implements Observer {
 					controller.getMap().addObserver((Observer) text);
 					((TextView) text).setController(controller);
 					controller.getMap().addObserver((Observer) UnitLocations);
+					((GraphicalView) graphical).setGameType(type);
 
 					selected = false;
 					actualMap();
