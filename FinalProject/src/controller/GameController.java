@@ -51,17 +51,23 @@ public class GameController implements Serializable {
 	private int rowValue;
 	private int colValue;
 
+	private boolean testing;
+	boolean notShownNE;
+	boolean notShownSW;
+	boolean notShownSE;
+
 	/**
 	 * Constructor for one player.
 	 * 
 	 * @param player1
 	 * @param i
 	 */
-	public GameController(Player player1, Difficulty i, String gameT) {
-		this.map = new Map(i.getValue(), gameT);
+	public GameController(Player player1, Difficulty i, String gameT, boolean testing) {
+		this.map = new Map(i.getValue(), gameT, testing);
 		this.player1 = player1;
 		this.player2 = new AI(i);
 
+		this.testing = testing;
 		if (gameT.equalsIgnoreCase("corner"))
 			gameType = new FourCorners();
 		else if (gameT.equalsIgnoreCase("survive"))
@@ -79,7 +85,7 @@ public class GameController implements Serializable {
 		}
 
 		// Place the players on the map
-		map.addUnitsToMap(temp);
+		map.addUnitsToMap(temp, testing);
 		// Place the enemy on the map / Get Enemy from map
 		player2.addListOfUnits(map.getEnemyUnits());
 
@@ -235,21 +241,24 @@ public class GameController implements Serializable {
 
 	private void attackAfterMove() {
 
-		for (Point p : enemyLocals) {
+		if (!gameOver) {
 
-			if (inAttackRange((int) p.getY(), (int) p.getX())) {
-				int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
-				if (answer == JOptionPane.YES_OPTION) {
+			for (Point p : enemyLocals) {
 
-					moveOn = true;
+				if (inAttackRange((int) p.getY(), (int) p.getX())) {
+					int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
+					if (answer == JOptionPane.YES_OPTION) {
 
-					endCol = (int) p.getX();
-					endRow = (int) p.getY();
-					attack();
+						moveOn = true;
+
+						endCol = (int) p.getX();
+						endRow = (int) p.getY();
+						attack();
+						break;
+
+					}
 					break;
-
 				}
-				break;
 			}
 		}
 
@@ -478,7 +487,7 @@ public class GameController implements Serializable {
 						else {
 							// Put it back
 							currUnit.addItem(itemBeingUsed);
-							
+
 						}
 					}
 
@@ -566,13 +575,13 @@ public class GameController implements Serializable {
 				gameOver = true;
 				playerWon = true;
 				// Display some kind of message telling player 2 won
-				JOptionPane.showMessageDialog(null, "Player " + player1.getID() + " won!");
-				System.out.println("Player " + player1.getID() + " won!");
-				System.out.println("Number of turns taken: " + turns);
+				// System.out.println("Player " + player1.getID() + " won!");
+				// System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you finished: " + player1.getGamesFinished());
-				System.out.println("Your team stats: ");
-				System.out.println(player1.getTeamStats());
+				// System.out.println("Games you finished: " +
+				// player1.getGamesFinished());
+				// System.out.println("Your team stats: ");
+				// System.out.println(player1.getTeamStats());
 
 				return true;
 			} else if (player1.everyonesDeadDave()) {
@@ -610,32 +619,112 @@ public class GameController implements Serializable {
 	public boolean checkWinConditions() {
 		if (gameType instanceof gametype.CaptureTower) {
 
-			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn) || player2.everyonesDeadDave())) {
+			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn))) {
+				JOptionPane.showMessageDialog(null, "Congrats you captured the tower! You win!");
 				return true;
-			} else
+
+			} else if (player2.everyonesDeadDave()) {
+				JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+				return true;
+
+			} else {
 				return false;
+			}
+
 		} else if (gameType instanceof gametype.Survive) {
-			if (!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))
+			if ((!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))) {
+				JOptionPane.showMessageDialog(null, "Congrats you survived the zombie attack! You win!");
 				return true;
+			}
+			if (player2.everyonesDeadDave()) {
+				JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+				return true;
+			}
+
 			else
 				return false;
 		}
 
 		else if (gameType instanceof gametype.FourCorners) {
-			if (map.getSpace(0, 0).getOccupied())
-				((CaptureCornerSpace) map.getSpace(0, 0)).setHasBeenCaptured(true);
-			if (map.getSpace(0, 49).getOccupied())
-				((CaptureCornerSpace) map.getSpace(0, 49)).setHasBeenCaptured(true);
-			if (map.getSpace(49, 0).getOccupied())
-				((CaptureCornerSpace) map.getSpace(49, 0)).setHasBeenCaptured(true);
-			if (map.getSpace(49, 49).getOccupied())
-				((CaptureCornerSpace) map.getSpace(49, 49)).setHasBeenCaptured(true);
+			if (!testing) {
+				if (map.getSpace(0, 0).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(0, 0)).setHasBeenCaptured(true);
+					//JOptionPane.showMessageDialog(null, "Northwest Tower captured.");
+				}
+				if (map.getSpace(0, 49).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(0, 49)).setHasBeenCaptured(true);
+					if (!notShownNE) {
+						JOptionPane.showMessageDialog(null, "Northeast Tower captured.");
+						notShownNE = true;
+					}
+				}
+				if (map.getSpace(49, 0).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(49, 0)).setHasBeenCaptured(true);
+					if (!notShownSW) {
+						JOptionPane.showMessageDialog(null, "Southwest Tower captured.");
+						notShownSW = true;
+					}
+				}
+				if (map.getSpace(49, 49).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(49, 49)).setHasBeenCaptured(true);
+					if (!notShownSE) {
+						JOptionPane.showMessageDialog(null, "Southeast Tower captured.");
+						notShownSE = true;
+					}
+				}
 
-			if (((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
-				if (((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
-					if (((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
-						if (((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured())
-							return true;
+				if (player2.everyonesDeadDave()) {
+					JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+					return true;
+				}
+				if (((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
+					if (((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
+						if (((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
+							if (((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured()) {
+								JOptionPane.showMessageDialog(null, "Congrats you secured all the towers! You win!");
+								return true;
+							}
+			} else {
+
+				if (map.getSpace(1, 1).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(1, 1)).setHasBeenCaptured(true);
+					// JOptionPane.showMessageDialog(null,
+					// "Northwest Tower captured.");
+				}
+				if (map.getSpace(1, 8).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(1, 8)).setHasBeenCaptured(true);
+					if (!notShownNE) {
+						JOptionPane.showMessageDialog(null, "Northeast Tower captured.");
+						notShownNE = true;
+					}
+				}
+				if (map.getSpace(8, 1).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(8, 1)).setHasBeenCaptured(true);
+					if (!notShownSW) {
+						JOptionPane.showMessageDialog(null, "Southwest Tower captured.");
+						notShownSW = true;
+					}
+				}
+				if (map.getSpace(8, 8).getOccupied()) {
+					((CaptureCornerSpace) map.getSpace(8, 8)).setHasBeenCaptured(true);
+					if (!notShownSE) {
+						JOptionPane.showMessageDialog(null, "Southeast Tower captured.");
+						notShownSE = true;
+					}
+				}
+
+				if (player2.everyonesDeadDave()) {
+					JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+					return true;
+				}
+				if (((CaptureCornerSpace) map.getSpace(1, 1)).getHasBeenCaptured())
+					if (((CaptureCornerSpace) map.getSpace(1, 8)).getHasBeenCaptured())
+						if (((CaptureCornerSpace) map.getSpace(8, 1)).getHasBeenCaptured())
+							if (((CaptureCornerSpace) map.getSpace(8, 8)).getHasBeenCaptured()) {
+								JOptionPane.showMessageDialog(null, "Congrats you secured all the towers! You win!");
+								return true;
+							}
+			}
 			return false;
 		}
 

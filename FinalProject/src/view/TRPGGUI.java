@@ -42,6 +42,11 @@ public class TRPGGUI {
 	public TRPGGUI() {	
 		mainFrame  = new JFrame(); 
 		SetupPanel = new SetupPanel();
+		int answer = JOptionPane.showConfirmDialog(null, "Start game in testing mode?","Player Mode Selection", JOptionPane.YES_NO_OPTION);
+		if (answer == JOptionPane.YES_OPTION) {
+			SetupPanel.setTestingMode(true);
+		}
+		
 		
 		mainFrame.setSize(996, 669);
 		mainFrame.setLocation(100, 10);

@@ -67,6 +67,7 @@ public class SetupPanel extends JPanel implements Observer {
 	private GameController controller;
 	private Difficulty difficulty;
 	private String type;
+	private boolean testingMode;
 
 	private JScrollPane scrollPanel;
 	private JTabbedPane views;
@@ -320,7 +321,7 @@ public class SetupPanel extends JPanel implements Observer {
 						snips--;
 					}
 					gameIsRunning = true;
-					controller = new GameController(player, difficulty, type);
+					controller = new GameController(player, difficulty, type, testingMode);
 					controller.getMap().addObserver((Observer) graphical);
 					((GraphicalView) graphical).setController(controller);
 					controller.getMap().addObserver((Observer) text);
@@ -335,6 +336,7 @@ public class SetupPanel extends JPanel implements Observer {
 					JOptionPane.showMessageDialog(null, "The number of units must add up to 5");
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, userName.getText() + " did not enter a valid input");
 			}
 
@@ -1019,6 +1021,13 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 		
 
+	}
+	
+	/**
+	 * @param testingMode the testingMode to set
+	 */
+	public void setTestingMode(boolean testingMode) {
+		this.testingMode = testingMode;
 	}
 
 }

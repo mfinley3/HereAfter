@@ -60,7 +60,7 @@ public class Map extends Observable implements Serializable {
 	 *            Takes in a double representing the difficulty. Is used to pick
 	 *            what map to make.
 	 */
-	public Map(double difficulty, String gameType) {
+	public Map(double difficulty, String gameType, boolean testingMode) {
 		isPlayerTurn = true;
 		this.gameType = gameType;
 		map = new Space[50][50];
@@ -68,32 +68,68 @@ public class Map extends Observable implements Serializable {
 		System.out.print(gameType);
 
 		if (gameType.equalsIgnoreCase("Tower")) {
-			File easyMap = new File("Tower.txt");
-			try {
-				mapScan = new Scanner(easyMap);
-			} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
+			if (!testingMode) {
+				File TowerMap = new File("Tower.txt");
+
+				try {
+					mapScan = new Scanner(TowerMap);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+			} else {
+				File TowerMap = new File("TowerTest.txt");
+				try {
+					mapScan = new Scanner(TowerMap);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
 			}
-
 		}
 		if (gameType.equalsIgnoreCase("Corner")) {
-			File mediumMap = new File("Corner.txt");
-			try {
-				mapScan = new Scanner(mediumMap);
-			} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
+			if (!testingMode) {
+				File CornerMap = new File("Corner.txt");
+				try {
+					mapScan = new Scanner(CornerMap);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+			} else {
+				File CornerMap = new File("CornerTest.txt");
+				try {
+					mapScan = new Scanner(CornerMap);
+
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
 			}
-
 		}
 		if (gameType.equalsIgnoreCase("Survive")) {
-			File hardMap = new File("Survival.txt");
-			try {
-				mapScan = new Scanner(hardMap);
-			} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
+			if (!testingMode) {
+				File SurvivalMap = new File("Survival.txt");
+				try {
+					mapScan = new Scanner(SurvivalMap);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
+			} else {
+				File CornerMap = new File("SurvivalTest.txt");
+				try {
+					mapScan = new Scanner(CornerMap);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
 			}
 
 		}
@@ -109,19 +145,19 @@ public class Map extends Observable implements Serializable {
 
 					if (mapLetterEquivalence.equals("H"))
 						map[m][n] = new IndoorWastelandSpace();
-					
+
 					if (mapLetterEquivalence.equals("P"))
 						map[m][n] = new PathSpace();
-					
+
 					if (mapLetterEquivalence.equals("Y"))
 						map[m][n] = new IndoorWallSpace();
-					
+
 					if (mapLetterEquivalence.equals("O"))
 						map[m][n] = new IndoorPath();
-					
+
 					if (mapLetterEquivalence.equals("J"))
 						map[m][n] = new IndoorPathSpace();
-					
+
 					if (mapLetterEquivalence.equals("R"))
 						map[m][n] = new WaterSpace();
 
@@ -144,7 +180,7 @@ public class Map extends Observable implements Serializable {
 			}
 		}
 
-		addEnemies(difficulty);
+		addEnemies(difficulty, testingMode);
 		setChanged();
 		notifyObservers();
 
@@ -157,38 +193,72 @@ public class Map extends Observable implements Serializable {
 	 * @param difficulty
 	 *            The difficulty level to set the enemies to.
 	 */
-	private void addEnemies(double difficulty) {
+	private void addEnemies(double difficulty, boolean testingMode) {
 
 		enemyList = new ArrayList<Unit>();
 		enemyUnitPositions = new ArrayList<Point>();
 
 		if (gameType.equalsIgnoreCase("Tower")) {
-			File TowerEnemies = new File("TowerEnemies.txt");
-			try {
-				unitScan = new Scanner(TowerEnemies);
-			} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
+			if (!testingMode) {
+				File TowerEnemies = new File("TowerEnemies.txt");
+				try {
+					unitScan = new Scanner(TowerEnemies);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
+			} else {
+				File TowerEnemies = new File("TowerEnemiesTest.txt");
+				try {
+					unitScan = new Scanner(TowerEnemies);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
 			}
 
 		}
 		if (gameType.equalsIgnoreCase("Corner")) {
-			File mediumMap = new File("CornerEnemies.txt");
-			try {
-				unitScan = new Scanner(mediumMap);
-			} catch (FileNotFoundException e) {
+			if (!testingMode) {
+				File CornerEnemies = new File("CornerEnemies.txt");
+				try {
+					unitScan = new Scanner(CornerEnemies);
+				} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
+					e.printStackTrace();
+				}
+			} else {
+				File CornerEnemies = new File("CornerEnemiesTest.txt");
+				try {
+					unitScan = new Scanner(CornerEnemies);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
 			}
 
 		}
 		if (gameType.equalsIgnoreCase("Survive")) {
-			File hardMap = new File("SurvivalEnemies.txt");
-			try {
-				unitScan = new Scanner(hardMap);
-			} catch (FileNotFoundException e) {
+			if (!testingMode) {
+				File hardMap = new File("SurvivalEnemies.txt");
+				try {
+					unitScan = new Scanner(hardMap);
+				} catch (FileNotFoundException e) {
 
-				e.printStackTrace();
+					e.printStackTrace();
+				}
+			} else {
+				File CornerEnemies = new File("SurvivalEnemiesTest.txt");
+				try {
+					unitScan = new Scanner(CornerEnemies);
+				} catch (FileNotFoundException e) {
+
+					e.printStackTrace();
+				}
+
 			}
 
 		}
@@ -217,8 +287,8 @@ public class Map extends Observable implements Serializable {
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						enemyUnitPositions.add(new Point(m, n));
-					} 
-					
+					}
+
 					if (unitLetterEquivalence.equals("C")) {
 						unitsOnMap[m][n] = new CarrierAI(difficulty);
 						map[m][n].setOccupied(true);
@@ -250,12 +320,12 @@ public class Map extends Observable implements Serializable {
 	 * @param unitList
 	 *            The list of units to be added to the map.
 	 */
-	public void addUnitsToMap(Stack<Unit> unitList) {
+	public void addUnitsToMap(Stack<Unit> unitList, boolean testing) {
 
 		goodUnitPositions = new ArrayList<Point>();
 
-		if (gameType.equalsIgnoreCase("Survive")) {
-			
+		if (gameType.equalsIgnoreCase("Survive") || testing) {
+
 			int k = 1;
 			int r = 3;
 
@@ -270,21 +340,22 @@ public class Map extends Observable implements Serializable {
 				}
 
 			}
-			
-		}
-		int k = 0;
-		int r = 2;
 
-		while (!unitList.isEmpty()) {
-			unitsOnMap[k][r] = unitList.pop();
-			map[k][r].setOccupied(true);
-			goodUnitPositions.add(new Point(k, r));
-			if (r != 0) {
-				r--;
-			} else {
-				k++;
+		} else {
+			int k = 0;
+			int r = 2;
+
+			while (!unitList.isEmpty()) {
+				unitsOnMap[k][r] = unitList.pop();
+				map[k][r].setOccupied(true);
+				goodUnitPositions.add(new Point(k, r));
+				if (r != 0) {
+					r--;
+				} else {
+					k++;
+				}
+
 			}
-
 		}
 		setChanged();
 		notifyObservers();
@@ -304,7 +375,7 @@ public class Map extends Observable implements Serializable {
 	 *            the move to col used to pick the space to move the unit to.
 	 */
 	public void moveUnit(int startRow, int startCol, int moveToRow, int moveToCol) {
-		
+
 		if (startCol != moveToCol || startRow != moveToRow) {
 			unitsOnMap[moveToCol][moveToRow] = unitsOnMap[startCol][startRow];
 			unitsOnMap[startCol][startRow] = null;
@@ -319,7 +390,7 @@ public class Map extends Observable implements Serializable {
 						break;
 					}
 				}
-				
+
 			} else {
 
 				for (Point p : enemyUnitPositions) {
@@ -343,7 +414,7 @@ public class Map extends Observable implements Serializable {
 	public List<Point> getGoodUnitPositions() {
 		return goodUnitPositions;
 	}
-	
+
 	/**
 	 * @return the enemyUnitPositions
 	 */
@@ -444,7 +515,6 @@ public class Map extends Observable implements Serializable {
 
 		unitsOnMap[row][col] = null;
 		map[row][col].setOccupied(false);
-		
 
 		if (!isPlayerTurn) {
 			for (Point p : goodUnitPositions) {
@@ -453,7 +523,7 @@ public class Map extends Observable implements Serializable {
 					break;
 				}
 			}
-			
+
 		} else {
 
 			for (Point p : enemyUnitPositions) {
@@ -463,8 +533,7 @@ public class Map extends Observable implements Serializable {
 				}
 			}
 		}
-		
-		
+
 		setChanged();
 		notifyObservers();
 
@@ -486,12 +555,11 @@ public class Map extends Observable implements Serializable {
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public String toString() {
 		String textMap = "";
-		
-		
-		//map.getSpace(endCol, endRow)
+
+		// map.getSpace(endCol, endRow)
 		for (int i = 0; i < 50; i++) {
 			for (int j = 0; j < 50; j++) {
 
@@ -519,38 +587,38 @@ public class Map extends Observable implements Serializable {
 					textMap += "[" + "H" + "]  ";
 				if (unitsOnMap[i][j] == null)
 					textMap += "[" + " " + "]  ";
-				
-//				if (map[i][j] instanceof WastelandSpace)
-//					textMap += "[" + "W" + "]  ";
-//				if (map[i][j] instanceof IndoorWastelandSpace)
-//					textMap += "[" + "H" + "]  ";
-//				if (map[i][j] instanceof PathSpace)
-//					textMap += "[" + "P" + "]  ";
-//				if (map[i][j] instanceof IndoorWallSpace)
-//					textMap += "[" + "Y" + "]  ";
-//				if (map[i][j] instanceof IndoorPath)
-//					textMap += "[" + "O" + "]  ";
-//				if (map[i][j] instanceof IndoorPathSpace)
-//					textMap += "[" + "J" + "]  ";
-//				if (map[i][j] instanceof WaterSpace)
-//					textMap += "[" + "R" + "]  ";
-//				if (map[i][j] instanceof WallSpace)
-//					textMap += "[" + "U" + "]  ";
-//				if (map[i][j] instanceof BridgeSpace)
-//					textMap += "[" + "B" + "]  ";
-//				if (map[i][j] instanceof MountainSpace)
-//					textMap += "[" + "M" + "]  ";
-//				if (map[i][j] instanceof TowerSpace)
-//					textMap += "[" + "T" + "]  ";
-//				if (map[i][j] instanceof CaptureCornerSpace)
-//					textMap += "[" + "C" + "]  ";
-				
+
+				// if (map[i][j] instanceof WastelandSpace)
+				// textMap += "[" + "W" + "]  ";
+				// if (map[i][j] instanceof IndoorWastelandSpace)
+				// textMap += "[" + "H" + "]  ";
+				// if (map[i][j] instanceof PathSpace)
+				// textMap += "[" + "P" + "]  ";
+				// if (map[i][j] instanceof IndoorWallSpace)
+				// textMap += "[" + "Y" + "]  ";
+				// if (map[i][j] instanceof IndoorPath)
+				// textMap += "[" + "O" + "]  ";
+				// if (map[i][j] instanceof IndoorPathSpace)
+				// textMap += "[" + "J" + "]  ";
+				// if (map[i][j] instanceof WaterSpace)
+				// textMap += "[" + "R" + "]  ";
+				// if (map[i][j] instanceof WallSpace)
+				// textMap += "[" + "U" + "]  ";
+				// if (map[i][j] instanceof BridgeSpace)
+				// textMap += "[" + "B" + "]  ";
+				// if (map[i][j] instanceof MountainSpace)
+				// textMap += "[" + "M" + "]  ";
+				// if (map[i][j] instanceof TowerSpace)
+				// textMap += "[" + "T" + "]  ";
+				// if (map[i][j] instanceof CaptureCornerSpace)
+				// textMap += "[" + "C" + "]  ";
+
 			}
 			textMap += "\n";
 		}
 
 		return textMap;
-		
+
 	}
 
 }
