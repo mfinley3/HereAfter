@@ -2,8 +2,17 @@ package units;
 
 import item.*;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.swing.Timer;
+
+import sprites.Sprite;
 
 /**
  * The abstract Unit class. Used in creating new units and keeping track of each
@@ -50,7 +59,7 @@ public abstract class Unit implements Serializable {
 	 * @param difficulty
 	 *            the difficulty
 	 */
-	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty) {
+	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty){
 
 		this.baseAttack = attack;
 		this.baseDefense = defense;
@@ -64,7 +73,9 @@ public abstract class Unit implements Serializable {
 		this.movement = movement;
 		this.difficulty = difficulty;
 		this.range = range;
+		
 	}
+
 
 	/**
 	 * Gets the unit type.
@@ -348,6 +359,7 @@ public abstract class Unit implements Serializable {
 		}
 
 	}
+
 
 } // end of class Unit
 

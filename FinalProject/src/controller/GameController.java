@@ -499,7 +499,7 @@ public class GameController implements Serializable {
 					// If it is a mine, place it on the map.
 					if (itemBeingUsed.getItemType() == ItemType.MINE) {
 						// TODO Place mine on space
-						mines[currCol][currRow] = itemBeingUsed;
+						map.getSpace(currRow, currCol).setHasMine(true);
 					}
 
 					// If health item, use on target space/self

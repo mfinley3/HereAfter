@@ -21,4 +21,5 @@ public class Soldier extends Unit {
 		this.addItem(new UsableItem("Military Grenade", ItemType.GRENADE));
 	}
 
+
 } // end of Soldier
