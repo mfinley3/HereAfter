@@ -16,7 +16,7 @@ public class Sniper extends Unit {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		
 		// Attack is doubled at creation so Attack is actually 70
-		super("Sniper", new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK), 35, 10, 100, 5, 6, difficulty);
+		super("Sniper", new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK), 35, 10, 100, 5, 7, difficulty);
 	}
 
 } // end of Sniper

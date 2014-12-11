@@ -16,7 +16,7 @@ public class Ranger extends Unit {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		
 		// Attack is doubled at creation so Attack is actually 50
-		super("Ranger", new Item("Ranger Rifle", ItemType.ATK), 25, 15, 100, 8, 3, difficulty);
+		super("Ranger", new Item("Ranger Rifle", ItemType.ATK), 15, 15, 100, 8, 3, difficulty);
 	}
 	
 } // end of Ranger
