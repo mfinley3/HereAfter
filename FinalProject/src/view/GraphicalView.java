@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 
 import model.Map;
 import space.Space;
+import sprites.SpriteObject;
 import units.AlphaProtectorAI;
 import units.CarrierAI;
 import units.Doctor;
