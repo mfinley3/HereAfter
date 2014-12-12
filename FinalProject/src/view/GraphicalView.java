@@ -81,14 +81,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 		this.addMouseMotionListener(motionListener);
 		this.addMouseListener(listener);
-		
-		Timer animTimer = new Timer(15, new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				repaint();
-			}
-			
-		});
+	
 
 		try {
 			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
@@ -146,8 +139,6 @@ public class GraphicalView extends JPanel implements Observer {
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
-		
-		animTimer.start();
 
 	}
 
@@ -268,19 +259,18 @@ public class GraphicalView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		// g2.translate(w/2, h/2);
 		g2.scale(1 * scaleFactor, 1 * scaleFactor);
 		Dimension maxSize = new Dimension((int) (4800 * scaleFactor), (int) (4800 * scaleFactor));
 		this.setPreferredSize(maxSize);
 		this.revalidate();
-		// g2.translate(-w/2, -h/2);
 
 		int x = 0;
 		int y = 0;
 
+
 		boolean attackHasHappened = controller.getHasAttacked();
 		
-		if (currentSpaces != null && !attackHasHappened) {
+		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
@@ -427,15 +417,7 @@ public class GraphicalView extends JPanel implements Observer {
 				}
 				y += 96;
 			}
-		} else {
-			Explosion explosion = new Explosion((int)(controller.getAttackRow() * (96 * scaleFactor) + 96), 
-					(int)(controller.getAttackCol() * (96 * scaleFactor) + 96));
-			explosion.start();
-			explosion.draw(g);
-			controller.setHasAttacked(false);
-
-			repaint();
-		}
+		} // end of if currentSpace != null
 	}
 
 	public void setZoomInScale() {

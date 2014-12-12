@@ -38,6 +38,8 @@ public abstract class Unit implements Serializable {
 	private boolean attackSet;
 	private boolean defenseSet;
 	private boolean healthSet;
+	
+	protected int currentX, currentY;
 
 	/**
 	 * Instantiates a new unit.
@@ -76,6 +78,13 @@ public abstract class Unit implements Serializable {
 		
 	}
 
+	
+	abstract public void drawUnit(Graphics g);
+
+	public void setCurrentPosition(int x, int y) {
+		currentX = x;
+		currentY = y;
+	}
 
 	/**
 	 * Gets the unit type.
