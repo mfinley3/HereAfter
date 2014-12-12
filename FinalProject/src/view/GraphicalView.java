@@ -10,20 +10,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import model.Map;
 import space.Space;
+import sprites.Explosion;
 import sprites.SpriteObject;
 import units.AlphaProtectorAI;
 import units.CarrierAI;
@@ -76,6 +81,14 @@ public class GraphicalView extends JPanel implements Observer {
 
 		this.addMouseMotionListener(motionListener);
 		this.addMouseListener(listener);
+		
+		Timer animTimer = new Timer(15, new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				repaint();
+			}
+			
+		});
 
 		try {
 			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
@@ -133,6 +146,8 @@ public class GraphicalView extends JPanel implements Observer {
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
+		
+		animTimer.start();
 
 	}
 
@@ -263,7 +278,9 @@ public class GraphicalView extends JPanel implements Observer {
 		int x = 0;
 		int y = 0;
 
-		if (currentSpaces != null) {
+		boolean attackHasHappened = controller.getHasAttacked();
+		
+		if (currentSpaces != null && !attackHasHappened) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
@@ -410,6 +427,14 @@ public class GraphicalView extends JPanel implements Observer {
 				}
 				y += 96;
 			}
+		} else {
+			Explosion explosion = new Explosion((int)(controller.getAttackRow() * (96 * scaleFactor) + 96), 
+					(int)(controller.getAttackCol() * (96 * scaleFactor) + 96));
+			explosion.start();
+			explosion.draw(g);
+			controller.setHasAttacked(false);
+
+			repaint();
 		}
 	}
 

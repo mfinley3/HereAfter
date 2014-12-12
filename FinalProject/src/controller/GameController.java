@@ -10,6 +10,7 @@ import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
+import sprites.Explosion;
 import model.*;
 import space.*;
 import units.*;
@@ -33,12 +34,15 @@ public class GameController implements Serializable {
 	private boolean playerTurn;
 	private boolean gameOver;
 	private boolean playerWon;
+	private boolean hasAttacked;
 	private AIPathFinder aiMove;
 
 	private int currRow;
 	private int currCol;
 	private int endRow;
 	private int endCol;
+	private int attackRow;
+	private int attackCol;
 	private Player currPlayer;
 
 	private GameTypeInterface gameType;
@@ -95,6 +99,7 @@ public class GameController implements Serializable {
 		turns = 0;
 		playerTurn = true;
 		currPlayer = player1;
+		hasAttacked = false;
 
 		// Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
@@ -465,8 +470,23 @@ public class GameController implements Serializable {
 	 */
 	private void actAttack() {
 		map.getUnitAt(endRow, endCol).reduceHealth(currUnit.getAttack());
-
 		targetDead(endRow, endCol);
+
+		hasAttacked = true;
+		attackRow = endRow;
+		attackCol = endCol;
+	}
+	
+	public int getAttackRow() {
+		return attackRow;
+	}
+	
+	public int getAttackCol() {
+		return attackCol;
+	}
+	
+	public boolean getHasAttacked() {
+		return hasAttacked;
 	}
 
 	/**
@@ -979,6 +999,26 @@ public class GameController implements Serializable {
 		System.out.println("New endCol: " + endCol);
 		this.endCol = endCol;
 	}
+	
+	/**
+	 * Gets the new endColumn. Used in attack and movement.
+	 * 
+	 * @param endRow
+	 *            , the new ending row
+	 */
+	public int getEndRow() {
+		return endRow;
+	}
+
+	/**
+	 * Gets the new endColumn. Used in attack and movement.
+	 * 
+	 * @param endCol
+	 *            , the new ending column
+	 */
+	public int getEndColumn() {
+		return endCol;
+	}
 
 	/**
 	 * Decides if the current unit can move onto a surrounding space. Called
@@ -1218,6 +1258,11 @@ public class GameController implements Serializable {
 	public void setPlayerTurn(boolean whosTurn) {
 		playerTurn = whosTurn;
 
+	}
+
+	public void setHasAttacked(boolean hasAttacked) {
+		// TODO Auto-generated method stub
+		this.hasAttacked = hasAttacked;
 	}
 
 	/*
