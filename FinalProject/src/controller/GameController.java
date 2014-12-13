@@ -990,7 +990,13 @@ public class GameController implements Serializable {
 				System.out.println("Second Player (AI) ends its turn.");
 
 				currCol = currRow = 0;
-
+				
+									
+					aiMove.getListOfPoints()
+					
+					for(list of points){
+					
+				}
 				gameOver();
 
 				map.updateObservers();
