@@ -521,7 +521,7 @@ public class GameController implements Serializable {
 
 		if (!(currUnit == null)) {
 			if (endRow != 51 || endCol != 51) {
-				if (inAttackRange(endCol, endRow)) {
+				if (inAttackRange(endRow, endCol)) {
 
 					Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
 					int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -579,6 +579,12 @@ public class GameController implements Serializable {
 							map.updateObservers();
 
 						} // end Mine
+						
+						if(usingItemType == ItemType.GRENADE){
+							
+							JOptionPane.showMessageDialog(null, "Your " +  map.getUnitAt(currRow, currCol).getUnitType() + "threw a grenade.");
+							blowShitUp(100, endCol, endRow, 4);
+						}
 
 					} else
 						JOptionPane.showMessageDialog(null, "The unit you selected does not have that item.");
@@ -600,10 +606,12 @@ public class GameController implements Serializable {
 	 * @param it
 	 *            , the ItemType of the explosive used
 	 */
-	private void blowShitUp(int it, int row, int col, int spacesLeft) {
-		if (map.getSpace(row, col).getOccupied()) {
-			map.getUnitAt(row, col).reduceHealth(it);
-			targetDead(row, col);
+	private void blowShitUp(int attackPower, int row, int col, int spacesLeft) {
+		
+		if (map.getSpace(col, row).getOccupied()) {
+			System.out.println(map.getUnitAt(col, row).getUnitType());
+			map.getUnitAt(row, col).reduceHealth(attackPower);
+			targetDead(col, row);
 			gameOver();
 		}
 
@@ -611,16 +619,16 @@ public class GameController implements Serializable {
 		if (spacesLeft > 0) {
 			if (row < 49)
 				if (map.getSpace(row + 1, col).getWalkable())
-					blowShitUp(it, row + 1, col, spacesLeft - 1);
+					blowShitUp(attackPower, row + 1, col, spacesLeft - 1);
 			if (row > 0)
 				if (map.getSpace(row - 1, col).getWalkable())
-					blowShitUp(it, row - 1, col, spacesLeft - 1);
+					blowShitUp(attackPower, row - 1, col, spacesLeft - 1);
 			if (col < 49)
 				if (map.getSpace(row, col + 1).getWalkable())
-					blowShitUp(it, row, col + 1, spacesLeft - 1);
+					blowShitUp(attackPower, row, col + 1, spacesLeft - 1);
 			if (col > 0)
 				if (map.getSpace(row, col - 1).getWalkable())
-					blowShitUp(it, row, col - 1, spacesLeft - 1);
+					blowShitUp(attackPower, row, col - 1, spacesLeft - 1);
 		}
 	}
 
