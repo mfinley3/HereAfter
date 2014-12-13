@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.Point;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import model.Map;
 
@@ -13,6 +14,7 @@ import model.Map;
  */
 public class AIPathFinder implements Serializable{
 	private Map gameMap;
+	private ArrayList<Point> mineLocations;
 	private int moveRange;
 	private int row = 0, col = 0;
 
@@ -44,6 +46,11 @@ public class AIPathFinder implements Serializable{
 			isNearPlayer = true; // the AI is near the target location
 		
 		if (moveRange == 0) {
+			return new Point(currAIRow, currAICol);
+		}
+		
+		if (gameMap.getSpace(currAICol, currAIRow).hasMine()) {
+			mineLocations.add(new Point(currAIRow, currAICol));
 			return new Point(currAIRow, currAICol);
 		}
 
@@ -153,6 +160,20 @@ public class AIPathFinder implements Serializable{
 		}
 
 		return valid;
+	}
+
+	/**
+	 * @return the mineLocations
+	 */
+	public ArrayList<Point> getMineLocations() {
+		return mineLocations;
+	}
+
+	/**
+	 * @param mineLocations the mineLocations to set
+	 */
+	public void setMineLocations(ArrayList<Point> mineLocations) {
+		this.mineLocations = mineLocations;
 	}
 
 } // end of class
