@@ -1222,8 +1222,9 @@ public class GameController implements Serializable {
 				
 				// if so, attack.
 				// TODO: Test
-				if (this.inAttackRange(endRow, endCol)) {
-					this.attack();
+				if (this.inAttackRange(temp.y, temp.x)) {
+					map.getUnitAt(temp.y, temp.x).reduceHealth(currUnit.getAttack());
+					
 				}
 
 				// If not, then move the AI closer to the player.
