@@ -32,8 +32,8 @@ public class SpitterAI extends Unit {
 	public void drawUnit(Graphics g) {
 		if (spitter == null) {
 			try {
-				spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
-				spitterGen = ImageIO.read(new File("Spitter.png"));
+				spitterCantMove = ImageIO.read(new File("carrierCantMove.png"));
+				spitterGen = ImageIO.read(new File("carrier.png"));
 				spitter = spitterGen;
 			} catch (IOException e) {
 				System.out.println("Could not find picture file");
@@ -41,7 +41,7 @@ public class SpitterAI extends Unit {
 		}
 		if (!super.canMove()) //If the soldier cannot move
 			spitter = spitterCantMove;
-		g.drawImage(spitter, super.currentX * 100, super.currentY * 100, null);
+		g.drawImage(spitterGen, super.currentX, super.currentY, null);
 	}
 
 } // end of SpitterAI

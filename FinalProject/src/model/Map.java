@@ -260,9 +260,9 @@ public class Map extends Observable implements Serializable {
 							g.drawImage(corner, x, y, null);
 						}
 
-						x += 100;
+						x += 96;
 					}
-					y += 100;
+					y += 96;
 				}
 		}
 		return background;
@@ -355,7 +355,7 @@ public class Map extends Observable implements Serializable {
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						//enemyUnitPositions.add(new Point(m, n));
-						unitsOnMap[m][n].setCurrentPostion(n, m);
+						unitsOnMap[m][n].setCurrentPostion(m, n);
 					}
 
 					if (unitLetterEquivalence.equals("A")) {
@@ -363,35 +363,35 @@ public class Map extends Observable implements Serializable {
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						//enemyUnitPositions.add(new Point(m, n));
-						unitsOnMap[m][n].setCurrentPostion(n, m);					}
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("G")) {
 						unitsOnMap[m][n] = new Hole(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						//enemyUnitPositions.add(new Point(m, n));
-						unitsOnMap[m][n].setCurrentPostion(n, m);					}
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("C")) {
 						unitsOnMap[m][n] = new CarrierAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						//enemyUnitPositions.add(new Point(m, n));
-						unitsOnMap[m][n].setCurrentPostion(n, m);					}
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("D")) {
 						unitsOnMap[m][n] = new ZombieDogAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						//enemyUnitPositions.add(new Point(m, n));
-						unitsOnMap[m][n].setCurrentPostion(n, m);					}
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("S")) {
 						unitsOnMap[m][n] = new SpitterAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
 						//enemyUnitPositions.add(new Point(m, n));
-						unitsOnMap[m][n].setCurrentPostion(n, m);					}
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 				}
 			}
 		}

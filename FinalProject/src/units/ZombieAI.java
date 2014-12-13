@@ -31,16 +31,16 @@ public class ZombieAI extends Unit {
 	public void drawUnit(Graphics g) {
 		if (zombie == null) {
 			try {
-				zombieCantMove = ImageIO.read(new File("ZombieCantMove.png"));
-				zombieGen = ImageIO.read(new File("Zombie.png"));
-				zombie = zombieGen;
+				zombieCantMove = ImageIO.read(new File("carrierCantMove.png"));
+				zombieGen = ImageIO.read(new File("carrier.png"));
+				zombie = zombieCantMove;
 			} catch (IOException e) {
 				System.out.println("Could not find picture file");
 			}
 		}
 		if (!super.canMove()) //If the soldier cannot move
 			zombie = zombieCantMove;
-		g.drawImage(zombie, super.currentX * 100, super.currentY * 100, null);
+		g.drawImage(zombieGen, super.currentX, super.currentY, null);
 	}
 
 } // end of RunnerAI

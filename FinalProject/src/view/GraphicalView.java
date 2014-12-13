@@ -271,6 +271,7 @@ public class GraphicalView extends JPanel implements Observer {
 		
 		
 		g2.drawImage(map.getBackground(), 0, 0, null);
+//		controller.getCurrentUnit().drawUnit(g2);
 		
 		
 
@@ -333,93 +334,90 @@ public class GraphicalView extends JPanel implements Observer {
 						}
 					}
 
-					//if (currentUnits[col][row] == controller.getCurrentUnit()) {
-						if(currentUnits[col][row] != null){
-							currentUnits[col][row].drawUnit(g2);
+					if (currentUnits[col][row] == controller.getCurrentUnit()) {
+						if (currentUnits[col][row] instanceof Doctor) {
+							g2.drawImage(docSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Engineer) {
+							g2.drawImage(engSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Ranger) {
+							g2.drawImage(rangSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Sniper) {
+							g2.drawImage(sinpSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Soldier) {
+							g2.drawImage(soldSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof ZombieAI) {
+							g2.drawImage(ZombieSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
+							g2.drawImage(alphaSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof ZombieDogAI) {
+							g2.drawImage(zDogSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof SpitterAI) {
+							g2.drawImage(spitterSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof CarrierAI) {
+							g2.drawImage(carrierSelected, x, y, null);
+						} else if (currentUnits[col][row] instanceof Hole) {
+							g2.drawImage(hole, x, y, null);
+
 						}
-//						if (currentUnits[col][row] instanceof Doctor) {
-//							g2.drawImage(docSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Engineer) {
-//							g2.drawImage(engSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Ranger) {
-//							g2.drawImage(rangSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Sniper) {
-//							g2.drawImage(sinpSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Soldier) {
-//							g2.drawImage(soldSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof ZombieAI) {
-//							g2.drawImage(ZombieSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
-//							g2.drawImage(alphaSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof ZombieDogAI) {
-//							g2.drawImage(zDogSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof SpitterAI) {
-//							g2.drawImage(spitterSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof CarrierAI) {
-//							g2.drawImage(carrierSelected, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Hole) {
-//							g2.drawImage(hole, x, y, null);
-//
-//						}
-//
-//					} else {
-//
-//						if (currentUnits[col][row] instanceof Doctor) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(doctor, x, y, null);
-//							else
-//								g2.drawImage(docCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Engineer) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(engineer, x, y, null);
-//							else
-//								g2.drawImage(engCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Ranger) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(ranger, x, y, null);
-//							else
-//								g2.drawImage(rangCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Sniper) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(sniper, x, y, null);
-//							else
-//								g2.drawImage(snipCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Soldier) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(soldier, x, y, null);
-//							else
-//								g2.drawImage(soldCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof ZombieAI) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(Zombie, x, y, null);
-//							else
-//								g2.drawImage(ZombieCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(alpha, x, y, null);
-//							else
-//								g2.drawImage(alphaCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof ZombieDogAI) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(zDog, x, y, null);
-//							else
-//								g2.drawImage(zDogCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof SpitterAI) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(spitter, x, y, null);
-//							else
-//								g2.drawImage(spitterCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof CarrierAI) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(carrier, x, y, null);
-//							else
-//								g2.drawImage(carrierCantMove, x, y, null);
-//						} else if (currentUnits[col][row] instanceof Hole) {
-//							if (currentUnits[col][row].canMove())
-//								g2.drawImage(hole, x, y, null);
-//							else
-//								g2.drawImage(hole, x, y, null);
-//						}
+
+					} else {
+
+						if (currentUnits[col][row] instanceof Doctor) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(doctor, x, y, null);
+							else
+								g2.drawImage(docCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Engineer) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(engineer, x, y, null);
+							else
+								g2.drawImage(engCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Ranger) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(ranger, x, y, null);
+							else
+								g2.drawImage(rangCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Sniper) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(sniper, x, y, null);
+							else
+								g2.drawImage(snipCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Soldier) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(soldier, x, y, null);
+							else
+								g2.drawImage(soldCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof ZombieAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(Zombie, x, y, null);
+							else
+								g2.drawImage(ZombieCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(alpha, x, y, null);
+							else
+								g2.drawImage(alphaCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof ZombieDogAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(zDog, x, y, null);
+							else
+								g2.drawImage(zDogCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof SpitterAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(spitter, x, y, null);
+							else
+								g2.drawImage(spitterCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof CarrierAI) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(carrier, x, y, null);
+							else
+								g2.drawImage(carrierCantMove, x, y, null);
+						} else if (currentUnits[col][row] instanceof Hole) {
+							if (currentUnits[col][row].canMove())
+								g2.drawImage(hole, x, y, null);
+							else
+								g2.drawImage(hole, x, y, null);
+						}
 
 					}
 
@@ -429,17 +427,17 @@ public class GraphicalView extends JPanel implements Observer {
 						g2.setColor(Color.green);
 						Stroke oldStroke = g2.getStroke();
 						g2.setStroke(new BasicStroke((float) (2 / scaleFactor)));
-						g2.drawRect(x, y, 100, 100);
+						g2.drawRect(x, y, 96, 96);
 						g2.setStroke(oldStroke);
 					}
 					// ///////
 
-					x += 100;
+					x += 96;
 				}
-				y += 100;
+				y += 96;
 			}
 		} // end of if currentSpace != null
-	//}
+	}
 
 	public void setZoomInScale() {
 		scaleFactor = (scaleFactor * 2);

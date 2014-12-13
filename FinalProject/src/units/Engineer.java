@@ -47,7 +47,7 @@ public class Engineer extends Unit {
 			eng = engSelect;
 		if (!super.canMove()) //If the soldier cannot move
 			eng = engCantMove;
-		g.drawImage(eng, super.currentX * 100, super.currentY * 100, null);
+		g.drawImage(eng, super.currentX, super.currentY, null);
 	}
 	
 } // end of Engineer
