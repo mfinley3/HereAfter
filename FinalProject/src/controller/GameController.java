@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
@@ -1204,7 +1205,7 @@ public class GameController implements Serializable {
 	public List<Unit> getPlayerUnits() {
 		return player1.allAliveUnits();
 	}
-
+	
 	/**
 	 * 
 	 */
@@ -1214,7 +1215,7 @@ public class GameController implements Serializable {
 		if (!playerTurn) {
 			Point temp = null;
 
-			for (Unit u : player2.allAliveUnits()) {
+			for (Unit u : tempUnitList) {
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
@@ -1224,7 +1225,15 @@ public class GameController implements Serializable {
 
 				// if so, attack.
 				// TODO: Test
-				if (this.inAttackRange(temp.x, temp.y)) {
+				if(u instanceof Hole){
+					Random r = new Random();
+					int i = r.nextInt(5);
+					if(i == 3){
+						spawnEnemyUnit(u.getX(), u.getY());
+					}
+				}
+				
+				else if (this.inAttackRange(temp.x, temp.y)) {
 					attack();
 				}
 
@@ -1236,14 +1245,42 @@ public class GameController implements Serializable {
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
 				// map.getUnitAt(rowValue, colValue).setCanMove(false);
-				tempUnitList.remove(currUnit);
-				if (tempUnitList.isEmpty())
-					endTurn();
 			}
 
-			// tempUnitList.clear();
+			tempUnitList.clear();
+			endTurn();
+		}
+	}
 
-			// endTurn();
+	/**
+	 * If called on the enemy turn and given the point of a spawning hole,
+	 * spawns a new zombie nearby if it can. First, it rolls to see where it will
+	 * spawn a zombie. If all of the other spaces are
+	 * occupied, then it does nothing.
+	 * @param x
+	 * @param y
+	 */
+	private void spawnEnemyUnit(int x, int y) {
+		// TODO Get it working
+		Random r = new Random();
+		int i = r.nextInt(4)+1;
+		
+		if(i==1){
+			// Place it one above
+			if(!map.getSpace(x, y+1).getOccupied())		
+				
+		}
+		
+		else if(i==2){
+			
+		}
+		
+		else if(i==3){
+			
+		}
+		
+		else{
+			
 		}
 	}
 

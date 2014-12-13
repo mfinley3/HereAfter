@@ -1,0 +1,51 @@
+JavaDoc Comments - to be added
+
+1) IN GAME CONTROLLER
+
+	/**
+	 * Sets the current player to be the player that is passed in.
+	 * Used when loading in an old game.
+	 */
+	public void setCurrentPlayer(Player player)
+	
+	/**
+	 * Sets if it is the player's turn to move or not.
+	 * 
+	 * @param whosTurn, if it is the player's turn.
+	 */
+	public void setPlayerTurn(boolean whosTurn)
+
+	/**
+	 * Sets if the current unit has attacked.
+	 * 
+	 * @param hasAttacked: the boolean value to work
+	 */
+	public void setHasAttacked(boolean hasAttacked)
+
+	/**
+	 * Sets if the current unit has been selected.
+	 */
+	public void setCurrentUnitSelected(boolean v)
+	
+	/**
+	 * Runs through all of the enemy units, moving them near or attacking the closest player unit. Calls the list from the AI class, and iterates through them
+	 */
+	public synchronized void enemyTurn()
+	
+	/**
+	 * Have it attack a target. Checks to see if the target is in range. If it is, attack. If the target is not, do nothing. Attack uses endRow, endCol, etc.
+	 */
+	 attack()
+	 
+	/**
+	 * After a player's unit moves, checks to see if it can attack a nearby enemy unit. If it can, ask if it can attack again. If yes, attack.
+	 */
+	 private void attackAfterMove() 
+	 
+	/**
+	 * Checks the space below the current unit to see if it has an item. If it does, pick it up.
+	 */
+	 private void pickUpItem() 
+	 
+	 
+2) 
