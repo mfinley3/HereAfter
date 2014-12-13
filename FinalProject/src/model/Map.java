@@ -4,15 +4,20 @@ import item.Item;
 import item.RandomBoost;
 import item.RandomItem;
 
+import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
 import java.util.Stack;
+
+import javax.imageio.ImageIO;
 
 import space.BridgeSpace;
 import space.CaptureCornerSpace;
@@ -58,6 +63,9 @@ public class Map extends Observable implements Serializable {
 	private Boolean isPlayerTurn;
 	private String gameType;
 	private transient Scanner itemScan;
+	private transient BufferedImage background;
+	private double scaleFactor = 1;
+	private transient BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water;
 
 	/**
 	 * Instantiates a new map by reading in a text file that is determined by a
@@ -193,6 +201,71 @@ public class Map extends Observable implements Serializable {
 		setChanged();
 		notifyObservers();
 
+	}
+	
+	public BufferedImage getBackground() {
+		if(background == null){
+			background = new BufferedImage((int) (4800 * scaleFactor), (int) (4800 * scaleFactor), BufferedImage.TYPE_INT_ARGB);
+			Graphics g = background.getGraphics();
+			
+			try {
+				waste = ImageIO.read(new File("WasteLandSpace.jpg"));
+				indoorWaste = ImageIO.read(new File("IndoorWasteLandSpace.jpg"));
+				bridge = ImageIO.read(new File("BridgeSpace.jpg"));
+				corner = ImageIO.read(new File("CornerSpace.jpg"));
+				mountain = ImageIO.read(new File("MountainSpace.jpg"));
+				path = ImageIO.read(new File("PathSpace.jpg"));
+				indoorPathSpace = ImageIO.read(new File("IndoorPathSpace.png"));
+				indoorPath = ImageIO.read(new File("IndoorPath.jpg"));
+				tower = ImageIO.read(new File("TowerSpace.jpg"));
+				wall = ImageIO.read(new File("WallSpace.jpg"));
+				indoorWall = ImageIO.read(new File("IndoorWall.png"));
+				water = ImageIO.read(new File("WaterSpace.jpg"));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not find picture file");
+			}
+			
+			int x = 0;
+			int y = 0;
+			
+				for (int col = 0; col < map.length; col++) {
+					x = 0;
+					for (int row = 0; row < map.length; row++) {
+
+						if (map[col][row].getSpaceType().equals("Bridge")) {
+							g.drawImage(bridge, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("IndoorPathSpace")) {
+							g.drawImage(indoorPathSpace, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("Mountain")) {
+							g.drawImage(mountain, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("Path")) {
+							g.drawImage(path, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("IndoorPath")) {
+							g.drawImage(indoorPath, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("Tower")) {
+							g.drawImage(tower, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("IndoorWall")) {
+							g.drawImage(indoorWall, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("Wall")) {
+							g.drawImage(wall, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("Wasteland")) {
+							g.drawImage(waste, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("IndoorWasteland")) {
+							g.drawImage(indoorWaste, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("Water")) {
+							g.drawImage(water, x, y, null);
+						} else if (map[col][row].getSpaceType().equals("CaptureCorner")) {
+							g.drawImage(corner, x, y, null);
+						}
+
+						x += 96;
+					}
+					y += 96;
+				}
+		}
+		return background;
 	}
 
 	/**
@@ -732,5 +805,10 @@ public class Map extends Observable implements Serializable {
 	
 	public void removeItem(int row, int col){
 		itemsOnMap[col][row] = null;
+	}
+
+	public void setScaleFactor(double scaleFactor) {
+		this.scaleFactor = scaleFactor;
+		
 	}
 }
