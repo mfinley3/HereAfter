@@ -282,70 +282,19 @@ public class GraphicalView extends JPanel implements Observer {
 		int x = 0;
 		int y = 0;
 
-
+		g2.drawImage(map.getBackground(), 0, 0, null);
+		
 		boolean attackHasHappened = controller.getHasAttacked();
 		
 		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-
-					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(bridgeWithMine, x, y, null);
-						else
-						g2.drawImage(bridge, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
-						else
-						g2.drawImage(indoorPathSpace, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(mountainWithMine, x, y, null);
-						else
-						g2.drawImage(mountain, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(pathWithMine, x, y, null);
-						else
-						g2.drawImage(path, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(indoorPathWithMine, x, y, null);
-						else
-						g2.drawImage(indoorPath, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(towerWithMine, x, y, null);
-						else
-						g2.drawImage(tower, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWall")) {
-						g2.drawImage(indoorWall, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Wall")) {
-						g2.drawImage(wall, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(wasteWithMine, x, y, null);
-						else
-						g2.drawImage(waste, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(indoorWasteWithMine, x, y, null);
-						else
-						g2.drawImage(indoorWaste, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(waterWithMine, x, y, null);
-						else
-						g2.drawImage(water, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
-						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(cornerWithMine, x, y, null);
-						else
-						g2.drawImage(corner, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
-						
+					
+//				if(currentSpaces[col][row].hasMine())
+//					g2.drawImage(mine, x, y, null);
+					
+				if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
 						if (!type.equalsIgnoreCase("survive")) {
 							if(currentSpaces[col][row].hasMine())
 								g2.drawImage(holeCoveredWithMine, x, y, null);
@@ -486,6 +435,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 	public void setScaleFactor(double scaleFactor) {
 		this.scaleFactor = scaleFactor;
+		map.setScaleFactor(scaleFactor);
 	}
 
 	public void setGameType(String type) {

@@ -374,7 +374,11 @@ public abstract class Unit implements Serializable {
 		}
 
 	}
-
-
+	
+	public void setCurrentPostion(int x, int y){
+		currentX = x;
+		currentY = y;
+	}
+	
 } // end of class Unit
 

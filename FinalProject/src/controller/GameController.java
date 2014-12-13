@@ -54,7 +54,6 @@ public class GameController implements Serializable {
 	private List<Point> enemyLocals;
 
 	private boolean moveOn;
-	private Item[][] mines;
 	private int rowValue;
 	private int colValue;
 
@@ -111,8 +110,6 @@ public class GameController implements Serializable {
 
 		enemyLocals = map.getEnemyUnitPositions();
 		playerLocals = map.getGoodUnitPositions();
-
-		mines = new Item[50][50];
 
 		checkWinConditions();
 	}
@@ -1230,9 +1227,11 @@ public class GameController implements Serializable {
 				this.setCurrentUnit(u.y, u.x);
 				this.endRow = temp.y;
 				this.endCol = temp.x;
+				
 				// if so, attack.
-				if (this.inAttackRange(currRow, currCol)) {
-
+				// TODO: Test
+				if (this.inAttackRange(endRow, endCol)) {
+					this.attack();
 				}
 
 				// If not, then move the AI closer to the player.
@@ -1240,20 +1239,16 @@ public class GameController implements Serializable {
 				else
 					enemyMove(u);
 
-				System.out.println("Location initially trying to remove unit from: " + u.y + ", " + u.x);
-				// Values given from traverse are below
-				System.out.println("Should be: " + rowValue + ", " + colValue);
-
 				// TODO: empty curr list once all of the Ai has moved
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
-				map.getUnitAt(rowValue, colValue).setCanMove(false);
-				tempUnitList.remove(map.getUnitAt(rowValue, colValue));
+				//map.getUnitAt(rowValue, colValue).setCanMove(false);
+				//tempUnitList.remove(map.getUnitAt(rowValue, colValue));
 			}
 
-			tempUnitList.clear();
+			//tempUnitList.clear();
 
-			endTurn();
+			//endTurn();
 		}
 	}
 
@@ -1277,7 +1272,10 @@ public class GameController implements Serializable {
 		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
 		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).y;
 
-		map.moveUnit(em.y, em.x, rowValue, colValue);
+		endRow = rowValue;
+		endCol = colValue;
+		move();
+		//map.moveUnit(em.y, em.x, rowValue, colValue);
 		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
 	}
 
@@ -1320,6 +1318,15 @@ public class GameController implements Serializable {
 	public void setHasAttacked(boolean hasAttacked) {
 		// TODO Auto-generated method stub
 		this.hasAttacked = hasAttacked;
+	}
+	
+	// TODO: add unit .isSelected to change
+	// 		 add unit .cantMove
+	
+	public void setCurrentUnitSelected(boolean v){
+		if(currUnit!=null){
+			currUnit.setIsSelected(v);
+		}
 	}
 
 	/*

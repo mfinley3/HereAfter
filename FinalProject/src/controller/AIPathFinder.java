@@ -96,12 +96,39 @@ public class AIPathFinder implements Serializable{
 		boolean valid = false;
 		
 		// Check for hindrance and if walkable
-		if (moveRange >= gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance()
+		if (!(gameMap.getSpace(tgtCol, tgtRow).getSpaceType().equals("Wall"))) {
+			//if (getCurrentUnit() != null) {
+			if (!gameMap.isOccupied(tgtRow, tgtCol) && gameMap.getSpace(tgtRow, tgtCol).getCanMoveTo()) {
+				
+				moveRange = moveRange - gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
+				
+				// Check for boundaries
+				if (tgtRow < 49 && tgtRow > 0) {
+					if (gameMap.getSpace(tgtCol + 1, tgtRow).getWalkable()
+							&& gameMap.getSpace(tgtCol - 1, tgtRow).getWalkable()) {
+						valid = true;
+						row = tgtRow;
+						col = tgtCol;
+					}
+				}
+
+				if (tgtRow > 0 && tgtCol < 49) {
+					if (gameMap.getSpace(tgtCol, tgtRow + 1).getWalkable()
+							&& gameMap.getSpace(tgtCol, tgtRow - 1).getWalkable()) {
+						valid = true;
+						row = tgtRow;
+						col = tgtCol;
+					}
+				}
+				
+			}
+		
+		
+		/*if (moveRange >= gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance()
 				&& gameMap.getSpace(tgtRow, tgtCol).getWalkable()) {
 
 			moveRange = moveRange - gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
 
-			//System.out.println("\t\tHinderance: " + gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance());
 			gameMap.getSpace(tgtRow, tgtCol).setCanMoveTo(true);
 
 			// Check for boundaries
@@ -121,30 +148,10 @@ public class AIPathFinder implements Serializable{
 					row = tgtRow;
 					col = tgtCol;
 				}
-			}
+			} */
 			
 		}
-		
-			/*// Check if locations are in the bounds of the map
-		if (tgtRow > 50 || tgtRow < 0 || tgtCol > 50 || tgtCol < 0) {
-			valid = false;
-		}
 
-		else {
-			int moveHindrance = gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
-
-			// Check if walkable
-			if (gameMap.getSpace(tgtRow, tgtCol).getWalkable() && !gameMap.getSpace(tgtRow, tgtCol).getOccupied() && !gameMap.getSpace(tgtRow, tgtCol).getSpaceType().equals("Wall")) {
-				
-				// Check for hindrance
-				if (moveRange - moveHindrance >= 0) {
-					moveRange = moveRange - moveHindrance;
-					valid = true;
-					row = tgtRow;
-					col = tgtCol;
-				}
-			}
-		} */
 		return valid;
 	}
 
