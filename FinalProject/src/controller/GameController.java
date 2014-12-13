@@ -209,6 +209,7 @@ public class GameController implements Serializable {
 						// while not at end position
 						// change position
 						// repaint the graphical view, then Thread.sleep(20);
+						
 
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
