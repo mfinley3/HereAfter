@@ -34,7 +34,7 @@ public class Hole extends Unit{
 				System.out.println("Could not find picture file");
 			}
 		}
-		g.drawImage(holeGen, super.currentX, super.currentY, null);
+		g.drawImage(holeGen, super.currentX * 100, super.currentY * 100, null);
 	}
 
 	

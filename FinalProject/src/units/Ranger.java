@@ -45,7 +45,7 @@ public class Ranger extends Unit {
 			rang = rangSelect;
 		if (!super.canMove()) //If the soldier cannot move
 			rang = rangCantMove;
-		g.drawImage(rang, super.currentX, super.currentY, null);
+		g.drawImage(rang, super.currentX * 100, super.currentY * 100, null);
 	}
 	
 } // end of Ranger

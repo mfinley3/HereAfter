@@ -36,7 +36,7 @@ public class CarrierAI extends Unit{
 		}
 		if (!super.canMove()) //If the soldier cannot move
 			carrier = carrierCantMove;
-		g.drawImage(carrier, super.currentX, super.currentY, null);
+		g.drawImage(carrier, super.currentX * 100, super.currentY * 100, null);
 	}
 
 }

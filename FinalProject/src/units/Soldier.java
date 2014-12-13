@@ -49,7 +49,7 @@ public class Soldier extends Unit {
 			sold = soldSelect;
 		if (!super.canMove()) //If the soldier cannot move
 			sold = soldCantMove;
-		g.drawImage(sold, super.currentX, super.currentY, null);
+		g.drawImage(sold, super.currentX * 100, super.currentY * 100, null);
 	}
 
 } // end of Soldier
