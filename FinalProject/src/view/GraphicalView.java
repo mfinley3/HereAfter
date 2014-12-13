@@ -58,7 +58,8 @@ public class GraphicalView extends JPanel implements Observer {
 	private Unit[][] currentUnits;
 	private Item[][] currentItems;
 	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected, randomItem, randomBoost;
-
+	private BufferedImage bridgeWithMine, cornerWithMine, mountainWithMine, pathWithMine, indoorPathSpaceWithMine, indoorPathWithMine, towerWithMine, wasteWithMine, indoorWasteWithMine, waterWithMine, holeWithMine, holeCoveredWithMine, holeCoveredIndoorWithMine;
+	
 	private double scaleFactor = 1;
 	private String type;
 
@@ -100,6 +101,19 @@ public class GraphicalView extends JPanel implements Observer {
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
 			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
 			
+			wasteWithMine = ImageIO.read(new File("WasteLandSpaceWithMine.jpg"));
+			indoorWasteWithMine = ImageIO.read(new File("IndoorWasteLandSpaceWithMine.jpg"));
+			bridgeWithMine = ImageIO.read(new File("BridgeSpaceWithMine.jpg"));
+			cornerWithMine = ImageIO.read(new File("CornerSpaceWithMine.jpg"));
+			mountainWithMine = ImageIO.read(new File("MountainSpaceWithMine.jpg"));
+			pathWithMine = ImageIO.read(new File("PathSpaceWithMine.jpg"));
+			indoorPathSpaceWithMine = ImageIO.read(new File("IndoorPathSpaceWithMine.png"));
+			indoorPathWithMine = ImageIO.read(new File("IndoorPathWithMine.jpg"));
+			towerWithMine = ImageIO.read(new File("TowerSpaceWithMine.jpg"));
+			waterWithMine = ImageIO.read(new File("WaterSpaceWithMine.jpg"));
+			holeCoveredWithMine = ImageIO.read(new File("HoleSpaceCoveredWithMine.png"));
+			holeCoveredIndoorWithMine = ImageIO.read(new File("HoleSpaceCoveredIndoorWithMine.png"));
+			
 			randomItem = ImageIO.read(new File("RandomItem.png"));
 			randomBoost = ImageIO.read(new File("RandomBoost.png"));
 
@@ -137,6 +151,7 @@ public class GraphicalView extends JPanel implements Observer {
 			carrierSelected = ImageIO.read(new File("carrierSelected.png"));
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("Could not find picture file");
 		}
 
@@ -276,33 +291,70 @@ public class GraphicalView extends JPanel implements Observer {
 				for (int row = 0; row < currentSpaces.length; row++) {
 
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
-						g2.drawImage(bridge, x, y, null);
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
+						else
+						g2.drawImage(bridgeWithMine, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
+						else
 						g2.drawImage(indoorPathSpace, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(mountainWithMine, x, y, null);
+						else
 						g2.drawImage(mountain, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(pathWithMine, x, y, null);
+						else
 						g2.drawImage(path, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathWithMine, x, y, null);
+						else
 						g2.drawImage(indoorPath, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(towerWithMine, x, y, null);
+						else
 						g2.drawImage(tower, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWall")) {
 						g2.drawImage(indoorWall, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Wall")) {
 						g2.drawImage(wall, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(wasteWithMine, x, y, null);
+						else
 						g2.drawImage(waste, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorWasteWithMine, x, y, null);
+						else
 						g2.drawImage(indoorWaste, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(waterWithMine, x, y, null);
+						else
 						g2.drawImage(water, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(cornerWithMine, x, y, null);
+						else
 						g2.drawImage(corner, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+						
 						if (!type.equalsIgnoreCase("survive")) {
+							if(currentSpaces[col][row].hasMine())
+								g2.drawImage(holeCoveredWithMine, x, y, null);
+							else
 							g2.drawImage(holeCovered, x, y, null);
 						} else {
+							if(currentSpaces[col][row].hasMine())
+								g2.drawImage(holeCoveredIndoorWithMine, x, y, null);
+							else
 							g2.drawImage(holeCoveredIndoor, x, y, null);
 						}
 					}

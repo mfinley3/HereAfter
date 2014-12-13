@@ -569,7 +569,7 @@ public class GameController implements Serializable {
 							if (usingItemType == ItemType.MINE) {
 								
 								JOptionPane.showMessageDialog(null, "A Mine has been placed");
-								map.getSpace(endRow, endCol).setHasMine(true);
+								map.getSpace(endCol, endRow).setHasMine(true);
 								currUnit.setCanMove(false);
 								currUnit.removeItem(usingItemType);
 								tempUnitList.remove(currUnit);
