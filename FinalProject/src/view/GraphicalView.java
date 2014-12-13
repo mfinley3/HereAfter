@@ -28,8 +28,6 @@ import javax.swing.Timer;
 
 import model.Map;
 import space.Space;
-import sprites.Explosion;
-import sprites.SpriteObject;
 import units.AlphaProtectorAI;
 import units.CarrierAI;
 import units.Doctor;
@@ -105,18 +103,33 @@ public class GraphicalView extends JPanel implements Observer {
 			randomItem = ImageIO.read(new File("RandomItem.png"));
 			randomBoost = ImageIO.read(new File("RandomBoost.png"));
 
+			doctor = ImageIO.read(new File("Doctor1.png"));
+			engineer = ImageIO.read(new File("Engineer1.png"));
+			ranger = ImageIO.read(new File("Ranger1.png"));
+			sniper = ImageIO.read(new File("sniper1.PNG"));
+			soldier = ImageIO.read(new File("soldier1.png"));
 			Zombie = ImageIO.read(new File("Zombie.png"));
 			alpha = ImageIO.read(new File("AlphaProtector.png"));
 			zDog = ImageIO.read(new File("zDog.png"));
 			spitter = ImageIO.read(new File("Spitter.png"));
 			carrier = ImageIO.read(new File("carrier.png"));
 
+			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
+			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
+			rangCantMove = ImageIO.read(new File("Ranger1CantMove.png"));
+			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
+			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
 			ZombieCantMove = ImageIO.read(new File("ZombieCantMove.png"));
 			alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
 			zDogCantMove = ImageIO.read(new File("zDogCantMove.png"));
 			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
 			carrierCantMove = ImageIO.read(new File("carrierCantMove.png"));
 
+			docSelected = ImageIO.read(new File("Doctor1Selected.png"));
+			engSelected = ImageIO.read(new File("Engineer1Selected.png"));
+			rangSelected = ImageIO.read(new File("Ranger1Selected.png"));
+			sinpSelected = ImageIO.read(new File("sniper1Selected.png"));
+			soldSelected = ImageIO.read(new File("soldier1Selected.png"));
 			ZombieSelected = ImageIO.read(new File("ZombieSelected.png"));
 			alphaSelected = ImageIO.read(new File("AlphaProtectorSelected.png"));
 			zDogSelected = ImageIO.read(new File("zDogSelected.png"));
@@ -258,7 +271,7 @@ public class GraphicalView extends JPanel implements Observer {
 		
 		
 		g2.drawImage(map.getBackground(), 0, 0, null);
-		controller.getCurrentUnit().drawUnit(g2);
+//		controller.getCurrentUnit().drawUnit(g2);
 		
 		
 

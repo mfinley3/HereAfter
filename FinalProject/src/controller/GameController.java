@@ -10,7 +10,6 @@ import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
-import sprites.Explosion;
 import model.*;
 import space.*;
 import units.*;

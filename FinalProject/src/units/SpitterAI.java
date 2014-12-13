@@ -41,7 +41,7 @@ public class SpitterAI extends Unit {
 		}
 		if (!super.canMove()) //If the soldier cannot move
 			spitter = spitterCantMove;
-		g.drawImage(spitter, super.currentX, super.currentY, null);
+		g.drawImage(spitterGen, super.currentX, super.currentY, null);
 	}
 
 } // end of SpitterAI
