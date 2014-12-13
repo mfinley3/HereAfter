@@ -1222,7 +1222,7 @@ public class GameController implements Serializable {
 		if (!playerTurn) {
 			Point temp = null;
 
-			for (Unit u : tempUnitList) {
+			for (Unit u : player2.allAliveUnits()) {
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
@@ -1253,9 +1253,6 @@ public class GameController implements Serializable {
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
 				// map.getUnitAt(rowValue, colValue).setCanMove(false);
 			}
-
-			tempUnitList.clear();
-			endTurn();
 		}
 	}
 
@@ -1267,29 +1264,35 @@ public class GameController implements Serializable {
 	 * @param x
 	 * @param y
 	 */
-	private void spawnEnemyUnit(int x, int y) {
+	private void spawnEnemyUnit(int col, int row) {
 		// TODO Get it working
 		Random r = new Random();
-		int i = r.nextInt(4)+1;
+		int random = r.nextInt(4)+1;
 		
-		if(i==1){
+		if(random==1){
 			// Place it one above
-			//if(!map.getSpace(row, col+1).getOccupied()){
-				
-			//}
+			if(col < 49 && !(map.getSpace(row, col+1) instanceof space.WallSpace) && map.isOccupied(row, col)){
+				map.addAIToMap(row, col+1);
+			}
 				
 		}
 		
-		else if(i==2){
-			
+		else if(random==2){
+			if(row < 49 && !map.getSpace(row +1, col).getOccupied()){
+				map.addAIToMap(row+1, col);
+			}
 		}
 		
-		else if(i==3){
-			
+		else if(random==3){
+			if(col > 0 && !map.getSpace(row, col-1).getOccupied()){
+				map.addAIToMap(row, col-1);
+			}
 		}
 		
 		else{
-			
+			if(row > 0 && !map.getSpace(row, col-1).getOccupied()){
+				map.addAIToMap(row -1, col);
+			}
 		}
 	}
 
