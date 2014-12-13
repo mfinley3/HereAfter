@@ -45,9 +45,11 @@ public class Sniper extends Unit {
 		}
 		if (super.isSelected)
 			snip = snipSelect;
-		if (!super.canMove()) //If the soldier cannot move
+		else if (!super.canMove()) //If the soldier cannot move
 			snip = snipCantMove;
-		g.drawImage(snip, super.currentX, super.currentY, null);
+		else 
+			snip = snipGen;
+		g.drawImage(snip, super.currentY * 100, super.currentX * 100, null);
 	}
 
 } // end of Sniper

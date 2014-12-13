@@ -192,6 +192,8 @@ public class GraphicalView extends JPanel implements Observer {
 
 				if (firstClick) {
 					controller.setCurrentUnit(row, column);
+					controller.setCurrentUnitSelected(true);
+					repaint();
 					if (controller.getCurrentUnit() != null) {
 						if (controller.getCurrentUnit().canMove())
 							firstClick = false;
@@ -280,7 +282,6 @@ public class GraphicalView extends JPanel implements Observer {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						if(currentSpaces[col][row].hasMine())
 							g2.drawImage(bridgeWithMine, x, y, null);
@@ -311,7 +312,8 @@ public class GraphicalView extends JPanel implements Observer {
 					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
 						if(currentSpaces[col][row].hasMine())
 							g2.drawImage(cornerWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+					} else 
+					if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
 						
 						if (!type.equalsIgnoreCase("survive")) {
 							if(currentSpaces[col][row].hasMine())
@@ -334,6 +336,11 @@ public class GraphicalView extends JPanel implements Observer {
 						}
 					}
 
+					
+					if(currentUnits[col][row] != null){
+						currentUnits[col][row].drawUnit(g2);
+					}
+/*
 					if (currentUnits[col][row] == controller.getCurrentUnit()) {
 						if (currentUnits[col][row] instanceof Doctor) {
 							g2.drawImage(docSelected, x, y, null);
@@ -420,21 +427,21 @@ public class GraphicalView extends JPanel implements Observer {
 						}
 
 					}
-
+*/
 					// /////
 					// TODO Display which spaces can be moved to
 					if (currentSpaces[row][col].getCanMoveTo()) {
 						g2.setColor(Color.green);
 						Stroke oldStroke = g2.getStroke();
 						g2.setStroke(new BasicStroke((float) (2 / scaleFactor)));
-						g2.drawRect(x, y, 96, 96);
+						g2.drawRect(x, y, 100, 100);
 						g2.setStroke(oldStroke);
 					}
 					// ///////
 
-					x += 96;
+					x += 100;
 				}
-				y += 96;
+				y += 100;
 			}
 		} // end of if currentSpace != null
 	}

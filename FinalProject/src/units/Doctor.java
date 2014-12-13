@@ -46,9 +46,10 @@ public class Doctor extends Unit {
 		}
 		if (super.isSelected)
 			doc = docSelect;
-		if (!super.canMove()) //If the soldier cannot move
+		else if (!super.canMove()) //If the soldier cannot move
 			doc = docCantMove;
-		g.drawImage(doc, super.currentX, super.currentY, null);
+		else doc = docGen;
+		g.drawImage(doc, super.currentY * 100, super.currentX * 100, null);
 	}
 	
 } // end of Doctor
