@@ -1,5 +1,7 @@
 package units;
 
+import java.awt.Graphics;
+
 import item.*;
 
 /**
@@ -17,6 +19,12 @@ public class Sniper extends Unit {
 		
 		// Attack is doubled at creation so Attack is actually 70
 		super("Sniper", new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK), 35, 10, 100, 5, 7, difficulty);
+	}
+
+	@Override
+	public void drawUnit(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 
 } // end of Sniper

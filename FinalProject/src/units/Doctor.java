@@ -1,5 +1,7 @@
 package units;
 
+import java.awt.Graphics;
+
 import item.*;
 
 /**
@@ -20,6 +22,12 @@ public class Doctor extends Unit {
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
+	}
+
+	@Override
+	public void drawUnit(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 } // end of Doctor

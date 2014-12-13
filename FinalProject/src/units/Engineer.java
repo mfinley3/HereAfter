@@ -1,5 +1,7 @@
 package units;
 
+import java.awt.Graphics;
+
 import item.*;
 
 /**
@@ -19,6 +21,12 @@ public class Engineer extends Unit {
 		super("Engineer", new Item("Homemade Armor Suit", ItemType.DEF), 20, 25, 100, 4, 2, difficulty);	
 		this.addItem(new UsableItem("Salvaged Mine", ItemType.MINE));
 		this.addItem(new UsableItem("Homemade Mine", ItemType.MINE));
+	}
+
+	@Override
+	public void drawUnit(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 } // end of Engineer
