@@ -104,8 +104,8 @@ public class AIPathFinder implements Serializable{
 				
 				// Check for boundaries
 				if (tgtRow < 49 && tgtRow > 0) {
-					if (gameMap.getSpace(tgtRow + 1, tgtCol).getWalkable()
-							&& gameMap.getSpace(tgtRow - 1, tgtCol).getWalkable()) {
+					if (gameMap.getSpace(tgtCol + 1, tgtRow).getWalkable()
+							&& gameMap.getSpace(tgtCol - 1, tgtRow).getWalkable()) {
 						valid = true;
 						row = tgtRow;
 						col = tgtCol;
@@ -113,8 +113,8 @@ public class AIPathFinder implements Serializable{
 				}
 
 				if (tgtRow > 0 && tgtCol < 49) {
-					if (gameMap.getSpace(tgtRow - 1, tgtCol).getWalkable()
-							&& gameMap.getSpace(tgtRow, tgtCol + 1).getWalkable()) {
+					if (gameMap.getSpace(tgtCol, tgtRow + 1).getWalkable()
+							&& gameMap.getSpace(tgtCol, tgtRow - 1).getWalkable()) {
 						valid = true;
 						row = tgtRow;
 						col = tgtCol;
