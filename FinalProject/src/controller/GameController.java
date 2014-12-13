@@ -1280,7 +1280,7 @@ public class GameController implements Serializable {
 	
 	public void setCurrentUnitSelected(boolean v){
 		if(currUnit!=null){
-			currUnit.setSelected(v);
+			currUnit.setIsSelected(v);
 		}
 	}
 
