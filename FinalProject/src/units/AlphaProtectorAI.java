@@ -17,7 +17,7 @@ public class AlphaProtectorAI extends Unit {
 	 */
 	public AlphaProtectorAI(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
-		super("AlphaProtector", new Item("None", ItemType.NONE), 35, 65, 100, 0, 2, difficulty);
+		super("AlphaProtector", new Item("None", ItemType.NONE), 35, 65, 100, 0, 8, difficulty);
 		
 	}
 

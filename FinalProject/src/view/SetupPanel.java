@@ -60,7 +60,7 @@ import java.awt.event.MouseMotionListener;
  */
 public class SetupPanel extends JPanel implements Observer {
 
-	private BufferedImage unitHelpIcon, itemHelpIcon, spaceHelpIcon, background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy, helpIcon;
+	private BufferedImage unitHelpIcon, toggleSoundIcon, zombieHelpIcon, itemHelpIcon, spaceHelpIcon, background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy, helpIcon;
 	private JLabel title, currentUserName;
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
 	private JButton select, wait, item, attack, move, help, endTurn, save;
@@ -85,7 +85,7 @@ public class SetupPanel extends JPanel implements Observer {
 	
 	JMenuBar menuBar;
 	JMenu zoom, saveMenu, helpMenu, gamePlayHelp, sound;
-	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow, unitHelp, itemHelp, spaceHelp, toggleSound;
+	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow, unitHelp, zombieHelp, itemHelp, spaceHelp, toggleSound;
 
 	/**
 	 * Instantiates a new setup panel. This loads all of the images that are
@@ -115,6 +115,8 @@ public class SetupPanel extends JPanel implements Observer {
 			itemHelpIcon = ImageIO.read(new File("ItemHelpIcon.png"));
 			spaceHelpIcon = ImageIO.read(new File("MountainSpaceHelpIcon.jpg"));
 			unitHelpIcon = ImageIO.read(new File("UnitHelpIcon.png"));
+			zombieHelpIcon = ImageIO.read(new File("ZombieHelpIcon.png"));
+			toggleSoundIcon = ImageIO.read(new File("ToggleSoundIcon.png"));
 			
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
@@ -465,6 +467,18 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
+	
+	private class ZombieHelpButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			new Thread(new ZombieHelpWindow()).start();
+
+		}
+
+	}
+	
 	/**
 	 * If the end turn button is selected, the end turn method of controller is
 	 * called and the team that is allowed to be used is the other team.
@@ -582,10 +596,10 @@ public class SetupPanel extends JPanel implements Observer {
 
 		JScrollPane scrollPanel1 = new JScrollPane(text);
 		scrollPanel1.setSize(862, 542);
-		views.add(scrollPanel1, "Text");
+		views.add(scrollPanel1, "Unit Information");
 
 		views.add(textMap, "Map");
-		views.add(UnitLocations, "UnitLocations");
+		views.add(UnitLocations, "Unit Locations");
 
 		this.add(views, BorderLayout.CENTER);
 
@@ -678,7 +692,7 @@ public class SetupPanel extends JPanel implements Observer {
 		sound.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
 		menuBar.add(sound);
 		
-		toggleSound = new JMenuItem("Toggle Sound");
+		toggleSound = new JMenuItem("Toggle Sound", new ImageIcon(toggleSoundIcon));
 		toggleSound.addActionListener(new toggleSoundButtonListener());
 		sound.add(toggleSound);
 
@@ -699,6 +713,10 @@ public class SetupPanel extends JPanel implements Observer {
 		unitHelp = new JMenuItem("Unit Help", new ImageIcon(unitHelpIcon));//new ImageIcon(helpIcon));
 		unitHelp.addActionListener(new unitHelpButtonListener());
 		gamePlayHelp.add(unitHelp);
+		
+		zombieHelp = new JMenuItem("Zombie Help", new ImageIcon(zombieHelpIcon));
+		zombieHelp.addActionListener(new ZombieHelpButtonListener());
+		gamePlayHelp.add(zombieHelp);
 		
 		itemHelp = new JMenuItem("Item Help", new ImageIcon(itemHelpIcon));//new ImageIcon(helpIcon));
 		itemHelp.addActionListener(new itemHelpButtonListener());
@@ -983,6 +1001,7 @@ public class SetupPanel extends JPanel implements Observer {
 			if (slotNumber == 1 || slotNumber == 2 || slotNumber == 3)
 				JOptionPane.showMessageDialog(null, "Game Saved Successfully! Saved in save state " + slotNumber, "Game Saved", JOptionPane.INFORMATION_MESSAGE);
 			slotNumber = 0;
+			TRPGGUI.setdontAskAgain(true);
 			Songs.setPlaying(true);
 			Songs.toogleSound();
 			TRPGGUI.dispose();
