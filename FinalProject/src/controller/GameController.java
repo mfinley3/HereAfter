@@ -212,7 +212,6 @@ public class GameController implements Serializable {
 						// while not at end position
 						// change position
 						// repaint the graphical view, then Thread.sleep(20);
-						
 
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
@@ -580,11 +579,19 @@ public class GameController implements Serializable {
 							map.updateObservers();
 
 						} // end Mine
-						
-						if(usingItemType == ItemType.GRENADE){
-							
-							JOptionPane.showMessageDialog(null, "Your " +  map.getUnitAt(currRow, currCol).getUnitType() + "threw a grenade.");
-							blowShitUp(100, endCol, endRow, 4);
+
+						if (usingItemType == ItemType.GRENADE) {
+
+							JOptionPane.showMessageDialog(null, "Your " + map.getUnitAt(currRow, currCol).getUnitType() + " threw a grenade.");
+							blowShitUp(100, endRow, endCol);
+							currUnit.setCanMove(false);
+							currUnit.removeItem(usingItemType);
+							tempUnitList.remove(currUnit);
+							currUnit = null;
+							endRow = 51;
+							endCol = 51;
+							map.resetMapCanMove();
+							map.updateObservers();
 						}
 
 					} else
@@ -607,30 +614,61 @@ public class GameController implements Serializable {
 	 * @param it
 	 *            , the ItemType of the explosive used
 	 */
-	private void blowShitUp(int attackPower, int row, int col, int spacesLeft) {
+	private void blowShitUp(int attackPower, int row, int col) {
+
+		int baseRow = row;
+		int baseCol = col;
 		
 		if (map.getSpace(col, row).getOccupied()) {
-			System.out.println(map.getUnitAt(col, row).getUnitType());
-			map.getUnitAt(row, col).reduceHealth(attackPower);
-			targetDead(col, row);
-			gameOver();
+			if (!(SameTeam())) {
+				map.getUnitAt(row, col).reduceHealth(attackPower);
+				targetDead(row, col);
+				row = baseRow;
+				col = baseCol;
+				
+			}
 		}
 
-		// Recurse
-		if (spacesLeft > 0) {
-			if (row < 49)
-				if (map.getSpace(row + 1, col).getWalkable())
-					blowShitUp(attackPower, row + 1, col, spacesLeft - 1);
-			if (row > 0)
-				if (map.getSpace(row - 1, col).getWalkable())
-					blowShitUp(attackPower, row - 1, col, spacesLeft - 1);
-			if (col < 49)
-				if (map.getSpace(row, col + 1).getWalkable())
-					blowShitUp(attackPower, row, col + 1, spacesLeft - 1);
-			if (col > 0)
-				if (map.getSpace(row, col - 1).getWalkable())
-					blowShitUp(attackPower, row, col - 1, spacesLeft - 1);
+		if (map.getSpace(col, row + 1).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row + 1, col).reduceHealth(attackPower);
+				targetDead(row + 1, col);
+				row = baseRow;
+				col = baseCol;
+			}
 		}
+		
+
+		if (map.getSpace(col, row - 1).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row - 1, col).reduceHealth(attackPower);
+				targetDead(row - 1, col);
+				row = baseRow;
+				col = baseCol;
+			}
+		}
+		
+
+		if (map.getSpace(col + 1, row).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row, col + 1).reduceHealth(attackPower);
+				targetDead(row, col + 1);
+				row = baseRow;
+				col = baseCol;
+			}
+		}
+		
+
+		if (map.getSpace(col - 1, row).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row, col - 1).reduceHealth(attackPower);
+				targetDead(row, col - 1);
+				row = baseRow;
+				col = baseCol;
+			}
+		}
+		
+
 	}
 
 	/**
@@ -1131,7 +1169,7 @@ public class GameController implements Serializable {
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
 
 		} else {
-			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(endRow, endCol).getUnitType() + " was left with " + map.getUnitAt(endRow, endCol).getHealth() + " health after the attack!");
+			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!");
 		}
 	}
 
