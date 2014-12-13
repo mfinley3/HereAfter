@@ -54,7 +54,6 @@ public class GameController implements Serializable {
 	private List<Point> enemyLocals;
 
 	private boolean moveOn;
-	private Item[][] mines;
 	private int rowValue;
 	private int colValue;
 
@@ -111,8 +110,6 @@ public class GameController implements Serializable {
 
 		enemyLocals = map.getEnemyUnitPositions();
 		playerLocals = map.getGoodUnitPositions();
-
-		mines = new Item[50][50];
 
 		checkWinConditions();
 	}
@@ -1183,9 +1180,11 @@ public class GameController implements Serializable {
 				this.setCurrentUnit(u.y, u.x);
 				this.endRow = temp.y;
 				this.endCol = temp.x;
+				
 				// if so, attack.
-				if (this.inAttackRange(currRow, currCol)) {
-
+				// TODO: Test
+				if (this.inAttackRange(endRow, endCol)) {
+					this.attack();
 				}
 
 				// If not, then move the AI closer to the player.
@@ -1273,6 +1272,15 @@ public class GameController implements Serializable {
 	public void setHasAttacked(boolean hasAttacked) {
 		// TODO Auto-generated method stub
 		this.hasAttacked = hasAttacked;
+	}
+	
+	// TODO: add unit .isSelected to change
+	// 		 add unit .cantMove
+	
+	public void setCurrentUnitSelected(boolean v){
+		if(currUnit!=null){
+			currUnit.setSelected(v);
+		}
 	}
 
 	/*
