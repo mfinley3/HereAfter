@@ -214,9 +214,6 @@ public class GameController implements Serializable {
 						if (playerTurn)
 							attackAfterMove();
 
-						endRow = 51;
-						endCol = 51;
-
 						// Take the unit that can no longer move out of the
 						// tempUnitList
 						if (!moveOn) {
@@ -228,6 +225,9 @@ public class GameController implements Serializable {
 
 						if (tempUnitList.isEmpty())
 							endTurn();
+
+						endRow = 51;
+						endCol = 51;
 						return;
 					}
 				}
@@ -513,7 +513,7 @@ public class GameController implements Serializable {
 
 		if (!(currUnit == null)) {
 			if (endRow != 51 || endCol != 51) {
-				if (inAttackRange(endRow, endCol)) {
+				if (inAttackRange(currRow, currCol)) {
 
 					Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
 					int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -989,13 +989,15 @@ public class GameController implements Serializable {
 				System.out.println("Second Player (AI) ends its turn.");
 
 				currCol = currRow = 0;
-				
-									
-					aiMove.getListOfPoints()
-					
-					for(list of points){
-					
+
+				ArrayList<Point> mines = aiMove.getSteppedOnMines();
+
+				for (Point p : mines) {
+					blowShitUp(p.x, p.y);
+					map.getSpace(p.y, p.x).setHasMine(false);
+
 				}
+				aiMove.clearSteppedOnMines();
 				gameOver();
 
 				map.updateObservers();
@@ -1215,7 +1217,7 @@ public class GameController implements Serializable {
 			for (Unit u : player2.allAliveUnits()) {
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
-				temp = this.nearestPlayerUnit(new Point(u.getX(),u.getY()));
+				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
 				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
@@ -1228,14 +1230,14 @@ public class GameController implements Serializable {
 
 				// If not, then move the AI closer to the player.
 				else
-					enemyMove(new Point(u.getX(),u.getY()));
+					enemyMove(new Point(u.getX(), u.getY()));
 
 				// TODO: empty curr list once all of the Ai has moved
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
 				// map.getUnitAt(rowValue, colValue).setCanMove(false);
 				tempUnitList.remove(currUnit);
-				if(tempUnitList.isEmpty())
+				if (tempUnitList.isEmpty())
 					endTurn();
 			}
 
@@ -1286,7 +1288,7 @@ public class GameController implements Serializable {
 			tempSN = Math.abs(enemyLoc.x - p.getX()) + Math.abs(enemyLoc.y - p.getY());
 			if (tempSN < spaceNear || spaceNear == 0) {
 				spaceNear = tempSN;
-				toReturn = new Point (p.getX(), p.getY());
+				toReturn = new Point(p.getX(), p.getY());
 			}
 		}
 
