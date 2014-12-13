@@ -41,6 +41,7 @@ public class ExplosionSprite extends Sprite {
     return width;
   }
 
+  @Override
   public boolean isFinished() {
     return isDead;
   }

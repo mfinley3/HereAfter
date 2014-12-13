@@ -6,30 +6,15 @@ public abstract class Sprite {
 	public static enum State {
 		IDLE, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP
 	};
-	
-	protected State state; // current state
+
 	protected int frame; // current frame
 	
 	/**
 	 * Constructs a new sprite. Sprites are initialized in the IDLE state
 	 */
 	public Sprite(){
-		state = State.IDLE;
 		frame = 0;
 	}
-	
-	/**
-	 * Sets the state of the sprite
-	 * @param state	the new state of the sprite
-	 */
-	public void setState(State state){ this.state = state; }
-	
-	/**
-	 * Gets the current state of the sprite
-	 * @return	the current state of the sprite
-	 */
-	public State getState(){ return state; }
-	
 
 	/**
 	 * Indicates whether the sprite has finished animating.

@@ -26,8 +26,7 @@ public class ItemHelpWindow extends JFrame implements Runnable {
 		this.setLocation(900, 0);
 		this.setTitle("HereAfter: Item Help Screen");	
 		this.setLayout(new GridLayout(7,1));
-		
-		
+
 		description = new JTextArea();
 		description.setEditable(false);
 		description.setBackground(Color.WHITE);
@@ -37,5 +36,6 @@ public class ItemHelpWindow extends JFrame implements Runnable {
 					+ "     The usable items are Health kits, Gernades and Mines .\n"
 					+ "     Boosts affect units base stats.\n"
 					+ "     The boosts items are attack, defense and health.\n");
+
 	}
 }

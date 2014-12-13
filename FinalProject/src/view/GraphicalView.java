@@ -10,20 +10,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import model.Map;
 import space.Space;
+import sprites.Explosion;
 import sprites.SpriteObject;
 import units.AlphaProtectorAI;
 import units.CarrierAI;
@@ -76,6 +81,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 		this.addMouseMotionListener(motionListener);
 		this.addMouseListener(listener);
+	
 
 		try {
 			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
@@ -253,16 +259,17 @@ public class GraphicalView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		// g2.translate(w/2, h/2);
 		g2.scale(1 * scaleFactor, 1 * scaleFactor);
 		Dimension maxSize = new Dimension((int) (4800 * scaleFactor), (int) (4800 * scaleFactor));
 		this.setPreferredSize(maxSize);
 		this.revalidate();
-		// g2.translate(-w/2, -h/2);
 
 		int x = 0;
 		int y = 0;
 
+
+		boolean attackHasHappened = controller.getHasAttacked();
+		
 		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
@@ -410,7 +417,7 @@ public class GraphicalView extends JPanel implements Observer {
 				}
 				y += 96;
 			}
-		}
+		} // end of if currentSpace != null
 	}
 
 	public void setZoomInScale() {
