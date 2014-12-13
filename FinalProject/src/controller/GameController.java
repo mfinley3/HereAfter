@@ -208,12 +208,11 @@ public class GameController implements Serializable {
 						if (playerTurn)
 							pickUpItem();
 
-						//Animate the move
-						//while not at end position
-						//change position
-						//repaint the graphical view, then Thread.sleep(20);
-						
-						
+						// Animate the move
+						// while not at end position
+						// change position
+						// repaint the graphical view, then Thread.sleep(20);
+
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
 						currCol = endCol;
@@ -491,15 +490,15 @@ public class GameController implements Serializable {
 		attackRow = endRow;
 		attackCol = endCol;
 	}
-	
+
 	public int getAttackRow() {
 		return attackRow;
 	}
-	
+
 	public int getAttackCol() {
 		return attackCol;
 	}
-	
+
 	public boolean getHasAttacked() {
 		return hasAttacked;
 	}
@@ -564,24 +563,22 @@ public class GameController implements Serializable {
 
 							} else
 								JOptionPane.showMessageDialog(null, "There is nothing there to heal!");
-						} //end health kit
-						
-							if (usingItemType == ItemType.MINE) {
-								
-								JOptionPane.showMessageDialog(null, "A Mine has been placed");
-								map.getSpace(endCol, endRow).setHasMine(true);
-								currUnit.setCanMove(false);
-								currUnit.removeItem(usingItemType);
-								tempUnitList.remove(currUnit);
-								currUnit = null;
-								endRow = 51;
-								endCol = 51;
-								map.resetMapCanMove();
-								map.updateObservers();
-								
-							} //end Mine
-							
-						
+						} // end health kit
+
+						if (usingItemType == ItemType.MINE) {
+
+							JOptionPane.showMessageDialog(null, "A Mine has been placed");
+							map.getSpace(endCol, endRow).setHasMine(true);
+							currUnit.setCanMove(false);
+							currUnit.removeItem(usingItemType);
+							tempUnitList.remove(currUnit);
+							currUnit = null;
+							endRow = 51;
+							endCol = 51;
+							map.resetMapCanMove();
+							map.updateObservers();
+
+						} // end Mine
 
 					} else
 						JOptionPane.showMessageDialog(null, "The unit you selected does not have that item.");
@@ -1008,7 +1005,7 @@ public class GameController implements Serializable {
 		System.out.println("New endCol: " + endCol);
 		this.endCol = endCol;
 	}
-	
+
 	/**
 	 * Gets the new endColumn. Used in attack and movement.
 	 * 
@@ -1099,7 +1096,10 @@ public class GameController implements Serializable {
 
 			if (playerTurn) {
 
-				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + player1.getAliveNum() + ", Zombies - " + (player2.getAliveNum() - 1));
+				if (map.getUnitAt(endCol, endRow) instanceof Hole)
+					JOptionPane.showMessageDialog(null, "You threw a bomb down the hole and stopped zombies from crawling out of it!");
+				else
+					JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + player1.getAliveNum() + ", Zombies - " + (player2.getAliveNum() - 1));
 
 			} else {
 
