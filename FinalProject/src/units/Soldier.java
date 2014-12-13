@@ -22,15 +22,13 @@ public class Soldier extends Unit {
 	 */
 
 	transient private BufferedImage soldGen, soldSelect, soldCantMove, sold;
-	
 
 	public Soldier(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
 		// Difficulty multiplier
 
 		// Attack is doubled at creation so Attack is actually 60
-		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 30, 20, 100,
-				6, 3, difficulty);
+		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 30, 20, 100, 6, 3, difficulty);
 		this.addItem(new UsableItem("Salvaged Grenade", ItemType.GRENADE));
 		this.addItem(new UsableItem("Military Grenade", ItemType.GRENADE));
 	}
@@ -39,17 +37,17 @@ public class Soldier extends Unit {
 	public void drawUnit(Graphics g) {
 		if (sold == null) {
 			try {
-					soldSelect = ImageIO.read(new File("soldier1Selected.png"));
-					soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
-					soldGen = ImageIO.read(new File("soldier1.png"));
-					sold = soldGen;
+				soldSelect = ImageIO.read(new File("soldier1Selected.png"));
+				soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
+				soldGen = ImageIO.read(new File("soldier1.png"));
+				sold = soldGen;
 			} catch (IOException e) {
 				System.out.println("Could not find picture file");
 			}
 		}
-		if(isSelected)
+		if (isSelected)
 			sold = soldSelect;
-		if(cantMove)
+		if (cantMove)
 			sold = soldCantMove;
 		g.drawImage(sold, super.currentX, super.currentY, null);
 

@@ -522,7 +522,7 @@ public class GameController implements Serializable {
 
 		if (!(currUnit == null)) {
 			if (endRow != 51 || endCol != 51) {
-				if (inAttackRange(endRow, endCol)) {
+				if (inAttackRange(endCol, endRow)) {
 
 					Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
 					int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);

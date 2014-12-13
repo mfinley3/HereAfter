@@ -292,9 +292,9 @@ public class GraphicalView extends JPanel implements Observer {
 
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						if(currentSpaces[col][row].hasMine())
-							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
+							g2.drawImage(bridgeWithMine, x, y, null);
 						else
-						g2.drawImage(bridgeWithMine, x, y, null);
+						g2.drawImage(bridge, x, y, null);
 					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
 						if(currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
