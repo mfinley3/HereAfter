@@ -14,7 +14,8 @@ import model.Map;
  */
 public class AIPathFinder implements Serializable{
 	private Map gameMap;
-	private ArrayList<Point> mineLocations;
+	private ArrayList<Point> mineLocations = new ArrayList<Point>();
+	private ArrayList<Point> movePositions = new ArrayList<Point>();
 	private int moveRange;
 	private int row = 0, col = 0;
 
@@ -46,11 +47,13 @@ public class AIPathFinder implements Serializable{
 			isNearPlayer = true; // the AI is near the target location
 		
 		if (moveRange == 0) {
+			movePositions.add(new Point(currAIRow, currAICol));
 			return new Point(currAIRow, currAICol);
 		}
 		
 		if (gameMap.getSpace(currAICol, currAIRow).hasMine()) {
 			mineLocations.add(new Point(currAIRow, currAICol));
+			movePositions.add(new Point(currAIRow, currAICol));
 			return new Point(currAIRow, currAICol);
 		}
 
@@ -59,6 +62,7 @@ public class AIPathFinder implements Serializable{
 			// moves up
 			if (!isNearPlayer && currAIRow > plyrRow) {
 				if (validPosition(currAIRow - 1, currAICol)) {
+					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow - 1, currAICol, plyrRow, plyrCol, moveRange);
 				}
 			}
@@ -66,6 +70,7 @@ public class AIPathFinder implements Serializable{
 			// moves left
 			if (!isNearPlayer && currAICol > plyrCol) {
 				if (validPosition(currAIRow, currAICol - 1)) {
+					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow, currAICol - 1, plyrRow, plyrCol, moveRange);
 				}
 			}
@@ -73,6 +78,7 @@ public class AIPathFinder implements Serializable{
 			// moves down
 			if (!isNearPlayer && currAIRow < plyrRow) {
 				if (validPosition(currAIRow + 1, currAICol)) {
+					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow + 1, currAICol, plyrRow, plyrCol, moveRange);
 				}
 			}
@@ -80,11 +86,14 @@ public class AIPathFinder implements Serializable{
 			// moves right
 			if (!isNearPlayer && currAICol < plyrCol) {
 				if (validPosition(currAIRow, currAICol + 1)) {
+					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow, currAICol + 1, plyrRow, plyrCol, moveRange);
 				}
 			}
 			
 		}
+		
+		movePositions.add(new Point(currAIRow, currAICol));
 		return new Point(row, col); // Returns the Point of where the AI
 										// should move.
 	}
@@ -110,23 +119,23 @@ public class AIPathFinder implements Serializable{
 				moveRange = moveRange - gameMap.getSpace(tgtRow, tgtCol).getMoveHinderance();
 				
 				// Check for boundaries
-				if (tgtRow < 49 && tgtRow > 0) {
+				/*if (tgtRow <= 50 && tgtRow >= 0) {
 					if (gameMap.getSpace(tgtCol + 1, tgtRow).getWalkable()
-							&& gameMap.getSpace(tgtCol - 1, tgtRow).getWalkable()) {
+							|| gameMap.getSpace(tgtCol - 1, tgtRow).getWalkable()) {*/
 						valid = true;
 						row = tgtRow;
 						col = tgtCol;
-					}
-				}
+					//}
+				//}
 
-				if (tgtRow > 0 && tgtCol < 49) {
+				/*if (tgtRow <= 50 && tgtRow >= 0) {
 					if (gameMap.getSpace(tgtCol, tgtRow + 1).getWalkable()
-							&& gameMap.getSpace(tgtCol, tgtRow - 1).getWalkable()) {
+							|| gameMap.getSpace(tgtCol, tgtRow - 1).getWalkable()) {*/
 						valid = true;
 						row = tgtRow;
 						col = tgtCol;
-					}
-				}
+					//}
+				//}
 				
 			}
 		
@@ -174,6 +183,20 @@ public class AIPathFinder implements Serializable{
 	 */
 	public void clearSteppedOnMines() {
 		this.mineLocations = new ArrayList<Point>();
+	}
+
+	/**
+	 * @return the movePositions
+	 */
+	public ArrayList<Point> getMovePositions() {
+		return movePositions;
+	}
+
+	/**
+	 * @param movePositions the movePositions to set
+	 */
+	public void setMovePositions(ArrayList<Point> movePositions) {
+		this.movePositions = movePositions;
 	}
 
 } // end of class
