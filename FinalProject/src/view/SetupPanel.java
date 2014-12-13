@@ -38,6 +38,7 @@ import javax.swing.JTextArea;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import songplayer.Songs;
 import units.Doctor;
 import units.Engineer;
 import units.Ranger;
@@ -83,8 +84,8 @@ public class SetupPanel extends JPanel implements Observer {
 	private double scaleFactor;
 	
 	JMenuBar menuBar;
-	JMenu zoom, saveMenu, helpMenu, gamePlayHelp;
-	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow, unitHelp, itemHelp, spaceHelp;
+	JMenu zoom, saveMenu, helpMenu, gamePlayHelp, sound;
+	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow, unitHelp, itemHelp, spaceHelp, toggleSound;
 
 	/**
 	 * Instantiates a new setup panel. This loads all of the images that are
@@ -92,6 +93,7 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	public SetupPanel() {
 
+		
 		this.setLayout(null);
 
 		try {
@@ -531,6 +533,16 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
+	
+
+	private class toggleSoundButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Songs.toogleSound();
+		}
+
+	}
 
 	/**
 	 * Actual map. This sets up the actual map. It adds the graphical and text
@@ -659,12 +671,21 @@ public class SetupPanel extends JPanel implements Observer {
 		zoomOut = new JMenuItem("Zoom Out", new ImageIcon(zoomOutImg));
 		zoomOut.addActionListener(new ZoomOutListener());
 		zoom.add(zoomOut);
+		
+		sound = new JMenu("Sound");
+		sound.addMenuListener(new thisMenuListner());
+		sound.setForeground(Color.WHITE);
+		sound.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
+		menuBar.add(sound);
+		
+		toggleSound = new JMenuItem("Toggle Sound");
+		toggleSound.addActionListener(new toggleSoundButtonListener());
+		sound.add(toggleSound);
 
 		helpMenu = new JMenu("Help");
 		helpMenu.addMenuListener(new thisMenuListner());
 		helpMenu.setForeground(Color.WHITE);
 		helpMenu.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
-
 		menuBar.add(helpMenu);
 
 		helpWindow = new JMenuItem("General Help", new ImageIcon(helpIcon));
@@ -853,6 +874,9 @@ public class SetupPanel extends JPanel implements Observer {
 				} else if (clickX > 61 && clickX < 503 && clickY > 522 && clickY < 557) {
 					gameIsRunning = false;
 					startUp1 = true;
+					TRPGGUI.setdontAskAgain(true);
+					Songs.setPlaying(true);
+					Songs.toogleSound();
 					TRPGGUI.dispose();
 				}
 
@@ -959,6 +983,8 @@ public class SetupPanel extends JPanel implements Observer {
 			if (slotNumber == 1 || slotNumber == 2 || slotNumber == 3)
 				JOptionPane.showMessageDialog(null, "Game Saved Successfully! Saved in save state " + slotNumber, "Game Saved", JOptionPane.INFORMATION_MESSAGE);
 			slotNumber = 0;
+			Songs.setPlaying(true);
+			Songs.toogleSound();
 			TRPGGUI.dispose();
 
 		}
