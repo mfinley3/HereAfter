@@ -380,5 +380,13 @@ public abstract class Unit implements Serializable {
 		currentY = y;
 	}
 	
+	public int getX(){
+		return currentX;
+	}
+	
+	public int getY(){
+		return currentY;
+	}
+	
 } // end of class Unit
 

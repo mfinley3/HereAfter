@@ -50,8 +50,6 @@ public class GameController implements Serializable {
 
 	private GameTypeInterface gameType;
 	private Object winConditions;
-	private List<Point> playerLocals;
-	private List<Point> enemyLocals;
 
 	private boolean moveOn;
 	private int rowValue;
@@ -107,9 +105,6 @@ public class GameController implements Serializable {
 
 		// Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
-
-		enemyLocals = map.getEnemyUnitPositions();
-		playerLocals = map.getGoodUnitPositions();
 
 		checkWinConditions();
 	}
@@ -292,8 +287,9 @@ public class GameController implements Serializable {
 	private void attackAfterMove() {
 
 		if (!gameOver) {
+			// TODO: Test
 
-			for (Point p : enemyLocals) {
+			for (Unit p : player2.allAliveUnits()) {
 
 				if (inAttackRange((int) p.getY(), (int) p.getX())) {
 					int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
@@ -964,8 +960,6 @@ public class GameController implements Serializable {
 
 				System.out.println("Player 1 ends turn.");
 
-				playerLocals = map.getGoodUnitPositions();
-
 				// Switch to AI
 				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 				for (Unit i : tempUnitList)
@@ -986,8 +980,6 @@ public class GameController implements Serializable {
 					i.setCanMove(false);
 				tempUnitList.clear();
 				currUnit = null;
-
-				enemyLocals = map.getEnemyUnitPositions();
 
 				// Switch to player, add one to turns
 				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
@@ -1202,8 +1194,8 @@ public class GameController implements Serializable {
 	 * 
 	 * @return A List of Points with all of the locations of monsters.
 	 */
-	public List<Point> getPlayerUnits() {
-		return map.getGoodUnitPositions();
+	public List<Unit> getPlayerUnits() {
+		return player1.allAliveUnits();
 	}
 
 	/**
@@ -1215,11 +1207,11 @@ public class GameController implements Serializable {
 		if (!playerTurn) {
 			Point temp = null;
 
-			for (Point u : enemyLocals) {
+			for (Unit u : player2.allAliveUnits()) {
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
-				temp = this.nearestPlayerUnit(u);
-				this.setCurrentUnit(u.y, u.x);
+				temp = this.nearestPlayerUnit(new Point(u.getX(),u.getY()));
+				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
 
@@ -1232,7 +1224,7 @@ public class GameController implements Serializable {
 				// If not, then move the AI closer to the player.
 
 				else
-					enemyMove(u);
+					enemyMove(new Point(u.getX(),u.getY()));
 
 				// TODO: empty curr list once all of the Ai has moved
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
@@ -1260,8 +1252,6 @@ public class GameController implements Serializable {
 		 * Locations 3) Player's XY values 4) Send these params to
 		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
 		 */
-
-		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
 
 		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
@@ -1286,11 +1276,11 @@ public class GameController implements Serializable {
 		int tempSN = 0;
 		Point toReturn = null;
 
-		for (Point p : playerLocals) {
-			tempSN = Math.abs(enemyLoc.x - p.x) + Math.abs(enemyLoc.y - p.y);
+		for (Unit p : player1.allAliveUnits()) {
+			tempSN = Math.abs(enemyLoc.x - p.getX()) + Math.abs(enemyLoc.y - p.getY());
 			if (tempSN < spaceNear || spaceNear == 0) {
 				spaceNear = tempSN;
-				toReturn = p;
+				toReturn = new Point (p.getX(), p.getY());
 			}
 		}
 
