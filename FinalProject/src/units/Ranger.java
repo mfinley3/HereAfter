@@ -1,6 +1,11 @@
 package units;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import item.*;
 
@@ -9,6 +14,8 @@ import item.*;
  */
 public class Ranger extends Unit {
 
+	transient private BufferedImage rangGen, rangSelect, rangCantMove, rang;
+	
 	/**
 	 * Instantiates a new ranger.
 	 *
@@ -21,10 +28,24 @@ public class Ranger extends Unit {
 		super("Ranger", new Item("Ranger Rifle", ItemType.ATK), 15, 15, 100, 8, 3, difficulty);
 	}
 
+
 	@Override
 	public void drawUnit(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		if (rang == null) {
+			try {
+				rangSelect = ImageIO.read(new File("Ranger1Selected.png"));
+				rangCantMove = ImageIO.read(new File("Ranger1CantMove.png"));
+				rangGen = ImageIO.read(new File("Ranger1.png"));
+				rang = rangGen;
+			} catch (IOException e) {
+				System.out.println("Could not find picture file");
+			}
+		}
+		if (super.isSelected)
+			rang = rangSelect;
+		if (!super.canMove()) //If the soldier cannot move
+			rang = rangCantMove;
+		g.drawImage(rang, super.currentX, super.currentY, null);
 	}
 	
 } // end of Ranger

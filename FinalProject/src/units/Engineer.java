@@ -1,6 +1,11 @@
 package units;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import item.*;
 
@@ -9,6 +14,8 @@ import item.*;
  */
 public class Engineer extends Unit {
 
+	
+	transient private BufferedImage engGen, engSelect, engCantMove, eng;
 	/**
 	 * Instantiates a new engineer.
 	 *
@@ -23,10 +30,24 @@ public class Engineer extends Unit {
 		this.addItem(new UsableItem("Homemade Mine", ItemType.MINE));
 	}
 
+
 	@Override
 	public void drawUnit(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		if (eng == null) {
+			try {
+				engSelect = ImageIO.read(new File("Engineer1Selected.png"));
+				engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
+				engGen = ImageIO.read(new File("Engineer1.png"));
+				eng = engGen;
+			} catch (IOException e) {
+				System.out.println("Could not find picture file");
+			}
+		}
+		if (super.isSelected)
+			eng = engSelect;
+		if (!super.canMove()) //If the soldier cannot move
+			eng = engCantMove;
+		g.drawImage(eng, super.currentX, super.currentY, null);
 	}
 	
 } // end of Engineer

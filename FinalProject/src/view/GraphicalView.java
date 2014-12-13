@@ -85,18 +85,6 @@ public class GraphicalView extends JPanel implements Observer {
 	
 
 		try {
-			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
-			indoorWaste = ImageIO.read(new File("IndoorWasteLandSpace.jpg"));
-			bridge = ImageIO.read(new File("BridgeSpace.jpg"));
-			corner = ImageIO.read(new File("CornerSpace.jpg"));
-			mountain = ImageIO.read(new File("MountainSpace.jpg"));
-			path = ImageIO.read(new File("PathSpace.jpg"));
-			indoorPathSpace = ImageIO.read(new File("IndoorPathSpace.png"));
-			indoorPath = ImageIO.read(new File("IndoorPath.jpg"));
-			tower = ImageIO.read(new File("TowerSpace.jpg"));
-			wall = ImageIO.read(new File("WallSpace.jpg"));
-			indoorWall = ImageIO.read(new File("IndoorWall.png"));
-			water = ImageIO.read(new File("WaterSpace.jpg"));
 			hole = ImageIO.read(new File("HoleSpace.png"));
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
 			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
@@ -117,33 +105,18 @@ public class GraphicalView extends JPanel implements Observer {
 			randomItem = ImageIO.read(new File("RandomItem.png"));
 			randomBoost = ImageIO.read(new File("RandomBoost.png"));
 
-			doctor = ImageIO.read(new File("Doctor1.png"));
-			engineer = ImageIO.read(new File("Engineer1.png"));
-			ranger = ImageIO.read(new File("Ranger1.png"));
-			sniper = ImageIO.read(new File("sniper1.PNG"));
-			soldier = ImageIO.read(new File("soldier1.png"));
 			Zombie = ImageIO.read(new File("Zombie.png"));
 			alpha = ImageIO.read(new File("AlphaProtector.png"));
 			zDog = ImageIO.read(new File("zDog.png"));
 			spitter = ImageIO.read(new File("Spitter.png"));
 			carrier = ImageIO.read(new File("carrier.png"));
 
-			docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
-			engCantMove = ImageIO.read(new File("Engineer1CantMove.png"));
-			rangCantMove = ImageIO.read(new File("Ranger1CantMove.png"));
-			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
-			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
 			ZombieCantMove = ImageIO.read(new File("ZombieCantMove.png"));
 			alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
 			zDogCantMove = ImageIO.read(new File("zDogCantMove.png"));
 			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
 			carrierCantMove = ImageIO.read(new File("carrierCantMove.png"));
 
-			docSelected = ImageIO.read(new File("Doctor1Selected.png"));
-			engSelected = ImageIO.read(new File("Engineer1Selected.png"));
-			rangSelected = ImageIO.read(new File("Ranger1Selected.png"));
-			sinpSelected = ImageIO.read(new File("sniper1Selected.png"));
-			soldSelected = ImageIO.read(new File("soldier1Selected.png"));
 			ZombieSelected = ImageIO.read(new File("ZombieSelected.png"));
 			alphaSelected = ImageIO.read(new File("AlphaProtectorSelected.png"));
 			zDogSelected = ImageIO.read(new File("zDogSelected.png"));
@@ -282,19 +255,51 @@ public class GraphicalView extends JPanel implements Observer {
 		int x = 0;
 		int y = 0;
 
-		g2.drawImage(map.getBackground(), 0, 0, null);
 		
-		boolean attackHasHappened = controller.getHasAttacked();
+		
+		g2.drawImage(map.getBackground(), 0, 0, null);
+		controller.getCurrentUnit().drawUnit(g2);
+		
+		
+
 		
 		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-					
-//				if(currentSpaces[col][row].hasMine())
-//					g2.drawImage(mine, x, y, null);
-					
-				if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+
+					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(bridgeWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(mountainWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(pathWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(towerWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(wasteWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorWasteWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(waterWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(cornerWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+						
 						if (!type.equalsIgnoreCase("survive")) {
 							if(currentSpaces[col][row].hasMine())
 								g2.drawImage(holeCoveredWithMine, x, y, null);

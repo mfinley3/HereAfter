@@ -1,6 +1,11 @@
 package units;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import item.Item;
 import item.ItemType;
@@ -9,6 +14,8 @@ import item.ItemType;
  * The Class RunnerAI.
  */
 public class ZombieAI extends Unit {
+	
+	transient private BufferedImage zombieGen, zombieCantMove, zombie;
 	
 	/**
 	 * Instantiates a new runner ai.
@@ -22,8 +29,18 @@ public class ZombieAI extends Unit {
 
 	@Override
 	public void drawUnit(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		if (zombie == null) {
+			try {
+				zombieCantMove = ImageIO.read(new File("carrierCantMove.png"));
+				zombieGen = ImageIO.read(new File("carrier.png"));
+				zombie = zombieCantMove;
+			} catch (IOException e) {
+				System.out.println("Could not find picture file");
+			}
+		}
+		if (!super.canMove()) //If the soldier cannot move
+			zombie = zombieCantMove;
+		g.drawImage(zombieGen, super.currentX, super.currentY, null);
 	}
 
 } // end of RunnerAI
