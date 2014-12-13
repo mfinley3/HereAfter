@@ -624,6 +624,8 @@ public class GameController implements Serializable {
 
 		} else
 			JOptionPane.showMessageDialog(null, "Pick a unit to use an Item first");
+		
+		checkWinConditions();
 
 	}
 
@@ -1258,21 +1260,7 @@ public class GameController implements Serializable {
 				this.endRow = temp.y;
 				this.endCol = temp.x;
 
-				// if so, attack.
-				// TODO: Test
-				if(u instanceof Hole){
-					Random r = new Random();
-					int i = r.nextInt(5);
-					if(i == 3){
-						spawnEnemyUnit(u.getX(), u.getY());
-					}
-					
-					tempUnitList.remove(u);
-					if(tempUnitList.isEmpty())
-						endTurn();
-				}
-				
-				else if (this.inAttackRange(temp.x, temp.y)) {
+				if (this.inAttackRange(temp.x, temp.y)) {
 					attack();
 				}
 
@@ -1288,59 +1276,6 @@ public class GameController implements Serializable {
 		}
 		if(!playerTurn){
 			endTurn();
-		}
-	}
-
-	/**
-	 * If called on the enemy turn and given the point of a spawning hole,
-	 * spawns a new zombie nearby if it can. First, it rolls to see where it will
-	 * spawn a zombie. If all of the other spaces are
-	 * occupied, then it does nothing.
-	 * @param x
-	 * @param y
-	 */
-	private void spawnEnemyUnit(int col, int row) {
-		// TODO Get it working
-		
-		Random r = new Random();
-		int random = r.nextInt(4)+1;
-		
-		if(random==1){
-			// Place it one above
-			if(col < 49 && !(map.getSpace(col+1, row) instanceof WallSpace) && !map.isOccupied(row, col+1)){
-				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
-				map.addAIToMap(row, col+1);
-				player2.addUnits(map.getUnitAt(row, col+1));
-			}
-				
-		}
-		
-		else if(random==2){
-			if(row < 49 && !(map.getSpace(col, row+1) instanceof WallSpace) && !map.isOccupied(row+1, col)){
-				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
-
-				map.addAIToMap(row+1, col);
-				player2.addUnits(map.getUnitAt(row+1, col));
-			}
-		}
-		
-		else if(random==3){
-			if(col > 0 && !(map.getSpace(col-1, row) instanceof WallSpace) && !map.isOccupied(row, col-1)){
-				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
-
-				map.addAIToMap(row, col-1);
-				player2.addUnits(map.getUnitAt(row, col-1));
-			}
-		}
-		
-		else{
-			if(row > 0 && !(map.getSpace(col, row-1) instanceof WallSpace) && !map.isOccupied(row-1, col)){
-				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
-
-				map.addAIToMap(row -1, col);
-				player2.addUnits(map.getUnitAt(row-1, col));
-
-			}
 		}
 	}
 

@@ -48,4 +48,105 @@ JavaDoc Comments - to be added
 	 private void pickUpItem() 
 	 
 	 
-2) 
+2) Map
+
+	/**
+	 * @return the goodUnitPositions
+	 */
+	public List<Point> getGoodUnitPositions()
+
+	/**
+	 * @return the enemyUnitPositions
+	 */
+	public List<Point> getEnemyUnitPositions()
+
+	/**
+	 * Gets the unit at the requested location.
+	 *
+	 * @param row
+	 *            The row of the requested unit.
+	 * @param col
+	 *            The column of the requested unit.
+	 * @return Returns the 'full' Unit at requested spot.
+	 */
+	public Unit getUnitAt(int row, int col)
+
+	/**
+	 * Method to get the array of spaces in other words the actual map.
+	 *
+	 * @return map Map is the Space[][].
+	 */
+	public Space[][] getSpaces()
+
+	public Item[][] getItems()
+	
+	/**
+	 * Method to get the array of Units in other words the Units on the map.
+	 *
+	 * @return unitsOnMap unitsOnMap is the Unit[][]
+	 */
+	public Unit[][] getUnits()
+
+	/**
+	 * Checks if the requested space is occupied.
+	 *
+	 * @param row
+	 *            The row of the requested space.
+	 * @param column
+	 *            the column of the requested space.
+	 * @return True If the space is occupied.
+	 */
+	public boolean isOccupied(int row, int column)
+
+	/**
+	 * Gets the space in the map at the requested spot.
+	 *
+	 * @param row
+	 *            The row of the requested space.
+	 * @param column
+	 *            The column of the requested space.
+	 * @return The space at the requested spot.
+	 */
+	public Space getSpace(int row, int column)
+
+	/**
+	 * Gets the enemy units.
+	 *
+	 * @return The list of enemy units
+	 */
+	public List<Unit> getEnemyUnits()
+
+	/**
+	 * Resets all the spaces in map so they can't be moved to.
+	 */
+	public void resetMapCanMove()
+
+	/**
+	 * Removes the unit from the map.
+	 *
+	 * @param row
+	 *            the row of the unit that needs to be removed.
+	 * @param col
+	 *            the column of the unit that needs to be removed.
+	 */
+	public void removeUnit(int row, int col)
+
+	/**
+	 * @param isPlayerTurn
+	 *            the isPlayerTurn to set
+	 */
+	public void setIsPlayerTurn()
+
+	/**
+	 * A method that can be called from any class to get the the GUI to update
+	 * the map.
+	 */
+	public void updateObservers()
+
+	public String toString()
+	
+	public void coverUpHole(int row, int col)
+
+	public void removeItem(int row, int col)
+	
+	public void setScaleFactor(double scaleFactor)
