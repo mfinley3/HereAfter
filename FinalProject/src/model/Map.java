@@ -281,43 +281,44 @@ public class Map extends Observable implements Serializable {
 						unitsOnMap[m][n] = new ZombieAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						enemyUnitPositions.add(new Point(m, n));
+						//enemyUnitPositions.add(new Point(m, n));
+						unitsOnMap[m][n].setCurrentPostion(m, n);
 					}
 
 					if (unitLetterEquivalence.equals("A")) {
 						unitsOnMap[m][n] = new AlphaProtectorAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						enemyUnitPositions.add(new Point(m, n));
-					}
+						//enemyUnitPositions.add(new Point(m, n));
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("G")) {
 						unitsOnMap[m][n] = new Hole(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						enemyUnitPositions.add(new Point(m, n));
-					}
+						//enemyUnitPositions.add(new Point(m, n));
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("C")) {
 						unitsOnMap[m][n] = new CarrierAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						enemyUnitPositions.add(new Point(m, n));
-					}
+						//enemyUnitPositions.add(new Point(m, n));
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("D")) {
 						unitsOnMap[m][n] = new ZombieDogAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						enemyUnitPositions.add(new Point(m, n));
-					}
+						//enemyUnitPositions.add(new Point(m, n));
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("S")) {
 						unitsOnMap[m][n] = new SpitterAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						enemyUnitPositions.add(new Point(m, n));
-					}
+						//enemyUnitPositions.add(new Point(m, n));
+						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 				}
 			}
 		}
@@ -426,7 +427,8 @@ public class Map extends Observable implements Serializable {
 			while (!unitList.isEmpty()) {
 				unitsOnMap[k][r] = unitList.pop();
 				map[k][r].setOccupied(true);
-				goodUnitPositions.add(new Point(k, r));
+				//goodUnitPositions.add(new Point(k, r));
+				unitsOnMap[k][r].setCurrentPostion(k, r);
 				if (r != 1) {
 					r--;
 				} else {
@@ -442,7 +444,8 @@ public class Map extends Observable implements Serializable {
 			while (!unitList.isEmpty()) {
 				unitsOnMap[k][r] = unitList.pop();
 				map[k][r].setOccupied(true);
-				goodUnitPositions.add(new Point(k, r));
+				//goodUnitPositions.add(new Point(k, r));
+				unitsOnMap[k][r].setCurrentPostion(k, r);
 				if (r != 0) {
 					r--;
 				} else {
@@ -477,23 +480,25 @@ public class Map extends Observable implements Serializable {
 			map[moveToCol][moveToRow].setOccupied(true);
 
 			if (isPlayerTurn) {
-				for (Point p : goodUnitPositions) {
-					if (p.getX() == startCol && p.getY() == startRow) {
-						goodUnitPositions.remove(p);
-						goodUnitPositions.add(new Point(moveToCol, moveToRow));
-						break;
-					}
-				}
+				//for (Point p : goodUnitPositions){
+				//	if (p.getX() == startCol && p.getY() == startRow) {
+				//	goodUnitPositions.remove(p);
+				//	goodUnitPositions.add(new Point(moveToCol, moveToRow));
+				//	}
+				//}
+				unitsOnMap[moveToCol][moveToRow].setCurrentPostion(moveToCol, moveToRow);
 
 			} else {
 
-				for (Point p : enemyUnitPositions) {
-					if (p.getX() == startCol && p.getY() == startRow) {
-						enemyUnitPositions.remove(p);
-						enemyUnitPositions.add(new Point(moveToCol, moveToRow));
-						break;
-					}
-				}
+				//for (Point p : enemyUnitPositions) {
+				//	if (p.getX() == startCol && p.getY() == startRow) {
+				//		enemyUnitPositions.remove(p);
+				//		enemyUnitPositions.add(new Point(moveToCol, moveToRow));
+				//		break;
+				//	}
+				//}
+				
+				unitsOnMap[moveToCol][moveToRow].setCurrentPostion(moveToCol, moveToRow);
 			}
 		}
 
