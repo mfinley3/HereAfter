@@ -976,7 +976,7 @@ public class GameController implements Serializable {
 				map.setIsPlayerTurn();
 
 				//
-				for (Unit i : tempUnitList)
+				for (Unit i : player2.allAliveUnits())
 					i.setCanMove(false);
 				tempUnitList.clear();
 				currUnit = null;
@@ -1217,13 +1217,11 @@ public class GameController implements Serializable {
 
 				// if so, attack.
 				// TODO: Test
-				if (this.inAttackRange(temp.y, temp.x)) {
-					map.getUnitAt(temp.y, temp.x).reduceHealth(currUnit.getAttack());
-					
+				if (this.inAttackRange(temp.x, temp.y)) {
+					attack();
 				}
 
 				// If not, then move the AI closer to the player.
-
 				else
 					enemyMove(new Point(u.getX(),u.getY()));
 
@@ -1231,7 +1229,9 @@ public class GameController implements Serializable {
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
 				// map.getUnitAt(rowValue, colValue).setCanMove(false);
-				// tempUnitList.remove(map.getUnitAt(rowValue, colValue));
+				tempUnitList.remove(currUnit);
+				if(tempUnitList.isEmpty())
+					endTurn();
 			}
 
 			// tempUnitList.clear();
