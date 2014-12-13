@@ -1160,7 +1160,14 @@ public class GameController implements Serializable {
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
 
 		} else {
-			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!");
+			
+			if(map.getUnitAt(row, col).getNoDamage()){
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " had too high of a defense for it to be harmed");
+				map.getUnitAt(row, col).setNoDamage(false);
+			} else {
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!");
+
+			}
 		}
 	}
 

@@ -33,6 +33,8 @@ public abstract class Unit implements Serializable {
 	
 	protected int currentX, currentY;
 	protected boolean isSelected;
+	
+	private boolean noDamage;
 
 	/**
 	 * Instantiates a new unit.
@@ -133,7 +135,7 @@ public abstract class Unit implements Serializable {
 	 */
 	public void reduceHealth(int damage) {
 		if (damage <= getDefense()) {
-			return;
+			noDamage = true;
 		} else {
 			health -= (damage - defense);
 		}
@@ -378,6 +380,16 @@ public abstract class Unit implements Serializable {
 	
 	public int getY(){
 		return currentY;
+	}
+
+
+	public boolean getNoDamage() {
+		// TODO Auto-generated method stub
+		return noDamage;
+	}
+	
+	public void setNoDamage(boolean noDamage) {
+		this.noDamage = noDamage;
 	}
 	
 } // end of class Unit
