@@ -354,7 +354,8 @@ public class GameController implements Serializable {
 							}
 
 							else {
-								JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
+								if(playerTurn)
+									JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
 								System.out.println("Enemy out of attack range.");
 							}
 						} else
@@ -367,6 +368,14 @@ public class GameController implements Serializable {
 				JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
 		} else
 			JOptionPane.showMessageDialog(null, "Pick a unit to commit the attack before you try attacking...");
+		
+		if(currUnit !=null && !playerTurn){
+			currUnit.setCanMove(false);
+			tempUnitList.remove(currUnit);
+			currUnit = null;
+			if (tempUnitList.isEmpty())
+				endTurn();
+		}
 	}
 
 	// /**
@@ -1218,11 +1227,12 @@ public class GameController implements Serializable {
 	 */
 	public synchronized void enemyTurn() {
 		// TODO FINISH
+		List<Unit> enemyUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 
 		if (!playerTurn) {
 			Point temp = null;
 
-			for (Unit u : player2.allAliveUnits()) {
+			for (Unit u : enemyUnitList) {
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
@@ -1238,6 +1248,10 @@ public class GameController implements Serializable {
 					if(i == 3){
 						spawnEnemyUnit(u.getX(), u.getY());
 					}
+					
+					tempUnitList.remove(u);
+					if(tempUnitList.isEmpty())
+						endTurn();
 				}
 				
 				else if (this.inAttackRange(temp.x, temp.y)) {
@@ -1254,6 +1268,9 @@ public class GameController implements Serializable {
 				// map.getUnitAt(rowValue, colValue).setCanMove(false);
 			}
 		}
+		if(!playerTurn){
+			endTurn();
+		}
 	}
 
 	/**
@@ -1266,32 +1283,45 @@ public class GameController implements Serializable {
 	 */
 	private void spawnEnemyUnit(int col, int row) {
 		// TODO Get it working
+		
 		Random r = new Random();
 		int random = r.nextInt(4)+1;
 		
 		if(random==1){
 			// Place it one above
-			if(col < 49 && !(map.getSpace(row, col+1) instanceof space.WallSpace) && map.isOccupied(row, col)){
+			if(col < 49 && !(map.getSpace(col+1, row) instanceof WallSpace) && !map.isOccupied(row, col+1)){
+				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
 				map.addAIToMap(row, col+1);
+				player2.addUnits(map.getUnitAt(row, col+1));
 			}
 				
 		}
 		
 		else if(random==2){
-			if(row < 49 && !map.getSpace(row +1, col).getOccupied()){
+			if(row < 49 && !(map.getSpace(col, row+1) instanceof WallSpace) && !map.isOccupied(row+1, col)){
+				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
+
 				map.addAIToMap(row+1, col);
+				player2.addUnits(map.getUnitAt(row+1, col));
 			}
 		}
 		
 		else if(random==3){
-			if(col > 0 && !map.getSpace(row, col-1).getOccupied()){
+			if(col > 0 && !(map.getSpace(col-1, row) instanceof WallSpace) && !map.isOccupied(row, col-1)){
+				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
+
 				map.addAIToMap(row, col-1);
+				player2.addUnits(map.getUnitAt(row, col-1));
 			}
 		}
 		
 		else{
-			if(row > 0 && !map.getSpace(row, col-1).getOccupied()){
+			if(row > 0 && !(map.getSpace(col, row-1) instanceof WallSpace) && !map.isOccupied(row-1, col)){
+				JOptionPane.showMessageDialog(null, "New enemy Unit Spawned!");
+
 				map.addAIToMap(row -1, col);
+				player2.addUnits(map.getUnitAt(row-1, col));
+
 			}
 		}
 	}
