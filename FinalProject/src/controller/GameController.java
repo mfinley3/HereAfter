@@ -1274,7 +1274,9 @@ public class GameController implements Serializable {
 		
 		if(i==1){
 			// Place it one above
-			if(!map.getSpace(x, y+1).getOccupied())		
+			//if(!map.getSpace(row, col+1).getOccupied()){
+				
+			//}
 				
 		}
 		

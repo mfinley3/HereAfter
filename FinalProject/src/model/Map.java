@@ -260,9 +260,9 @@ public class Map extends Observable implements Serializable {
 							g.drawImage(corner, x, y, null);
 						}
 
-						x += 96;
+						x += 100;
 					}
-					y += 96;
+					y += 100;
 				}
 		}
 		return background;
@@ -809,6 +809,10 @@ public class Map extends Observable implements Serializable {
 
 	public void setScaleFactor(double scaleFactor) {
 		this.scaleFactor = scaleFactor;
+		
+	}
+	
+	public void addAIToMap(int row, int col){
 		
 	}
 }
