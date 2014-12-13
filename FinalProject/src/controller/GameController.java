@@ -1193,20 +1193,16 @@ public class GameController implements Serializable {
 				else
 					enemyMove(u);
 
-				System.out.println("Location initially trying to remove unit from: " + u.y + ", " + u.x);
-				// Values given from traverse are below
-				System.out.println("Should be: " + rowValue + ", " + colValue);
-
 				// TODO: empty curr list once all of the Ai has moved
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
-				map.getUnitAt(rowValue, colValue).setCanMove(false);
-				tempUnitList.remove(map.getUnitAt(rowValue, colValue));
+				//map.getUnitAt(rowValue, colValue).setCanMove(false);
+				//tempUnitList.remove(map.getUnitAt(rowValue, colValue));
 			}
 
-			tempUnitList.clear();
+			//tempUnitList.clear();
 
-			endTurn();
+			//endTurn();
 		}
 	}
 
@@ -1230,7 +1226,10 @@ public class GameController implements Serializable {
 		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
 		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).y;
 
-		map.moveUnit(em.y, em.x, rowValue, colValue);
+		endRow = rowValue;
+		endCol = colValue;
+		move();
+		//map.moveUnit(em.y, em.x, rowValue, colValue);
 		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
 	}
 
