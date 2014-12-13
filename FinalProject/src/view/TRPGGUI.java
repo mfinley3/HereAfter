@@ -53,7 +53,7 @@ public class TRPGGUI {
 			}
 		}
 
-		new Songs();
+		//new Songs();
 
 		mainFrame.setSize(996, 669);
 		mainFrame.setLocation(100, 10);

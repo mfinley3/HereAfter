@@ -50,8 +50,6 @@ public class GameController implements Serializable {
 
 	private GameTypeInterface gameType;
 	private Object winConditions;
-	private List<Point> playerLocals;
-	private List<Point> enemyLocals;
 
 	private boolean moveOn;
 	private int rowValue;
@@ -107,9 +105,6 @@ public class GameController implements Serializable {
 
 		// Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
-
-		enemyLocals = map.getEnemyUnitPositions();
-		playerLocals = map.getGoodUnitPositions();
 
 		checkWinConditions();
 	}
@@ -209,7 +204,6 @@ public class GameController implements Serializable {
 						// while not at end position
 						// change position
 						// repaint the graphical view, then Thread.sleep(20);
-						
 
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
@@ -293,8 +287,9 @@ public class GameController implements Serializable {
 	private void attackAfterMove() {
 
 		if (!gameOver) {
+			// TODO: Test
 
-			for (Point p : enemyLocals) {
+			for (Unit p : player2.allAliveUnits()) {
 
 				if (inAttackRange((int) p.getY(), (int) p.getX())) {
 					int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
@@ -577,11 +572,19 @@ public class GameController implements Serializable {
 							map.updateObservers();
 
 						} // end Mine
-						
-						if(usingItemType == ItemType.GRENADE){
-							
-							JOptionPane.showMessageDialog(null, "Your " +  map.getUnitAt(currRow, currCol).getUnitType() + "threw a grenade.");
-							blowShitUp(100, endCol, endRow, 4);
+
+						if (usingItemType == ItemType.GRENADE) {
+
+							JOptionPane.showMessageDialog(null, "Your " + map.getUnitAt(currRow, currCol).getUnitType() + " threw a grenade.");
+							blowShitUp(endRow, endCol);
+							currUnit.setCanMove(false);
+							currUnit.removeItem(usingItemType);
+							tempUnitList.remove(currUnit);
+							currUnit = null;
+							endRow = 51;
+							endCol = 51;
+							map.resetMapCanMove();
+							map.updateObservers();
 						}
 
 					} else
@@ -604,29 +607,55 @@ public class GameController implements Serializable {
 	 * @param it
 	 *            , the ItemType of the explosive used
 	 */
-	private void blowShitUp(int attackPower, int row, int col, int spacesLeft) {
-		
+	private void blowShitUp(int row, int col) {
+
+		int baseRow = row;
+		int baseCol = col;
+
 		if (map.getSpace(col, row).getOccupied()) {
-			System.out.println(map.getUnitAt(col, row).getUnitType());
-			map.getUnitAt(row, col).reduceHealth(attackPower);
-			targetDead(col, row);
-			gameOver();
+			if (!(SameTeam())) {
+				map.getUnitAt(row, col).reduceHealth(100);
+				targetDead(row, col);
+				row = baseRow;
+				col = baseCol;
+
+			}
 		}
 
-		// Recurse
-		if (spacesLeft > 0) {
-			if (row < 49)
-				if (map.getSpace(row + 1, col).getWalkable())
-					blowShitUp(attackPower, row + 1, col, spacesLeft - 1);
-			if (row > 0)
-				if (map.getSpace(row - 1, col).getWalkable())
-					blowShitUp(attackPower, row - 1, col, spacesLeft - 1);
-			if (col < 49)
-				if (map.getSpace(row, col + 1).getWalkable())
-					blowShitUp(attackPower, row, col + 1, spacesLeft - 1);
-			if (col > 0)
-				if (map.getSpace(row, col - 1).getWalkable())
-					blowShitUp(attackPower, row, col - 1, spacesLeft - 1);
+		if (map.getSpace(col, row + 1).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row + 1, col).reduceHealth(75);
+				targetDead(row + 1, col);
+				row = baseRow;
+				col = baseCol;
+			}
+		}
+
+		if (map.getSpace(col, row - 1).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row - 1, col).reduceHealth(75);
+				targetDead(row - 1, col);
+				row = baseRow;
+				col = baseCol;
+			}
+		}
+
+		if (map.getSpace(col + 1, row).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row, col + 1).reduceHealth(75);
+				targetDead(row, col + 1);
+				row = baseRow;
+				col = baseCol;
+			}
+		}
+
+		if (map.getSpace(col - 1, row).getOccupied()) {
+			if (!(SameTeam())) {
+				map.getUnitAt(row, col - 1).reduceHealth(75);
+				targetDead(row, col - 1);
+				row = baseRow;
+				col = baseCol;
+			}
 		}
 	}
 
@@ -931,8 +960,6 @@ public class GameController implements Serializable {
 
 				System.out.println("Player 1 ends turn.");
 
-				playerLocals = map.getGoodUnitPositions();
-
 				// Switch to AI
 				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 				for (Unit i : tempUnitList)
@@ -949,12 +976,10 @@ public class GameController implements Serializable {
 				map.setIsPlayerTurn();
 
 				//
-				for (Unit i : tempUnitList)
+				for (Unit i : player2.allAliveUnits())
 					i.setCanMove(false);
 				tempUnitList.clear();
 				currUnit = null;
-
-				enemyLocals = map.getEnemyUnitPositions();
 
 				// Switch to player, add one to turns
 				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
@@ -1128,7 +1153,7 @@ public class GameController implements Serializable {
 			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
 
 		} else {
-			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(endRow, endCol).getUnitType() + " was left with " + map.getUnitAt(endRow, endCol).getHealth() + " health after the attack!");
+			JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!");
 		}
 	}
 
@@ -1169,8 +1194,8 @@ public class GameController implements Serializable {
 	 * 
 	 * @return A List of Points with all of the locations of monsters.
 	 */
-	public List<Point> getPlayerUnits() {
-		return map.getGoodUnitPositions();
+	public List<Unit> getPlayerUnits() {
+		return player1.allAliveUnits();
 	}
 
 	/**
@@ -1182,35 +1207,36 @@ public class GameController implements Serializable {
 		if (!playerTurn) {
 			Point temp = null;
 
-			for (Point u : enemyLocals) {
+			for (Unit u : player2.allAliveUnits()) {
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
-				temp = this.nearestPlayerUnit(u);
-				this.setCurrentUnit(u.y, u.x);
+				temp = this.nearestPlayerUnit(new Point(u.getX(),u.getY()));
+				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
-				
+
 				// if so, attack.
 				// TODO: Test
-				if (this.inAttackRange(endRow, endCol)) {
-					this.attack();
+				if (this.inAttackRange(temp.x, temp.y)) {
+					attack();
 				}
 
 				// If not, then move the AI closer to the player.
-
 				else
-					enemyMove(u);
+					enemyMove(new Point(u.getX(),u.getY()));
 
 				// TODO: empty curr list once all of the Ai has moved
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
-				//map.getUnitAt(rowValue, colValue).setCanMove(false);
-				//tempUnitList.remove(map.getUnitAt(rowValue, colValue));
+				// map.getUnitAt(rowValue, colValue).setCanMove(false);
+				tempUnitList.remove(currUnit);
+				if(tempUnitList.isEmpty())
+					endTurn();
 			}
 
-			//tempUnitList.clear();
+			// tempUnitList.clear();
 
-			//endTurn();
+			// endTurn();
 		}
 	}
 
@@ -1227,8 +1253,6 @@ public class GameController implements Serializable {
 		 * Locations 3) Player's XY values 4) Send these params to
 		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
 		 */
-
-		playerLocals = getPlayerUnits();
 		Point p = nearestPlayerUnit(em);
 
 		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
@@ -1237,7 +1261,7 @@ public class GameController implements Serializable {
 		endRow = rowValue;
 		endCol = colValue;
 		move();
-		//map.moveUnit(em.y, em.x, rowValue, colValue);
+		// map.moveUnit(em.y, em.x, rowValue, colValue);
 		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
 	}
 
@@ -1253,11 +1277,11 @@ public class GameController implements Serializable {
 		int tempSN = 0;
 		Point toReturn = null;
 
-		for (Point p : playerLocals) {
-			tempSN = Math.abs(enemyLoc.x - p.x) + Math.abs(enemyLoc.y - p.y);
+		for (Unit p : player1.allAliveUnits()) {
+			tempSN = Math.abs(enemyLoc.x - p.getX()) + Math.abs(enemyLoc.y - p.getY());
 			if (tempSN < spaceNear || spaceNear == 0) {
 				spaceNear = tempSN;
-				toReturn = p;
+				toReturn = new Point (p.getX(), p.getY());
 			}
 		}
 
@@ -1281,12 +1305,12 @@ public class GameController implements Serializable {
 		// TODO Auto-generated method stub
 		this.hasAttacked = hasAttacked;
 	}
-	
+
 	// TODO: add unit .isSelected to change
-	// 		 add unit .cantMove
-	
-	public void setCurrentUnitSelected(boolean v){
-		if(currUnit!=null){
+	// add unit .cantMove
+
+	public void setCurrentUnitSelected(boolean v) {
+		if (currUnit != null) {
 			currUnit.setIsSelected(v);
 		}
 	}
