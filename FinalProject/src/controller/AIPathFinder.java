@@ -165,15 +165,15 @@ public class AIPathFinder implements Serializable{
 	/**
 	 * @return the mineLocations
 	 */
-	public ArrayList<Point> getMineLocations() {
+	public ArrayList<Point> getSteppedOnMines() {
 		return mineLocations;
 	}
 
 	/**
 	 * @param mineLocations the mineLocations to set
 	 */
-	public void setMineLocations(ArrayList<Point> mineLocations) {
-		this.mineLocations = mineLocations;
+	public void clearSteppedOnMines() {
+		this.mineLocations = new ArrayList<Point>();
 	}
 
 } // end of class
