@@ -133,6 +133,7 @@ public class SetupPanel extends JPanel implements Observer {
 	 * their units and user name. It adds a label, picture, and text area for
 	 * each unit.
 	 */
+	
 	private void selectUnit() {
 
 		title = new JLabel("HereAfter");
@@ -390,26 +391,10 @@ public class SetupPanel extends JPanel implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!(controller.getCurrentUnit() == null)) {
-				Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
-				int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			
+				controller.useItem();
+					
 				
-				if (answer == JOptionPane.YES_OPTION) {
-					controller.useItem(ItemType.MEDKIT); 
-					
-				} else if (answer == JOptionPane.NO_OPTION) {
-					controller.useItem(ItemType.MINE); 
-					
-				} else if (answer == JOptionPane.CANCEL_OPTION) {
-					controller.useItem(ItemType.GRENADE); 
-					
-				} else {
-					
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Please select a unit you wish to have use an item first.");
-			}
 		}
 	}
 

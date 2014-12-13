@@ -8,7 +8,7 @@ import javax.swing.JTextArea;
 
 public class ItemHelpWindow extends JFrame implements Runnable {
 
-	private JTextArea attackBoost;
+	private JTextArea description;
 	private JTextArea defenceBoost;
 	private JTextArea healthBoost;
 	private JTextArea mine;
@@ -31,12 +31,11 @@ public class ItemHelpWindow extends JFrame implements Runnable {
 		description = new JTextArea();
 		description.setEditable(false);
 		description.setBackground(Color.WHITE);
-		description.setText( "About this Window: This Window shows the stats of each unit type.\n"
-					+ "     Attack - How much damage a unit can do.\n"
-					+ "     Defense - How much damage is negaged when attacked.\n"
-					+ "     Health - All Units Start with a base 100 health.\n"
-					+ "     Range - How far a unit can interact with things.\n"
-					+ "     Movement - How far a unit can move on the map in one turn.\n"
-					+ "     Items - The items a unit is currently holding.\n");
+		description.setText( "About this Window: This Window shows what each item does.\n"
+					+ "     An item is either a boost or useable item.\n"
+					+ "     A useable item can be used by units in game to affect other units.\n"
+					+ "     The usable items are Health kits, Gernades and Mines .\n"
+					+ "     Boosts affect units base stats.\n"
+					+ "     The boosts items are attack, defense and health.\n");
 	}
 }

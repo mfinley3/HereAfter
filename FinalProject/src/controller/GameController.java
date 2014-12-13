@@ -37,8 +37,8 @@ public class GameController implements Serializable {
 
 	private int currRow;
 	private int currCol;
-	private int endRow;
-	private int endCol;
+	private int endRow = 51;
+	private int endCol = 51;
 	private Player currPlayer;
 
 	private GameTypeInterface gameType;
@@ -55,6 +55,8 @@ public class GameController implements Serializable {
 	boolean notShownNE;
 	boolean notShownSW;
 	boolean notShownSE;
+
+	private ItemType usingItemType;
 
 	/**
 	 * Constructor for one player.
@@ -227,7 +229,7 @@ public class GameController implements Serializable {
 				}
 
 				if (currUnit == null)
-					JOptionPane.showMessageDialog(null, "Please select a Unit");
+					JOptionPane.showMessageDialog(null, "Please select a Unit to move first");
 				else if (!currUnit.canMove())
 					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
 				else if (map.isOccupied(endRow, endCol))
@@ -249,7 +251,7 @@ public class GameController implements Serializable {
 		if (!(itemsOnMap[endCol][endRow] == null)) {
 
 			if (itemsOnMap[endCol][endRow] instanceof RandomItem) {
-				
+
 				Item newItem = RandomItem.generateItem();
 				if (newItem.getItemType() == ItemType.MEDKIT)
 					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic medkit!");
@@ -268,7 +270,7 @@ public class GameController implements Serializable {
 					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up an attack boost!");
 				if (newItem.getItemType() == ItemType.DEF)
 					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a defense boost!");
-				
+
 				currUnit.addItem(newItem);
 				currUnit.UpdateBoosts();
 			}
@@ -313,48 +315,52 @@ public class GameController implements Serializable {
 	 * @return
 	 */
 	public void attack() {
-		// Checks to see if the target is in range.
-		if (endRow != 51 || endCol != 51) {
 
-			// Makes sure that the target is not the current unit
-			if (currUnit != map.getUnitAt(endRow, endCol)) {
+		if (!(currUnit == null)) {
 
-				// Checks to see if on the same side.
-				if (!SameTeam()) {
+			if (endRow != 51 || endCol != 51) {
 
-					// Checks to see if either of the units are false.
-					if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
-						// if both exist, check if one can move
-						if (inAttackRange(currRow, currCol)) {
-							actAttack();
+				// Makes sure that the target is not the current unit
+				if (currUnit != map.getUnitAt(endRow, endCol)) {
 
-							// If no other unit can move, end the turn
-							currUnit.setCanMove(false);
-							tempUnitList.remove(currUnit);
-							currUnit = null;
-							endRow = 51;
-							endCol = 51;
+					// Checks to see if on the same side.
+					if (!SameTeam()) {
 
-							map.resetMapCanMove();
+						// Checks to see if either of the units are false.
+						if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
+							// if both exist, check if one can move
+							if (inAttackRange(currRow, currCol)) {
+								actAttack();
 
-							gameOver();
-							map.updateObservers();
-							if (tempUnitList.isEmpty())
-								endTurn();
-						}
+								// If no other unit can move, end the turn
+								currUnit.setCanMove(false);
+								tempUnitList.remove(currUnit);
+								currUnit = null;
+								endRow = 51;
+								endCol = 51;
 
-						else {
-							JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
-							System.out.println("Enemy out of attack range.");
-						}
+								map.resetMapCanMove();
+
+								gameOver();
+								map.updateObservers();
+								if (tempUnitList.isEmpty())
+									endTurn();
+							}
+
+							else {
+								JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
+								System.out.println("Enemy out of attack range.");
+							}
+						} else
+							JOptionPane.showMessageDialog(null, "Nothing to Attack!");
 					} else
-						JOptionPane.showMessageDialog(null, "Nothing to Attack!");
+						JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
 				} else
-					JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
+					JOptionPane.showMessageDialog(null, "You can't attack youself!");
 			} else
-				JOptionPane.showMessageDialog(null, "You can't attack youself!");
+				JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
 		} else
-			JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
+			JOptionPane.showMessageDialog(null, "Pick a unit to commit the attack before you try attacking...");
 	}
 
 	// /**
@@ -483,87 +489,81 @@ public class GameController implements Serializable {
 	 * 
 	 * @return if the item was used.
 	 */
-	public void useItem(ItemType item) {
-		/*
-		 * TODO Finish this!
-		 * Doesn't know what to do with each one. Fix it.
-		 */
+	public void useItem() {
 
-		if (currUnit.hasItem(item)) {
+		if (!(currUnit == null)) {
+			if (endRow != 51 || endCol != 51) {
+				if (inAttackRange(endRow, endCol)) {
 
-			Item itemBeingUsed = currUnit.removeItem(item);
+					Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
+					int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-			if (itemBeingUsed != null) {
+					if (answer == JOptionPane.YES_OPTION) {
+						usingItemType = ItemType.MEDKIT;
 
-				if (itemBeingUsed instanceof UsableItem) {
-					// If it is a mine, place it on the map.
-					if (itemBeingUsed.getItemType() == ItemType.MINE) {
-						// TODO Place mine on space
-						map.getSpace(currRow, currCol).setHasMine(true);
+					} else if (answer == JOptionPane.NO_OPTION) {
+						usingItemType = ItemType.MINE;
+
+					} else if (answer == JOptionPane.CANCEL_OPTION) {
+						usingItemType = ItemType.GRENADE;
+
+					} else {
+
 					}
 
-					// If health item, use on target space/self
-					else if (itemBeingUsed.getItemType() == ItemType.MEDKIT) {
-						// TODO Place mine on space
-						Object[] options = { "Self", "Target", "Cancel" };
-						int answer = JOptionPane.showOptionDialog(null, "Who to heal?", "Would you like to heal the target or the current unit?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+					if (currUnit.hasItem(usingItemType)) {
 
-						if (answer == JOptionPane.YES_OPTION) {
-							currUnit.restoreHealth(itemBeingUsed.useItem());
-							currUnit.setCanMove(false);
-							tempUnitList.remove(currUnit);
-							gameOver();
-							if (tempUnitList.isEmpty())
-								endTurn();
-						}
+						if (usingItemType == ItemType.MEDKIT) {
 
-						else if (answer == JOptionPane.NO_OPTION) {
-							map.getUnitAt(endRow, endCol).restoreHealth(itemBeingUsed.useItem());
-							currUnit.setCanMove(false);
-							tempUnitList.remove(currUnit);
-							gameOver();
-							if (tempUnitList.isEmpty())
-								endTurn();
-						}
+							if (!(map.getUnitAt(endRow, endCol) == null)) {
 
-						else {
-							// Put it back
-							currUnit.addItem(itemBeingUsed);
+								if (SameTeam()) {
 
-						}
-					}
+									map.getUnitAt(endRow, endCol).restoreHealth();
+									JOptionPane.showMessageDialog(null, "The " + map.getUnitAt(endRow, endCol).getUnitType() + " you selected has had their health fully restored.");
+									currUnit.setCanMove(false);
+									currUnit.removeItem(usingItemType);
+									tempUnitList.remove(currUnit);
+									currUnit = null;
+									endRow = 51;
+									endCol = 51;
+									map.resetMapCanMove();
+									map.updateObservers();
 
-					// If it's a grenade, use on target space.
-					// TODO Add range functionality
+								} else
+									JOptionPane.showMessageDialog(null, "You don't want to heal a " + map.getUnitAt(endRow, endCol).getUnitType() + "!");
 
-					else if (itemBeingUsed.getItemType() == ItemType.GRENADE) {
-						// TODO Throw the Grenade
-						if (endRow != currRow || endCol != currCol) {
-							blowShitUp(itemBeingUsed.useItem(), endRow, endCol, 2);
-							currUnit.setCanMove(false);
-							tempUnitList.remove(currUnit);
-							gameOver();
-							if (tempUnitList.isEmpty())
-								endTurn();
-						}
+							} else
+								JOptionPane.showMessageDialog(null, "There is nothing there to heal!");
+						} //end health kit
+						
+							if (usingItemType == ItemType.MINE) {
+								
+								JOptionPane.showMessageDialog(null, "A Mine has been placed");
+								map.getSpace(endRow, endCol).setHasMine(true);
+								currUnit.setCanMove(false);
+								currUnit.removeItem(usingItemType);
+								tempUnitList.remove(currUnit);
+								currUnit = null;
+								endRow = 51;
+								endCol = 51;
+								map.resetMapCanMove();
+								map.updateObservers();
+								
+							} //end Mine
+							
+						
 
-						else {
-							currUnit.addItem(itemBeingUsed);
+					} else
+						JOptionPane.showMessageDialog(null, "The unit you selected does not have that item.");
+				} else
+					JOptionPane.showMessageDialog(null, "The place you are tying to use the item is out of this units range");
 
-						}
-					}
+			} else
+				JOptionPane.showMessageDialog(null, "Pick a space to use the Item first");
 
-				} else {
-
-				}
-
-			} else {
-
-			}
-
-		} else {
-			JOptionPane.showMessageDialog(null, "The unit you selected does not have that item.");
-		}
+		} else
+			JOptionPane.showMessageDialog(null, "Pick a unit to use an Item first");
 
 	}
 
@@ -1165,7 +1165,8 @@ public class GameController implements Serializable {
 	 * TODO Write this Method for automatically moving the enemy AI. Moves them
 	 * toward the closest human based on their behavior. If they are near enough
 	 * to a player's unit, attack.
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public synchronized void enemyMove(Point em) {
 		/*
