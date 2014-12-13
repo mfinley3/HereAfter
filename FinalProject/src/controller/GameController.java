@@ -200,10 +200,10 @@ public class GameController implements Serializable {
 						if (playerTurn)
 							pickUpItem();
 
-						// Animate the move
-						// while not at end position
-						// change position
-						// repaint the graphical view, then Thread.sleep(20);
+						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
+							currUnit instanceof Sniper || currUnit instanceof Soldier)
+							goodUnitMove();
+						
 
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
@@ -222,6 +222,7 @@ public class GameController implements Serializable {
 							tempUnitList.remove(currUnit);
 							currUnit = null;
 						}
+						setCurrentUnitSelected(true);
 						map.updateObservers();
 
 						if (tempUnitList.isEmpty())
