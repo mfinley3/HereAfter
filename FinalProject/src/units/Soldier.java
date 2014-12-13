@@ -45,9 +45,9 @@ public class Soldier extends Unit {
 				System.out.println("Could not find picture file");
 			}
 		}
-		if (isSelected)
+		if (super.isSelected())
 			sold = soldSelect;
-		if (cantMove)
+		if (!super.canMove()) //If the soldier cannot move
 			sold = soldCantMove;
 		g.drawImage(sold, super.currentX, super.currentY, null);
 

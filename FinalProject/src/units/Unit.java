@@ -40,6 +40,7 @@ public abstract class Unit implements Serializable {
 	private boolean healthSet;
 	
 	protected int currentX, currentY;
+	protected boolean isSelected;
 
 	/**
 	 * Instantiates a new unit.
@@ -84,6 +85,10 @@ public abstract class Unit implements Serializable {
 	public void setCurrentPosition(int x, int y) {
 		currentX = x;
 		currentY = y;
+	}
+	
+	public void setIsSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 
 	/**
