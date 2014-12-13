@@ -576,7 +576,7 @@ public class GameController implements Serializable {
 						if (usingItemType == ItemType.GRENADE) {
 
 							JOptionPane.showMessageDialog(null, "Your " + map.getUnitAt(currRow, currCol).getUnitType() + " threw a grenade.");
-							blowShitUp(100, endRow, endCol);
+							blowShitUp(endRow, endCol);
 							currUnit.setCanMove(false);
 							currUnit.removeItem(usingItemType);
 							tempUnitList.remove(currUnit);
@@ -607,61 +607,56 @@ public class GameController implements Serializable {
 	 * @param it
 	 *            , the ItemType of the explosive used
 	 */
-	private void blowShitUp(int attackPower, int row, int col) {
+	private void blowShitUp(int row, int col) {
 
 		int baseRow = row;
 		int baseCol = col;
-		
+
 		if (map.getSpace(col, row).getOccupied()) {
 			if (!(SameTeam())) {
-				map.getUnitAt(row, col).reduceHealth(attackPower);
+				map.getUnitAt(row, col).reduceHealth(100);
 				targetDead(row, col);
 				row = baseRow;
 				col = baseCol;
-				
+
 			}
 		}
 
 		if (map.getSpace(col, row + 1).getOccupied()) {
 			if (!(SameTeam())) {
-				map.getUnitAt(row + 1, col).reduceHealth(attackPower);
+				map.getUnitAt(row + 1, col).reduceHealth(75);
 				targetDead(row + 1, col);
 				row = baseRow;
 				col = baseCol;
 			}
 		}
-		
 
 		if (map.getSpace(col, row - 1).getOccupied()) {
 			if (!(SameTeam())) {
-				map.getUnitAt(row - 1, col).reduceHealth(attackPower);
+				map.getUnitAt(row - 1, col).reduceHealth(75);
 				targetDead(row - 1, col);
 				row = baseRow;
 				col = baseCol;
 			}
 		}
-		
 
 		if (map.getSpace(col + 1, row).getOccupied()) {
 			if (!(SameTeam())) {
-				map.getUnitAt(row, col + 1).reduceHealth(attackPower);
+				map.getUnitAt(row, col + 1).reduceHealth(75);
 				targetDead(row, col + 1);
 				row = baseRow;
 				col = baseCol;
 			}
 		}
-		
 
 		if (map.getSpace(col - 1, row).getOccupied()) {
 			if (!(SameTeam())) {
-				map.getUnitAt(row, col - 1).reduceHealth(attackPower);
+				map.getUnitAt(row, col - 1).reduceHealth(75);
 				targetDead(row, col - 1);
 				row = baseRow;
 				col = baseCol;
 			}
 		}
-		
-
 	}
 
 	/**
@@ -1219,7 +1214,7 @@ public class GameController implements Serializable {
 				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
-				
+
 				// if so, attack.
 				// TODO: Test
 				if (this.inAttackRange(temp.y, temp.x)) {
@@ -1235,13 +1230,13 @@ public class GameController implements Serializable {
 				// TODO: empty curr list once all of the Ai has moved
 				// map.getUnitAt(u.y, u.x).setCanMove(false);
 				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
-				//map.getUnitAt(rowValue, colValue).setCanMove(false);
-				//tempUnitList.remove(map.getUnitAt(rowValue, colValue));
+				// map.getUnitAt(rowValue, colValue).setCanMove(false);
+				// tempUnitList.remove(map.getUnitAt(rowValue, colValue));
 			}
 
-			//tempUnitList.clear();
+			// tempUnitList.clear();
 
-			//endTurn();
+			// endTurn();
 		}
 	}
 
@@ -1266,7 +1261,7 @@ public class GameController implements Serializable {
 		endRow = rowValue;
 		endCol = colValue;
 		move();
-		//map.moveUnit(em.y, em.x, rowValue, colValue);
+		// map.moveUnit(em.y, em.x, rowValue, colValue);
 		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
 	}
 
@@ -1310,12 +1305,12 @@ public class GameController implements Serializable {
 		// TODO Auto-generated method stub
 		this.hasAttacked = hasAttacked;
 	}
-	
+
 	// TODO: add unit .isSelected to change
-	// 		 add unit .cantMove
-	
-	public void setCurrentUnitSelected(boolean v){
-		if(currUnit!=null){
+	// add unit .cantMove
+
+	public void setCurrentUnitSelected(boolean v) {
+		if (currUnit != null) {
 			currUnit.setIsSelected(v);
 		}
 	}
