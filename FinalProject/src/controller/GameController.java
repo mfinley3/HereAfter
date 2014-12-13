@@ -249,6 +249,23 @@ public class GameController implements Serializable {
 			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
 
 	}
+	
+	
+	
+// Animate the move
+// while not at end position
+// change position
+// repaint the graphical view, then Thread.sleep(20);
+
+	private void goodUnitMove() {
+		rowValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).x;
+		colValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).y;
+
+		endRow = rowValue;
+		endCol = colValue;
+		aiMove.getMovePositions();
+	}
+
 
 	private void pickUpItem() {
 
