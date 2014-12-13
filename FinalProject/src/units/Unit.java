@@ -3,16 +3,8 @@ package units;
 import item.*;
 
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.swing.Timer;
-
-import sprites.Sprite;
 
 /**
  * The abstract Unit class. Used in creating new units and keeping track of each

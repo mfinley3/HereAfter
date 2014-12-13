@@ -1,6 +1,11 @@
 package units;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import item.*;
 
@@ -9,6 +14,9 @@ import item.*;
  */
 public class Doctor extends Unit {
 
+	
+	transient private BufferedImage docGen, docSelect, docCantMove, doc;
+	
 	/**
 	 * Instantiates a new doctor.
 	 *
@@ -26,8 +34,21 @@ public class Doctor extends Unit {
 
 	@Override
 	public void drawUnit(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		if (doc == null) {
+			try {
+				docSelect = ImageIO.read(new File("Doctor1Selected.png"));
+				docCantMove = ImageIO.read(new File("Doctor1CantMove.png"));
+				docGen = ImageIO.read(new File("Doctor1.png"));
+				doc = docGen;
+			} catch (IOException e) {
+				System.out.println("Could not find picture file");
+			}
+		}
+		if (super.isSelected)
+			doc = docSelect;
+		if (!super.canMove()) //If the soldier cannot move
+			doc = docCantMove;
+		g.drawImage(doc, super.currentX, super.currentY, null);
 	}
 	
 } // end of Doctor

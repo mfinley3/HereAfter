@@ -28,8 +28,6 @@ import javax.swing.Timer;
 
 import model.Map;
 import space.Space;
-import sprites.Explosion;
-import sprites.SpriteObject;
 import units.AlphaProtectorAI;
 import units.CarrierAI;
 import units.Doctor;
@@ -85,18 +83,6 @@ public class GraphicalView extends JPanel implements Observer {
 	
 
 		try {
-			waste = ImageIO.read(new File("WasteLandSpace.jpg"));
-			indoorWaste = ImageIO.read(new File("IndoorWasteLandSpace.jpg"));
-			bridge = ImageIO.read(new File("BridgeSpace.jpg"));
-			corner = ImageIO.read(new File("CornerSpace.jpg"));
-			mountain = ImageIO.read(new File("MountainSpace.jpg"));
-			path = ImageIO.read(new File("PathSpace.jpg"));
-			indoorPathSpace = ImageIO.read(new File("IndoorPathSpace.png"));
-			indoorPath = ImageIO.read(new File("IndoorPath.jpg"));
-			tower = ImageIO.read(new File("TowerSpace.jpg"));
-			wall = ImageIO.read(new File("WallSpace.jpg"));
-			indoorWall = ImageIO.read(new File("IndoorWall.png"));
-			water = ImageIO.read(new File("WaterSpace.jpg"));
 			hole = ImageIO.read(new File("HoleSpace.png"));
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
 			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
@@ -282,19 +268,51 @@ public class GraphicalView extends JPanel implements Observer {
 		int x = 0;
 		int y = 0;
 
-		g2.drawImage(map.getBackground(), 0, 0, null);
 		
-		boolean attackHasHappened = controller.getHasAttacked();
+		
+		g2.drawImage(map.getBackground(), 0, 0, null);
+//		controller.getCurrentUnit().drawUnit(g2);
+		
+		
+
 		
 		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
-					
-//				if(currentSpaces[col][row].hasMine())
-//					g2.drawImage(mine, x, y, null);
-					
-				if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+
+					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(bridgeWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(mountainWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(pathWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorPathWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(towerWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(wasteWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(indoorWasteWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(waterWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
+						if(currentSpaces[col][row].hasMine())
+							g2.drawImage(cornerWithMine, x, y, null);
+					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
+						
 						if (!type.equalsIgnoreCase("survive")) {
 							if(currentSpaces[col][row].hasMine())
 								g2.drawImage(holeCoveredWithMine, x, y, null);
