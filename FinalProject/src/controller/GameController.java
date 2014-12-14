@@ -1284,6 +1284,8 @@ public class GameController implements Serializable {
 		return player1.allAliveUnits();
 	}
 	
+	private Point toAttack;
+	
 	/**
 	 * 
 	 */
@@ -1295,16 +1297,25 @@ public class GameController implements Serializable {
 			Point temp = null;
 
 			for (Unit u : enemyUnitList) {
+				toAttack = null;
+				
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
 				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
-
-				if (this.inAttackRange(temp.x, temp.y)) {
-					attack();
+				
+				// TODO add attack method. If it is around them, and they are not a whole, attack.
+				
+				if(u.canMove()){
+					if(aIInAttackRange(u.getX(), u.getY(), u.getRange())){
+						
+					}
 				}
+				//if (this.inAttackRange()) {
+				//	attack();
+				//}
 
 				// If not, then move the AI closer to the player.
 				else
@@ -1322,6 +1333,27 @@ public class GameController implements Serializable {
 	}
 
 	/**
+	 * Attacks the nearest unit
+	 * @param k 
+	 * @param col 
+	 * @param row 
+	 * @return
+	 */
+	private boolean aIInAttackRange(int row, int col, int rangeLeft) {
+		// TODO Auto-generated method stub
+		
+		if(rangeLeft == 0&& map.isOccupied(row, col))
+			if(player1.allAliveUnits().contains(map.getUnitAt(row, col))){
+				if(toAttack==null){
+					toAttack = new Point(row,col);
+					toReturn = true;
+				}
+			}
+		
+		return false;
+	}
+
+	/**
 	 * TODO Write this Method for automatically moving the enemy AI. Moves them
 	 * toward the closest human based on their behavior. If they are near enough
 	 * to a player's unit, attack.
@@ -1329,11 +1361,6 @@ public class GameController implements Serializable {
 	 * @return
 	 */
 	public synchronized void enemyMove(Point em) {
-		/*
-		 * TODO: Add these things 1) Nearest Player Method 2) List of Enemy Unit
-		 * Locations 3) Player's XY values 4) Send these params to
-		 * AIPathfinder.traverse(): AiROW, AI COLUMN, PlayerPointLIst
-		 */
 		Point p = nearestPlayerUnit(em);
 
 		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
@@ -1360,7 +1387,7 @@ public class GameController implements Serializable {
 
 		for (Unit p : player1.allAliveUnits()) {
 			tempSN = Math.abs(enemyLoc.x - p.getX()) + Math.abs(enemyLoc.y - p.getY());
-			if (tempSN < spaceNear || spaceNear == 0) {
+			if (tempSN <= spaceNear || spaceNear == 0) {
 				spaceNear = tempSN;
 				toReturn = new Point(p.getX(), p.getY());
 			}
