@@ -216,10 +216,14 @@ public class GameController implements Serializable {
 						// Take the unit that can no longer move out of the
 						// tempUnitList
 						if (!moveOn) {
+							try{
 							currUnit.setCanMove(false);
 							tempUnitList.remove(currUnit);
 							setCurrentUnitSelected(false);
 							currUnit = null;
+							}catch (Exception e){
+								
+							}
 						}
 						
 						endRow = 51;
@@ -355,7 +359,7 @@ public class GameController implements Serializable {
 						endCol = (int) p.getX();
 						endRow = (int) p.getY();
 						attack();
-
+						
 						break;
 
 					}
