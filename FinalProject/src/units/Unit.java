@@ -12,65 +12,28 @@ import java.util.ArrayList;
  * of the units stats.
  */
 public abstract class Unit implements Serializable {
-	
-	/** The item list. */
 	public ArrayList<Item> itemList = new ArrayList<Item>();
-
-	/** The can move. */
 	private boolean canMove;
-	
-	/** The attack. */
 	private int attack;
-	
-	/** The defense. */
 	private int defense;
-	
-	/** The movement. */
 	private int movement;
-	
-	/** The health. */
 	private int health;
-	
-	/** The range. */
 	private int range;
-
-	/** The base attack. */
 	private int baseAttack;
-	
-	/** The base defense. */
 	private int baseDefense;
-	
-	/** The base health. */
 	private int baseHealth;
-	
-	/** The unit type. */
 	private String unitType;
-	
-	/** The difficulty. */
 	private Double difficulty;
-
-	/** The attack set. */
 	private boolean attackSet;
-	
-	/** The defense set. */
 	private boolean defenseSet;
-	
-	/** The health set. */
 	private boolean healthSet;
-	
-	/** The current y. */
 	protected int currentX, currentY;
-	
-	/** The is selected. */
 	protected boolean isSelected;
-	
-	/** The no damage. */
 	private boolean noDamage;
 
-
-
 	/**
-	 * Instantiates a new unit.
+	 * Instantiates a new unit. These are the game pieces that will be placed on
+	 * the map.
 	 *
 	 * @param unitType
 	 *            the unit type
@@ -89,12 +52,13 @@ public abstract class Unit implements Serializable {
 	 * @param difficulty
 	 *            the difficulty
 	 */
-	public Unit(String unitType, Item item, int attack, int defense, int health, int movement, int range, double difficulty){
+	public Unit(String unitType, Item item, int attack, int defense,
+			int health, int movement, int range, double difficulty) {
 
 		this.baseAttack = attack;
 		this.baseDefense = defense;
 		this.baseHealth = health;
-		
+
 		this.unitType = unitType;
 		itemList.add(item); // Adds each Unit's given item to their list
 		this.attack = attack;
@@ -103,31 +67,35 @@ public abstract class Unit implements Serializable {
 		this.movement = movement;
 		this.difficulty = difficulty;
 		this.range = range;
-		
+
 	}
 
 	/**
 	 * Will be responsible for drawing the unit in the Graphical View.
 	 *
-	 * @param g the g
+	 * @param g
+	 *            the g
 	 */
 	abstract public void drawUnit(Graphics g);
 
 	/**
 	 * Sets the CurrentPostition of the unit. Changed when the unit moves/
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void setCurrentPosition(int x, int y) {
 		currentX = x;
 		currentY = y;
 	}
-	
+
 	/**
 	 * Sets whether or not the unit selected.
 	 *
-	 * @param isSelected the new checks if is selected
+	 * @param isSelected
+	 *            the new checks if is selected
 	 */
 	public void setIsSelected(boolean isSelected) {
 		this.isSelected = isSelected;
@@ -317,12 +285,15 @@ public abstract class Unit implements Serializable {
 			displayHealth = 0;
 
 		String result = "Unit Type: " + getUnitType();
+		if(displayHealth<=0)
+			result += " (dead)";
 		result += "\nCurrent Health: " + displayHealth;
 		result += "\nCurrent Attack Power: " + getAttack();
 		result += "\nCurrent Defense Power: " + getDefense();
 		result += "\nCurrent Movement: " + getMovement();
 		result += "\nCurrent Range: " + getRange();
-		result += "\nUnit's Inventory: " + inventory + "\n";
+		result += "\nUnit's Inventory: " + inventory;
+		result += "\nUnit's Location: (" + this.getY()+ ", " + this.getX()+ ")"+ "\n";
 
 		return result;
 	}
@@ -339,7 +310,8 @@ public abstract class Unit implements Serializable {
 	/**
 	 * Goes through itemList to see if the unit has the specific item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return true, if successful
 	 */
 	public boolean hasItem(ItemType item) {
@@ -352,17 +324,19 @@ public abstract class Unit implements Serializable {
 	/**
 	 * Adds the item to the unit's inventory.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	public void addItem(Item item) {
 		itemList.add(item);
 	}
 
 	/**
-	 * Gets an item from the inventory depending on desired type and
-	 * uses it. If that type is not in the person's inventory, return null.
+	 * Gets an item from the inventory depending on desired type and uses it. If
+	 * that type is not in the person's inventory, return null.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return the item
 	 */
 	public Item removeItem(ItemType item) {
@@ -405,7 +379,7 @@ public abstract class Unit implements Serializable {
 		int defMod = 1;
 		int atkMod = 1;
 		int HPMod = 1;
-		
+
 		for (Item item : itemList) {
 			if ((item.getItemType() == ItemType.DEF)) {
 				defMod++;
@@ -423,33 +397,35 @@ public abstract class Unit implements Serializable {
 		}
 
 	}
-	
+
 	/**
 	 * Sets the current posisiton of the unit on the map.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public void setCurrentPostion(int x, int y){
+	public void setCurrentPostion(int x, int y) {
 		currentX = x;
 		currentY = y;
 	}
-	
+
 	/**
 	 * Gets the x-location of the unit on the map (or the column, if you will).
 	 *
 	 * @return the x
 	 */
-	public int getX(){
+	public int getX() {
 		return currentX;
 	}
-	
+
 	/**
 	 * Gets the y-location of the unit on the map (or the row, if you will).
 	 *
 	 * @return the y
 	 */
-	public int getY(){
+	public int getY() {
 		return currentY;
 	}
 
@@ -462,11 +438,12 @@ public abstract class Unit implements Serializable {
 		// TODO Auto-generated method stub
 		return noDamage;
 	}
-	
+
 	/**
 	 * Sets if the damage is too high to allow the unit to be hurt.
 	 *
-	 * @param noDamage the new no damage
+	 * @param noDamage
+	 *            the new no damage
 	 */
 	public void setNoDamage(boolean noDamage) {
 		this.noDamage = noDamage;

@@ -11,24 +11,30 @@ import item.Item;
 import item.ItemType;
 
 /**
- * The Class ZombieDogAI. 
+ * ZombieDogs are a {@link Unit} that is controlled by AI. Moves quickly, but
+ * doesn't have great damage output.
  */
-public class ZombieDogAI extends Unit{
+public class ZombieDogAI extends Unit {
 
 	transient private BufferedImage zombieGen, zombieCantMove, zombie;
-	
+
 	/**
 	 * Instantiates a new ZombieDog class. Will be controlled by the AI.
 	 *
-	 * @param difficulty the difficulty
+	 * @param difficulty
+	 *            the difficulty
 	 */
 	public ZombieDogAI(double difficulty) {
-		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
-		super("ZDog", new Item("None", ItemType.NONE), 35, 0, 100, 10, 1, difficulty);
-		
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
+		// Difficulty multiplier
+		super("ZDog", new Item("None", ItemType.NONE), 35, 0, 100, 10, 1,
+				difficulty);
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see units.Unit#drawUnit(java.awt.Graphics)
 	 */
 	@Override
@@ -42,10 +48,9 @@ public class ZombieDogAI extends Unit{
 				System.out.println("Could not find picture file");
 			}
 		}
-		if (!super.canMove()) //If the soldier cannot move
+		if (!super.canMove()) // If the soldier cannot move
 			zombie = zombieCantMove;
 		g.drawImage(zombie, super.currentY * 100, super.currentX * 100, null);
 	}
-
 
 }
