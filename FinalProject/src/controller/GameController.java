@@ -1423,7 +1423,7 @@ public class GameController implements Serializable {
 					
 				}
 				
-				if (aIInAttackRange(u.getX(), u.getY(), u.getRange())) {
+				if (aIInAttackRange(u.getY(), u.getX(), u.getRange())) {
 					endCol = toAttack.x;
 					endRow = toAttack.y;
 
@@ -1459,7 +1459,6 @@ public class GameController implements Serializable {
 	 * 
 	 */
 	private boolean inImmediateAttackRange(){
-		
 		
 		
 		
