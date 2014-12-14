@@ -187,8 +187,8 @@ public class GraphicalView extends JPanel implements Observer {
 				clickX = evt.getX();
 				clickY = evt.getY();
 
-				row = clickX / (int) (96 * scaleFactor);
-				column = clickY / (int) (96 * scaleFactor);
+				row = clickX / (int) (100 * scaleFactor);
+				column = clickY / (int) (100 * scaleFactor);
 
 				if (firstClick) {
 					controller.setCurrentUnit(row, column);
