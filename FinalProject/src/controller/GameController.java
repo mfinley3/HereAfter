@@ -688,50 +688,50 @@ public class GameController implements Serializable {
 		int baseCol = col;
 
 		if (map.getSpace(col, row).getOccupied()) {
-			if (!(SameTeam())) {
+			//if (!(SameTeam())) {
 				map.getUnitAt(row, col).reduceHealth(100);
 				targetDead(row, col);
 				row = baseRow;
 				col = baseCol;
 
-			}
+			//}
 		}
 
 		if (map.getSpace(col, row + 1).getOccupied()) {
-			if (!(SameTeam())) {
+			//if (!(SameTeam())) {
 				map.getUnitAt(row + 1, col).reduceHealth(75);
 				targetDead(row + 1, col);
 				row = baseRow;
 				col = baseCol;
-			}
+			//}
 		}
 
 		if (map.getSpace(col, row - 1).getOccupied()) {
-			if (!(SameTeam())) {
+			//if (!(SameTeam())) {
 				map.getUnitAt(row - 1, col).reduceHealth(75);
 				targetDead(row - 1, col);
 				row = baseRow;
 				col = baseCol;
-			}
+			//}
 		}
 
 		if (map.getSpace(col + 1, row).getOccupied()) {
-			if (!(SameTeam())) {
+			//if (!(SameTeam())) {
 				map.getUnitAt(row, col + 1).reduceHealth(75);
 				targetDead(row, col + 1);
 				row = baseRow;
 				col = baseCol;
-			}
+			//}
 		}
 
 		if (map.getSpace(col - 1, row).getOccupied()) {
-			if (!(SameTeam())) {
+			//if (!(SameTeam())) {
 				map.getUnitAt(row, col - 1).reduceHealth(75);
 				targetDead(row, col - 1);
 				row = baseRow;
 				col = baseCol;
 			}
-		}
+		//}
 	}
 
 	/**
