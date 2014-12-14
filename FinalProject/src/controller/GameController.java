@@ -345,6 +345,7 @@ public class GameController implements Serializable {
 						endCol = (int) p.getX();
 						endRow = (int) p.getY();
 						attack();
+
 						break;
 
 					}
@@ -385,6 +386,7 @@ public class GameController implements Serializable {
 
 								// If no other unit can move, end the turn
 								currUnit.setCanMove(false);
+								currUnit.setIsSelected(false);
 								tempUnitList.remove(currUnit);
 								currUnit = null;
 								endRow = 51;
@@ -598,6 +600,7 @@ public class GameController implements Serializable {
 									JOptionPane.showMessageDialog(null, "The " + map.getUnitAt(endRow, endCol).getUnitType() + " you selected has had their health fully restored.");
 									currUnit.setCanMove(false);
 									currUnit.removeItem(usingItemType);
+									currUnit.setIsSelected(false);
 									tempUnitList.remove(currUnit);
 									currUnit = null;
 									endRow = 51;
@@ -618,6 +621,7 @@ public class GameController implements Serializable {
 							map.getSpace(endCol, endRow).setHasMine(true);
 							currUnit.setCanMove(false);
 							currUnit.removeItem(usingItemType);
+							currUnit.setIsSelected(false);
 							tempUnitList.remove(currUnit);
 							currUnit = null;
 							endRow = 51;
@@ -633,6 +637,7 @@ public class GameController implements Serializable {
 							blowShitUp(endRow, endCol);
 							currUnit.setCanMove(false);
 							currUnit.removeItem(usingItemType);
+							currUnit.setIsSelected(false);
 							tempUnitList.remove(currUnit);
 							currUnit = null;
 							endRow = 51;
