@@ -208,8 +208,6 @@ public class GameController implements Serializable {
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
 						currCol = endCol;
-						System.out.println(currRow);
-						System.out.println(currCol);
 						gameOver();
 
 						if (playerTurn)

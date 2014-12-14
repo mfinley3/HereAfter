@@ -107,7 +107,10 @@ public class AIPathFinder implements Serializable{
 		boolean valid = false;
 		
 		// Check for hindrance and if walkable
-		if (!(gameMap.getSpace(tgtCol, tgtRow).getSpaceType().equals("Wall"))) {
+		if (tgtRow > 50 || tgtRow < 0 || tgtCol > 50 || tgtCol < 0 ) {
+			valid = false;
+		}
+		else if (!(gameMap.getSpace(tgtCol, tgtRow).getSpaceType().equals("Wall"))) {
 			// if (getCurrentUnit() != null) {
 			if (!gameMap.isOccupied(tgtRow, tgtCol)
 					&& gameMap.getSpace(tgtRow, tgtCol).getCanMoveTo()) {
