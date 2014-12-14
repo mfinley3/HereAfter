@@ -46,54 +46,27 @@ import units.SpitterAI;
 import units.Unit;
 import units.ZombieDogAI;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Map class, creates a new map. Also handles moving units, adding/removing
  * units on the map and checking to see if a space is occupied.
  */
 public class Map extends Observable implements Serializable {
 
-	/** The map. */
 	private Space[][] map;
-	
-	/** The units on map. */
 	private Unit[][] unitsOnMap;
-	
-	/** The items on map. */
 	private Item[][] itemsOnMap;
-	
-	/** The map scan. */
 	private transient Scanner mapScan;
-	
-	/** The enemy list. */
 	private List<Unit> enemyList;
-	
-	/** The good unit positions. */
 	private List<Point> goodUnitPositions;
-	
-	/** The enemy unit positions. */
 	private List<Point> enemyUnitPositions;
-	
-	/** The unit scan. */
 	private transient Scanner unitScan;
-	
-	/** The is player turn. */
 	private Boolean isPlayerTurn;
-	
-	/** The game type. */
 	private String gameType;
-	
-	/** The item scan. */
 	private transient Scanner itemScan;
-	
-	/** The background. */
 	private transient BufferedImage background;
-	
-	/** The scale factor. */
 	private double scaleFactor = 1;
-	
-	/** The water. */
-	private transient BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water;
+	private transient BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall,
+		indoorWall, waste, indoorWaste, water;
 
 	/**
 	 * Instantiates a new map by reading in a text file that is determined by a
@@ -233,7 +206,8 @@ public class Map extends Observable implements Serializable {
 	}
 	
 	/**
-	 * Gets the background.
+	 * Gets the background.  If the background is null, which is if a game is loaded from save, then it will create a new background.
+	 * This way, the background is an image in itself and only have to be printed once instead of each tile being printed.
 	 *
 	 * @return the background
 	 */
@@ -388,7 +362,6 @@ public class Map extends Observable implements Serializable {
 						unitsOnMap[m][n] = new ZombieAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						//enemyUnitPositions.add(new Point(m, n));
 						unitsOnMap[m][n].setCurrentPostion(m, n);
 					}
 
@@ -396,35 +369,30 @@ public class Map extends Observable implements Serializable {
 						unitsOnMap[m][n] = new AlphaProtectorAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						//enemyUnitPositions.add(new Point(m, n));
 						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("G")) {
 						unitsOnMap[m][n] = new Hole(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						//enemyUnitPositions.add(new Point(m, n));
 						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("C")) {
 						unitsOnMap[m][n] = new CarrierAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						//enemyUnitPositions.add(new Point(m, n));
 						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("D")) {
 						unitsOnMap[m][n] = new ZombieDogAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						//enemyUnitPositions.add(new Point(m, n));
 						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 
 					if (unitLetterEquivalence.equals("S")) {
 						unitsOnMap[m][n] = new SpitterAI(difficulty);
 						map[m][n].setOccupied(true);
 						enemyList.add(unitsOnMap[m][n]);
-						//enemyUnitPositions.add(new Point(m, n));
 						unitsOnMap[m][n].setCurrentPostion(m, n);					}
 				}
 			}
@@ -432,7 +400,7 @@ public class Map extends Observable implements Serializable {
 	}
 	
 	/**
-	 * Adds the items.
+	 * Adds the items to the map.
 	 *
 	 * @param testingMode the testing mode
 	 */
@@ -539,7 +507,6 @@ public class Map extends Observable implements Serializable {
 			while (!unitList.isEmpty()) {
 				unitsOnMap[k][r] = unitList.pop();
 				map[k][r].setOccupied(true);
-				//goodUnitPositions.add(new Point(k, r));
 				unitsOnMap[k][r].setCurrentPostion(k, r);
 				if (r != 1) {
 					r--;
@@ -556,7 +523,6 @@ public class Map extends Observable implements Serializable {
 			while (!unitList.isEmpty()) {
 				unitsOnMap[k][r] = unitList.pop();
 				map[k][r].setOccupied(true);
-				//goodUnitPositions.add(new Point(k, r));
 				unitsOnMap[k][r].setCurrentPostion(k, r);
 				if (r != 0) {
 					r--;
@@ -590,28 +556,8 @@ public class Map extends Observable implements Serializable {
 			unitsOnMap[startCol][startRow] = null;
 			map[startCol][startRow].setOccupied(false);
 			map[moveToCol][moveToRow].setOccupied(true);
-
-			if (isPlayerTurn) {
-				//for (Point p : goodUnitPositions){
-				//	if (p.getX() == startCol && p.getY() == startRow) {
-				//	goodUnitPositions.remove(p);
-				//	goodUnitPositions.add(new Point(moveToCol, moveToRow));
-				//	}
-				//}
-				unitsOnMap[moveToCol][moveToRow].setCurrentPostion(moveToCol, moveToRow);
-
-			} else {
-
-				//for (Point p : enemyUnitPositions) {
-				//	if (p.getX() == startCol && p.getY() == startRow) {
-				//		enemyUnitPositions.remove(p);
-				//		enemyUnitPositions.add(new Point(moveToCol, moveToRow));
-				//		break;
-				//	}
-				//}
-				
-				unitsOnMap[moveToCol][moveToRow].setCurrentPostion(moveToCol, moveToRow);
-			}
+			
+			unitsOnMap[moveToCol][moveToRow].setCurrentPostion(moveToCol, moveToRow);
 		}
 
 		setChanged();
@@ -779,9 +725,6 @@ public class Map extends Observable implements Serializable {
 		notifyObservers();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	public String toString() {
 		String textMap = "";
 
@@ -813,31 +756,6 @@ public class Map extends Observable implements Serializable {
 					textMap += "[" + "H" + "]  ";
 				if (unitsOnMap[i][j] == null)
 					textMap += "[" + " " + "]  ";
-
-				// if (map[i][j] instanceof WastelandSpace)
-				// textMap += "[" + "W" + "]  ";
-				// if (map[i][j] instanceof IndoorWastelandSpace)
-				// textMap += "[" + "H" + "]  ";
-				// if (map[i][j] instanceof PathSpace)
-				// textMap += "[" + "P" + "]  ";
-				// if (map[i][j] instanceof IndoorWallSpace)
-				// textMap += "[" + "Y" + "]  ";
-				// if (map[i][j] instanceof IndoorPath)
-				// textMap += "[" + "O" + "]  ";
-				// if (map[i][j] instanceof IndoorPathSpace)
-				// textMap += "[" + "J" + "]  ";
-				// if (map[i][j] instanceof WaterSpace)
-				// textMap += "[" + "R" + "]  ";
-				// if (map[i][j] instanceof WallSpace)
-				// textMap += "[" + "U" + "]  ";
-				// if (map[i][j] instanceof BridgeSpace)
-				// textMap += "[" + "B" + "]  ";
-				// if (map[i][j] instanceof MountainSpace)
-				// textMap += "[" + "M" + "]  ";
-				// if (map[i][j] instanceof TowerSpace)
-				// textMap += "[" + "T" + "]  ";
-				// if (map[i][j] instanceof CaptureCornerSpace)
-				// textMap += "[" + "C" + "]  ";
 
 			}
 			textMap += "\n";
