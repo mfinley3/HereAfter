@@ -1418,11 +1418,7 @@ public class GameController implements Serializable {
 				this.endCol = temp.x;
 
 				// TODO add attack method. If it is around them, and they are
-				// not a whole, attack.
-				if(inImmediateAttackRange()){
-					
-				}
-				
+				// not a whole, attack.				
 				if (aIInAttackRange(u.getY(), u.getX(), u.getRange())) {
 					endCol = toAttack.x;
 					endRow = toAttack.y;
@@ -1453,16 +1449,6 @@ public class GameController implements Serializable {
 		if (!playerTurn) {
 			endTurn();
 		}
-	}
-	
-	/**
-	 * 
-	 */
-	private boolean inImmediateAttackRange(){
-		
-		
-		
-		return false;
 	}
 
 	/**
