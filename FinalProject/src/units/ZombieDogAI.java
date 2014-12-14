@@ -14,6 +14,11 @@ public class ZombieDogAI extends Unit{
 
 	transient private BufferedImage zombieGen, zombieCantMove, zombie;
 	
+	/**
+	 * Instantiates a new ZombieDog class. Will be controlled by the AI.
+	 * 
+	 * @param difficulty, augments some of the stats
+	 */
 	public ZombieDogAI(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		super("ZDog", new Item("None", ItemType.NONE), 35, 0, 100, 10, 1, difficulty);

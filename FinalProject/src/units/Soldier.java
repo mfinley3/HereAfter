@@ -20,7 +20,6 @@ public class Soldier extends Unit {
 	 * @param difficulty
 	 *            the difficulty
 	 */
-
 	transient private BufferedImage soldGen, soldSelect, soldCantMove, sold;
 
 	public Soldier(double difficulty) {

@@ -73,14 +73,26 @@ public abstract class Unit implements Serializable {
 		
 	}
 
-	
+	/**
+	 * Will be responsible for drawing the unit in the Graphical View
+	 * @param g
+	 */
 	abstract public void drawUnit(Graphics g);
 
+	/**
+	 * Sets the CurrentPostition of the unit. Changed when the unit moves/
+	 * @param x
+	 * @param y
+	 */
 	public void setCurrentPosition(int x, int y) {
 		currentX = x;
 		currentY = y;
 	}
 	
+	/**
+	 * Sets whether or not the unit selected.
+	 * @param isSelected
+	 */
 	public void setIsSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
@@ -223,16 +235,16 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * Can move.
+	 * Gets if the unit can move. If true, it can
 	 *
-	 * @return true, if successful
+	 * @return if it can or not
 	 */
 	public boolean canMove() {
 		return canMove;
 	}
 
 	/**
-	 * Sets the can move.
+	 * Sets if the unit can move.
 	 *
 	 * @param canMove
 	 *            the new can move
@@ -242,7 +254,7 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * Checks if is alive.
+	 * Checks if the unit is alive. If false, the unit is dead.
 	 *
 	 * @return true, if is alive
 	 */
@@ -253,7 +265,7 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * Gets the stats.
+	 * Gets the unit's stats.
 	 *
 	 * @return the stats
 	 */
@@ -280,7 +292,7 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * Gets the range.
+	 * Gets the unit's range.
 	 *
 	 * @return the range
 	 */
@@ -289,7 +301,7 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * TODO Test Goes through itemList to see if the unit has the specific item.
+	 * Goes through itemList to see if the unit has the specific item.
 	 * 
 	 * @param item
 	 * @return
@@ -302,7 +314,7 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * TODO Test Adds the item to the unit's inventory
+	 * Adds the item to the unit's inventory
 	 * 
 	 * @param item
 	 */
@@ -311,7 +323,7 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * TODO test Gets an item from the inventory depending on desired type and
+	 * Gets an item from the inventory depending on desired type and
 	 * uses it. If that type is not in the person's inventory, return null.
 	 * 
 	 * @param item
@@ -341,11 +353,17 @@ public abstract class Unit implements Serializable {
 		UpdateBoosts();
 	}
 
+	/**
+	 * Get the Item's list.
+	 * @return
+	 */
 	public Object getItemList() {
-		// TODO Auto-generated method stub
 		return itemList;
 	}
 
+	/**
+	 * Updates the boosts of the unit.
+	 */
 	public void UpdateBoosts() {
 		int defMod = 1;
 		int atkMod = 1;
@@ -369,25 +387,45 @@ public abstract class Unit implements Serializable {
 
 	}
 	
+	/**
+	 * Sets the current posisiton of the unit on the map.
+	 * @param x
+	 * @param y
+	 */
 	public void setCurrentPostion(int x, int y){
 		currentX = x;
 		currentY = y;
 	}
 	
+	/**
+	 * Gets the x-location of the unit on the map (or the column, if you will).
+	 * @return
+	 */
 	public int getX(){
 		return currentX;
 	}
 	
+	/**
+	 * Gets the y-location of the unit on the map (or the row, if you will).
+	 * @return
+	 */
 	public int getY(){
 		return currentY;
 	}
 
-
+	/**
+	 * Gets if damage is not enough.
+	 * @return
+	 */
 	public boolean getNoDamage() {
 		// TODO Auto-generated method stub
 		return noDamage;
 	}
 	
+	/**
+	 * Sets if the damage is too high to allow the unit to be hurt.
+	 * @param noDamage
+	 */
 	public void setNoDamage(boolean noDamage) {
 		this.noDamage = noDamage;
 	}
