@@ -59,6 +59,8 @@ public class GameController implements Serializable {
 	
 	/** The ai move. */
 	private AIPathFinder aiMove;
+	
+	private UnitPathFinder unitMove;
 
 	/** The curr row. */
 	private int currRow;
@@ -156,6 +158,7 @@ public class GameController implements Serializable {
 
 		// Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
+		unitMove = new UnitPathFinder(map);
 
 		checkWinConditions();
 	}
@@ -248,9 +251,9 @@ public class GameController implements Serializable {
 						if (playerTurn)
 							pickUpItem();
 
-//						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
-//							currUnit instanceof Sniper || currUnit instanceof Soldier)
-//							goodUnitMove();
+						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
+							currUnit instanceof Sniper || currUnit instanceof Soldier)
+							goodUnitMove();
 						
 
 						// Set the new CurrRow and CurrCol, and check
@@ -324,8 +327,8 @@ public class GameController implements Serializable {
  * Good unit move.
  */
 private void goodUnitMove() {
-		rowValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).x;
-		colValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).y;
+		rowValue = unitMove.traverse(currCol, currRow, endCol, endRow).x;
+		colValue = unitMove.traverse(currCol, currRow, endCol, endRow).y;
 
 	//	endRow = rowValue;
 	//	endCol = colValue;
