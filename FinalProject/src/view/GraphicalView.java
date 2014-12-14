@@ -40,20 +40,8 @@ public class GraphicalView extends JPanel implements Observer {
 	private Space[][] currentSpaces;
 	private Unit[][] currentUnits;
 	private Item[][] currentItems;
-	private BufferedImage bridge, corner, mountain, path, indoorPathSpace,
-			indoorPath, tower, wall, indoorWall, waste, indoorWaste, water,
-			hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger,
-			sniper, soldier, Zombie, alpha, zDog, spitter, carrier,
-			docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove,
-			ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove,
-			carrierCantMove, docSelected, engSelected, rangSelected,
-			sinpSelected, soldSelected, ZombieSelected, alphaSelected,
-			zDogSelected, spitterSelected, carrierSelected, randomItem,
-			randomBoost;
-	private BufferedImage bridgeWithMine, cornerWithMine, mountainWithMine,
-			pathWithMine, indoorPathSpaceWithMine, indoorPathWithMine,
-			towerWithMine, wasteWithMine, indoorWasteWithMine, waterWithMine,
-			holeWithMine, holeCoveredWithMine, holeCoveredIndoorWithMine;
+	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected, randomItem, randomBoost;
+	private BufferedImage bridgeWithMine, cornerWithMine, mountainWithMine, pathWithMine, indoorPathSpaceWithMine, indoorPathWithMine, towerWithMine, wasteWithMine, indoorWasteWithMine, waterWithMine, holeWithMine, holeCoveredWithMine, holeCoveredIndoorWithMine;
 	private double scaleFactor = 1;
 	private String type;
 
@@ -67,7 +55,7 @@ public class GraphicalView extends JPanel implements Observer {
 
 		this.setLayout(null);
 
-		Dimension maxSize = new Dimension(4800, 4800);
+		Dimension maxSize = new Dimension(5000, 5000);
 		this.setPreferredSize(maxSize);
 		this.setVisible(true);
 
@@ -80,28 +68,20 @@ public class GraphicalView extends JPanel implements Observer {
 		try {
 			hole = ImageIO.read(new File("HoleSpace.png"));
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
-			holeCoveredIndoor = ImageIO.read(new File(
-					"HoleSpaceCoveredIndoor.png"));
+			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
 
-			wasteWithMine = ImageIO
-					.read(new File("WasteLandSpaceWithMine.jpg"));
-			indoorWasteWithMine = ImageIO.read(new File(
-					"IndoorWasteLandSpaceWithMine.jpg"));
+			wasteWithMine = ImageIO.read(new File("WasteLandSpaceWithMine.jpg"));
+			indoorWasteWithMine = ImageIO.read(new File("IndoorWasteLandSpaceWithMine.jpg"));
 			bridgeWithMine = ImageIO.read(new File("BridgeSpaceWithMine.jpg"));
 			cornerWithMine = ImageIO.read(new File("CornerSpaceWithMine.jpg"));
-			mountainWithMine = ImageIO.read(new File(
-					"MountainSpaceWithMine.jpg"));
+			mountainWithMine = ImageIO.read(new File("MountainSpaceWithMine.jpg"));
 			pathWithMine = ImageIO.read(new File("PathSpaceWithMine.jpg"));
-			indoorPathSpaceWithMine = ImageIO.read(new File(
-					"IndoorPathSpaceWithMine.png"));
-			indoorPathWithMine = ImageIO
-					.read(new File("IndoorPathWithMine.jpg"));
+			indoorPathSpaceWithMine = ImageIO.read(new File("IndoorPathSpaceWithMine.png"));
+			indoorPathWithMine = ImageIO.read(new File("IndoorPathWithMine.jpg"));
 			towerWithMine = ImageIO.read(new File("TowerSpaceWithMine.jpg"));
 			waterWithMine = ImageIO.read(new File("WaterSpaceWithMine.jpg"));
-			holeCoveredWithMine = ImageIO.read(new File(
-					"HoleSpaceCoveredWithMine.png"));
-			holeCoveredIndoorWithMine = ImageIO.read(new File(
-					"HoleSpaceCoveredIndoorWithMine.png"));
+			holeCoveredWithMine = ImageIO.read(new File("HoleSpaceCoveredWithMine.png"));
+			holeCoveredIndoorWithMine = ImageIO.read(new File("HoleSpaceCoveredIndoorWithMine.png"));
 
 			randomItem = ImageIO.read(new File("RandomItem.png"));
 			randomBoost = ImageIO.read(new File("RandomBoost.png"));
@@ -123,8 +103,7 @@ public class GraphicalView extends JPanel implements Observer {
 			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
 			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
 			ZombieCantMove = ImageIO.read(new File("ZombieCantMove.png"));
-			alphaCantMove = ImageIO
-					.read(new File("AlphaProtectorCantMove.png"));
+			alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
 			zDogCantMove = ImageIO.read(new File("zDogCantMove.png"));
 			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
 			carrierCantMove = ImageIO.read(new File("carrierCantMove.png"));
@@ -135,8 +114,7 @@ public class GraphicalView extends JPanel implements Observer {
 			sinpSelected = ImageIO.read(new File("sniper1Selected.png"));
 			soldSelected = ImageIO.read(new File("soldier1Selected.png"));
 			ZombieSelected = ImageIO.read(new File("ZombieSelected.png"));
-			alphaSelected = ImageIO
-					.read(new File("AlphaProtectorSelected.png"));
+			alphaSelected = ImageIO.read(new File("AlphaProtectorSelected.png"));
 			zDogSelected = ImageIO.read(new File("zDogSelected.png"));
 			spitterSelected = ImageIO.read(new File("SpitterSelected.png"));
 			carrierSelected = ImageIO.read(new File("carrierSelected.png"));
@@ -219,17 +197,14 @@ public class GraphicalView extends JPanel implements Observer {
 						if (controller.getCurrentUnit().canMove())
 							firstClick = false;
 						else
-							System.out
-									.println("Unit can't move; select a new one.");
+							System.out.println("Unit can't move; select a new one.");
 					} else
-						System.out
-								.println("No unit to select; please select a new unit.");
+						System.out.println("No unit to select; please select a new unit.");
 
 				} else {
 					if (controller.getCurrentUnit() == null)
 						firstClick = true;
-					if (row >= 0 && row < currentSpaces.length && column >= 0
-							&& column < currentSpaces.length) {
+					if (row >= 0 && row < currentSpaces.length && column >= 0 && column < currentSpaces.length) {
 						controller.setEndRow(row);
 						controller.setEndColumn(column);
 					}
@@ -314,8 +289,7 @@ public class GraphicalView extends JPanel implements Observer {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.scale(1 * scaleFactor, 1 * scaleFactor);
-		Dimension maxSize = new Dimension((int) (4800 * scaleFactor),
-				(int) (4800 * scaleFactor));
+		Dimension maxSize = new Dimension((int) (5000 * scaleFactor), (int) (5000 * scaleFactor));
 		this.setPreferredSize(maxSize);
 		this.revalidate();
 
@@ -332,44 +306,34 @@ public class GraphicalView extends JPanel implements Observer {
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(bridgeWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"IndoorPathSpace")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"Mountain")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(mountainWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"Path")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(pathWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"IndoorPath")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorPathWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"Tower")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(towerWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"Wasteland")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(wasteWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"IndoorWasteland")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorWasteWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"Water")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(waterWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"CaptureCorner")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
 						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(cornerWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals(
-							"HoleCovered")) {
+					} else if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
 
 						if (!type.equalsIgnoreCase("survive")) {
 							if (currentSpaces[col][row].hasMine())
@@ -378,8 +342,7 @@ public class GraphicalView extends JPanel implements Observer {
 								g2.drawImage(holeCovered, x, y, null);
 						} else {
 							if (currentSpaces[col][row].hasMine())
-								g2.drawImage(holeCoveredIndoorWithMine, x, y,
-										null);
+								g2.drawImage(holeCoveredIndoorWithMine, x, y, null);
 							else
 								g2.drawImage(holeCoveredIndoor, x, y, null);
 						}
@@ -398,8 +361,7 @@ public class GraphicalView extends JPanel implements Observer {
 					}
 
 					// Display which spaces can be moved to
-					if (currentSpaces[row][col].getCanMoveTo()
-							&& controller.playerTurn()) {
+					if (currentSpaces[row][col].getCanMoveTo() && controller.playerTurn()) {
 						g2.setColor(Color.green);
 						Stroke oldStroke = g2.getStroke();
 						g2.setStroke(new BasicStroke((float) (2 / scaleFactor)));

@@ -67,6 +67,8 @@ public abstract class Unit implements Serializable {
 	/** The no damage. */
 	private boolean noDamage;
 
+
+
 	/**
 	 * Instantiates a new unit.
 	 *
@@ -469,6 +471,6 @@ public abstract class Unit implements Serializable {
 	public void setNoDamage(boolean noDamage) {
 		this.noDamage = noDamage;
 	}
-	
+
 } // end of class Unit
 

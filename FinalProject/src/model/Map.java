@@ -239,7 +239,7 @@ public class Map extends Observable implements Serializable {
 	 */
 	public BufferedImage getBackground() {
 		if(background == null){
-			background = new BufferedImage((int) (4800 * scaleFactor), (int) (4800 * scaleFactor), BufferedImage.TYPE_INT_ARGB);
+			background = new BufferedImage((int) (5000 * scaleFactor), (int) (5000 * scaleFactor), BufferedImage.TYPE_INT_ARGB);
 			Graphics g = background.getGraphics();
 			
 			try {

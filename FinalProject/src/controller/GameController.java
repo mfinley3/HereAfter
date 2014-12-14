@@ -2,6 +2,7 @@ package controller;
 
 import gametype.*;
 
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -364,7 +365,9 @@ public class GameController implements Serializable {
 				currCol++;
 			}
 			currUnit.setCurrentPosition(currCol, currRow);
-			currUnit.drawUnit(graphical.getGraphics());
+			Graphics2D g2 = (Graphics2D) graphical.getGraphics();
+			g2.scale(1 * graphical.getScaleFactor(), 1 * graphical.getScaleFactor());
+			currUnit.drawUnit(g2);
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {

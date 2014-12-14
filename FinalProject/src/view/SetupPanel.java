@@ -1,6 +1,5 @@
 package view;
 
-
 import item.ItemType;
 
 import java.awt.BorderLayout;
@@ -63,64 +62,64 @@ public class SetupPanel extends JPanel implements Observer {
 
 	/** The help icon. */
 	private BufferedImage unitHelpIcon, toggleSoundIcon, zombieHelpIcon, itemHelpIcon, spaceHelpIcon, background, loadPage, setUp1, setUpLevel, setUpType, soldier, doctor, engineer, ranger, sniper, zoomInImg, zoomOutImg, floppy, helpIcon;
-	
+
 	/** The current user name. */
 	private JLabel title, currentUserName;
-	
+
 	/** The snip num. */
 	private JTextArea userName, docNum, soldNum, engNum, rangNum, snipNum;
-	
+
 	/** The save. */
 	private JButton select, wait, item, attack, move, help, endTurn, save;
-	
+
 	/** The data was loaded. */
 	private boolean selectLevel, startUp1, selectUnits, selected, gameIsRunning, selectType, loadGame, dataWasLoaded;
-	
+
 	/** The controller. */
 	private GameController controller;
-	
+
 	/** The difficulty. */
 	private Difficulty difficulty;
-	
+
 	/** The type. */
 	private String type;
-	
+
 	/** The testing mode. */
 	private boolean testingMode;
 
 	/** The scroll panel. */
 	private JScrollPane scrollPanel;
-	
+
 	/** The views. */
 	private JTabbedPane views;
 
 	/** The text. */
 	private JPanel text = new TextView();
-	
+
 	/** The graphical. */
 	private JPanel graphical = new GraphicalView();
-	
+
 	/** The text map. */
 	private JPanel textMap = new MapView();
-	
+
 	/** The Unit locations. */
 	private JPanel UnitLocations = new UnitLocations();
 
 	/** The player name. */
 	public String playerName;
-	
+
 	/** The player. */
 	private Player player;
 
 	/** The scale factor. */
 	private double scaleFactor;
-	
+
 	/** The menu bar. */
 	JMenuBar menuBar;
-	
+
 	/** The sound. */
 	JMenu zoom, saveMenu, helpMenu, gamePlayHelp, sound;
-	
+
 	/** The toggle sound. */
 	JMenuItem zoomIn, zoomOut, saveAndContinue, saveAndQuit, helpWindow, unitHelp, zombieHelp, itemHelp, spaceHelp, toggleSound;
 
@@ -130,11 +129,10 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	public SetupPanel() {
 
-		
 		this.setLayout(null);
 
 		try {
-			
+
 			background = ImageIO.read(new File("unitSelect.jpg"));
 			loadPage = ImageIO.read(new File("LoadGameScreen.png"));
 			setUp1 = ImageIO.read(new File("FinalStartScreenBackground.png"));
@@ -154,7 +152,7 @@ public class SetupPanel extends JPanel implements Observer {
 			unitHelpIcon = ImageIO.read(new File("UnitHelpIcon.png"));
 			zombieHelpIcon = ImageIO.read(new File("ZombieHelpIcon.png"));
 			toggleSoundIcon = ImageIO.read(new File("ToggleSoundIcon.png"));
-			
+
 		} catch (IOException e) {
 			System.out.println("Could not find picture file");
 		}
@@ -174,7 +172,7 @@ public class SetupPanel extends JPanel implements Observer {
 	 * their units and user name. It adds a label, picture, and text area for
 	 * each unit.
 	 */
-	
+
 	private void selectUnit() {
 
 		title = new JLabel("HereAfter");
@@ -298,8 +296,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class selectButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		public void actionPerformed(ActionEvent ae) {
 			// Check that the number of all units adds to 5. if they dont, show
@@ -378,7 +380,7 @@ public class SetupPanel extends JPanel implements Observer {
 					((TextView) text).setController(controller);
 					controller.getMap().addObserver((Observer) UnitLocations);
 					((GraphicalView) graphical).setGameType(type);
-					controller.setGraphicalView((GraphicalView)graphical);
+					controller.setGraphicalView((GraphicalView) graphical);
 
 					selected = false;
 					actualMap();
@@ -403,8 +405,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class moveButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -422,8 +428,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class attackButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -440,15 +450,18 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class useItemButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-				controller.useItem();
-					
-				
+
+			controller.useItem();
+
 		}
 	}
 
@@ -461,8 +474,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class waitButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -479,8 +496,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class helpButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -490,13 +511,13 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	
+
 	/**
-	 * The listener interface for receiving unitHelpButton events.
-	 * The class that is interested in processing a unitHelpButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addunitHelpButtonListener<code> method. When
+	 * The listener interface for receiving unitHelpButton events. The class
+	 * that is interested in processing a unitHelpButton event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addunitHelpButtonListener<code> method. When
 	 * the unitHelpButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -504,8 +525,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class unitHelpButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -517,11 +542,11 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving itemHelpButton events.
-	 * The class that is interested in processing a itemHelpButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>additemHelpButtonListener<code> method. When
+	 * The listener interface for receiving itemHelpButton events. The class
+	 * that is interested in processing a itemHelpButton event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>additemHelpButtonListener<code> method. When
 	 * the itemHelpButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -529,8 +554,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class itemHelpButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -540,13 +569,13 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	
+
 	/**
-	 * The listener interface for receiving spaceHelpButton events.
-	 * The class that is interested in processing a spaceHelpButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addspaceHelpButtonListener<code> method. When
+	 * The listener interface for receiving spaceHelpButton events. The class
+	 * that is interested in processing a spaceHelpButton event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addspaceHelpButtonListener<code> method. When
 	 * the spaceHelpButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -554,8 +583,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class spaceHelpButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -565,13 +598,13 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	
+
 	/**
-	 * The listener interface for receiving zombieHelpButton events.
-	 * The class that is interested in processing a zombieHelpButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addZombieHelpButtonListener<code> method. When
+	 * The listener interface for receiving zombieHelpButton events. The class
+	 * that is interested in processing a zombieHelpButton event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addZombieHelpButtonListener<code> method. When
 	 * the zombieHelpButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -579,8 +612,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class ZombieHelpButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -590,7 +627,7 @@ public class SetupPanel extends JPanel implements Observer {
 		}
 
 	}
-	
+
 	/**
 	 * If the end turn button is selected, the end turn method of controller is
 	 * called and the team that is allowed to be used is the other team.
@@ -599,8 +636,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class endTurnButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -614,8 +655,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class thisMenuListner implements MenuListener {
 
-		/* (non-Javadoc)
-		 * @see javax.swing.event.MenuListener#menuCanceled(javax.swing.event.MenuEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * javax.swing.event.MenuListener#menuCanceled(javax.swing.event.MenuEvent
+		 * )
 		 */
 		@Override
 		public void menuCanceled(MenuEvent arg0) {
@@ -623,8 +668,12 @@ public class SetupPanel extends JPanel implements Observer {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see javax.swing.event.MenuListener#menuDeselected(javax.swing.event.MenuEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * javax.swing.event.MenuListener#menuDeselected(javax.swing.event.MenuEvent
+		 * )
 		 */
 		@Override
 		public void menuDeselected(MenuEvent arg0) {
@@ -632,8 +681,12 @@ public class SetupPanel extends JPanel implements Observer {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see javax.swing.event.MenuListener#menuSelected(javax.swing.event.MenuEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * javax.swing.event.MenuListener#menuSelected(javax.swing.event.MenuEvent
+		 * )
 		 */
 		@Override
 		public void menuSelected(MenuEvent arg0) {
@@ -644,11 +697,10 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving zoomIn events.
-	 * The class that is interested in processing a zoomIn
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addZoomInListener<code> method. When
+	 * The listener interface for receiving zoomIn events. The class that is
+	 * interested in processing a zoomIn event implements this interface, and
+	 * the object created with that class is registered with a component using
+	 * the component's <code>addZoomInListener<code> method. When
 	 * the zoomIn event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -656,8 +708,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class ZoomInListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -665,6 +721,7 @@ public class SetupPanel extends JPanel implements Observer {
 			if (((GraphicalView) graphical).getScaleFactor() == 4) {
 				JOptionPane.showMessageDialog(null, "Cannot zoom in any more. It is already hard to see the map! It would make it way too hard to see the game!", "Can't Zoom In", JOptionPane.OK_OPTION);
 			} else {
+
 
 				((GraphicalView) graphical).setZoomInScale();
 				graphical.repaint();
@@ -675,11 +732,10 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving zoomOut events.
-	 * The class that is interested in processing a zoomOut
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addZoomOutListener<code> method. When
+	 * The listener interface for receiving zoomOut events. The class that is
+	 * interested in processing a zoomOut event implements this interface, and
+	 * the object created with that class is registered with a component using
+	 * the component's <code>addZoomOutListener<code> method. When
 	 * the zoomOut event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -687,29 +743,33 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class ZoomOutListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (((GraphicalView) graphical).getScaleFactor() == .25) {
 				JOptionPane.showMessageDialog(null, "Cannot zoom out any more. It would make it too hard to see the game!", "Can't Zoom Out", JOptionPane.OK_OPTION);
 			} else {
+				
 				((GraphicalView) graphical).setZoomOutScale();
+				
 				graphical.repaint();
 
 			}
 		}
-
 	}
-	
 
 	/**
-	 * The listener interface for receiving toggleSoundButton events.
-	 * The class that is interested in processing a toggleSoundButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addtoggleSoundButtonListener<code> method. When
+	 * The listener interface for receiving toggleSoundButton events. The class
+	 * that is interested in processing a toggleSoundButton event implements
+	 * this interface, and the object created with that class is registered with
+	 * a component using the component's
+	 * <code>addtoggleSoundButtonListener<code> method. When
 	 * the toggleSoundButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -717,8 +777,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class toggleSoundButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -857,13 +921,13 @@ public class SetupPanel extends JPanel implements Observer {
 		zoomOut = new JMenuItem("Zoom Out", new ImageIcon(zoomOutImg));
 		zoomOut.addActionListener(new ZoomOutListener());
 		zoom.add(zoomOut);
-		
+
 		sound = new JMenu("Sound");
 		sound.addMenuListener(new thisMenuListner());
 		sound.setForeground(Color.WHITE);
 		sound.setFont(new Font(Font.SERIF, Font.PLAIN, 15));
 		menuBar.add(sound);
-		
+
 		toggleSound = new JMenuItem("Toggle Sound", new ImageIcon(toggleSoundIcon));
 		toggleSound.addActionListener(new toggleSoundButtonListener());
 		sound.add(toggleSound);
@@ -877,24 +941,27 @@ public class SetupPanel extends JPanel implements Observer {
 		helpWindow = new JMenuItem("General Help", new ImageIcon(helpIcon));
 		helpWindow.addActionListener(new helpButtonListener());
 		helpMenu.add(helpWindow);
-		
+
 		gamePlayHelp = new JMenu("Game Play Help");
 		gamePlayHelp.addMenuListener(new thisMenuListner());
 		helpMenu.add(gamePlayHelp);
-		
-		unitHelp = new JMenuItem("Unit Help", new ImageIcon(unitHelpIcon));//new ImageIcon(helpIcon));
+
+		unitHelp = new JMenuItem("Unit Help", new ImageIcon(unitHelpIcon));// new
+																			// ImageIcon(helpIcon));
 		unitHelp.addActionListener(new unitHelpButtonListener());
 		gamePlayHelp.add(unitHelp);
-		
+
 		zombieHelp = new JMenuItem("Zombie Help", new ImageIcon(zombieHelpIcon));
 		zombieHelp.addActionListener(new ZombieHelpButtonListener());
 		gamePlayHelp.add(zombieHelp);
-		
-		itemHelp = new JMenuItem("Item Help", new ImageIcon(itemHelpIcon));//new ImageIcon(helpIcon));
+
+		itemHelp = new JMenuItem("Item Help", new ImageIcon(itemHelpIcon));// new
+																			// ImageIcon(helpIcon));
 		itemHelp.addActionListener(new itemHelpButtonListener());
 		gamePlayHelp.add(itemHelp);
-		
-		spaceHelp = new JMenuItem("Space Help", new ImageIcon(spaceHelpIcon));//new ImageIcon(helpIcon));
+
+		spaceHelp = new JMenuItem("Space Help", new ImageIcon(spaceHelpIcon));// new
+																				// ImageIcon(helpIcon));
 		spaceHelp.addActionListener(new spaceHelpButtonListener());
 		gamePlayHelp.add(spaceHelp);
 	}
@@ -919,7 +986,8 @@ public class SetupPanel extends JPanel implements Observer {
 	 * of the other 2 set up screens to select to have a new game or select the
 	 * level.
 	 *
-	 * @param g the g
+	 * @param g
+	 *            the g
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -965,8 +1033,11 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 		 */
 		public void mouseClicked(MouseEvent evt) {
 
@@ -977,7 +1048,8 @@ public class SetupPanel extends JPanel implements Observer {
 		 * the gui is at. Depending on that, it will change the image that is in
 		 * the background, and what options are able to be selected.
 		 *
-		 * @param e the e
+		 * @param e
+		 *            the e
 		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -1080,40 +1152,57 @@ public class SetupPanel extends JPanel implements Observer {
 			}
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseEntered(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 		 */
 		@Override
 		public void mouseExited(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent
+		 * )
 		 */
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent
+		 * )
 		 */
 		@Override
 		public void mouseMoved(MouseEvent e) {
@@ -1127,8 +1216,10 @@ public class SetupPanel extends JPanel implements Observer {
 	 * map calls update, and the username that is in the upper hand corner
 	 * changes so that it is the current player.
 	 *
-	 * @param o the o
-	 * @param arg the arg
+	 * @param o
+	 *            the o
+	 * @param arg
+	 *            the arg
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
@@ -1151,11 +1242,11 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving saveQuitButton events.
-	 * The class that is interested in processing a saveQuitButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addsaveQuitButtonListener<code> method. When
+	 * The listener interface for receiving saveQuitButton events. The class
+	 * that is interested in processing a saveQuitButton event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addsaveQuitButtonListener<code> method. When
 	 * the saveQuitButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -1163,8 +1254,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class saveQuitButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -1175,11 +1270,11 @@ public class SetupPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * The listener interface for receiving saveContinueButton events.
-	 * The class that is interested in processing a saveContinueButton
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addsaveContinueButtonListener<code> method. When
+	 * The listener interface for receiving saveContinueButton events. The class
+	 * that is interested in processing a saveContinueButton event implements
+	 * this interface, and the object created with that class is registered with
+	 * a component using the component's
+	 * <code>addsaveContinueButtonListener<code> method. When
 	 * the saveContinueButton event occurs, that object's appropriate
 	 * method is invoked.
 	 *
@@ -1187,8 +1282,12 @@ public class SetupPanel extends JPanel implements Observer {
 	 */
 	private class saveContinueButtonListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -1201,7 +1300,8 @@ public class SetupPanel extends JPanel implements Observer {
 	/**
 	 * Save the game.
 	 *
-	 * @param quit the quit
+	 * @param quit
+	 *            the quit
 	 */
 	public void saveTheGame(boolean quit) {
 
@@ -1244,7 +1344,8 @@ public class SetupPanel extends JPanel implements Observer {
 	/**
 	 * Save data.
 	 *
-	 * @param saveName the save name
+	 * @param saveName
+	 *            the save name
 	 */
 	private void saveData(String saveName) {
 		try {
@@ -1289,7 +1390,8 @@ public class SetupPanel extends JPanel implements Observer {
 	/**
 	 * Load data.
 	 *
-	 * @param saveStateName the save state name
+	 * @param saveStateName
+	 *            the save state name
 	 */
 	public void LoadData(String saveStateName) {
 		try {
@@ -1330,8 +1432,8 @@ public class SetupPanel extends JPanel implements Observer {
 			controller.setPlayerTurn(true);
 			((MapView) textMap).setGameType(type);
 			((GraphicalView) graphical).setScaleFactor(scaleFactor);
-			controller.setGraphicalView((GraphicalView)graphical);
-			
+			controller.setGraphicalView((GraphicalView) graphical);
+
 			gameIsRunning = true;
 			dataWasLoaded = true;
 			selected = false;
@@ -1343,14 +1445,14 @@ public class SetupPanel extends JPanel implements Observer {
 			JOptionPane.showMessageDialog(null, "Unable to load the selected data. There is either no save in this slot or the data is currupt.", "Unable to load Data", JOptionPane.WARNING_MESSAGE);
 
 		}
-		
 
 	}
-	
+
 	/**
 	 * Sets the testing mode.
 	 *
-	 * @param testingMode the testingMode to set
+	 * @param testingMode
+	 *            the testingMode to set
 	 */
 	public void setTestingMode(boolean testingMode) {
 		this.testingMode = testingMode;

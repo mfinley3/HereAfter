@@ -1,6 +1,7 @@
 package units;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import item.*;
  */
 public class Soldier extends Unit {
 	transient private BufferedImage soldGen, soldSelect, soldCantMove, sold;
+
 
 	/**
 	 * Instantiates a new soldier.
@@ -41,6 +43,7 @@ public class Soldier extends Unit {
 	 */
 	@Override
 	public void drawUnit(Graphics g) {
+		
 		if (sold == null) {
 			try {
 				soldSelect = ImageIO.read(new File("soldier1Selected.png"));
@@ -57,7 +60,7 @@ public class Soldier extends Unit {
 			sold = soldCantMove;
 		else
 			sold = soldGen;
-		g.drawImage(sold, super.currentY * 100, super.currentX * 100, null);
+		g.drawImage(sold, (int) (super.currentY * 100), (int) (super.currentX * 100), null);
 	}
 
 } // end of Soldier
