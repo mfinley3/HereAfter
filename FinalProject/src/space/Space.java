@@ -2,19 +2,35 @@ package space;
 
 import java.io.Serializable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The abstract space class. Is used to easily create any amount of different types of
  * spaces. Holds all of a spaces information to allow easy addition of new spaces. 
  */
 public abstract class Space implements Serializable{
 
+	/** The space type. */
 	private String spaceType;
+	
+	/** The walkable. */
 	private Boolean walkable;
+	
+	/** The occupied. */
 	private Boolean occupied;
+	
+	/** The visable. */
 	private Boolean visable;
+	
+	/** The can move to. */
 	private boolean canMoveTo;
+	
+	/** The move hinderance. */
 	private int moveHinderance;
+	
+	/** The visablity modifier. */
 	private int visablityModifier;
+	
+	/** The has mine. */
 	private boolean hasMine;
 	
 	/**
@@ -77,7 +93,7 @@ public abstract class Space implements Serializable{
 	/**
 	 * Sets the space to be occupied or not.
 	 *
-	 * @param Occupied is what the spaces occupied variable needs to be changed to.
+	 * @param occupied the new occupied
 	 */
 	public void setOccupied(Boolean occupied) {
 		this.occupied = occupied;
@@ -140,6 +156,8 @@ public abstract class Space implements Serializable{
 	
 	/**
 	 * Sets if it has a mine. Called when adding and removing a mine.
+	 *
+	 * @param hasMine the new checks for mine
 	 */
 	public void setHasMine(boolean hasMine){
 		this.hasMine = hasMine;

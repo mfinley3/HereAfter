@@ -6,22 +6,45 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ItemHelpWindow.
+ */
 public class ItemHelpWindow extends JFrame implements Runnable {
 
+	/** The description. */
 	private JTextArea description;
+	
+	/** The attack boost. */
 	private JTextArea attackBoost;
+	
+	/** The defence boost. */
 	private JTextArea defenceBoost;
+	
+	/** The health boost. */
 	private JTextArea healthBoost;
+	
+	/** The med kit. */
 	private JTextArea medKit;
+	
+	/** The mine. */
 	private JTextArea mine;
+	
+	/** The gernade. */
 	private JTextArea gernade;
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Instantiates a new item help window.
+	 */
 	public ItemHelpWindow() {
 		this.setSize(400, 750);
 		this.setVisible(true);

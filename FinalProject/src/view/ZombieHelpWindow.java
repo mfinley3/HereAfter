@@ -6,21 +6,42 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ZombieHelpWindow.
+ */
 public class ZombieHelpWindow extends JFrame implements Runnable {
 
+	/** The description. */
 	private JTextArea description;
+	
+	/** The zombie. */
 	private JTextArea zombie;
+	
+	/** The carrier. */
 	private JTextArea carrier;
+	
+	/** The alpha protector. */
 	private JTextArea alphaProtector;
+	
+	/** The zombie dog. */
 	private JTextArea zombieDog;
+	
+	/** The spitter. */
 	private JTextArea spitter;
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Instantiates a new zombie help window.
+	 */
 	public ZombieHelpWindow(){
 		
 		this.setSize(400, 750);

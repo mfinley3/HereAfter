@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import songplayer.Songs;
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * Sets up the GUI with the title of the frame. This is in charge of the entire
@@ -24,12 +25,20 @@ public class TRPGGUI {
 	// Random serial number
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -703102129384036053L;
+	
+	/** The main frame. */
 	private static JFrame mainFrame;
+	
+	/** The Setup panel. */
 	private SetupPanel SetupPanel;
+	
+	/** The dont ask again. */
 	private static boolean dontAskAgain;
 
 	/**
 	 * The main method. It creates a new TRPGGUI.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -40,7 +49,7 @@ public class TRPGGUI {
 	}
 
 	/**
-	 * Instantiates a new TRPG gui, with the title and size
+	 * Instantiates a new TRPG gui, with the title and size.
 	 */
 	public TRPGGUI() {
 		mainFrame = new JFrame();
@@ -53,7 +62,7 @@ public class TRPGGUI {
 			}
 		}
 
-		//new Songs();
+		new Songs();
 
 		mainFrame.setSize(996, 669);
 		mainFrame.setLocation(100, 10);
@@ -104,24 +113,47 @@ public class TRPGGUI {
 		mainFrame.setResizable(true);
 	}
 
+	/**
+	 * Dispose.
+	 */
 	public static void dispose() {
 		mainFrame.dispose();
 		new TRPGGUI();
 
 	}
 
+	/**
+	 * Validate.
+	 */
 	public static void validate() {
 		mainFrame.validate();
 
 	}
 
+	/**
+	 * The listener interface for receiving saveData events.
+	 * The class that is interested in processing a saveData
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addSaveDataListener<code> method. When
+	 * the saveData event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see SaveDataEvent
+	 */
 	private class SaveDataListener implements WindowListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowOpened(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowOpened(WindowEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowClosing(WindowEvent e) {
 
@@ -138,26 +170,41 @@ public class TRPGGUI {
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowClosed(WindowEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowIconified(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowIconified(WindowEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowDeiconified(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowDeiconified(WindowEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowActivated(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowActivated(WindowEvent e) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.WindowListener#windowDeactivated(java.awt.event.WindowEvent)
+		 */
 		@Override
 		public void windowDeactivated(WindowEvent e) {
 
@@ -165,6 +212,11 @@ public class TRPGGUI {
 
 	}
 	
+	/**
+	 * Sets the dont ask again.
+	 *
+	 * @param dontAskAgain1 the new dont ask again
+	 */
 	public static void setdontAskAgain(boolean dontAskAgain1){
 		dontAskAgain = dontAskAgain1;
 	}

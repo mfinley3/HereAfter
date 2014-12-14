@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Soldier.
  */
@@ -16,12 +17,15 @@ public class Soldier extends Unit {
 
 	/**
 	 * Instantiates a new soldier.
-	 * 
-	 * @param difficulty
-	 *            the difficulty
+	 *
 	 */
 	transient private BufferedImage soldGen, soldSelect, soldCantMove, sold;
 
+	/**
+	 * Instantiates a new soldier.
+	 *
+	 * @param difficulty the difficulty
+	 */
 	public Soldier(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
 		// Difficulty multiplier
@@ -32,6 +36,9 @@ public class Soldier extends Unit {
 		this.addItem(new UsableItem("Military Grenade", ItemType.GRENADE));
 	}
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (sold == null) {

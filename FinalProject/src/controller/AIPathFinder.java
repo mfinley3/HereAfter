@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import model.Map;
 
+// TODO: Auto-generated Javadoc
 /**
  * AIPathFinder attempts to recursively traverse the game Map. The goal is to
  * get from the given starting position to the nearest player location.
@@ -13,14 +14,26 @@ import model.Map;
  * @author Chioke
  */
 public class AIPathFinder implements Serializable{
+	
+	/** The game map. */
 	private Map gameMap;
+	
+	/** The mine locations. */
 	private ArrayList<Point> mineLocations = new ArrayList<Point>();
+	
+	/** The move positions. */
 	private ArrayList<Point> movePositions = new ArrayList<Point>();
+	
+	/** The move range. */
 	private int moveRange;
+	
+	/** The col. */
 	private int row = 0, col = 0;
 
 	/**
 	 * Constructor for the AIPathFinder class.
+	 *
+	 * @param gameMap the game map
 	 */
 	public AIPathFinder(Map gameMap) {
 		this.gameMap = gameMap;
@@ -28,12 +41,13 @@ public class AIPathFinder implements Serializable{
 
 	/**
 	 * Attempts to recursively traverse the game map from the first given X & Y
-	 * locations to the next pair
-	 * 
-	 * @param currAIRow
-	 *            row index of current location
-	 * @param currAICol
-	 *            column index of current location
+	 * locations to the next pair.
+	 *
+	 * @param currAIRow            row index of current location
+	 * @param currAICol            column index of current location
+	 * @param plyrRow the plyr row
+	 * @param plyrCol the plyr col
+	 * @param aiMovement the ai movement
 	 * @return true if the current location is 'near' the other
 	 */
 	public Point traverse(int currAIRow, int currAICol, int plyrRow, int plyrCol, int aiMovement) {
@@ -128,6 +142,8 @@ public class AIPathFinder implements Serializable{
 	}
 
 	/**
+	 * Gets the stepped on mines.
+	 *
 	 * @return the mineLocations
 	 */
 	public ArrayList<Point> getSteppedOnMines() {
@@ -135,13 +151,15 @@ public class AIPathFinder implements Serializable{
 	}
 
 	/**
-	 * @param mineLocations the mineLocations to set
+	 * Clear stepped on mines.
 	 */
 	public void clearSteppedOnMines() {
 		this.mineLocations = new ArrayList<Point>();
 	}
 
 	/**
+	 * Gets the move positions.
+	 *
 	 * @return the movePositions
 	 */
 	public ArrayList<Point> getMovePositions() {
@@ -149,6 +167,8 @@ public class AIPathFinder implements Serializable{
 	}
 
 	/**
+	 * Sets the move positions.
+	 *
 	 * @param movePositions the movePositions to set
 	 */
 	public void setMovePositions(ArrayList<Point> movePositions) {

@@ -1,5 +1,6 @@
 package songplayer;
 
+// TODO: Auto-generated Javadoc
 /**
  * SongPlayer has two static methods that allow an audio file to be played
  * through the output device. The first one
@@ -12,15 +13,19 @@ package songplayer;
  */
 
 public class SongPlayer {
+  
   /**
-   * Play the audio file stored in audioFileName
-   * 
-   * @param audioFileName
-   *          The name of the file to be written to your output device.
+   * Play the audio file stored in audioFileName.
+   *
    */
 	
 	private static Thread player;
 	
+  /**
+   * Play file.
+   *
+   * @param audioFileName the audio file name
+   */
   public static void playFile(String audioFileName) {
     AudioFilePlayer player = new AudioFilePlayer(audioFileName);
     // AudioFilePlayer extends Thread. When start is called,
@@ -30,13 +35,11 @@ public class SongPlayer {
   }
 
   /**
-   * Play the song stored in filename in a new thread where waiter will be sent
-   * 
-   * @param waiter
-   *          A reference to the EndOfSongEvent object that becomes registered
+   * Play the song stored in filename in a new thread where waiter will be sent.
+   *
+   * @param waiter          A reference to the EndOfSongEvent object that becomes registered
    *          as a listener waiting for the song to end.
-   * @param audioFileName
-   *          The name of the file to be written to your output device.
+   * @param audioFileName          The name of the file to be written to your output device.
    */
   public static void playFile(EndOfSongListener waiter, String audioFileName) {
      player = new AudioFilePlayer(audioFileName);
@@ -49,6 +52,9 @@ public class SongPlayer {
     player.start();
   }
 
+/**
+ * Stop.
+ */
 @SuppressWarnings("deprecation")
 public static void stop() {
 	player.stop();

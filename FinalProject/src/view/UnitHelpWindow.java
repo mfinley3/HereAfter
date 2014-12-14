@@ -6,26 +6,57 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UnitHelpWindow.
+ */
 public class UnitHelpWindow extends JFrame implements Runnable {
 
+	/** The description. */
 	private JTextArea description;
+	
+	/** The soldier. */
 	private JTextArea soldier;
+	
+	/** The doctor. */
 	private JTextArea doctor;
+	
+	/** The engineer. */
 	private JTextArea engineer;
+	
+	/** The sniper. */
 	private JTextArea sniper;
+	
+	/** The ranger. */
 	private JTextArea ranger;
+	
+	/** The zombie. */
 	private JTextArea zombie;
+	
+	/** The carrier. */
 	private JTextArea carrier;
+	
+	/** The alpha protector. */
 	private JTextArea alphaProtector;
+	
+	/** The zombie dog. */
 	private JTextArea zombieDog;
+	
+	/** The spitter. */
 	private JTextArea spitter;
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Instantiates a new unit help window.
+	 */
 	public UnitHelpWindow(){
 		this.setSize(400, 750);
 		this.setVisible(true);

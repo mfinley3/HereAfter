@@ -1,7 +1,8 @@
 package space;
 
+// TODO: Auto-generated Javadoc
 /**
- * The Class for a bridge space
+ * The Class for a bridge space.
  */
 public class BridgeSpace extends Space{
 

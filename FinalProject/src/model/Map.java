@@ -46,34 +46,63 @@ import units.SpitterAI;
 import units.Unit;
 import units.ZombieDogAI;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Map class, creates a new map. Also handles moving units, adding/removing
  * units on the map and checking to see if a space is occupied.
  */
 public class Map extends Observable implements Serializable {
 
+	/** The map. */
 	private Space[][] map;
+	
+	/** The units on map. */
 	private Unit[][] unitsOnMap;
+	
+	/** The items on map. */
 	private Item[][] itemsOnMap;
+	
+	/** The map scan. */
 	private transient Scanner mapScan;
+	
+	/** The enemy list. */
 	private List<Unit> enemyList;
+	
+	/** The good unit positions. */
 	private List<Point> goodUnitPositions;
+	
+	/** The enemy unit positions. */
 	private List<Point> enemyUnitPositions;
+	
+	/** The unit scan. */
 	private transient Scanner unitScan;
+	
+	/** The is player turn. */
 	private Boolean isPlayerTurn;
+	
+	/** The game type. */
 	private String gameType;
+	
+	/** The item scan. */
 	private transient Scanner itemScan;
+	
+	/** The background. */
 	private transient BufferedImage background;
+	
+	/** The scale factor. */
 	private double scaleFactor = 1;
+	
+	/** The water. */
 	private transient BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water;
 
 	/**
 	 * Instantiates a new map by reading in a text file that is determined by a
 	 * variable sent in.
 	 *
-	 * @param difficulty
-	 *            Takes in a double representing the difficulty. Is used to pick
+	 * @param difficulty            Takes in a double representing the difficulty. Is used to pick
 	 *            what map to make.
+	 * @param gameType the game type
+	 * @param testingMode the testing mode
 	 */
 	public Map(double difficulty, String gameType, boolean testingMode) {
 		isPlayerTurn = true;
@@ -203,6 +232,11 @@ public class Map extends Observable implements Serializable {
 
 	}
 	
+	/**
+	 * Gets the background.
+	 *
+	 * @return the background
+	 */
 	public BufferedImage getBackground() {
 		if(background == null){
 			background = new BufferedImage((int) (4800 * scaleFactor), (int) (4800 * scaleFactor), BufferedImage.TYPE_INT_ARGB);
@@ -272,8 +306,8 @@ public class Map extends Observable implements Serializable {
 	 * Adds the enemies to the map by reading locations from a text file
 	 * determined by the game type.
 	 *
-	 * @param difficulty
-	 *            The difficulty level to set the enemies to.
+	 * @param difficulty            The difficulty level to set the enemies to.
+	 * @param testingMode the testing mode
 	 */
 	private void addEnemies(double difficulty, boolean testingMode) {
 
@@ -397,6 +431,11 @@ public class Map extends Observable implements Serializable {
 		}
 	}
 	
+	/**
+	 * Adds the items.
+	 *
+	 * @param testingMode the testing mode
+	 */
 	private void addItems(boolean testingMode) {
 		if (gameType.equalsIgnoreCase("Tower")) {
 
@@ -485,8 +524,8 @@ public class Map extends Observable implements Serializable {
 	/**
 	 * Adds the players picked units to map.
 	 *
-	 * @param unitList
-	 *            The list of units to be added to the map.
+	 * @param unitList            The list of units to be added to the map.
+	 * @param testing the testing
 	 */
 	public void addUnitsToMap(Stack<Unit> unitList, boolean testing) {
 
@@ -581,6 +620,8 @@ public class Map extends Observable implements Serializable {
 	}
 
 	/**
+	 * Gets the good unit positions.
+	 *
 	 * @return the goodUnitPositions
 	 */
 	public List<Point> getGoodUnitPositions() {
@@ -588,6 +629,8 @@ public class Map extends Observable implements Serializable {
 	}
 
 	/**
+	 * Gets the enemy unit positions.
+	 *
 	 * @return the enemyUnitPositions
 	 */
 	public List<Point> getEnemyUnitPositions() {
@@ -617,6 +660,11 @@ public class Map extends Observable implements Serializable {
 		return map;
 	}
 
+	/**
+	 * Gets the items.
+	 *
+	 * @return the items
+	 */
 	public Item[][] getItems() {
 		return itemsOnMap;
 	}
@@ -716,8 +764,7 @@ public class Map extends Observable implements Serializable {
 	}
 
 	/**
-	 * @param isPlayerTurn
-	 *            the isPlayerTurn to set
+	 * Sets the is player turn.
 	 */
 	public void setIsPlayerTurn() {
 		isPlayerTurn = !isPlayerTurn;
@@ -732,6 +779,9 @@ public class Map extends Observable implements Serializable {
 		notifyObservers();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		String textMap = "";
 
@@ -797,21 +847,44 @@ public class Map extends Observable implements Serializable {
 
 	}
 	
+	/**
+	 * Cover up hole.
+	 *
+	 * @param row the row
+	 * @param col the col
+	 */
 	public void coverUpHole(int row, int col){
 		map[col][row] = new HoleCovered();
 		setChanged();
 		notifyObservers();
 	}
 	
+	/**
+	 * Removes the item.
+	 *
+	 * @param row the row
+	 * @param col the col
+	 */
 	public void removeItem(int row, int col){
 		itemsOnMap[col][row] = null;
 	}
 
+	/**
+	 * Sets the scale factor.
+	 *
+	 * @param scaleFactor the new scale factor
+	 */
 	public void setScaleFactor(double scaleFactor) {
 		this.scaleFactor = scaleFactor;
 		
 	}
 	
+	/**
+	 * Adds the ai to map.
+	 *
+	 * @param row the row
+	 * @param col the col
+	 */
 	public void addAIToMap(int row, int col){
 		
 	}

@@ -9,17 +9,19 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Sniper.
  */
 public class Sniper extends Unit {
 	
+	/** The snip. */
 	transient private BufferedImage snipGen, snipSelect, snipCantMove, snip;	
 	
 	/**
 	 * Instantiates a new sniper unit.
 	 *
-	 * @param difficulty, augments the stats
+	 * @param difficulty the difficulty
 	 */
 	public Sniper(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
@@ -30,6 +32,9 @@ public class Sniper extends Unit {
 
 
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (snip == null) {

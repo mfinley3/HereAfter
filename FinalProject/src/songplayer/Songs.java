@@ -8,14 +8,26 @@ import songplayer.EndOfSongEvent;
 import songplayer.EndOfSongListener;
 import songplayer.SongPlayer;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Songs.
+ */
 public class Songs {
 
 	// private SongList SL = new SongList();
+	/** The play queue. */
 	private static ArrayList<Song> playQueue;
+	
+	/** The first play. */
 	static boolean firstPlay = true;
+	
+	/** The playing. */
 	static boolean playing = true;
 
 	// Creates a new player composed of the below.
+	/**
+	 * Instantiates a new songs.
+	 */
 	public Songs() {
 		// playQueue = SL.getSongs();
 		playQueue = new ArrayList<Song>();
@@ -27,9 +39,15 @@ public class Songs {
 
 	}
 
+	/** The base dir. */
 	public static String baseDir = System.getProperty("user.dir") + System.getProperty("file.separator") + "songfiles" + System.getProperty("file.separator");
 
 	// adds a song to the queue and starts to play if there isn't a song playing
+	/**
+	 * Adds the song.
+	 *
+	 * @param songFileName the song file name
+	 */
 	public void addSong(Song songFileName) {
 		if (playQueue.isEmpty()) {
 
@@ -45,6 +63,9 @@ public class Songs {
 	}
 
 	// plays the song once the waiter gets word the next song can be played
+	/**
+	 * Play.
+	 */
 	public static void play() {
 
 		ObjectWaitingForSongToEnd waiter = new ObjectWaitingForSongToEnd();
@@ -58,8 +79,14 @@ public class Songs {
 	}
 
 	// wait listener for letting play() know to send the next song
+	/**
+	 * The Class ObjectWaitingForSongToEnd.
+	 */
 	private static class ObjectWaitingForSongToEnd implements EndOfSongListener {
 
+		/* (non-Javadoc)
+		 * @see songplayer.EndOfSongListener#songFinishedPlaying(songplayer.EndOfSongEvent)
+		 */
 		@Override
 		public void songFinishedPlaying(EndOfSongEvent eventWithFileNameAndDateFinished) {
 
@@ -74,10 +101,18 @@ public class Songs {
 
 	}
 
+	/**
+	 * Gets the playlist.
+	 *
+	 * @return the playlist
+	 */
 	public ArrayList<Song> getPlaylist() {
 		return playQueue;
 	}
 
+	/**
+	 * Toogle sound.
+	 */
 	public static void toogleSound() {
 
 		if (playing) {
@@ -92,6 +127,11 @@ public class Songs {
 		}
 	}
 	
+	/**
+	 * Sets the playing.
+	 *
+	 * @param shouldBePlaying the new playing
+	 */
 	public static void setPlaying(boolean shouldBePlaying) {
 		playing = shouldBePlaying;
 	}

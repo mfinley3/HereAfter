@@ -16,6 +16,7 @@ import space.*;
 import units.*;
 import item.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * 
  * The controller for a game. Sends messages to map, Saves Data, Loads Data,
@@ -25,48 +26,98 @@ import item.*;
  *
  */
 public class GameController implements Serializable {
+	
+	/** The player1. */
 	private Player player1;
+	
+	/** The player2. */
 	private AI player2;
+	
+	/** The map. */
 	private Map map;
+	
+	/** The temp unit list. */
 	private List<Unit> tempUnitList;
+	
+	/** The curr unit. */
 	private Unit currUnit;
+	
+	/** The turns. */
 	private int turns;
+	
+	/** The player turn. */
 	private boolean playerTurn;
+	
+	/** The game over. */
 	private boolean gameOver;
+	
+	/** The player won. */
 	private boolean playerWon;
+	
+	/** The has attacked. */
 	private boolean hasAttacked;
+	
+	/** The ai move. */
 	private AIPathFinder aiMove;
 
+	/** The curr row. */
 	private int currRow;
+	
+	/** The curr col. */
 	private int currCol;
 
+	/** The end row. */
 	private int endRow = 51;
+	
+	/** The end col. */
 	private int endCol = 51;
 
+	/** The attack row. */
 	private int attackRow;
+	
+	/** The attack col. */
 	private int attackCol;
 
+	/** The curr player. */
 	private Player currPlayer;
 
+	/** The game type. */
 	private GameTypeInterface gameType;
+	
+	/** The win conditions. */
 	private Object winConditions;
 
+	/** The move on. */
 	private boolean moveOn;
+	
+	/** The row value. */
 	private int rowValue;
+	
+	/** The col value. */
 	private int colValue;
 
+	/** The testing. */
 	private boolean testing;
+	
+	/** The not shown ne. */
 	boolean notShownNE;
+	
+	/** The not shown sw. */
 	boolean notShownSW;
+	
+	/** The not shown se. */
 	boolean notShownSE;
 
+	/** The using item type. */
 	private ItemType usingItemType;
 
 	/**
 	 * Constructor for one player.
-	 * 
-	 * @param player1
-	 * @param i
+	 *
+	 * @param player1 the player1
+	 * @param i the i
+	 * @param gameT the game t
+	 * @param testing the testing
 	 */
 	public GameController(Player player1, Difficulty i, String gameT, boolean testing) {
 		this.map = new Map(i.getValue(), gameT, testing);
@@ -109,6 +160,11 @@ public class GameController implements Serializable {
 		checkWinConditions();
 	}
 
+	/**
+	 * Gets the curr player name.
+	 *
+	 * @return the curr player name
+	 */
 	public String getCurrPlayerName() {
 		if (playerTurn)
 			return player1.getID();
@@ -119,9 +175,10 @@ public class GameController implements Serializable {
 	/**
 	 * Set the the current unit to the unit located at this space. Will return
 	 * true if it
-	 * 
-	 * @param row
-	 * @param col
+	 *
+	 * @param row the row
+	 * @param col the col
+	 * @return true, if successful
 	 */
 	public boolean setCurrentUnit(int row, int col) {
 		if (map.getUnitAt(row, col) != null) {
@@ -148,8 +205,8 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Get method for CurrUnit
-	 * 
+	 * Get method for CurrUnit.
+	 *
 	 * @return the currently selected unit
 	 */
 	public Unit getCurrentUnit() {
@@ -174,15 +231,6 @@ public class GameController implements Serializable {
 	/**
 	 * Move a selected Unit to a another space. Checks to see if the player can
 	 * move to the targeted space, and if can, move them.
-	 * 
-	 * @param sr
-	 *            , the starting row
-	 * @param sc
-	 *            , the starting column
-	 * @param er
-	 *            , the ending row
-	 * @param ec
-	 *            , the ending column
 	 */
 	public void move() {
 		// Check to see if the end Row and end Col point to something
@@ -272,7 +320,10 @@ public class GameController implements Serializable {
 // change position
 // repaint the graphical view, then Thread.sleep(20);
 
-	private void goodUnitMove() {
+	/**
+ * Good unit move.
+ */
+private void goodUnitMove() {
 		rowValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).x;
 		colValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).y;
 
@@ -308,6 +359,9 @@ public class GameController implements Serializable {
 	}
 
 
+	/**
+	 * Pick up item.
+	 */
 	private void pickUpItem() {
 
 		Item[][] itemsOnMap = map.getItems();
@@ -343,6 +397,9 @@ public class GameController implements Serializable {
 
 	}
 
+	/**
+	 * Attack after move.
+	 */
 	private void attackAfterMove() {
 
 		if (!gameOver) {
@@ -371,14 +428,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Get it to attack
-	 * 
-	 * 
-	 * @param sr
-	 * @param sc
-	 * @param er
-	 * @param ec
-	 * @return
+	 * Get it to attack.
 	 */
 	public void attack() {
 
@@ -512,7 +562,9 @@ public class GameController implements Serializable {
 	/**
 	 * Simply check if the enemy is in range. Range is based on the four
 	 * cardinal directions.
-	 * 
+	 *
+	 * @param row the row
+	 * @param col the col
 	 * @return If the current unit is in range of the target.
 	 */
 	private boolean inAttackRange(int row, int col) {
@@ -554,20 +606,38 @@ public class GameController implements Serializable {
 		attackCol = endCol;
 	}
 
+	/**
+	 * Gets the attack row.
+	 *
+	 * @return the attack row
+	 */
 	public int getAttackRow() {
 		return attackRow;
 	}
 
+	/**
+	 * Gets the attack col.
+	 *
+	 * @return the attack col
+	 */
 	public int getAttackCol() {
 		return attackCol;
 	}
 
+	/**
+	 * Gets the checks for attacked.
+	 *
+	 * @return the checks for attacked
+	 */
 	public boolean getHasAttacked() {
 		return hasAttacked;
 	}
 
 	/**
 	 * TODO Finish this method.
+	 *
+	 * @param item the item
+	 * @return true, if successful
 	 */
 	public boolean currUnitHasItem(ItemType item) {
 		return currUnit.hasItem(item);
@@ -678,9 +748,9 @@ public class GameController implements Serializable {
 	/**
 	 * TODO Finish and Test Blow those zombies up, kid. Just try not to blow
 	 * yourself up.
-	 * 
-	 * @param it
-	 *            , the ItemType of the explosive used
+	 *
+	 * @param row the row
+	 * @param col the col
 	 */
 	private void blowShitUp(int row, int col) {
 
@@ -913,8 +983,8 @@ public class GameController implements Serializable {
 
 	/**
 	 * Get all of the stats for the selected player.
-	 * 
-	 * @return
+	 *
+	 * @return the team stats
 	 */
 	public String getTeamStats() {
 		if (this.playerTurn) {
@@ -926,20 +996,17 @@ public class GameController implements Serializable {
 
 	/**
 	 * Get the selected unit's stats.
-	 * 
-	 * @param p
-	 *            , the player that is asking
-	 * @param u
-	 *            , the player's unit
-	 * @return
+	 *
+	 * @param u            , the player's unit
+	 * @return the curr unit stats
 	 */
 	public String getCurrUnitStats(Unit u) {
 		return currUnit.getStats();
 	}
 
 	/**
-	 * Get the number of turns gone through in the game
-	 * 
+	 * Get the number of turns gone through in the game.
+	 *
 	 * @return the number of turns taken in game
 	 */
 	public int getTurns() {
@@ -1122,9 +1189,8 @@ public class GameController implements Serializable {
 
 	/**
 	 * Gets the new endColumn. Used in attack and movement.
-	 * 
-	 * @param endRow
-	 *            , the new ending row
+	 *
+	 * @return the end row
 	 */
 	public int getEndRow() {
 		return endRow;
@@ -1132,9 +1198,8 @@ public class GameController implements Serializable {
 
 	/**
 	 * Gets the new endColumn. Used in attack and movement.
-	 * 
-	 * @param endCol
-	 *            , the new ending column
+	 *
+	 * @return the end column
 	 */
 	public int getEndColumn() {
 		return endCol;
@@ -1143,9 +1208,9 @@ public class GameController implements Serializable {
 	/**
 	 * Decides if the current unit can move onto a surrounding space. Called
 	 * twice, before and after a move/attack.
-	 * 
-	 * @param currRow
-	 * @param currCol
+	 *
+	 * @param row the row
+	 * @param col the col
 	 */
 	private void setCanMove(int row, int col) {
 		map.getSpace(currRow, currCol).setCanMoveTo(true);
@@ -1168,10 +1233,10 @@ public class GameController implements Serializable {
 	 * TODO Get it working
 	 * 
 	 * Helper method for setCanMove.
-	 * 
-	 * @param movesAvail
-	 * @param row
-	 * @param col
+	 *
+	 * @param movesAvail the moves avail
+	 * @param row the row
+	 * @param col the col
 	 */
 	private void canMoveHelper(int movesAvail, int row, int col) {
 
@@ -1196,10 +1261,9 @@ public class GameController implements Serializable {
 	/**
 	 * Checks to see if a specific unit is dead. If it is, remove it from the
 	 * map and from the alive unit lists in the associated team.
-	 * 
-	 * @param row
-	 * @param col
-	 * @return
+	 *
+	 * @param row the row
+	 * @param col the col
 	 */
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
@@ -1288,10 +1352,11 @@ public class GameController implements Serializable {
 		return player1.allAliveUnits();
 	}
 	
+	/** The to attack. */
 	private Point toAttack;
 	
 	/**
-	 * 
+	 * Enemy turn.
 	 */
 	public synchronized void enemyTurn() {
 		// TODO FINISH
@@ -1344,11 +1409,12 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Attacks the nearest unit
-	 * @param k 
-	 * @param col 
-	 * @param row 
-	 * @return
+	 * Attacks the nearest unit.
+	 *
+	 * @param row the row
+	 * @param col the col
+	 * @param rangeLeft the range left
+	 * @return true, if successful
 	 */
 	private boolean aIInAttackRange(int row, int col, int rangeLeft) {
 		// TODO Auto-generated method stub
@@ -1384,8 +1450,8 @@ public class GameController implements Serializable {
 	 * TODO Write this Method for automatically moving the enemy AI. Moves them
 	 * toward the closest human based on their behavior. If they are near enough
 	 * to a player's unit, attack.
-	 * 
-	 * @return
+	 *
+	 * @param em the em
 	 */
 	public synchronized void enemyMove(Point em) {
 		Point p = nearestPlayerUnit(em);
@@ -1403,9 +1469,9 @@ public class GameController implements Serializable {
 	/**
 	 * Finds the nearest player location point closest to an enemy unit. Returns
 	 * the nearest point based on how many moves would be needed to make it.
-	 * 
-	 * @param enemyLoc
-	 * @return
+	 *
+	 * @param enemyLoc the enemy loc
+	 * @return the point
 	 */
 	public Point nearestPlayerUnit(Point enemyLoc) {
 		int spaceNear = 0;
@@ -1424,18 +1490,30 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO
+	 * TODO.
+	 *
+	 * @param player the new current player
 	 */
 
 	public void setCurrentPlayer(Player player) {
 		currPlayer = player;
 	}
 
+	/**
+	 * Sets the player turn.
+	 *
+	 * @param whosTurn the new player turn
+	 */
 	public void setPlayerTurn(boolean whosTurn) {
 		playerTurn = whosTurn;
 
 	}
 
+	/**
+	 * Sets the checks for attacked.
+	 *
+	 * @param hasAttacked the new checks for attacked
+	 */
 	public void setHasAttacked(boolean hasAttacked) {
 		// TODO Auto-generated method stub
 		this.hasAttacked = hasAttacked;
@@ -1444,6 +1522,11 @@ public class GameController implements Serializable {
 	// TODO: add unit .isSelected to change
 	// add unit .cantMove
 
+	/**
+	 * Sets the current unit selected.
+	 *
+	 * @param v the new current unit selected
+	 */
 	public void setCurrentUnitSelected(boolean v) {
 		if (currUnit != null) {
 			currUnit.setIsSelected(v);

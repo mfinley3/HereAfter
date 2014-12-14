@@ -42,23 +42,43 @@ import units.Unit;
 import units.ZombieDogAI;
 import controller.GameController;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GraphicalView.
  */
 public class GraphicalView extends JPanel implements Observer {
 
+	/** The column. */
 	private int clickX, clickY, row, column;
+	
+	/** The controller. */
 	private GameController controller;
+	
+	/** The first click. */
 	private boolean firstClick;
+	
+	/** The map. */
 	private Map map;
 
+	/** The current spaces. */
 	private Space[][] currentSpaces;
+	
+	/** The current units. */
 	private Unit[][] currentUnits;
+	
+	/** The current items. */
 	private Item[][] currentItems;
+	
+	/** The random boost. */
 	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected, randomItem, randomBoost;
+	
+	/** The hole covered indoor with mine. */
 	private BufferedImage bridgeWithMine, cornerWithMine, mountainWithMine, pathWithMine, indoorPathSpaceWithMine, indoorPathWithMine, towerWithMine, wasteWithMine, indoorWasteWithMine, waterWithMine, holeWithMine, holeCoveredWithMine, holeCoveredIndoorWithMine;
 	
+	/** The scale factor. */
 	private double scaleFactor = 1;
+	
+	/** The type. */
 	private String type;
 
 	/**
@@ -163,10 +183,16 @@ public class GraphicalView extends JPanel implements Observer {
 	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+		 */
 		public void mouseClicked(MouseEvent evt) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+		 */
 		public void mouseMoved(MouseEvent evt) {
 
 		}
@@ -180,6 +206,8 @@ public class GraphicalView extends JPanel implements Observer {
 		 * second click, that is the destination row and column, which is sent
 		 * to the controller so that the controller can tell the map to change
 		 * the position of the unit.
+		 *
+		 * @param evt the evt
 		 */
 		public void mousePressed(MouseEvent evt) {
 
@@ -217,10 +245,16 @@ public class GraphicalView extends JPanel implements Observer {
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+		 */
 		public void mouseEntered(MouseEvent evt) {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+		 */
 		public void mouseReleased(MouseEvent evt) {
 
 		}
@@ -235,6 +269,9 @@ public class GraphicalView extends JPanel implements Observer {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+		 */
 		public void mouseDragged(MouseEvent evt) {
 
 		}
@@ -243,6 +280,9 @@ public class GraphicalView extends JPanel implements Observer {
 	/**
 	 * The map calls notify Observers, and the graphical view will repaint the
 	 * map to have the changed that occurred.
+	 *
+	 * @param arg0 the arg0
+	 * @param arg1 the arg1
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -257,6 +297,8 @@ public class GraphicalView extends JPanel implements Observer {
 	/**
 	 * This will first print ever space with the default map background. It will
 	 * then print a unit if applicable.
+	 *
+	 * @param g the g
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -446,23 +488,44 @@ public class GraphicalView extends JPanel implements Observer {
 		} // end of if currentSpace != null
 	}
 
+	/**
+	 * Sets the zoom in scale.
+	 */
 	public void setZoomInScale() {
 		scaleFactor = (scaleFactor * 2);
 	}
 
+	/**
+	 * Sets the zoom out scale.
+	 */
 	public void setZoomOutScale() {
 		scaleFactor = (scaleFactor / 2);
 	}
 
+	/**
+	 * Gets the scale factor.
+	 *
+	 * @return the scale factor
+	 */
 	public double getScaleFactor() {
 		return scaleFactor;
 	}
 
+	/**
+	 * Sets the scale factor.
+	 *
+	 * @param scaleFactor the new scale factor
+	 */
 	public void setScaleFactor(double scaleFactor) {
 		this.scaleFactor = scaleFactor;
 		map.setScaleFactor(scaleFactor);
 	}
 
+	/**
+	 * Sets the game type.
+	 *
+	 * @param type the new game type
+	 */
 	public void setGameType(String type) {
 		this.type = type;
 

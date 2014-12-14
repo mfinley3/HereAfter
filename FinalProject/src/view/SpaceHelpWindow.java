@@ -6,23 +6,46 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SpaceHelpWindow.
+ */
 public class SpaceHelpWindow extends JFrame implements Runnable {
 
+	/** The description. */
 	private JTextArea description;
+	
+	/** The wasteland and paths. */
 	private JTextArea wastelandAndPaths;
+	
+	/** The water. */
 	private JTextArea water;
+	
+	/** The bridge. */
 	private JTextArea bridge;
+	
+	/** The mountain. */
 	private JTextArea mountain;
+	
+	/** The wall. */
 	private JTextArea wall;
+	
+	/** The holes. */
 	private JTextArea holes;
 	
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 
 	}
 	
+	/**
+	 * Instantiates a new space help window.
+	 */
 	public SpaceHelpWindow(){
 		this.setSize(400, 750);
 		this.setVisible(true);

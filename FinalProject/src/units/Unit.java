@@ -6,34 +6,65 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
  * The abstract Unit class. Used in creating new units and keeping track of each
  * of the units stats.
  */
 public abstract class Unit implements Serializable {
+	
+	/** The item list. */
 	public ArrayList<Item> itemList = new ArrayList<Item>();
 
+	/** The can move. */
 	private boolean canMove;
+	
+	/** The attack. */
 	private int attack;
+	
+	/** The defense. */
 	private int defense;
+	
+	/** The movement. */
 	private int movement;
+	
+	/** The health. */
 	private int health;
+	
+	/** The range. */
 	private int range;
 
+	/** The base attack. */
 	private int baseAttack;
+	
+	/** The base defense. */
 	private int baseDefense;
+	
+	/** The base health. */
 	private int baseHealth;
 	
+	/** The unit type. */
 	private String unitType;
+	
+	/** The difficulty. */
 	private Double difficulty;
 
+	/** The attack set. */
 	private boolean attackSet;
+	
+	/** The defense set. */
 	private boolean defenseSet;
+	
+	/** The health set. */
 	private boolean healthSet;
 	
+	/** The current y. */
 	protected int currentX, currentY;
+	
+	/** The is selected. */
 	protected boolean isSelected;
 	
+	/** The no damage. */
 	private boolean noDamage;
 
 	/**
@@ -74,15 +105,17 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * Will be responsible for drawing the unit in the Graphical View
-	 * @param g
+	 * Will be responsible for drawing the unit in the Graphical View.
+	 *
+	 * @param g the g
 	 */
 	abstract public void drawUnit(Graphics g);
 
 	/**
 	 * Sets the CurrentPostition of the unit. Changed when the unit moves/
-	 * @param x
-	 * @param y
+	 *
+	 * @param x the x
+	 * @param y the y
 	 */
 	public void setCurrentPosition(int x, int y) {
 		currentX = x;
@@ -91,7 +124,8 @@ public abstract class Unit implements Serializable {
 	
 	/**
 	 * Sets whether or not the unit selected.
-	 * @param isSelected
+	 *
+	 * @param isSelected the new checks if is selected
 	 */
 	public void setIsSelected(boolean isSelected) {
 		this.isSelected = isSelected;
@@ -302,9 +336,9 @@ public abstract class Unit implements Serializable {
 
 	/**
 	 * Goes through itemList to see if the unit has the specific item.
-	 * 
-	 * @param item
-	 * @return
+	 *
+	 * @param item the item
+	 * @return true, if successful
 	 */
 	public boolean hasItem(ItemType item) {
 		for (Item i : itemList)
@@ -314,9 +348,9 @@ public abstract class Unit implements Serializable {
 	}
 
 	/**
-	 * Adds the item to the unit's inventory
-	 * 
-	 * @param item
+	 * Adds the item to the unit's inventory.
+	 *
+	 * @param item the item
 	 */
 	public void addItem(Item item) {
 		itemList.add(item);
@@ -325,9 +359,9 @@ public abstract class Unit implements Serializable {
 	/**
 	 * Gets an item from the inventory depending on desired type and
 	 * uses it. If that type is not in the person's inventory, return null.
-	 * 
-	 * @param item
-	 * @return
+	 *
+	 * @param item the item
+	 * @return the item
 	 */
 	public Item removeItem(ItemType item) {
 		Item used = null;
@@ -355,7 +389,8 @@ public abstract class Unit implements Serializable {
 
 	/**
 	 * Get the Item's list.
-	 * @return
+	 *
+	 * @return the item list
 	 */
 	public Object getItemList() {
 		return itemList;
@@ -389,8 +424,9 @@ public abstract class Unit implements Serializable {
 	
 	/**
 	 * Sets the current posisiton of the unit on the map.
-	 * @param x
-	 * @param y
+	 *
+	 * @param x the x
+	 * @param y the y
 	 */
 	public void setCurrentPostion(int x, int y){
 		currentX = x;
@@ -399,7 +435,8 @@ public abstract class Unit implements Serializable {
 	
 	/**
 	 * Gets the x-location of the unit on the map (or the column, if you will).
-	 * @return
+	 *
+	 * @return the x
 	 */
 	public int getX(){
 		return currentX;
@@ -407,7 +444,8 @@ public abstract class Unit implements Serializable {
 	
 	/**
 	 * Gets the y-location of the unit on the map (or the row, if you will).
-	 * @return
+	 *
+	 * @return the y
 	 */
 	public int getY(){
 		return currentY;
@@ -415,7 +453,8 @@ public abstract class Unit implements Serializable {
 
 	/**
 	 * Gets if damage is not enough.
-	 * @return
+	 *
+	 * @return the no damage
 	 */
 	public boolean getNoDamage() {
 		// TODO Auto-generated method stub
@@ -424,7 +463,8 @@ public abstract class Unit implements Serializable {
 	
 	/**
 	 * Sets if the damage is too high to allow the unit to be hurt.
-	 * @param noDamage
+	 *
+	 * @param noDamage the new no damage
 	 */
 	public void setNoDamage(boolean noDamage) {
 		this.noDamage = noDamage;
