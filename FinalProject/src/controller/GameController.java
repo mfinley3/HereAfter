@@ -200,9 +200,9 @@ public class GameController implements Serializable {
 						if (playerTurn)
 							pickUpItem();
 
-						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
-							currUnit instanceof Sniper || currUnit instanceof Soldier)
-							goodUnitMove();
+//						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
+//							currUnit instanceof Sniper || currUnit instanceof Soldier)
+//							goodUnitMove();
 						
 
 						// Set the new CurrRow and CurrCol, and check
