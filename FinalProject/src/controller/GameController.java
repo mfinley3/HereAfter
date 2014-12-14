@@ -235,15 +235,25 @@ public class GameController implements Serializable {
 					}
 				}
 
-				if (currUnit == null)
+				if (currUnit == null){
+					if(playerTurn)
 					JOptionPane.showMessageDialog(null, "Please select a Unit to move first");
-				else if (!currUnit.canMove())
+					
+				} else if (!currUnit.canMove()) {
+					if(playerTurn)
 					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
-				else if (map.isOccupied(endRow, endCol))
+					
+				} else if (map.isOccupied(endRow, endCol)) {
+					if(playerTurn)
 					JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
-				else if (!map.getSpace(endRow, endCol).getCanMoveTo())
+					
+				} else if (!map.getSpace(endRow, endCol).getCanMoveTo()) {
+					if(playerTurn)
 					JOptionPane.showMessageDialog(null, "Space is out of range.");
+				}
+				
 				return;
+				
 			} else
 				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
 		} else
