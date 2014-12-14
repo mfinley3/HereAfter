@@ -35,10 +35,10 @@ public class UnitPathFinder implements Serializable{
 	 * @return true if the current location is 'near' the other
 	 */
 	public Point traverse(int currRow, int currCol, int tgtRow, int tgtCol) {
-		movePositions.add(new Point(currRow, currCol));
 
-		// System.out.println("Current AI Location: " + currAIRow + ", " + currAICol + ": " + moveRange);
-		// System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
+
+		System.out.println("Current AI Location: " + currRow + ", " + currCol);
+		System.out.println("\t\tTarget Location: " + tgtRow + ", " + tgtCol);
 
 		// moves up
 		if (currRow > tgtRow) {
@@ -67,7 +67,7 @@ public class UnitPathFinder implements Serializable{
 				traverse(currRow, currCol + 1, tgtRow, tgtCol);
 			}
 		}
-
+		movePositions.add(new Point(row, col));
 		// Returns the Point of where the AI should move.
 		return new Point(row, col);
 	}
@@ -86,18 +86,13 @@ public class UnitPathFinder implements Serializable{
 		boolean valid = false;
 		
 		// Check for hindrance and if walkable
-		if (tgtRow > 50 || tgtRow < 0 || tgtCol > 50 || tgtCol < 0 ) {
+		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0 ) {
 			valid = false;
 		}
-		else if (!(gameMap.getSpace(tgtCol, tgtRow).getSpaceType().equals("Wall"))) {
-			// if (getCurrentUnit() != null) {
-			if (!gameMap.isOccupied(tgtRow, tgtCol)
-					&& gameMap.getSpace(tgtRow, tgtCol).getCanMoveTo()) {
-
-					valid = true;
-					row = tgtRow;
-					col = tgtCol;
-			}
+		else {
+						valid = true;
+						row = tgtRow;
+						col = tgtCol;
 		}
 
 		return valid;
