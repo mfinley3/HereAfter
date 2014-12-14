@@ -2,7 +2,6 @@ package item;
 
 import java.util.Random;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class RandomBoost.
  */
@@ -17,7 +16,6 @@ public class RandomBoost extends Item {
 	 */
 	public RandomBoost(String title, ItemType item) {
 		super(title, item);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
