@@ -15,6 +15,10 @@ public class CarrierAI extends Unit{
 	
 	transient private BufferedImage carrierGen, carrierCantMove, carrier;
 	
+	/**
+	 * Creates a new FatZombie AI. Difficulty affects its stats.
+	 * @param difficulty
+	 */
 	public CarrierAI(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		super("Carrier", new Item("Lard", ItemType.NONE), 10, 20, 100, 5, 1, difficulty);
