@@ -5,7 +5,7 @@ import units.*;
 import java.util.ArrayList;
 
 /**
- * The Class LastStand.
+ * The Class LastStand. Will be deleted at some point.
  */
 public class LastStand implements GameTypeInterface {
 

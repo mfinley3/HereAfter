@@ -218,9 +218,9 @@ public class GameController implements Serializable {
 						if (!moveOn) {
 							currUnit.setCanMove(false);
 							tempUnitList.remove(currUnit);
+							setCurrentUnitSelected(false);
 							currUnit = null;
 						}
-						setCurrentUnitSelected(true);
 						map.updateObservers();
 
 						if (tempUnitList.isEmpty())
@@ -259,9 +259,35 @@ public class GameController implements Serializable {
 		rowValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).x;
 		colValue = aiMove.traverse(currCol, currRow, endCol, endRow, currUnit.getMovement()).y;
 
-		endRow = rowValue;
-		endCol = colValue;
-		aiMove.getMovePositions();
+	//	endRow = rowValue;
+	//	endCol = colValue;
+		ArrayList<Point> positionsMoved = aiMove.getMovePositions();
+
+		for(int i = 0; i < positionsMoved.size(); i++) {
+			Point p = positionsMoved.get(i);
+			int getToCol = p.y;
+			int getToRow = p.x;
+			System.out.println("goodMoveUnit- col: " + getToCol + " row: " + getToRow);
+			
+			
+			currCol = getToCol;
+			currRow = getToRow;
+			currUnit.setCurrentPosition(currRow, currCol);
+			
+			map.updateObservers();
+			
+			endRow = rowValue;
+			endCol = colValue;
+//			try {
+//				Thread.sleep(20);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+			
+		}
+			
 	}
 
 

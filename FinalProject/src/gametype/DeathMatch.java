@@ -1,7 +1,7 @@
 package gametype;
 
 /**
- * Defines the DeathMatch game type. Used to define the rules.
+ * Defines the DeathMatch game type. Used to define the rules. Will be deleted at some point.
  * 
  *
  */

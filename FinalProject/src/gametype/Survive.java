@@ -5,11 +5,10 @@ package gametype;
  */
 public class Survive implements GameTypeInterface{
 
-	/** The turns needed. */
 	private int turnsNeeded;
 	
 	/**
-	 * Instantiates a new survive.
+	 * Instantiates a new survive game. Sets the number of turns needed to win.
 	 *
 	 * @param turnsToSurvive the turns to survive
 	 */

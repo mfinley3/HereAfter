@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import space.Space;
 
 /**
- * The Class FourCorners.
+ * The Class FourCorners. Go to the four corners.
  *
  */
 public class FourCorners implements GameTypeInterface {

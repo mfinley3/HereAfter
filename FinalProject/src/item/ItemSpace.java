@@ -5,13 +5,8 @@ package item;
  */
 public class ItemSpace {
 
-	/** The atk item. */
 	private boolean atkItem;
-	
-	/** The def item. */
 	private boolean defItem;
-	
-	/** The health item. */
 	private boolean healthItem;
 
 	/**
@@ -30,12 +25,8 @@ public class ItemSpace {
 		this.atkItem = atkItem;
 	}
 
-	/*
-	 * Returns true if the Hunter is here
-	 * 
-	 */
 	/**
-	 * Checks if is atk item.
+	 * Checks if it is an attack item.
 	 *
 	 * @return true, if is atk item
 	 */
@@ -43,9 +34,6 @@ public class ItemSpace {
 		return atkItem;
 	}
 
-	/*
-	 * Method dealing w/ visited game spaces
-	 */
 	/**
 	 * Sets the def item.
 	 *
@@ -55,9 +43,6 @@ public class ItemSpace {
 		this.defItem = defItem;
 	}
 
-	/*
-	 * Returns true if the player has come through
-	 */
 	/**
 	 * Checks if is def item.
 	 *
@@ -76,10 +61,6 @@ public class ItemSpace {
 		this.healthItem = healthItem;
 	}
 
-	/*
-	 * Returns true if the Hunter is here
-	 * 
-	 */
 	/**
 	 * Checks if is health item.
 	 *

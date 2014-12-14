@@ -16,7 +16,7 @@ public class Item implements Serializable {
 	private boolean healthItem;
 
 	/**
-	 * Constructor
+	 * Constructor that creates the new item, sets the title and sets the item type.
 	 * 
 	 * @param title
 	 * @param itemType
@@ -27,7 +27,7 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Gets the item title
+	 * Gets the item's title
 	 * 
 	 * @return item title
 	 */
@@ -35,14 +35,26 @@ public class Item implements Serializable {
 		return title;
 	}
 
+	/**
+	 * Gets the item type
+	 * @return the type of item the item is
+	 */
 	public ItemType getItemType() {
 		return item;
 	}
 
+	/**
+	 * Sets the type of the item
+	 * @param item, the new item type
+	 */
 	public void setItemType(ItemType item) {
 		this.item = item;
 	}
 	
+	/**
+	 * Gets the modifier of what the item is
+	 * @param modType
+	 */
 	public void getItemModifier(ItemType modType) {
 		if(modType.equals(ItemType.ATK)) {
 			setAtkItem(true);
@@ -58,6 +70,7 @@ public class Item implements Serializable {
 	}
 
 	/**
+	 * Gets if the item is a defense item
 	 * @return the atkItem
 	 */
 	public boolean isAtkItem() {
@@ -65,6 +78,7 @@ public class Item implements Serializable {
 	}
 
 	/**
+	 * Sets if the item is a attack item
 	 * @param atkItem the atkItem to set
 	 */
 	public void setAtkItem(boolean atkItem) {
@@ -72,6 +86,7 @@ public class Item implements Serializable {
 	}
 
 	/**
+	 * Gets if the item is a defense item
 	 * @return the defItem
 	 */
 	public boolean isDefItem() {
@@ -79,6 +94,8 @@ public class Item implements Serializable {
 	}
 
 	/**
+	 * Sets if the item is a defense item
+
 	 * @param defItem the defItem to set
 	 */
 	public void setDefItem(boolean defItem) {
@@ -86,6 +103,7 @@ public class Item implements Serializable {
 	}
 
 	/**
+	 * Returns if the item is a health item
 	 * @return the healthItem
 	 */
 	public boolean isHealthItem() {
@@ -93,16 +111,24 @@ public class Item implements Serializable {
 	}
 
 	/**
+	 * Sets if the item is a health item
 	 * @param healthItem the healthItem to set
 	 */
 	public void setHealthItem(boolean healthItem) {
 		this.healthItem = healthItem;
 	}
 	
+	/**
+	 * Returns the toString of the item. Used in the text view.
+	 */
 	public String toString() {
 		return "\n  *Item: " + title + "\n      -Item Type: " + item;
 	}
 
+	/**
+	 * Use the item.
+	 * @return
+	 */
 	public int useItem() {
 		// TODO Auto-generated method stub
 		return 0;
