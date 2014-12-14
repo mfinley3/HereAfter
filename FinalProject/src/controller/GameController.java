@@ -202,7 +202,7 @@ public class GameController implements Serializable {
 
 //						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
 //							currUnit instanceof Sniper || currUnit instanceof Soldier)
-//							goodUnitMove(); asdfsdfaf
+//							goodUnitMove();
 						
 
 						// Set the new CurrRow and CurrCol, and check
@@ -221,13 +221,16 @@ public class GameController implements Serializable {
 							setCurrentUnitSelected(false);
 							currUnit = null;
 						}
+						
+						endRow = 51;
+						endCol = 51;
+						
 						map.updateObservers();
 
 						if (tempUnitList.isEmpty())
 							endTurn();
 
-						endRow = 51;
-						endCol = 51;
+						
 						return;
 					}
 				}
