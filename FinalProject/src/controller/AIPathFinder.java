@@ -41,8 +41,8 @@ public class AIPathFinder implements Serializable{
 		moveRange = aiMovement;
 		movePositions.add(new Point(currAIRow, currAICol));
 		
-		System.out.println("Current AI Location: " + currAIRow + ", " + currAICol + ": " + moveRange);
-		System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
+		//System.out.println("Current AI Location: " + currAIRow + ", " + currAICol + ": " + moveRange);
+		//System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
 
 		if ((currAIRow == plyrRow || currAIRow == plyrRow - 1 || currAIRow == plyrRow + 1) && (currAICol == plyrCol || currAICol == plyrCol - 1 || currAICol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
@@ -58,7 +58,6 @@ public class AIPathFinder implements Serializable{
 		}
 
 		else {
-			
 			// moves up
 			if (!isNearPlayer && currAIRow > plyrRow) {
 				if (validPosition(currAIRow - 1, currAICol)) {
