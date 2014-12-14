@@ -29,7 +29,7 @@ import item.*;
  */
 public class GameController implements Serializable {
 
-	private GraphicalView graphical;
+	private transient GraphicalView graphical;
 	/** The player1. */
 	private Player player1;
 
