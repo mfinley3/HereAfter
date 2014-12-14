@@ -1426,7 +1426,7 @@ public class GameController implements Serializable {
 
 			if (playerTurn) {
 
-				if (map.getUnitAt(endCol, endRow) instanceof Hole)
+				if (map.getUnitAt(col, row) instanceof Hole)
 					JOptionPane
 							.showMessageDialog(null,
 									"You threw a bomb down the hole and stopped zombies from crawling out of it!");
