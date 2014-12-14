@@ -17,7 +17,6 @@ import item.*;
  */
 public class Doctor extends Unit {
 
-	/** The doc. */
 	transient private BufferedImage docGen, docSelect, docCantMove, doc;
 
 	/**

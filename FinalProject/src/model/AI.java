@@ -6,7 +6,6 @@ import java.util.List;
 
 import units.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * Going to have a similar design as {@link Player}. In iteration 2, will be able
  * to assign AI behaviors to different units.
@@ -14,41 +13,24 @@ import units.*;
  */
 public class AI implements Serializable{
 
-	/** The living units. */
 	private List<Unit> livingUnits;
-	
-	/** The all units. */
 	private List<Unit> allUnits;
-	
-	/** The dead units. */
 	private List<Unit> deadUnits;
-	
-	/** The d. */
 	private double d;
-	
-	/** The total ai left. */
 	private int totalAILeft;
 
 	/**
 	 * The constructor for the AI. Designs the enemy team by difficulty.
 	 * Sets AI behavior.
 	 *
-	 * @param d the d
+	 * @param d the Difficulty
 	 */
 	public AI(Difficulty d){
 		this.d = d.getValue();
 		allUnits = new LinkedList<Unit>();
 		deadUnits = new LinkedList<Unit>();
 		livingUnits = new LinkedList<Unit>();
-		generateTeam();
 		totalAILeft=0;
-	}
-
-	/**
-	 * Generates the enemy team. Will be used in Iteration 2.
-	 */
-	private void generateTeam() {
-		// TODO Use the factory to make a team
 	}
 
 	/**

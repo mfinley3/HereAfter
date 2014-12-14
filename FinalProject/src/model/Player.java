@@ -6,7 +6,6 @@ import java.util.List;
 
 import units.*;;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Player class. Contains all of the player's units (although
  * not their locations on the field), their stats, if they're alive
@@ -15,19 +14,10 @@ import units.*;;
  */
 public class Player implements Serializable{
 	
-	/** The games finished. */
 	private int gamesFinished;
-	
-	/** The living team. */
 	private int livingTeam;
-	
-	/** The living units. */
 	private List<Unit> livingUnits;
-	
-	/** The all units. */
 	private List<Unit> allUnits;
-
-	/** The id. */
 	private String id;
 	
 	/**

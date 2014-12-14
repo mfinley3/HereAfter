@@ -12,7 +12,7 @@ import item.ItemType;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class RunnerAI.
+ * Classic Zombie that extends {@link Unit}. Balanced stats.
  */
 public class ZombieAI extends Unit {
 	

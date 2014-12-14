@@ -3,26 +3,16 @@ package item;
 
 import java.io.Serializable;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Item class. Creates and holds all information for items.
+ * The Item class. Creates and holds all information for items. UsableItem extends this class.
  *
  */
 public class Item implements Serializable {
 
-	/** The title. */
 	private String title;
-	
-	/** The item. */
 	private ItemType item;
-	
-	/** The atk item. */
 	private boolean atkItem;
-	
-	/** The def item. */
 	private boolean defItem;
-	
-	/** The health item. */
 	private boolean healthItem;
 
 	/**
@@ -64,7 +54,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * Gets the modifier of what the item is.
+	 * Gets the modifier of what the item is.  Depending on the type, it changes either the attack, defense, or health.
 	 *
 	 * @param modType the mod type
 	 * @return the item modifier
@@ -84,7 +74,7 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Gets if the item is a defense item.
+	 * Gets if the item is an attack item.
 	 *
 	 * @return the atkItem
 	 */
@@ -152,7 +142,6 @@ public class Item implements Serializable {
 	 * @return the int
 	 */
 	public int useItem() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
