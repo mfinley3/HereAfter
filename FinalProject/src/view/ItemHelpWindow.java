@@ -6,31 +6,17 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ItemHelpWindow.
+ * The Class ItemHelpWindow. Displays the types of items that can be used in the game. Displays types, what the different item types do, etc.
  */
 public class ItemHelpWindow extends JFrame implements Runnable {
 
-	/** The description. */
 	private JTextArea description;
-	
-	/** The attack boost. */
 	private JTextArea attackBoost;
-	
-	/** The defence boost. */
 	private JTextArea defenceBoost;
-	
-	/** The health boost. */
 	private JTextArea healthBoost;
-	
-	/** The med kit. */
 	private JTextArea medKit;
-	
-	/** The mine. */
 	private JTextArea mine;
-	
-	/** The gernade. */
 	private JTextArea gernade;
 	
 	/* (non-Javadoc)
@@ -38,12 +24,11 @@ public class ItemHelpWindow extends JFrame implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 
 	}
 
 	/**
-	 * Instantiates a new item help window.
+	 * Instantiates a new item help window. Displays all of the information.
 	 */
 	public ItemHelpWindow() {
 		this.setSize(400, 750);
