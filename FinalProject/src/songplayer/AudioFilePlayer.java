@@ -24,20 +24,39 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AudioFilePlayer.
+ */
 public class AudioFilePlayer extends Thread {
 
+  /** The file name. */
   private String fileName;
 
+  /** The listeners. */
   private List<EndOfSongListener> listeners = new ArrayList<EndOfSongListener>();
 
+  /**
+   * Instantiates a new audio file player.
+   *
+   * @param audioFileName the audio file name
+   */
   public AudioFilePlayer(String audioFileName) {
     fileName = audioFileName;
   }
 
+  /**
+   * Adds the end of song listener.
+   *
+   * @param listener the listener
+   */
   public void addEndOfSongListener(EndOfSongListener listener) {
     this.listeners.add(listener);
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Thread#run()
+   */
   @Override
   public void run() {
     play();
@@ -76,6 +95,12 @@ public class AudioFilePlayer extends Thread {
   }
 
   // This Code snippet is from JavaZOOM
+  /**
+   * Rawplay.
+   *
+   * @param targetFormat the target format
+   * @param din the din
+   */
   private void rawplay(AudioFormat targetFormat, AudioInputStream din) {
     SourceDataLine line = null;
     try {
@@ -126,6 +151,13 @@ public class AudioFilePlayer extends Thread {
     }
   }
 
+  /**
+   * Gets the line.
+   *
+   * @param audioFormat the audio format
+   * @return the line
+   * @throws LineUnavailableException the line unavailable exception
+   */
   private SourceDataLine getLine(AudioFormat audioFormat)
       throws LineUnavailableException {
     SourceDataLine res = null;
@@ -136,16 +168,39 @@ public class AudioFilePlayer extends Thread {
     return res;
   }
 
+  /**
+   * The listener interface for receiving EDT events.
+   * The class that is interested in processing a EDT
+   * event implements this interface, and the object created
+   * with that class is registered with a component using the
+   * component's <code>addEDTListener<code> method. When
+   * the EDT event occurs, that object's appropriate
+   * method is invoked.
+   *
+   * @see EDTEvent
+   */
   private class EDTListener implements Runnable {
 
+    /** The eose. */
     private EndOfSongEvent eose;
+    
+    /** The listener. */
     private EndOfSongListener listener;
 
+    /**
+     * Instantiates a new EDT listener.
+     *
+     * @param eose the eose
+     * @param listener the listener
+     */
     public EDTListener(EndOfSongEvent eose, EndOfSongListener listener) {
       this.eose = eose;
       this.listener = listener;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Runnable#run()
+     */
     @Override
     public void run() {
       listener.songFinishedPlaying(eose);

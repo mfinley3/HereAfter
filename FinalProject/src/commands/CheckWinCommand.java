@@ -2,6 +2,7 @@ package commands;
 
 import gametype.GameTypeInterface;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CheckWinCommand.
  */

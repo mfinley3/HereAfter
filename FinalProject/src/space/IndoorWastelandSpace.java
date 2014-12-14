@@ -1,5 +1,9 @@
 package space;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class IndoorWastelandSpace.
+ */
 public class IndoorWastelandSpace extends Space {
 
 	/**

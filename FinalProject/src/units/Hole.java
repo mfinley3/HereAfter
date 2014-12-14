@@ -10,13 +10,19 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Hole.
+ */
 public class Hole extends Unit{
 
+	/** The hole gen. */
 	transient private BufferedImage holeGen;
 	
 	/**
 	 * Creates a new hole enemy unit. Difficulty doesn't matter.
-	 * @param difficulty
+	 *
+	 * @param difficulty the difficulty
 	 */
 	public Hole(double difficulty) {
 		// unitType, their given item, attack, defense, health, movement, range, difficulty multiplier
@@ -29,6 +35,9 @@ public class Hole extends Unit{
 
 
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (holeGen == null) {

@@ -2,13 +2,18 @@ package item;
 
 import java.util.Random;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RandomBoost.
+ */
 public class RandomBoost extends Item {
 
 	/**
 	 * Creates a new random boost item. The item is placed on the map, but it isn't
 	 * a usable item, but it does augment the stats of the unit with the item.
-	 * @param title
-	 * @param item
+	 *
+	 * @param title the title
+	 * @param item the item
 	 */
 	public RandomBoost(String title, ItemType item) {
 		super(title, item);

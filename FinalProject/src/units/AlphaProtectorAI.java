@@ -10,11 +10,13 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
 /** 
  * The Class AlphaProtectorAI.
  */
 public class AlphaProtectorAI extends Unit {
 
+	/** The alpha. */
 	transient private BufferedImage alphaGen, alphaCantMove, alpha;
 	
 	/**
@@ -28,6 +30,9 @@ public class AlphaProtectorAI extends Unit {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		// TODO Auto-generated method stub

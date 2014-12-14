@@ -1,5 +1,9 @@
 package space;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class IndoorPathSpace.
+ */
 public class IndoorPathSpace extends Space {
 
 	/**

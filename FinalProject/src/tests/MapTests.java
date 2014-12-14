@@ -13,8 +13,15 @@ import space.Space;
 import units.Soldier;
 import units.Unit;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MapTests.
+ */
 public class MapTests {
 
+	/**
+	 * Test map setup.
+	 */
 	@Test
 	public void testMapSetup() {
 
@@ -93,6 +100,9 @@ public class MapTests {
 
 	}
 
+	/**
+	 * Test is occupied.
+	 */
 	@Test
 	public void testIsOccupied() {
 

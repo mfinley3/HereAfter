@@ -6,6 +6,7 @@ import java.util.List;
 
 import units.*;;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Player class. Contains all of the player's units (although
  * not their locations on the field), their stats, if they're alive
@@ -14,11 +15,19 @@ import units.*;;
  */
 public class Player implements Serializable{
 	
+	/** The games finished. */
 	private int gamesFinished;
+	
+	/** The living team. */
 	private int livingTeam;
+	
+	/** The living units. */
 	private List<Unit> livingUnits;
+	
+	/** The all units. */
 	private List<Unit> allUnits;
 
+	/** The id. */
 	private String id;
 	
 	/**
@@ -87,7 +96,7 @@ public class Player implements Serializable{
 	/**
 	 * Sets the player's ID (name).
 	 *
-	 * @param The new ID
+	 * @param id the new id
 	 */
 	public void setID(String id) {
 		this.id = id;
@@ -96,7 +105,7 @@ public class Player implements Serializable{
 	/**
 	 * Adds units to the Player's team.
 	 *
-	 * @param toAdd: unit to add to the the player's team.
+	 * @param toAdd the to add
 	 */
 	public void addUnits(Unit toAdd){
 		livingUnits.add(toAdd);
@@ -116,7 +125,7 @@ public class Player implements Serializable{
 	/**
 	 * Called when a Unit is killed in game. Removes it from the living units.
 	 *
-	 * @param The unit to be removed
+	 * @param dead the dead
 	 */
 	public void unitKilled(Unit dead){
 		livingUnits.remove(dead);

@@ -10,11 +10,13 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SpitterAI.
  */
 public class SpitterAI extends Unit {
 	
+	/** The spitter. */
 	transient private BufferedImage spitterGen, spitterCantMove, spitter;
 	
 	/**
@@ -28,6 +30,9 @@ public class SpitterAI extends Unit {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (spitter == null) {

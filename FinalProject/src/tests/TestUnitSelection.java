@@ -6,8 +6,15 @@ import controller.*;
 import units.*;
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestUnitSelection.
+ */
 public class TestUnitSelection {
 	
+	/**
+	 * Test things.
+	 */
 	@Test
 	public void TestThings(){
 		Player p = new Player("EB");
@@ -33,6 +40,9 @@ public class TestUnitSelection {
 		assertTrue(u!=null);
 	}
 	
+	/**
+	 * Test movement.
+	 */
 	@Test
 	public void TestMovement(){
 		Player p = new Player("EB");
@@ -64,6 +74,9 @@ public class TestUnitSelection {
 		assertTrue(g.getCurrentUnit().canMove());
 	}
 	
+	/**
+	 * Test end turn and new turn.
+	 */
 	@Test
 	public void testEndTurnAndNewTurn(){
 		Player p = new Player("EB");
@@ -77,6 +90,9 @@ public class TestUnitSelection {
 		g.setCurrentUnit(0, 0);
 	}
 	
+	/**
+	 * Test attack and heal.
+	 */
 	@Test
 	public void testAttackAndHeal(){
 		// Test Attack

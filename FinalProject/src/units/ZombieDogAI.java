@@ -10,14 +10,19 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ZombieDogAI.
+ */
 public class ZombieDogAI extends Unit{
 
+	/** The zombie. */
 	transient private BufferedImage zombieGen, zombieCantMove, zombie;
 	
 	/**
 	 * Instantiates a new ZombieDog class. Will be controlled by the AI.
-	 * 
-	 * @param difficulty, augments some of the stats
+	 *
+	 * @param difficulty the difficulty
 	 */
 	public ZombieDogAI(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
@@ -25,6 +30,9 @@ public class ZombieDogAI extends Unit{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (zombie == null) {

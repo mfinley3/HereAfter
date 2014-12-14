@@ -9,12 +9,14 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Doctor.
  */
 public class Doctor extends Unit {
 
 	
+	/** The doc. */
 	transient private BufferedImage docGen, docSelect, docCantMove, doc;
 	
 	/**
@@ -32,6 +34,9 @@ public class Doctor extends Unit {
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
 	}
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (doc == null) {

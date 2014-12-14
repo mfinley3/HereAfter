@@ -1,5 +1,6 @@
 package gametype;
 
+// TODO: Auto-generated Javadoc
 /**
  * Defines the DeathMatch game type. Used to define the rules. Will be deleted at some point.
  * 

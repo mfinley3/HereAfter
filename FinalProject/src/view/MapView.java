@@ -18,11 +18,21 @@ import javax.swing.JTextArea;
 
 import controller.GameController;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MapView.
+ */
 public class MapView extends JPanel {
 
+	/** The Corner map. */
 	private BufferedImage survivalMap, TowerMap, CornerMap;
+	
+	/** The Game type. */
 	private String GameType;
 
+	/**
+	 * Instantiates a new map view.
+	 */
 	public MapView() {
 		try {
 			
@@ -35,6 +45,9 @@ public class MapView extends JPanel {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -49,6 +62,11 @@ public class MapView extends JPanel {
 			g2.drawImage(CornerMap, 30, 30, null);
 	}
 
+	/**
+	 * Sets the game type.
+	 *
+	 * @param GameType the new game type
+	 */
 	public void setGameType(String GameType) {
 		this.GameType = GameType;
 

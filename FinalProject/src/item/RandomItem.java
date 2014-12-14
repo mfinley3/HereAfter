@@ -2,12 +2,17 @@ package item;
 
 import java.util.Random;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RandomItem.
+ */
 public class RandomItem extends Item{
 
 	/**
 	 * Places a random item on the map depending on the type.
-	 * @param title
-	 * @param item
+	 *
+	 * @param title the title
+	 * @param item the item
 	 */
 	public RandomItem(String title, ItemType item) {
 		super(title, item);
@@ -15,7 +20,7 @@ public class RandomItem extends Item{
 	}
 	
 	/**
-	 * Creates a new, empty randomItem
+	 * Creates a new, empty randomItem.
 	 */
 	public RandomItem() {
 		super(null, null);

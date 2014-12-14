@@ -3,23 +3,33 @@ package item;
 
 import java.io.Serializable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Item class. Creates and holds all information for items.
  *
  */
 public class Item implements Serializable {
 
+	/** The title. */
 	private String title;
+	
+	/** The item. */
 	private ItemType item;
+	
+	/** The atk item. */
 	private boolean atkItem;
+	
+	/** The def item. */
 	private boolean defItem;
+	
+	/** The health item. */
 	private boolean healthItem;
 
 	/**
 	 * Constructor that creates the new item, sets the title and sets the item type.
-	 * 
-	 * @param title
-	 * @param itemType
+	 *
+	 * @param title the title
+	 * @param item the item
 	 */
 	public Item(String title, ItemType item) {
 		this.title = title;
@@ -27,8 +37,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Gets the item's title
-	 * 
+	 * Gets the item's title.
+	 *
 	 * @return item title
 	 */
 	public String getTitle() {
@@ -36,7 +46,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Gets the item type
+	 * Gets the item type.
+	 *
 	 * @return the type of item the item is
 	 */
 	public ItemType getItemType() {
@@ -44,16 +55,19 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Sets the type of the item
-	 * @param item, the new item type
+	 * Sets the type of the item.
+	 *
+	 * @param item the new item type
 	 */
 	public void setItemType(ItemType item) {
 		this.item = item;
 	}
 	
 	/**
-	 * Gets the modifier of what the item is
-	 * @param modType
+	 * Gets the modifier of what the item is.
+	 *
+	 * @param modType the mod type
+	 * @return the item modifier
 	 */
 	public void getItemModifier(ItemType modType) {
 		if(modType.equals(ItemType.ATK)) {
@@ -70,7 +84,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Gets if the item is a defense item
+	 * Gets if the item is a defense item.
+	 *
 	 * @return the atkItem
 	 */
 	public boolean isAtkItem() {
@@ -78,7 +93,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Sets if the item is a attack item
+	 * Sets if the item is a attack item.
+	 *
 	 * @param atkItem the atkItem to set
 	 */
 	public void setAtkItem(boolean atkItem) {
@@ -86,7 +102,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Gets if the item is a defense item
+	 * Gets if the item is a defense item.
+	 *
 	 * @return the defItem
 	 */
 	public boolean isDefItem() {
@@ -94,8 +111,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Sets if the item is a defense item
-
+	 * Sets if the item is a defense item.
+	 *
 	 * @param defItem the defItem to set
 	 */
 	public void setDefItem(boolean defItem) {
@@ -103,7 +120,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Returns if the item is a health item
+	 * Returns if the item is a health item.
+	 *
 	 * @return the healthItem
 	 */
 	public boolean isHealthItem() {
@@ -111,7 +129,8 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * Sets if the item is a health item
+	 * Sets if the item is a health item.
+	 *
 	 * @param healthItem the healthItem to set
 	 */
 	public void setHealthItem(boolean healthItem) {
@@ -120,6 +139,8 @@ public class Item implements Serializable {
 	
 	/**
 	 * Returns the toString of the item. Used in the text view.
+	 *
+	 * @return the string
 	 */
 	public String toString() {
 		return "\n  *Item: " + title + "\n      -Item Type: " + item;
@@ -127,7 +148,8 @@ public class Item implements Serializable {
 
 	/**
 	 * Use the item.
-	 * @return
+	 *
+	 * @return the int
 	 */
 	public int useItem() {
 		// TODO Auto-generated method stub

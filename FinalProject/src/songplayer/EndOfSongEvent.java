@@ -8,15 +8,22 @@ package songplayer;
 
 import java.util.GregorianCalendar;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EndOfSongEvent.
+ */
 public class EndOfSongEvent {
 
+  /** The file name. */
   private String fileName;
+  
+  /** The current time. */
   private GregorianCalendar currentTime;
   
   /**
    * Construct a new EndOfSongEvent with the file name just finished 
-   * playing and the time at which the song finished playing
-   * 
+   * playing and the time at which the song finished playing.
+   *
    * @param fileName  The song that just finished playing
    * @param currentTime  The moment at which the song finished playing
    */
@@ -34,7 +41,8 @@ public class EndOfSongEvent {
   }
   
   /**
-   * Provide access to time of this EndOfSongEvent
+   * Provide access to time of this EndOfSongEvent.
+   *
    * @return the name of the file sent to the SongPlayer
    */
   public GregorianCalendar finishedTime() {

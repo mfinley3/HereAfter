@@ -9,11 +9,13 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Ranger.
  */
 public class Ranger extends Unit {
 
+	/** The rang. */
 	transient private BufferedImage rangGen, rangSelect, rangCantMove, rang;
 	
 	/**
@@ -29,6 +31,9 @@ public class Ranger extends Unit {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (rang == null) {

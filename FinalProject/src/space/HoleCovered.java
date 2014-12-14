@@ -1,5 +1,9 @@
 package space;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HoleCovered.
+ */
 public class HoleCovered extends Space {
 
 	/**

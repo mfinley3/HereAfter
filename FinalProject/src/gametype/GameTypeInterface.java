@@ -2,6 +2,7 @@ package gametype;
 
 import java.io.Serializable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface GameTypeInterface, used in the controller to decide
  * the wind conditions.

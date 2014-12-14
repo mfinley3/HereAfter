@@ -9,12 +9,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UnitLocations.
+ */
 public class UnitLocations extends JPanel implements Observer {
 
+	/** The text map. */
 	private JTextArea textMap;
+	
+	/** The string of map. */
 	private String stringOfMap;
+	
+	/** The scroll panel. */
 	private JScrollPane scrollPanel;
 
+	/**
+	 * Instantiates a new unit locations.
+	 */
 	public UnitLocations() {
 		textMap = new JTextArea();
 		textMap.setText(stringOfMap);
@@ -26,6 +38,9 @@ public class UnitLocations extends JPanel implements Observer {
 		add(scrollPanel);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		stringOfMap = arg0.toString();

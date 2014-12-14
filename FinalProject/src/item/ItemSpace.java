@@ -1,12 +1,18 @@
 package item;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ItemSpace, Not yet used in the game.
  */
 public class ItemSpace {
 
+	/** The atk item. */
 	private boolean atkItem;
+	
+	/** The def item. */
 	private boolean defItem;
+	
+	/** The health item. */
 	private boolean healthItem;
 
 	/**

@@ -11,13 +11,19 @@ import item.Item;
 import item.ItemType;
 import item.UsableItem;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CarrierAI.
+ */
 public class CarrierAI extends Unit{
 	
+	/** The carrier. */
 	transient private BufferedImage carrierGen, carrierCantMove, carrier;
 	
 	/**
 	 * Creates a new FatZombie AI. Difficulty affects its stats.
-	 * @param difficulty
+	 *
+	 * @param difficulty the difficulty
 	 */
 	public CarrierAI(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
@@ -27,6 +33,9 @@ public class CarrierAI extends Unit{
 
 
 
+	/* (non-Javadoc)
+	 * @see units.Unit#drawUnit(java.awt.Graphics)
+	 */
 	@Override
 	public void drawUnit(Graphics g) {
 		if (carrier == null) {

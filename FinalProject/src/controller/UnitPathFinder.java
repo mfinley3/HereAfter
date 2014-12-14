@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import model.Map;
 
+// TODO: Auto-generated Javadoc
 /**
  * AIPathFinder attempts to recursively traverse the game Map. The goal is to
  * get from the given starting position to the nearest player location.
@@ -13,12 +14,20 @@ import model.Map;
  * @author Chioke
  */
 public class UnitPathFinder implements Serializable{
+	
+	/** The game map. */
 	private Map gameMap;
+	
+	/** The move positions. */
 	private ArrayList<Point> movePositions = new ArrayList<Point>();
+	
+	/** The col. */
 	private int row = 0, col = 0;
 
 	/**
 	 * Constructor for the AIPathFinder class.
+	 *
+	 * @param gameMap the game map
 	 */
 	public UnitPathFinder(Map gameMap) {
 		this.gameMap = gameMap;
@@ -26,12 +35,12 @@ public class UnitPathFinder implements Serializable{
 
 	/**
 	 * Attempts to recursively traverse the game map from the first given X & Y
-	 * locations to the next pair
-	 * 
-	 * @param currRow
-	 *            row index of current location
-	 * @param currCol
-	 *            column index of current location
+	 * locations to the next pair.
+	 *
+	 * @param currRow            row index of current location
+	 * @param currCol            column index of current location
+	 * @param tgtRow the tgt row
+	 * @param tgtCol the tgt col
 	 * @return true if the current location is 'near' the other
 	 */
 	public Point traverse(int currRow, int currCol, int tgtRow, int tgtCol) {
@@ -99,6 +108,8 @@ public class UnitPathFinder implements Serializable{
 	}
 
 	/**
+	 * Gets the move positions.
+	 *
 	 * @return the movePositions
 	 */
 	public ArrayList<Point> getMovePositions() {
@@ -106,6 +117,8 @@ public class UnitPathFinder implements Serializable{
 	}
 
 	/**
+	 * Sets the move positions.
+	 *
 	 * @param movePositions the movePositions to set
 	 */
 	public void setMovePositions(ArrayList<Point> movePositions) {

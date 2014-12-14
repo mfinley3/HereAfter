@@ -1,10 +1,12 @@
 package gametype;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Survive.
  */
 public class Survive implements GameTypeInterface{
 
+	/** The turns needed. */
 	private int turnsNeeded;
 	
 	/**

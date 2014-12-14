@@ -6,6 +6,7 @@ import java.util.List;
 
 import units.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Going to have a similar design as {@link Player}. In iteration 2, will be able
  * to assign AI behaviors to different units.
@@ -13,17 +14,26 @@ import units.*;
  */
 public class AI implements Serializable{
 
+	/** The living units. */
 	private List<Unit> livingUnits;
+	
+	/** The all units. */
 	private List<Unit> allUnits;
+	
+	/** The dead units. */
 	private List<Unit> deadUnits;
+	
+	/** The d. */
 	private double d;
+	
+	/** The total ai left. */
 	private int totalAILeft;
 
 	/**
 	 * The constructor for the AI. Designs the enemy team by difficulty.
 	 * Sets AI behavior.
-	 * 
-	 * @param The game difficulty
+	 *
+	 * @param d the d
 	 */
 	public AI(Difficulty d){
 		this.d = d.getValue();
@@ -86,7 +96,7 @@ public class AI implements Serializable{
 	/**
 	 * Adds units to the AI's team.
 	 *
-	 * @param toAdd: unit to add to the the player's team.
+	 * @param toAdd the to add
 	 */
 	public void addUnits(Unit toAdd){
 		totalAILeft++;
@@ -105,7 +115,7 @@ public class AI implements Serializable{
 	/**
 	 * Called when a Unit is killed in game. Removes it from the living units.
 	 *
-	 * @param The unit to be removed
+	 * @param dead the dead
 	 */
 	public void unitKilled(Unit dead){
 		livingUnits.remove(dead);
