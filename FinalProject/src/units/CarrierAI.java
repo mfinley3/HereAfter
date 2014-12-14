@@ -9,31 +9,31 @@ import javax.imageio.ImageIO;
 
 import item.Item;
 import item.ItemType;
-import item.UsableItem;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class CarrierAI.
+ * The Carrier is a {@link Unit} that is controllable by the AI. It's a fat
+ * zombie with a medium amount of movement. Has decent defense.
  */
-public class CarrierAI extends Unit{
-	
-	/** The carrier. */
+public class CarrierAI extends Unit {
+
 	transient private BufferedImage carrierGen, carrierCantMove, carrier;
-	
+
 	/**
 	 * Creates a new FatZombie AI. Difficulty affects its stats.
 	 *
-	 * @param difficulty the difficulty
+	 * @param difficulty
+	 *            the difficulty
 	 */
 	public CarrierAI(double difficulty) {
-		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
-		super("Carrier", new Item("Lard", ItemType.NONE), 10, 20, 100, 5, 1, difficulty);
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
+		// Difficulty multiplier
+		super("Carrier", new Item("Lard", ItemType.NONE), 10, 20, 100, 5, 1,
+				difficulty);
 	}
 
-
-
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see units.Unit#drawUnit(java.awt.Graphics)
 	 */
 	@Override
@@ -47,7 +47,7 @@ public class CarrierAI extends Unit{
 				System.out.println("Could not find picture file");
 			}
 		}
-		if (!super.canMove()) //If the soldier cannot move
+		if (!super.canMove()) // If the soldier cannot move
 			carrier = carrierCantMove;
 		g.drawImage(carrier, super.currentY * 100, super.currentX * 100, null);
 	}

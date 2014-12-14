@@ -10,13 +10,11 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /** 
- * The Class AlphaProtectorAI.
+ * The Alpha Protector is a {@link Unit} that is controllable by the AI. It's a large zombie that cannot move, but it has an insane defense and range. Will protect certain areas of the map. Is very dangerous.
  */
 public class AlphaProtectorAI extends Unit {
 
-	/** The alpha. */
 	transient private BufferedImage alphaGen, alphaCantMove, alpha;
 	
 	/**
@@ -35,7 +33,6 @@ public class AlphaProtectorAI extends Unit {
 	 */
 	@Override
 	public void drawUnit(Graphics g) {
-		// TODO Auto-generated method stub
 		if (alpha == null) {
 			try {
 				alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
