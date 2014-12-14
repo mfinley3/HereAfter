@@ -10,7 +10,6 @@ import model.Map;
  * AIPathFinder attempts to recursively traverse the game Map. The goal is to
  * get from the given starting position to the nearest player location.
  * 
- * @author Chioke
  */
 public class AIPathFinder implements Serializable{
 	

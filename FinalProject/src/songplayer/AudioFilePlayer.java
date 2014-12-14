@@ -87,7 +87,7 @@ public class AudioFilePlayer extends Thread {
       in.close();
       // stop();
     } catch (Exception e) {
-      System.out.println(e);
+
     }
   }
 

@@ -267,11 +267,6 @@ public class GameController implements Serializable {
 
 	}
 
-	// Animate the move
-	// while not at end position
-	// change position
-	// repaint the graphical view, then Thread.sleep(20);
-
 	/**
 	 * Good unit move.
 	 */
@@ -443,47 +438,6 @@ public class GameController implements Serializable {
 		}
 	}
 
-	// /**
-	// * Move, and then check if the enemy is in range.
-	// *
-	// * @return If the current unit is in range of the target after a move
-	// */
-	// private boolean attackHelper(int movesLeft, int row, int col) {
-	// if (movesLeft < 0)
-	// return false;
-	// else {
-	//
-	// boolean toReturn = this.inAttackRange(endRow, endCol);
-	//
-	// if (toReturn) {
-	// map.moveUnit(currRow, currCol, col, row);
-	// currCol = col;
-	// currRow = row;
-	// return true;
-	// }
-	//
-	// else {
-	// if (row > 0 && endRow < row && !toReturn)
-	// toReturn = attackHelper(
-	// (movesLeft - 1 - map.getSpace(row - 1, col)
-	// .getMoveHinderance()), row - 1, col);
-	// if (row < 49 && endRow > row && !toReturn)
-	// toReturn = attackHelper(
-	// (movesLeft - 1 - map.getSpace(row + 1, col)
-	// .getMoveHinderance()), row + 1, col);
-	// if (col > 0 && endCol < col && !toReturn)
-	// toReturn = attackHelper(
-	// (movesLeft - 1 - map.getSpace(row, col - 1)
-	// .getMoveHinderance()), row, col - 1);
-	// if (col < 49 && endCol > col && !toReturn)
-	// toReturn = attackHelper(
-	// (movesLeft - 1 - map.getSpace(row, col + 1)
-	// .getMoveHinderance()), row, col + 1);
-	// }
-	//
-	// return toReturn;
-	// }
-	// }
 
 	/**
 	 * Check to see if units are on the same team. If they are, return true.
@@ -1077,10 +1031,8 @@ public class GameController implements Serializable {
 				map.updateObservers();
 				enemyTurn();
 
-				// TODO: Update the enemy's with the player's current locations
 			} else {
 
-				// Remove all of the AI's units from the tempList
 				playerTurn = true;
 				map.setIsPlayerTurn();
 
@@ -1092,7 +1044,6 @@ public class GameController implements Serializable {
 					currUnit.setIsSelected(false);
 				currUnit = null;
 
-				// Switch to player, add one to turns
 				tempUnitList = new ArrayList<Unit>(player1.allAliveUnits());
 				for (Unit i : tempUnitList)
 					i.setCanMove(true);
@@ -1119,20 +1070,6 @@ public class GameController implements Serializable {
 		}
 	}
 
-	/*
-	 * TODO Check item type, see if it is on same side
-	 * 
-	 * Heal a friendly unit. Checks to see if on the same side, and if the unit
-	 * can heal.
-	 * 
-	 * @param er , target row
-	 * 
-	 * @param ec , target col
-	 * 
-	 * @return can heal, or can't heal
-	 * 
-	 * public boolean heal(int targetRow, int targetCol) { return false; }
-	 */
 
 	/**
 	 * Sets the new endColumn. Used in attack and movement.
@@ -1276,7 +1213,7 @@ public class GameController implements Serializable {
 				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " had too high of a defense for it to be harmed");
 				map.getUnitAt(row, col).setNoDamage(false);
 			} else {
-				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!" + map.getUnitAt(currRow, currCol).getUnitType());
+				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!");
 
 			}
 		}
@@ -1339,16 +1276,12 @@ public class GameController implements Serializable {
 			for (Unit u : enemyUnitList) {
 				toAttack = null;
 
-				// Goes through each member of the AI. Checks to see if there
-				// are any enemies within range.
 				
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
 				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
-
-				// TODO add attack method. If it is around them, and they are
-				// not a whole, attack.				
+			
 				if (aIInAttackRange(u.getY(), u.getX(), u.getRange())) {
 					endCol = toAttack.x;
 					endRow = toAttack.y;
@@ -1362,18 +1295,10 @@ public class GameController implements Serializable {
 						break;
 					}
 				}
-				// if (this.inAttackRange()) {
-				// attack();
-				// }
 
-				// If not, then move the AI closer to the player.
 				else
 					enemyMove(new Point(u.getX(), u.getY()));
 
-				// TODO: empty curr list once all of the Ai has moved
-				// map.getUnitAt(u.y, u.x).setCanMove(false);
-				// tempUnitList.remove(map.getUnitAt(u.y, u.x));
-				// map.getUnitAt(rowValue, colValue).setCanMove(false);
 			}
 		}
 		if (!playerTurn) {
@@ -1439,7 +1364,6 @@ public class GameController implements Serializable {
 		endRow = rowValue;
 		endCol = colValue;
 		move();
-		// map.moveUnit(em.y, em.x, rowValue, colValue);
 	}
 
 	/**
@@ -1499,8 +1423,6 @@ public class GameController implements Serializable {
 		this.hasAttacked = hasAttacked;
 	}
 
-	// TODO: add unit .isSelected to change
-	// add unit .cantMove
 
 	/**
 	 * Sets the current unit selected.
@@ -1519,13 +1441,4 @@ public class GameController implements Serializable {
 		this.graphical = graphical;
 	}
 
-	/*
-	 * A private Enum class, helps with movement. Prevents overlap and stack
-	 * overflow during calculating the spaces where the player can move.
-	 * 
-	 * @author Brian Seaman
-	 */
-	/*
-	 * private enum MoveDirection { UP, DOWN, LEFT, RIGHT; // NOX, NOY; }
-	 */
 }

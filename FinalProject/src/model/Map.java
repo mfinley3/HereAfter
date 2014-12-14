@@ -83,7 +83,6 @@ public class Map extends Observable implements Serializable {
 		map = new Space[50][50];
 		unitsOnMap = new Unit[50][50];
 		itemsOnMap = new Item[50][50];
-		System.out.print(gameType);
 
 		if (gameType.equalsIgnoreCase("Tower")) {
 
@@ -232,7 +231,6 @@ public class Map extends Observable implements Serializable {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("Could not find picture file");
 			}
 			
 			int x = 0;

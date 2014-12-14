@@ -21,7 +21,6 @@ import songplayer.Songs;
 
 public class TRPGGUI {
 	// Random serial number
-	private static final long serialVersionUID = -703102129384036053L;
 	private static JFrame mainFrame;
 	private SetupPanel SetupPanel;
 	private static boolean dontAskAgain;
