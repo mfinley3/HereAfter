@@ -1433,6 +1433,7 @@ public class SetupPanel extends JPanel implements Observer {
 			((MapView) textMap).setGameType(type);
 			((GraphicalView) graphical).setScaleFactor(scaleFactor);
 			controller.setGraphicalView((GraphicalView) graphical);
+			((GraphicalView) graphical).setGameType(type);
 
 			gameIsRunning = true;
 			dataWasLoaded = true;
