@@ -1133,7 +1133,7 @@ public class GameController implements Serializable {
 					currUnit.setIsSelected(false);
 				currUnit = null;
 
-				System.out.println("Player 1 ends turn.");
+				JOptionPane.showMessageDialog(null, "It is now the Computers turn.");
 
 				// Switch to AI
 				tempUnitList = new ArrayList<Unit>(player2.allAliveUnits());
@@ -1164,7 +1164,7 @@ public class GameController implements Serializable {
 					i.setCanMove(true);
 				turns++;
 
-				System.out.println("Second Player (AI) ends its turn.");
+				JOptionPane.showMessageDialog(null, "It is now your turn.");
 
 				currCol = currRow = 0;
 
