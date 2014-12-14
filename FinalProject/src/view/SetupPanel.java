@@ -848,38 +848,19 @@ public class SetupPanel extends JPanel implements Observer {
 		item.addActionListener(new useItemButtonListener());
 		wait = new JButton("Wait");
 		wait.addActionListener(new waitButtonListener());
-		// help = new JButton("How to play");
-		// help.addActionListener(new helpButtonListener());
 		endTurn = new JButton("End Turn");
 		endTurn.addActionListener(new endTurnButtonListener());
-		// save = new JButton("Save And Quit");
-		// save.addActionListener(new saveButtonListener());
 
 		JPanel temp = new JPanel();
 		temp.setOpaque(false);
+		
 
-		JLabel currentUser = new JLabel("Current User:");
-		currentUser.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-		currentUser.setForeground(Color.WHITE);
-
-		if (!dataWasLoaded) {
-			currentUserName = new JLabel(userName.getText());
-
-			currentUserName.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-			currentUserName.setForeground(Color.WHITE);
-
-		}
-		buttons.add(currentUser);
-		if (!dataWasLoaded) {
-			buttons.add(currentUserName);
-		}
-		// buttons.add(help);
+		buttons.add(temp);
 		buttons.add(move);
 		buttons.add(attack);
 		buttons.add(item);
 		buttons.add(wait);
 		buttons.add(endTurn);
-		// buttons.add(save);
 
 		this.add(buttons, BorderLayout.WEST);
 		if (dataWasLoaded) {
