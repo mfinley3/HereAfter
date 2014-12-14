@@ -4,8 +4,6 @@ package songplayer;
 /**
  * This one method interface allows any new type to become 
  * registered as a listener to end of song event.  
- * 
- * @author Rick Mercer
  */
 
 public interface EndOfSongListener {

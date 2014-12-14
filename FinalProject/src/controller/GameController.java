@@ -14,9 +14,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.*;
+import songplayer.Songs;
 import space.*;
 import units.*;
 import view.GraphicalView;
+import view.TRPGGUI;
 import item.*;
 
 // TODO: Auto-generated Javadoc
@@ -31,90 +33,33 @@ import item.*;
 public class GameController implements Serializable {
 
 	private transient GraphicalView graphical;
-	/** The player1. */
 	private Player player1;
-
-	/** The player2. */
 	private AI player2;
-
-	/** The map. */
 	private Map map;
-
-	/** The temp unit list. */
 	private List<Unit> tempUnitList;
-
-	/** The curr unit. */
 	private Unit currUnit;
-
-	/** The turns. */
 	private int turns;
-
-	/** The player turn. */
 	private boolean playerTurn;
-
-	/** The game over. */
 	private boolean gameOver;
-
-	/** The player won. */
 	private boolean playerWon;
-
-	/** The has attacked. */
 	private boolean hasAttacked;
-
-	/** The ai move. */
 	private AIPathFinder aiMove;
-
-	private UnitPathFinder unitMove;
-
-	/** The curr row. */
 	private int currRow;
-
-	/** The curr col. */
 	private int currCol;
-
-	/** The end row. */
 	private int endRow = 51;
-
-	/** The end col. */
 	private int endCol = 51;
-
-	/** The attack row. */
 	private int attackRow;
-
-	/** The attack col. */
 	private int attackCol;
-
-	/** The curr player. */
 	private Player currPlayer;
-
-	/** The game type. */
 	private GameTypeInterface gameType;
-
-	/** The win conditions. */
 	private Object winConditions;
-
-	/** The move on. */
 	private boolean moveOn;
-
-	/** The row value. */
 	private int rowValue;
-
-	/** The col value. */
 	private int colValue;
-
-	/** The testing. */
 	private boolean testing;
-
-	/** The not shown ne. */
 	boolean notShownNE;
-
-	/** The not shown sw. */
 	boolean notShownSW;
-
-	/** The not shown se. */
 	boolean notShownSE;
-
-	/** The using item type. */
 	private ItemType usingItemType;
 
 	/**
@@ -166,7 +111,6 @@ public class GameController implements Serializable {
 
 		// Give the enemy units behaviors.
 		aiMove = new AIPathFinder(map);
-		unitMove = new UnitPathFinder(map);
 
 		checkWinConditions();
 	}
@@ -202,7 +146,7 @@ public class GameController implements Serializable {
 				currRow = row;
 				currCol = col;
 				setCanMove(row, col);
-				System.out.println("New CurrUnit " + currUnit.getUnitType() + " at: (" + currRow + ", " + currCol + ")");
+				
 				map.updateObservers();
 				return true;
 			}
@@ -249,7 +193,7 @@ public class GameController implements Serializable {
 		// Check to see if the end Row and end Col point to something
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
-				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
+				
 				if (currUnit != null) {
 					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
 
@@ -478,7 +422,6 @@ public class GameController implements Serializable {
 							else {
 								if (playerTurn)
 									JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
-								System.out.println("Enemy out of attack range.");
 							}
 						} else
 							JOptionPane.showMessageDialog(null, "Nothing to Attack!");
@@ -850,12 +793,13 @@ public class GameController implements Serializable {
 				playerWon = false;
 				// Display some kind of message telling player 1 won
 				JOptionPane.showMessageDialog(null, "AI won! Better luck next time...");
-				System.out.println("AI won! Better luck next time...");
-				System.out.println("Number of turns taken: " + turns);
+
 				player1.gameFinished();
-				System.out.println("Games you've finished: " + player1.getGamesFinished());
-				System.out.println("AI team stats: ");
-				System.out.println(player2.getTeamStats());
+				TRPGGUI.setdontAskAgain(true);
+				Songs.setPlaying(true);
+				Songs.toogleSound();
+				TRPGGUI.dispose();
+
 
 				return true;
 			} else
@@ -878,10 +822,18 @@ public class GameController implements Serializable {
 
 			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn))) {
 				JOptionPane.showMessageDialog(null, "Congrats you captured the tower! You win!");
+				TRPGGUI.setdontAskAgain(true);
+				Songs.setPlaying(true);
+				Songs.toogleSound();
+				TRPGGUI.dispose();
 				return true;
 
 			} else if (player2.everyonesDeadDave()) {
 				JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+				TRPGGUI.setdontAskAgain(true);
+				Songs.setPlaying(true);
+				Songs.toogleSound();
+				TRPGGUI.dispose();
 				return true;
 
 			} else {
@@ -891,10 +843,18 @@ public class GameController implements Serializable {
 		} else if (gameType instanceof gametype.Survive) {
 			if ((!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))) {
 				JOptionPane.showMessageDialog(null, "Congrats you survived the zombie attack! You win!");
+				TRPGGUI.setdontAskAgain(true);
+				Songs.setPlaying(true);
+				Songs.toogleSound();
+				TRPGGUI.dispose();
 				return true;
 			}
 			if (player2.everyonesDeadDave()) {
 				JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+				TRPGGUI.setdontAskAgain(true);
+				Songs.setPlaying(true);
+				Songs.toogleSound();
+				TRPGGUI.dispose();
 				return true;
 			}
 
@@ -933,6 +893,10 @@ public class GameController implements Serializable {
 
 				if (player2.everyonesDeadDave()) {
 					JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+					TRPGGUI.setdontAskAgain(true);
+					Songs.setPlaying(true);
+					Songs.toogleSound();
+					TRPGGUI.dispose();
 					return true;
 				}
 				if (((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
@@ -940,6 +904,10 @@ public class GameController implements Serializable {
 						if (((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
 							if (((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured()) {
 								JOptionPane.showMessageDialog(null, "Congrats you secured all the towers! You win!");
+								TRPGGUI.setdontAskAgain(true);
+								Songs.setPlaying(true);
+								Songs.toogleSound();
+								TRPGGUI.dispose();
 								return true;
 							}
 			} else {
@@ -973,6 +941,10 @@ public class GameController implements Serializable {
 
 				if (player2.everyonesDeadDave()) {
 					JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+					TRPGGUI.setdontAskAgain(true);
+					Songs.setPlaying(true);
+					Songs.toogleSound();
+					TRPGGUI.dispose();
 					return true;
 				}
 				if (((CaptureCornerSpace) map.getSpace(1, 1)).getHasBeenCaptured())
@@ -980,6 +952,10 @@ public class GameController implements Serializable {
 						if (((CaptureCornerSpace) map.getSpace(8, 1)).getHasBeenCaptured())
 							if (((CaptureCornerSpace) map.getSpace(8, 8)).getHasBeenCaptured()) {
 								JOptionPane.showMessageDialog(null, "Congrats you secured all the towers! You win!");
+								TRPGGUI.setdontAskAgain(true);
+								Songs.setPlaying(true);
+								Songs.toogleSound();
+								TRPGGUI.dispose();
 								return true;
 							}
 			}
@@ -1069,48 +1045,6 @@ public class GameController implements Serializable {
 		return map;
 	}
 
-	/*
-	 * \/**
-	 * 
-	 * When called, ends a turn. Checks to see whose turn it is, clears the
-	 * temporary unit list, sets the current unit to null. Sets the can move to
-	 * false.
-	 *//*
-		 * 
-		 * public void endTurn() { map.resetMapCanMove(); if (!gameOver) { if
-		 * (playerTurn) { // Remove all of the player's units from tempList
-		 * playerTurn = false; for (Unit i : tempUnitList) i.setCanMove(false);
-		 * tempUnitList.clear(); currUnit = null;
-		 * 
-		 * System.out.println("Player 1 ends turn.");
-		 * 
-		 * // Switch to AI tempUnitList = new
-		 * ArrayList<Unit>(player2.allAliveUnits()); for (Unit i : tempUnitList)
-		 * i.setCanMove(true);
-		 * 
-		 * map.updateObservers(); if (tempUnitList.isEmpty()) endTurn();
-		 * 
-		 * currRow = 0; currCol = 0;
-		 * 
-		 * else {
-		 * 
-		 * // Remove all of the AI's units from the tempList playerTurn = true;
-		 * 
-		 * // for (Unit i : tempUnitList) i.setCanMove(false);
-		 * tempUnitList.clear(); currUnit = null;
-		 * 
-		 * // Switch to player, add one to turns tempUnitList = new
-		 * ArrayList<Unit>(player1.allAliveUnits()); for (Unit i : tempUnitList)
-		 * i.setCanMove(true); turns++;
-		 * 
-		 * System.out.println("Second Player (AI) ends its turn.");
-		 * 
-		 * currCol = currRow = 0;
-		 * 
-		 * gameOver();
-		 * 
-		 * map.updateObservers(); if (tempUnitList.isEmpty()) endTurn(); } } }
-		 */
 
 	/**
 	 * When called, ends a turn. Checks to see whose turn it is, clears the
@@ -1207,7 +1141,6 @@ public class GameController implements Serializable {
 	 *            , the new ending row
 	 */
 	public void setEndRow(int endRow) {
-		System.out.println("New endRow: " + endRow);
 		this.endRow = endRow;
 	}
 
@@ -1218,7 +1151,6 @@ public class GameController implements Serializable {
 	 *            , the new ending column
 	 */
 	public void setEndColumn(int endCol) {
-		System.out.println("New endCol: " + endCol);
 		this.endCol = endCol;
 	}
 
@@ -1337,9 +1269,6 @@ public class GameController implements Serializable {
 			// If the unit is in the temporary list, remove it.
 			if (tempUnitList.contains(temp))
 				tempUnitList.remove(temp);
-
-			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
 
 		} else {
 
@@ -1510,7 +1439,6 @@ public class GameController implements Serializable {
 		endCol = colValue;
 		move();
 		// map.moveUnit(em.y, em.x, rowValue, colValue);
-		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
 	}
 
 	/**

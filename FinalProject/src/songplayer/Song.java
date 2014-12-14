@@ -20,25 +20,12 @@ import java.util.GregorianCalendar;
  */
 public class Song implements Serializable{
 
-	/** The Constant MAX_PLAYS. */
 	public final static int MAX_PLAYS = 5;
-	
-	/** The title. */
 	String title;
-	
-	/** The artist. */
 	String artist;
-	
-	/** The times played in day. */
 	int timesPlayedInDay;
-	
-	/** The song length. */
 	int songLength;
-	
-	/** The file name. */
 	String fileName;
-	
-	/** The most recent date. */
 	private GregorianCalendar mostRecentDate;
 	
 	//creates a song

@@ -19,6 +19,7 @@ public interface GameTypeInterface extends Serializable{
 	
 	/**
 	 * Gets the string containing the goal of the game goal.
+	 * Not used.
 	 *
 	 * @return the goal
 	 */

@@ -97,7 +97,7 @@ public class ItemHelpWindow extends JFrame implements Runnable {
 					+ "     The Mine is a usable item that is automatically\n"
 					+ "     placed into a units inventory.\n"
 					+ "     The mine can be placed on nearly any space and if a zombie\n"
-					+ "     steps on it they will explode");
+					+ "     steps on it they will explode careful it will hurt you too");
 					
 		gernade = new JTextArea();
 		gernade.setEditable(false);
@@ -107,7 +107,7 @@ public class ItemHelpWindow extends JFrame implements Runnable {
 					+ "     The Gernade is a usable item that is automatically\n"
 					+ "     placed into a units inventory.\n"
 					+ "     The gernade can be thown toward a group of zombies\n"
-					+ "     to deal a good amount of dammage to each in the range of the shrapnel");
+					+ "     to deal a good amount of dammage to all units in the range of the shrapnel");
 		
 		
 		this.add(description);

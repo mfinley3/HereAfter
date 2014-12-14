@@ -9,28 +9,13 @@ import java.io.Serializable;
  */
 public abstract class Space implements Serializable{
 
-	/** The space type. */
 	private String spaceType;
-	
-	/** The walkable. */
 	private Boolean walkable;
-	
-	/** The occupied. */
 	private Boolean occupied;
-	
-	/** The visable. */
 	private Boolean visable;
-	
-	/** The can move to. */
 	private boolean canMoveTo;
-	
-	/** The move hinderance. */
 	private int moveHinderance;
-	
-	/** The visablity modifier. */
 	private int visablityModifier;
-	
-	/** The has mine. */
 	private boolean hasMine;
 	
 	/**

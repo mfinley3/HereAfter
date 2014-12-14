@@ -47,18 +47,17 @@ public class HelpWindow extends JFrame implements Runnable {
 		goals.setBackground(Color.WHITE);
 		goals.setText("GOALS: The intent of the game is to cure the world of the new-age\n"
 				+ "     Ebola. Your group contains the cure, however, it is low in\n"
-				+ "     quantity. To circumvent this issue, your units in the top\n"
-				+ "     corner of the map must either move on top, or 'capture', the\n"
-				+ "     Beacon Tower near the bottom right of the map to release the\n"
-				+ "     cure via air, or you can kill all of the enemies on the map.");
+				+ "     quantity. To circumvent this issue, your units must move the top\n"
+				+ "     each corner of the map, on top of the Beacon Tower, or just\n"
+				+ "     survive for 25 turns. This depends on the game type.\n");
 
 		movement = new JTextArea();
 		movement.setEditable(false);
 		movement.setBackground(Color.WHITE);
 		movement.setText("MOVEMENT: First select the unit you wish to move, then select the\n"
-				+ "     space in which you'd like that unit to move to. Once you have\n"
-				+ "     done that, click the 'Move' button on the left-hand side of\n"
-				+ "     the screen.");
+				+ "     space (lighted in green) in which you'd like that unit to move to.\n"
+				+ "     Once you have done that, click the 'Move' button on the \n"
+				+ "     left-hand side of the screen.");
 
 		attacks = new JTextArea();
 		attacks.setEditable(false);
@@ -70,15 +69,15 @@ public class HelpWindow extends JFrame implements Runnable {
 		item = new JTextArea();
 		item.setEditable(false);
 		item.setBackground(Color.WHITE);
-		item.setText("ITEM: Using Group-Inventory Items is not yet fully supported.\n"
-				+ "     When it is, it will give the selected Item in your inventory\n"
-				+ "     to every Unit's individual item lists.");
+		item.setText("ITEM: First select the unit you wish to have use the item.\n"
+				+ "     Then select the target you wish to use the item on.\n"
+				+ "     A unit can use items on items on itself remember!");
 
 		wait = new JTextArea();
 		wait.setEditable(false);
 		wait.setBackground(Color.WHITE);
-		wait.setText("WAITING: Used in replace of 'Move' or 'Attack', 'Wait' allows the\n"
-				+ "     current Unit to remain where they are, by clicking the Unit\n"
+		wait.setText("WAITING: Used in replace of 'Use Item', 'Move' or 'Attack', 'Wait'\n"
+				+ "     allows the current Unit to remain where they are, by clicking the Unit\n"
 				+ "     you'd like to 'Wait', then clicking the 'Wait' button.");
 
 		turns = new JTextArea();

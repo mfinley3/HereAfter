@@ -14,10 +14,7 @@ import java.util.GregorianCalendar;
  */
 public class EndOfSongEvent {
 
-  /** The file name. */
   private String fileName;
-  
-  /** The current time. */
   private GregorianCalendar currentTime;
   
   /**

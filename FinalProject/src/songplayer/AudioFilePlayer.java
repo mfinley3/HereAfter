@@ -30,10 +30,7 @@ import javax.sound.sampled.SourceDataLine;
  */
 public class AudioFilePlayer extends Thread {
 
-  /** The file name. */
   private String fileName;
-
-  /** The listeners. */
   private List<EndOfSongListener> listeners = new ArrayList<EndOfSongListener>();
 
   /**

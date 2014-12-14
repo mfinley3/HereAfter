@@ -15,13 +15,8 @@ import songplayer.SongPlayer;
 public class Songs {
 
 	// private SongList SL = new SongList();
-	/** The play queue. */
 	private static ArrayList<Song> playQueue;
-	
-	/** The first play. */
 	static boolean firstPlay = true;
-	
-	/** The playing. */
 	static boolean playing = true;
 
 	// Creates a new player composed of the below.

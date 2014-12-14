@@ -9,13 +9,10 @@ package gametype;
  */
 public class CaptureTower implements GameTypeInterface{
 
-	/**
-	 * The temp.
-	 */
 	private boolean temp;
 	
 	/**
-	 * Instantiates a new capture tower.
+	 * Instantiates a new capture tower game type.
 	 */
 	public CaptureTower(){
 		temp = false;
