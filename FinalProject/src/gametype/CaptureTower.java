@@ -8,7 +8,9 @@ package gametype;
  */
 public class CaptureTower implements GameTypeInterface{
 
-	/** The temp. */
+	/**
+	 * The temp.
+	 */
 	private boolean temp;
 	
 	/**

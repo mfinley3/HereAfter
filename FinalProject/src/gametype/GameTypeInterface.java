@@ -3,12 +3,13 @@ package gametype;
 import java.io.Serializable;
 
 /**
- * The Interface GameTypeInterface.
+ * The Interface GameTypeInterface, used in the controller to decide
+ * the wind conditions.
  */
 public interface GameTypeInterface extends Serializable{
 	
 	/**
-	 * Check win condition.
+	 * Check win conditions.
 	 *
 	 * @param ob the ob
 	 * @return true, if successful
@@ -16,7 +17,7 @@ public interface GameTypeInterface extends Serializable{
 	public boolean CheckWinCondition(Object ob);
 	
 	/**
-	 * Gets the goal.
+	 * Gets the string containing the goal of the game goal.
 	 *
 	 * @return the goal
 	 */
