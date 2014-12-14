@@ -2,19 +2,13 @@ package item;
 
 import java.io.Serializable;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class UsableItem.
  */
 public class UsableItem extends Item implements Serializable{
 	
-	/** The item. */
 	private ItemType item;
-	
-	/** The points. */
 	private int points;
-	
-	/** The title. */
 	private String title;
 
 	/**
@@ -25,7 +19,6 @@ public class UsableItem extends Item implements Serializable{
 	 */
 	public UsableItem(String title, ItemType item) {
 		super(title, item);
-		// TODO Auto-generated constructor stub
 		if(item == ItemType.MEDKIT)
 			points = 1000;
 		else if(item == ItemType.MINE){
@@ -35,9 +28,6 @@ public class UsableItem extends Item implements Serializable{
 			points = 75;
 	}
 	
-	/* (non-Javadoc)
-	 * @see item.Item#useItem()
-	 */
 	@Override
 	public int useItem(){
 		return points;

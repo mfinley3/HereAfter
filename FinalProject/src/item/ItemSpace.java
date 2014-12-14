@@ -1,18 +1,12 @@
 package item;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ItemSpace, Not yet used in the game.
  */
 public class ItemSpace {
 
-	/** The atk item. */
 	private boolean atkItem;
-	
-	/** The def item. */
 	private boolean defItem;
-	
-	/** The health item. */
 	private boolean healthItem;
 
 	/**
@@ -23,7 +17,7 @@ public class ItemSpace {
 	}
 
 	/**
-	 * Methods dealing w/ visited game spaces.
+	 * Sets the attack item
 	 *
 	 * @param atkItem the new atk item
 	 */
@@ -32,7 +26,7 @@ public class ItemSpace {
 	}
 
 	/**
-	 * Checks if it is an attack item.
+	 * Returns the attack item attack item.
 	 *
 	 * @return true, if is atk item
 	 */
@@ -50,7 +44,7 @@ public class ItemSpace {
 	}
 
 	/**
-	 * Checks if is def item.
+	 * Returns the def item.
 	 *
 	 * @return true, if is def item
 	 */
@@ -59,7 +53,7 @@ public class ItemSpace {
 	}
 
 	/**
-	 * Methods dealing w/ visited game spaces.
+	 * Sets the health item
 	 *
 	 * @param healthItem the new health item
 	 */
@@ -68,7 +62,7 @@ public class ItemSpace {
 	}
 
 	/**
-	 * Checks if is health item.
+	 * Returns the health item.
 	 *
 	 * @return true, if is health item
 	 */

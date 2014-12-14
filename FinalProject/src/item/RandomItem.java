@@ -2,7 +2,6 @@ package item;
 
 import java.util.Random;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class RandomItem.
  */
@@ -16,7 +15,6 @@ public class RandomItem extends Item{
 	 */
 	public RandomItem(String title, ItemType item) {
 		super(title, item);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
