@@ -14,6 +14,10 @@ public class Hole extends Unit{
 
 	transient private BufferedImage holeGen;
 	
+	/**
+	 * Creates a new hole enemy unit. Difficulty doesn't matter.
+	 * @param difficulty
+	 */
 	public Hole(double difficulty) {
 		// unitType, their given item, attack, defense, health, movement, range, difficulty multiplier
 		super("Hole", new Item("None", ItemType.NONE), 0, 0, 1, 0, 0, difficulty);
