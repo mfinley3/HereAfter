@@ -1146,7 +1146,29 @@ public class GameController implements Serializable {
 		if (currUnit != null) {
 			endCol = currCol;
 			endRow = currRow;
-			move();
+			
+			
+			map.resetMapCanMove();
+			// Take the unit that can no longer move out of the
+			// tempUnitList
+			if (!moveOn) {
+				try {
+					currUnit.setCanMove(false);
+					tempUnitList.remove(currUnit);
+					setCurrentUnitSelected(false);
+					currUnit = null;
+				} catch (Exception e) {
+
+				}
+			}
+
+			endRow = 51;
+			endCol = 51;
+
+			map.updateObservers();
+
+			if (tempUnitList.isEmpty())
+				endTurn();
 		}
 
 		else
@@ -1407,7 +1429,7 @@ public class GameController implements Serializable {
 
 			if (playerTurn) {
 
-				if (map.getUnitAt(endCol, endRow) instanceof Hole)
+				if (map.getUnitAt(col, row) instanceof Hole)
 					JOptionPane
 							.showMessageDialog(null,
 									"You threw a bomb down the hole and stopped zombies from crawling out of it!");
