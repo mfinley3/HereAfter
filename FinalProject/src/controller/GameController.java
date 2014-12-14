@@ -10,10 +10,12 @@ import java.util.Random;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import model.*;
 import space.*;
 import units.*;
+import view.GraphicalView;
 import item.*;
 
 // TODO: Auto-generated Javadoc
@@ -23,60 +25,61 @@ import item.*;
  * sets up players, calculate which map is needed, sends messages to the enemy
  * team factory, etc.
  * 
- *
+ * 
  */
 public class GameController implements Serializable {
-	
+
+	private GraphicalView graphical;
 	/** The player1. */
 	private Player player1;
-	
+
 	/** The player2. */
 	private AI player2;
-	
+
 	/** The map. */
 	private Map map;
-	
+
 	/** The temp unit list. */
 	private List<Unit> tempUnitList;
-	
+
 	/** The curr unit. */
 	private Unit currUnit;
-	
+
 	/** The turns. */
 	private int turns;
-	
+
 	/** The player turn. */
 	private boolean playerTurn;
-	
+
 	/** The game over. */
 	private boolean gameOver;
-	
+
 	/** The player won. */
 	private boolean playerWon;
-	
+
 	/** The has attacked. */
 	private boolean hasAttacked;
-	
+
 	/** The ai move. */
 	private AIPathFinder aiMove;
-	
+
 	private UnitPathFinder unitMove;
 
 	/** The curr row. */
 	private int currRow;
-	
+
 	/** The curr col. */
 	private int currCol;
 
 	/** The end row. */
 	private int endRow = 51;
-	
+
 	/** The end col. */
 	private int endCol = 51;
 
 	/** The attack row. */
 	private int attackRow;
-	
+
 	/** The attack col. */
 	private int attackCol;
 
@@ -85,28 +88,28 @@ public class GameController implements Serializable {
 
 	/** The game type. */
 	private GameTypeInterface gameType;
-	
+
 	/** The win conditions. */
 	private Object winConditions;
 
 	/** The move on. */
 	private boolean moveOn;
-	
+
 	/** The row value. */
 	private int rowValue;
-	
+
 	/** The col value. */
 	private int colValue;
 
 	/** The testing. */
 	private boolean testing;
-	
+
 	/** The not shown ne. */
 	boolean notShownNE;
-	
+
 	/** The not shown sw. */
 	boolean notShownSW;
-	
+
 	/** The not shown se. */
 	boolean notShownSE;
 
@@ -115,13 +118,18 @@ public class GameController implements Serializable {
 
 	/**
 	 * Constructor for one player.
-	 *
-	 * @param player1 the player1
-	 * @param i the i
-	 * @param gameT the game t
-	 * @param testing the testing
+	 * 
+	 * @param player1
+	 *            the player1
+	 * @param i
+	 *            the i
+	 * @param gameT
+	 *            the game t
+	 * @param testing
+	 *            the testing
 	 */
-	public GameController(Player player1, Difficulty i, String gameT, boolean testing) {
+	public GameController(Player player1, Difficulty i, String gameT,
+			boolean testing) {
 		this.map = new Map(i.getValue(), gameT, testing);
 		this.player1 = player1;
 		this.player2 = new AI(i);
@@ -165,7 +173,7 @@ public class GameController implements Serializable {
 
 	/**
 	 * Gets the curr player name.
-	 *
+	 * 
 	 * @return the curr player name
 	 */
 	public String getCurrPlayerName() {
@@ -178,9 +186,11 @@ public class GameController implements Serializable {
 	/**
 	 * Set the the current unit to the unit located at this space. Will return
 	 * true if it
-	 *
-	 * @param row the row
-	 * @param col the col
+	 * 
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 * @return true, if successful
 	 */
 	public boolean setCurrentUnit(int row, int col) {
@@ -192,7 +202,8 @@ public class GameController implements Serializable {
 				currRow = row;
 				currCol = col;
 				setCanMove(row, col);
-				System.out.println("New CurrUnit " + currUnit.getUnitType() + " at: (" + currRow + ", " + currCol + ")");
+				System.out.println("New CurrUnit " + currUnit.getUnitType()
+						+ " at: (" + currRow + ", " + currCol + ")");
 				map.updateObservers();
 				return true;
 			}
@@ -209,7 +220,7 @@ public class GameController implements Serializable {
 
 	/**
 	 * Get method for CurrUnit.
-	 *
+	 * 
 	 * @return the currently selected unit
 	 */
 	public Unit getCurrentUnit() {
@@ -239,22 +250,28 @@ public class GameController implements Serializable {
 		// Check to see if the end Row and end Col point to something
 		if (endRow != 51 || endCol != 51) {
 			if (!(map.getSpace(endCol, endRow).getSpaceType().equals("Wall"))) {
-				System.out.println("(" + currRow + ", " + currCol + ") Move to (" + endRow + ", " + endCol + ")");
+				System.out.println("(" + currRow + ", " + currCol
+						+ ") Move to (" + endRow + ", " + endCol + ")");
 				if (currUnit != null) {
-					if (currUnit.canMove() && (!map.isOccupied(endRow, endCol) || map.getUnitAt(endRow, endCol) == currUnit) && map.getSpace(endRow, endCol).getCanMoveTo()) {
+					if (currUnit.canMove()
+							&& (!map.isOccupied(endRow, endCol) || map
+									.getUnitAt(endRow, endCol) == currUnit)
+							&& map.getSpace(endRow, endCol).getCanMoveTo()) {
 
 						moveOn = false;
+
+						if (currUnit instanceof Doctor
+								|| currUnit instanceof Engineer
+								|| currUnit instanceof Ranger
+								|| currUnit instanceof Sniper
+								|| currUnit instanceof Soldier)
+							goodUnitMove();
 
 						map.resetMapCanMove();
 						map.moveUnit(currRow, currCol, endRow, endCol);
 
 						if (playerTurn)
 							pickUpItem();
-
-						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
-							currUnit instanceof Sniper || currUnit instanceof Soldier)
-							goodUnitMove();
-						
 
 						// Set the new CurrRow and CurrCol, and check
 						currRow = endRow;
@@ -267,100 +284,94 @@ public class GameController implements Serializable {
 						// Take the unit that can no longer move out of the
 						// tempUnitList
 						if (!moveOn) {
-							try{
-							currUnit.setCanMove(false);
-							tempUnitList.remove(currUnit);
-							setCurrentUnitSelected(false);
-							currUnit = null;
-							}catch (Exception e){
-								
+							try {
+								currUnit.setCanMove(false);
+								tempUnitList.remove(currUnit);
+								setCurrentUnitSelected(false);
+								currUnit = null;
+							} catch (Exception e) {
+
 							}
 						}
-						
+
 						endRow = 51;
 						endCol = 51;
-						
+
 						map.updateObservers();
 
 						if (tempUnitList.isEmpty())
 							endTurn();
 
-						
 						return;
 					}
 				}
 
-				if (currUnit == null){
-					if(playerTurn)
-					JOptionPane.showMessageDialog(null, "Please select a Unit to move first");
-					
+				if (currUnit == null) {
+					if (playerTurn)
+						JOptionPane.showMessageDialog(null,
+								"Please select a Unit to move first");
+
 				} else if (!currUnit.canMove()) {
-					if(playerTurn)
-					JOptionPane.showMessageDialog(null, "Unit can't move anymore. Select a new unit.");
-					
+					if (playerTurn)
+						JOptionPane.showMessageDialog(null,
+								"Unit can't move anymore. Select a new unit.");
+
 				} else if (map.isOccupied(endRow, endCol)) {
-					if(playerTurn)
-					JOptionPane.showMessageDialog(null, "Space is occupied, you can't move there");
-					
+					if (playerTurn)
+						JOptionPane.showMessageDialog(null,
+								"Space is occupied, you can't move there");
+
 				} else if (!map.getSpace(endRow, endCol).getCanMoveTo()) {
-					if(playerTurn)
-					JOptionPane.showMessageDialog(null, "Space is out of range.");
+					if (playerTurn)
+						JOptionPane.showMessageDialog(null,
+								"Space is out of range.");
 				}
-				
+
 				return;
-				
+
 			} else
-				JOptionPane.showMessageDialog(null, "You can't move on top of walls!");
+				JOptionPane.showMessageDialog(null,
+						"You can't move on top of walls!");
 		} else
-			JOptionPane.showMessageDialog(null, "Pick a space to move to before you try moving...");
+			JOptionPane.showMessageDialog(null,
+					"Pick a space to move to before you try moving...");
 
 	}
-	
-	
-	
-// Animate the move
-// while not at end position
-// change position
-// repaint the graphical view, then Thread.sleep(20);
+
+	// Animate the move
+	// while not at end position
+	// change position
+	// repaint the graphical view, then Thread.sleep(20);
 
 	/**
- * Good unit move.
- */
-private void goodUnitMove() {
-		rowValue = unitMove.traverse(currCol, currRow, endCol, endRow).x;
-		colValue = unitMove.traverse(currCol, currRow, endCol, endRow).y;
-
-	//	endRow = rowValue;
-	//	endCol = colValue;
-		ArrayList<Point> positionsMoved = aiMove.getMovePositions();
-
-		for(int i = 0; i < positionsMoved.size(); i++) {
-			Point p = positionsMoved.get(i);
-			int getToCol = p.y;
-			int getToRow = p.x;
-			System.out.println("goodMoveUnit- col: " + getToCol + " row: " + getToRow);
-			
-			
-			currCol = getToCol;
-			currRow = getToRow;
-			currUnit.setCurrentPosition(currRow, currCol);
-			
-			map.updateObservers();
-			
-			endRow = rowValue;
-			endCol = colValue;
-//			try {
-//				Thread.sleep(20);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			
-			
+	 * Good unit move.
+	 */
+	private void goodUnitMove() {
+		while (currCol != endCol || currRow != endRow) {
+			if (currRow > endRow) { // Up
+				map.moveUnit(currRow, currCol, currRow - 1, currCol);
+				currRow--;
+			} else if (currCol > endCol) { // Left
+				map.moveUnit(currRow, currCol, currRow, currCol - 1);
+				currCol--;
+			} else if (currRow < endRow) { // Down
+				map.moveUnit(currRow, currCol, currRow + 1, currCol);
+				currRow++;
+			} else if (currCol < endCol) { // Right
+				map.moveUnit(currRow, currCol, currRow, currCol + 1);
+				currCol++;
+			}
+			currUnit.drawUnit(graphical.getGraphics());
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-			
-	}
+		graphical.repaint();
 
+	}
 
 	/**
 	 * Pick up item.
@@ -375,22 +386,34 @@ private void goodUnitMove() {
 
 				Item newItem = RandomItem.generateItem();
 				if (newItem.getItemType() == ItemType.MEDKIT)
-					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic medkit!");
+					JOptionPane.showMessageDialog(null,
+							"Your " + currUnit.getUnitType()
+									+ " picked up a basic medkit!");
 				if (newItem.getItemType() == ItemType.MINE)
-					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic mine!");
+					JOptionPane.showMessageDialog(null,
+							"Your " + currUnit.getUnitType()
+									+ " picked up a basic mine!");
 				if (newItem.getItemType() == ItemType.GRENADE)
-					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a basic grenade!");
+					JOptionPane.showMessageDialog(null,
+							"Your " + currUnit.getUnitType()
+									+ " picked up a basic grenade!");
 				currUnit.addItem(newItem);
 
 			} else {
 
 				Item newItem = RandomBoost.generateBoost();
 				if (newItem.getItemType() == ItemType.HP)
-					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up an HP boost!");
+					JOptionPane.showMessageDialog(null,
+							"Your " + currUnit.getUnitType()
+									+ " picked up an HP boost!");
 				if (newItem.getItemType() == ItemType.ATK)
-					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up an attack boost!");
+					JOptionPane.showMessageDialog(null,
+							"Your " + currUnit.getUnitType()
+									+ " picked up an attack boost!");
 				if (newItem.getItemType() == ItemType.DEF)
-					JOptionPane.showMessageDialog(null, "Your " + currUnit.getUnitType() + " picked up a defense boost!");
+					JOptionPane.showMessageDialog(null,
+							"Your " + currUnit.getUnitType()
+									+ " picked up a defense boost!");
 
 				currUnit.addItem(newItem);
 				currUnit.UpdateBoosts();
@@ -411,7 +434,11 @@ private void goodUnitMove() {
 			for (Unit p : player2.allAliveUnits()) {
 
 				if (inAttackRange((int) p.getY(), (int) p.getX())) {
-					int answer = JOptionPane.showConfirmDialog(null, "There are possible Units to attack in range. Would you like to attack one of them?", "Attack?", JOptionPane.YES_NO_OPTION);
+					int answer = JOptionPane
+							.showConfirmDialog(
+									null,
+									"There are possible Units to attack in range. Would you like to attack one of them?",
+									"Attack?", JOptionPane.YES_NO_OPTION);
 					if (answer == JOptionPane.YES_OPTION) {
 
 						moveOn = true;
@@ -419,7 +446,7 @@ private void goodUnitMove() {
 						endCol = (int) p.getX();
 						endRow = (int) p.getY();
 						attack();
-						
+
 						break;
 
 					}
@@ -446,7 +473,8 @@ private void goodUnitMove() {
 					if (!SameTeam()) {
 
 						// Checks to see if either of the units are false.
-						if (currUnit != null && map.getUnitAt(endRow, endCol) != null) {
+						if (currUnit != null
+								&& map.getUnitAt(endRow, endCol) != null) {
 							// if both exist, check if one can move
 							if (inAttackRange(currRow, currCol)) {
 								actAttack();
@@ -468,22 +496,30 @@ private void goodUnitMove() {
 							}
 
 							else {
-								if(playerTurn)
-									JOptionPane.showMessageDialog(null, "Enemy out of attack Range.");
-								System.out.println("Enemy out of attack range.");
+								if (playerTurn)
+									JOptionPane.showMessageDialog(null,
+											"Enemy out of attack Range.");
+								System.out
+										.println("Enemy out of attack range.");
 							}
 						} else
-							JOptionPane.showMessageDialog(null, "Nothing to Attack!");
+							JOptionPane.showMessageDialog(null,
+									"Nothing to Attack!");
 					} else
-						JOptionPane.showMessageDialog(null, "You cannot attack your own teammates...");
+						JOptionPane.showMessageDialog(null,
+								"You cannot attack your own teammates...");
 				} else
-					JOptionPane.showMessageDialog(null, "You can't attack youself!");
+					JOptionPane.showMessageDialog(null,
+							"You can't attack youself!");
 			} else
-				JOptionPane.showMessageDialog(null, "Pick a unit to attack before you try attacking...");
+				JOptionPane.showMessageDialog(null,
+						"Pick a unit to attack before you try attacking...");
 		} else
-			JOptionPane.showMessageDialog(null, "Pick a unit to commit the attack before you try attacking...");
-		
-		if(currUnit !=null && !playerTurn){
+			JOptionPane
+					.showMessageDialog(null,
+							"Pick a unit to commit the attack before you try attacking...");
+
+		if (currUnit != null && !playerTurn) {
 			currUnit.setCanMove(false);
 			tempUnitList.remove(currUnit);
 			currUnit = null;
@@ -565,9 +601,11 @@ private void goodUnitMove() {
 	/**
 	 * Simply check if the enemy is in range. Range is based on the four
 	 * cardinal directions.
-	 *
-	 * @param row the row
-	 * @param col the col
+	 * 
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 * @return If the current unit is in range of the target.
 	 */
 	private boolean inAttackRange(int row, int col) {
@@ -611,7 +649,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Gets the attack row.
-	 *
+	 * 
 	 * @return the attack row
 	 */
 	public int getAttackRow() {
@@ -620,7 +658,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Gets the attack col.
-	 *
+	 * 
 	 * @return the attack col
 	 */
 	public int getAttackCol() {
@@ -629,7 +667,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Gets the checks for attacked.
-	 *
+	 * 
 	 * @return the checks for attacked
 	 */
 	public boolean getHasAttacked() {
@@ -638,8 +676,9 @@ private void goodUnitMove() {
 
 	/**
 	 * TODO Finish this method.
-	 *
-	 * @param item the item
+	 * 
+	 * @param item
+	 *            the item
 	 * @return true, if successful
 	 */
 	public boolean currUnitHasItem(ItemType item) {
@@ -659,8 +698,13 @@ private void goodUnitMove() {
 			if (endRow != 51 || endCol != 51) {
 				if (inAttackRange(currRow, currCol)) {
 
-					Object[] options = { "Health Kit", "Mine", "Grenade", "Cancel" };
-					int answer = JOptionPane.showOptionDialog(null, "What item would you like to use?", "Use Item?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+					Object[] options = { "Health Kit", "Mine", "Grenade",
+							"Cancel" };
+					int answer = JOptionPane.showOptionDialog(null,
+							"What item would you like to use?", "Use Item?",
+							JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, options,
+							options[1]);
 
 					if (answer == JOptionPane.YES_OPTION) {
 						usingItemType = ItemType.MEDKIT;
@@ -683,8 +727,17 @@ private void goodUnitMove() {
 
 								if (SameTeam()) {
 
-									map.getUnitAt(endRow, endCol).restoreHealth();
-									JOptionPane.showMessageDialog(null, "The " + map.getUnitAt(endRow, endCol).getUnitType() + " you selected has had their health fully restored.");
+									map.getUnitAt(endRow, endCol)
+											.restoreHealth();
+									JOptionPane
+											.showMessageDialog(
+													null,
+													"The "
+															+ map.getUnitAt(
+																	endRow,
+																	endCol)
+																	.getUnitType()
+															+ " you selected has had their health fully restored.");
 									currUnit.setCanMove(false);
 									currUnit.removeItem(usingItemType);
 									currUnit.setIsSelected(false);
@@ -696,15 +749,23 @@ private void goodUnitMove() {
 									map.updateObservers();
 
 								} else
-									JOptionPane.showMessageDialog(null, "You don't want to heal a " + map.getUnitAt(endRow, endCol).getUnitType() + "!");
+									JOptionPane.showMessageDialog(
+											null,
+											"You don't want to heal a "
+													+ map.getUnitAt(endRow,
+															endCol)
+															.getUnitType()
+													+ "!");
 
 							} else
-								JOptionPane.showMessageDialog(null, "There is nothing there to heal!");
+								JOptionPane.showMessageDialog(null,
+										"There is nothing there to heal!");
 						} // end health kit
 
 						if (usingItemType == ItemType.MINE) {
 
-							JOptionPane.showMessageDialog(null, "A Mine has been placed");
+							JOptionPane.showMessageDialog(null,
+									"A Mine has been placed");
 							map.getSpace(endCol, endRow).setHasMine(true);
 							currUnit.setCanMove(false);
 							currUnit.removeItem(usingItemType);
@@ -720,7 +781,10 @@ private void goodUnitMove() {
 
 						if (usingItemType == ItemType.GRENADE) {
 
-							JOptionPane.showMessageDialog(null, "Your " + map.getUnitAt(currRow, currCol).getUnitType() + " threw a grenade.");
+							JOptionPane.showMessageDialog(null, "Your "
+									+ map.getUnitAt(currRow, currCol)
+											.getUnitType()
+									+ " threw a grenade.");
 							blowShitUp(endRow, endCol);
 							currUnit.setCanMove(false);
 							currUnit.removeItem(usingItemType);
@@ -734,16 +798,22 @@ private void goodUnitMove() {
 						}
 
 					} else
-						JOptionPane.showMessageDialog(null, "The unit you selected does not have that item.");
+						JOptionPane
+								.showMessageDialog(null,
+										"The unit you selected does not have that item.");
 				} else
-					JOptionPane.showMessageDialog(null, "The place you are tying to use the item is out of this units range");
+					JOptionPane
+							.showMessageDialog(null,
+									"The place you are tying to use the item is out of this units range");
 
 			} else
-				JOptionPane.showMessageDialog(null, "Pick a space to use the Item first");
+				JOptionPane.showMessageDialog(null,
+						"Pick a space to use the Item first");
 
 		} else
-			JOptionPane.showMessageDialog(null, "Pick a unit to use an Item first");
-		
+			JOptionPane.showMessageDialog(null,
+					"Pick a unit to use an Item first");
+
 		checkWinConditions();
 
 	}
@@ -751,9 +821,11 @@ private void goodUnitMove() {
 	/**
 	 * TODO Finish and Test Blow those zombies up, kid. Just try not to blow
 	 * yourself up.
-	 *
-	 * @param row the row
-	 * @param col the col
+	 * 
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 */
 	private void blowShitUp(int row, int col) {
 
@@ -761,50 +833,50 @@ private void goodUnitMove() {
 		int baseCol = col;
 
 		if (map.getSpace(col, row).getOccupied()) {
-			//if (!(SameTeam())) {
-				map.getUnitAt(row, col).reduceHealth(100);
-				targetDead(row, col);
-				row = baseRow;
-				col = baseCol;
+			// if (!(SameTeam())) {
+			map.getUnitAt(row, col).reduceHealth(100);
+			targetDead(row, col);
+			row = baseRow;
+			col = baseCol;
 
-			//}
+			// }
 		}
 
 		if (map.getSpace(col, row + 1).getOccupied()) {
-			//if (!(SameTeam())) {
-				map.getUnitAt(row + 1, col).reduceHealth(75);
-				targetDead(row + 1, col);
-				row = baseRow;
-				col = baseCol;
-			//}
+			// if (!(SameTeam())) {
+			map.getUnitAt(row + 1, col).reduceHealth(75);
+			targetDead(row + 1, col);
+			row = baseRow;
+			col = baseCol;
+			// }
 		}
 
 		if (map.getSpace(col, row - 1).getOccupied()) {
-			//if (!(SameTeam())) {
-				map.getUnitAt(row - 1, col).reduceHealth(75);
-				targetDead(row - 1, col);
-				row = baseRow;
-				col = baseCol;
-			//}
+			// if (!(SameTeam())) {
+			map.getUnitAt(row - 1, col).reduceHealth(75);
+			targetDead(row - 1, col);
+			row = baseRow;
+			col = baseCol;
+			// }
 		}
 
 		if (map.getSpace(col + 1, row).getOccupied()) {
-			//if (!(SameTeam())) {
-				map.getUnitAt(row, col + 1).reduceHealth(75);
-				targetDead(row, col + 1);
-				row = baseRow;
-				col = baseCol;
-			//}
+			// if (!(SameTeam())) {
+			map.getUnitAt(row, col + 1).reduceHealth(75);
+			targetDead(row, col + 1);
+			row = baseRow;
+			col = baseCol;
+			// }
 		}
 
 		if (map.getSpace(col - 1, row).getOccupied()) {
-			//if (!(SameTeam())) {
-				map.getUnitAt(row, col - 1).reduceHealth(75);
-				targetDead(row, col - 1);
-				row = baseRow;
-				col = baseCol;
-			}
-		//}
+			// if (!(SameTeam())) {
+			map.getUnitAt(row, col - 1).reduceHealth(75);
+			targetDead(row, col - 1);
+			row = baseRow;
+			col = baseCol;
+		}
+		// }
 	}
 
 	/**
@@ -843,11 +915,13 @@ private void goodUnitMove() {
 				gameOver = true;
 				playerWon = false;
 				// Display some kind of message telling player 1 won
-				JOptionPane.showMessageDialog(null, "AI won! Better luck next time...");
+				JOptionPane.showMessageDialog(null,
+						"AI won! Better luck next time...");
 				System.out.println("AI won! Better luck next time...");
 				System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				System.out.println("Games you've finished: " + player1.getGamesFinished());
+				System.out.println("Games you've finished: "
+						+ player1.getGamesFinished());
 				System.out.println("AI team stats: ");
 				System.out.println(player2.getTeamStats());
 
@@ -871,11 +945,13 @@ private void goodUnitMove() {
 		if (gameType instanceof gametype.CaptureTower) {
 
 			if (((map.getSpace(currCol, currRow) instanceof space.TowerSpace && playerTurn))) {
-				JOptionPane.showMessageDialog(null, "Congrats you captured the tower! You win!");
+				JOptionPane.showMessageDialog(null,
+						"Congrats you captured the tower! You win!");
 				return true;
 
 			} else if (player2.everyonesDeadDave()) {
-				JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+				JOptionPane.showMessageDialog(null,
+						"Congrats you killed all the Zombies! You win!");
 				return true;
 
 			} else {
@@ -883,12 +959,15 @@ private void goodUnitMove() {
 			}
 
 		} else if (gameType instanceof gametype.Survive) {
-			if ((!player1.everyonesDeadDave() && gameType.CheckWinCondition(turns))) {
-				JOptionPane.showMessageDialog(null, "Congrats you survived the zombie attack! You win!");
+			if ((!player1.everyonesDeadDave() && gameType
+					.CheckWinCondition(turns))) {
+				JOptionPane.showMessageDialog(null,
+						"Congrats you survived the zombie attack! You win!");
 				return true;
 			}
 			if (player2.everyonesDeadDave()) {
-				JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+				JOptionPane.showMessageDialog(null,
+						"Congrats you killed all the Zombies! You win!");
 				return true;
 			}
 
@@ -899,81 +978,109 @@ private void goodUnitMove() {
 		else if (gameType instanceof gametype.FourCorners) {
 			if (!testing) {
 				if (map.getSpace(0, 0).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(0, 0)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(0, 0))
+							.setHasBeenCaptured(true);
 					// JOptionPane.showMessageDialog(null,
 					// "Northwest Tower captured.");
 				}
 				if (map.getSpace(0, 49).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(0, 49)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(0, 49))
+							.setHasBeenCaptured(true);
 					if (!notShownNE) {
-						JOptionPane.showMessageDialog(null, "Northeast Tower captured.");
+						JOptionPane.showMessageDialog(null,
+								"Northeast Tower captured.");
 						notShownNE = true;
 					}
 				}
 				if (map.getSpace(49, 0).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(49, 0)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(49, 0))
+							.setHasBeenCaptured(true);
 					if (!notShownSW) {
-						JOptionPane.showMessageDialog(null, "Southwest Tower captured.");
+						JOptionPane.showMessageDialog(null,
+								"Southwest Tower captured.");
 						notShownSW = true;
 					}
 				}
 				if (map.getSpace(49, 49).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(49, 49)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(49, 49))
+							.setHasBeenCaptured(true);
 					if (!notShownSE) {
-						JOptionPane.showMessageDialog(null, "Southeast Tower captured.");
+						JOptionPane.showMessageDialog(null,
+								"Southeast Tower captured.");
 						notShownSE = true;
 					}
 				}
 
 				if (player2.everyonesDeadDave()) {
-					JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+					JOptionPane.showMessageDialog(null,
+							"Congrats you killed all the Zombies! You win!");
 					return true;
 				}
-				if (((CaptureCornerSpace) map.getSpace(0, 0)).getHasBeenCaptured())
-					if (((CaptureCornerSpace) map.getSpace(49, 0)).getHasBeenCaptured())
-						if (((CaptureCornerSpace) map.getSpace(0, 49)).getHasBeenCaptured())
-							if (((CaptureCornerSpace) map.getSpace(49, 49)).getHasBeenCaptured()) {
-								JOptionPane.showMessageDialog(null, "Congrats you secured all the towers! You win!");
+				if (((CaptureCornerSpace) map.getSpace(0, 0))
+						.getHasBeenCaptured())
+					if (((CaptureCornerSpace) map.getSpace(49, 0))
+							.getHasBeenCaptured())
+						if (((CaptureCornerSpace) map.getSpace(0, 49))
+								.getHasBeenCaptured())
+							if (((CaptureCornerSpace) map.getSpace(49, 49))
+									.getHasBeenCaptured()) {
+								JOptionPane
+										.showMessageDialog(null,
+												"Congrats you secured all the towers! You win!");
 								return true;
 							}
 			} else {
 
 				if (map.getSpace(1, 1).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(1, 1)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(1, 1))
+							.setHasBeenCaptured(true);
 					// JOptionPane.showMessageDialog(null,
 					// "Northwest Tower captured.");
 				}
 				if (map.getSpace(1, 8).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(1, 8)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(1, 8))
+							.setHasBeenCaptured(true);
 					if (!notShownNE) {
-						JOptionPane.showMessageDialog(null, "Northeast Tower captured.");
+						JOptionPane.showMessageDialog(null,
+								"Northeast Tower captured.");
 						notShownNE = true;
 					}
 				}
 				if (map.getSpace(8, 1).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(8, 1)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(8, 1))
+							.setHasBeenCaptured(true);
 					if (!notShownSW) {
-						JOptionPane.showMessageDialog(null, "Southwest Tower captured.");
+						JOptionPane.showMessageDialog(null,
+								"Southwest Tower captured.");
 						notShownSW = true;
 					}
 				}
 				if (map.getSpace(8, 8).getOccupied()) {
-					((CaptureCornerSpace) map.getSpace(8, 8)).setHasBeenCaptured(true);
+					((CaptureCornerSpace) map.getSpace(8, 8))
+							.setHasBeenCaptured(true);
 					if (!notShownSE) {
-						JOptionPane.showMessageDialog(null, "Southeast Tower captured.");
+						JOptionPane.showMessageDialog(null,
+								"Southeast Tower captured.");
 						notShownSE = true;
 					}
 				}
 
 				if (player2.everyonesDeadDave()) {
-					JOptionPane.showMessageDialog(null, "Congrats you killed all the Zombies! You win!");
+					JOptionPane.showMessageDialog(null,
+							"Congrats you killed all the Zombies! You win!");
 					return true;
 				}
-				if (((CaptureCornerSpace) map.getSpace(1, 1)).getHasBeenCaptured())
-					if (((CaptureCornerSpace) map.getSpace(1, 8)).getHasBeenCaptured())
-						if (((CaptureCornerSpace) map.getSpace(8, 1)).getHasBeenCaptured())
-							if (((CaptureCornerSpace) map.getSpace(8, 8)).getHasBeenCaptured()) {
-								JOptionPane.showMessageDialog(null, "Congrats you secured all the towers! You win!");
+				if (((CaptureCornerSpace) map.getSpace(1, 1))
+						.getHasBeenCaptured())
+					if (((CaptureCornerSpace) map.getSpace(1, 8))
+							.getHasBeenCaptured())
+						if (((CaptureCornerSpace) map.getSpace(8, 1))
+								.getHasBeenCaptured())
+							if (((CaptureCornerSpace) map.getSpace(8, 8))
+									.getHasBeenCaptured()) {
+								JOptionPane
+										.showMessageDialog(null,
+												"Congrats you secured all the towers! You win!");
 								return true;
 							}
 			}
@@ -986,7 +1093,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Get all of the stats for the selected player.
-	 *
+	 * 
 	 * @return the team stats
 	 */
 	public String getTeamStats() {
@@ -999,8 +1106,9 @@ private void goodUnitMove() {
 
 	/**
 	 * Get the selected unit's stats.
-	 *
-	 * @param u            , the player's unit
+	 * 
+	 * @param u
+	 *            , the player's unit
 	 * @return the curr unit stats
 	 */
 	public String getCurrUnitStats(Unit u) {
@@ -1009,7 +1117,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Get the number of turns gone through in the game.
-	 *
+	 * 
 	 * @return the number of turns taken in game
 	 */
 	public int getTurns() {
@@ -1192,7 +1300,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Gets the new endColumn. Used in attack and movement.
-	 *
+	 * 
 	 * @return the end row
 	 */
 	public int getEndRow() {
@@ -1201,7 +1309,7 @@ private void goodUnitMove() {
 
 	/**
 	 * Gets the new endColumn. Used in attack and movement.
-	 *
+	 * 
 	 * @return the end column
 	 */
 	public int getEndColumn() {
@@ -1211,9 +1319,11 @@ private void goodUnitMove() {
 	/**
 	 * Decides if the current unit can move onto a surrounding space. Called
 	 * twice, before and after a move/attack.
-	 *
-	 * @param row the row
-	 * @param col the col
+	 * 
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 */
 	private void setCanMove(int row, int col) {
 		map.getSpace(currRow, currCol).setCanMoveTo(true);
@@ -1236,15 +1346,20 @@ private void goodUnitMove() {
 	 * TODO Get it working
 	 * 
 	 * Helper method for setCanMove.
-	 *
-	 * @param movesAvail the moves avail
-	 * @param row the row
-	 * @param col the col
+	 * 
+	 * @param movesAvail
+	 *            the moves avail
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 */
 	private void canMoveHelper(int movesAvail, int row, int col) {
 
-		if (movesAvail >= map.getSpace(col, row).getMoveHinderance() && map.getSpace(row, col).getWalkable()) {
-			movesAvail = movesAvail - map.getSpace(col, row).getMoveHinderance();
+		if (movesAvail >= map.getSpace(col, row).getMoveHinderance()
+				&& map.getSpace(row, col).getWalkable()) {
+			movesAvail = movesAvail
+					- map.getSpace(col, row).getMoveHinderance();
 			map.getSpace(row, col).setCanMoveTo(true);
 			if (row < 49)
 				if (map.getSpace(row + 1, col).getWalkable())
@@ -1264,9 +1379,11 @@ private void goodUnitMove() {
 	/**
 	 * Checks to see if a specific unit is dead. If it is, remove it from the
 	 * map and from the alive unit lists in the associated team.
-	 *
-	 * @param row the row
-	 * @param col the col
+	 * 
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
 	 */
 	private void targetDead(int row, int col) {
 		Unit temp = map.getUnitAt(row, col);
@@ -1278,13 +1395,28 @@ private void goodUnitMove() {
 			if (playerTurn) {
 
 				if (map.getUnitAt(endCol, endRow) instanceof Hole)
-					JOptionPane.showMessageDialog(null, "You threw a bomb down the hole and stopped zombies from crawling out of it!");
+					JOptionPane
+							.showMessageDialog(null,
+									"You threw a bomb down the hole and stopped zombies from crawling out of it!");
 				else
-					JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + player1.getAliveNum() + ", Zombies - " + (player2.getAliveNum() - 1));
+					JOptionPane.showMessageDialog(null, "The attacked "
+							+ map.getUnitAt(row, col).getUnitType()
+							+ " was left with no health and has died!" + '\n'
+							+ "Number of units remaining on both sides: "
+							+ player1.getID() + " - " + player1.getAliveNum()
+							+ ", Zombies - " + (player2.getAliveNum() - 1));
 
 			} else {
 
-				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with no health and has died!" + '\n' + "Number of units remaining on both sides: " + player1.getID() + " - " + (player1.getAliveNum() - 1) + ", Zombies - " + (player2.getAliveNum()));
+				JOptionPane.showMessageDialog(
+						null,
+						"The attacked " + map.getUnitAt(row, col).getUnitType()
+								+ " was left with no health and has died!"
+								+ '\n'
+								+ "Number of units remaining on both sides: "
+								+ player1.getID() + " - "
+								+ (player1.getAliveNum() - 1) + ", Zombies - "
+								+ (player2.getAliveNum()));
 			}
 
 			map.removeUnit(col, row);
@@ -1300,15 +1432,22 @@ private void goodUnitMove() {
 				tempUnitList.remove(temp);
 
 			// Check to see if the game is over
-			System.out.println("Unit " + temp.getUnitType() + " at (" + row + ", " + col + ") is dead!");
+			System.out.println("Unit " + temp.getUnitType() + " at (" + row
+					+ ", " + col + ") is dead!");
 
 		} else {
-			
-			if(map.getUnitAt(row, col).getNoDamage()){
-				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " had too high of a defense for it to be harmed");
+
+			if (map.getUnitAt(row, col).getNoDamage()) {
+				JOptionPane.showMessageDialog(null, "The attacked "
+						+ map.getUnitAt(row, col).getUnitType()
+						+ " had too high of a defense for it to be harmed");
 				map.getUnitAt(row, col).setNoDamage(false);
 			} else {
-				JOptionPane.showMessageDialog(null, "The attacked " + map.getUnitAt(row, col).getUnitType() + " was left with " + map.getUnitAt(row, col).getHealth() + " health after the attack!");
+				JOptionPane.showMessageDialog(null, "The attacked "
+						+ map.getUnitAt(row, col).getUnitType()
+						+ " was left with "
+						+ map.getUnitAt(row, col).getHealth()
+						+ " health after the attack!");
 
 			}
 		}
@@ -1354,10 +1493,10 @@ private void goodUnitMove() {
 	public List<Unit> getPlayerUnits() {
 		return player1.allAliveUnits();
 	}
-	
+
 	/** The to attack. */
 	private Point toAttack;
-	
+
 	/**
 	 * Enemy turn.
 	 */
@@ -1370,31 +1509,32 @@ private void goodUnitMove() {
 
 			for (Unit u : enemyUnitList) {
 				toAttack = null;
-				
+
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
 				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;
 				this.endCol = temp.x;
-				
-				// TODO add attack method. If it is around them, and they are not a whole, attack.
-				if(aIInAttackRange(u.getX(), u.getY(), u.getRange())){
-						endCol = toAttack.x;
-						endRow = toAttack.y;
-						
-						map.getUnitAt(endRow, endCol).reduceHealth(u.getAttack());
-						targetDead(endRow, endCol);
-						gameOver();
-						map.updateObservers();
-						tempUnitList.remove(u);
-						if(tempUnitList.isEmpty()){
-							break;
-						}
+
+				// TODO add attack method. If it is around them, and they are
+				// not a whole, attack.
+				if (aIInAttackRange(u.getX(), u.getY(), u.getRange())) {
+					endCol = toAttack.x;
+					endRow = toAttack.y;
+
+					map.getUnitAt(endRow, endCol).reduceHealth(u.getAttack());
+					targetDead(endRow, endCol);
+					gameOver();
+					map.updateObservers();
+					tempUnitList.remove(u);
+					if (tempUnitList.isEmpty()) {
+						break;
+					}
 				}
-				//if (this.inAttackRange()) {
-				//	attack();
-				//}
+				// if (this.inAttackRange()) {
+				// attack();
+				// }
 
 				// If not, then move the AI closer to the player.
 				else
@@ -1406,46 +1546,49 @@ private void goodUnitMove() {
 				// map.getUnitAt(rowValue, colValue).setCanMove(false);
 			}
 		}
-		if(!playerTurn){
+		if (!playerTurn) {
 			endTurn();
 		}
 	}
 
 	/**
 	 * Attacks the nearest unit.
-	 *
-	 * @param row the row
-	 * @param col the col
-	 * @param rangeLeft the range left
+	 * 
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
+	 * @param rangeLeft
+	 *            the range left
 	 * @return true, if successful
 	 */
 	private boolean aIInAttackRange(int row, int col, int rangeLeft) {
 		// TODO Auto-generated method stub
-		
-		if(rangeLeft >= 0){
-			if(map.isOccupied(row, col)){
-				if(player1.allAliveUnits().contains(map.getUnitAt(row, col))){
-					toAttack = new Point(col,row);
+
+		if (rangeLeft >= 0) {
+			if (map.isOccupied(row, col)) {
+				if (player1.allAliveUnits().contains(map.getUnitAt(row, col))) {
+					toAttack = new Point(col, row);
 					return true;
 				}
 			}
-		
-			if (rangeLeft>0){	
+
+			if (rangeLeft > 0) {
 				boolean toReturn = false;
 
-				if (!toReturn&& row < 49)
-					toReturn = aIInAttackRange(row+1, col, rangeLeft-1);
-				if (!toReturn&& row > 0)
-					toReturn = aIInAttackRange(row-1, col, rangeLeft-1);
-				if (!toReturn&& col < 49)
-					toReturn = aIInAttackRange(row, col+1, rangeLeft-1);
-				if (!toReturn&& col > 0)
-					toReturn = aIInAttackRange(row, col-1, rangeLeft-1);
-			
+				if (!toReturn && row < 49)
+					toReturn = aIInAttackRange(row + 1, col, rangeLeft - 1);
+				if (!toReturn && row > 0)
+					toReturn = aIInAttackRange(row - 1, col, rangeLeft - 1);
+				if (!toReturn && col < 49)
+					toReturn = aIInAttackRange(row, col + 1, rangeLeft - 1);
+				if (!toReturn && col > 0)
+					toReturn = aIInAttackRange(row, col - 1, rangeLeft - 1);
+
 				return toReturn;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -1453,27 +1596,32 @@ private void goodUnitMove() {
 	 * TODO Write this Method for automatically moving the enemy AI. Moves them
 	 * toward the closest human based on their behavior. If they are near enough
 	 * to a player's unit, attack.
-	 *
-	 * @param em the em
+	 * 
+	 * @param em
+	 *            the em
 	 */
 	public synchronized void enemyMove(Point em) {
 		Point p = nearestPlayerUnit(em);
 
-		rowValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
-		colValue = aiMove.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).y;
+		rowValue = aiMove
+				.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).x;
+		colValue = aiMove
+				.traverse(em.y, em.x, p.y, p.x, currUnit.getMovement()).y;
 
 		endRow = rowValue;
 		endCol = colValue;
 		move();
 		// map.moveUnit(em.y, em.x, rowValue, colValue);
-		System.out.println("Location being sent: " + em.y + ", " + em.x + " | " + rowValue + ", " + colValue);
+		System.out.println("Location being sent: " + em.y + ", " + em.x + " | "
+				+ rowValue + ", " + colValue);
 	}
 
 	/**
 	 * Finds the nearest player location point closest to an enemy unit. Returns
 	 * the nearest point based on how many moves would be needed to make it.
-	 *
-	 * @param enemyLoc the enemy loc
+	 * 
+	 * @param enemyLoc
+	 *            the enemy loc
 	 * @return the point
 	 */
 	public Point nearestPlayerUnit(Point enemyLoc) {
@@ -1482,7 +1630,8 @@ private void goodUnitMove() {
 		Point toReturn = null;
 
 		for (Unit p : player1.allAliveUnits()) {
-			tempSN = Math.abs(enemyLoc.x - p.getX()) + Math.abs(enemyLoc.y - p.getY());
+			tempSN = Math.abs(enemyLoc.x - p.getX())
+					+ Math.abs(enemyLoc.y - p.getY());
 			if (tempSN <= spaceNear || spaceNear == 0) {
 				spaceNear = tempSN;
 				toReturn = new Point(p.getX(), p.getY());
@@ -1494,8 +1643,9 @@ private void goodUnitMove() {
 
 	/**
 	 * TODO.
-	 *
-	 * @param player the new current player
+	 * 
+	 * @param player
+	 *            the new current player
 	 */
 
 	public void setCurrentPlayer(Player player) {
@@ -1504,8 +1654,9 @@ private void goodUnitMove() {
 
 	/**
 	 * Sets the player turn.
-	 *
-	 * @param whosTurn the new player turn
+	 * 
+	 * @param whosTurn
+	 *            the new player turn
 	 */
 	public void setPlayerTurn(boolean whosTurn) {
 		playerTurn = whosTurn;
@@ -1514,8 +1665,9 @@ private void goodUnitMove() {
 
 	/**
 	 * Sets the checks for attacked.
-	 *
-	 * @param hasAttacked the new checks for attacked
+	 * 
+	 * @param hasAttacked
+	 *            the new checks for attacked
 	 */
 	public void setHasAttacked(boolean hasAttacked) {
 		// TODO Auto-generated method stub
@@ -1527,13 +1679,19 @@ private void goodUnitMove() {
 
 	/**
 	 * Sets the current unit selected.
-	 *
-	 * @param v the new current unit selected
+	 * 
+	 * @param v
+	 *            the new current unit selected
 	 */
 	public void setCurrentUnitSelected(boolean v) {
 		if (currUnit != null) {
 			currUnit.setIsSelected(v);
 		}
+	}
+
+	public void setGraphicalView(GraphicalView graphical) {
+		// TODO Auto-generated method stub
+		this.graphical = graphical;
 	}
 
 	/*

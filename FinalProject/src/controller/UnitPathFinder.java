@@ -52,33 +52,44 @@ public class UnitPathFinder implements Serializable{
 		// moves up
 		if (currRow > tgtRow) {
 			if (validPosition(currRow - 1, currCol)) {
+				movePositions.add(new Point(row, col));
 				traverse(currRow - 1, currCol, tgtRow, tgtCol);
 			}
 		}
 
 		// moves left
-		if (currCol > tgtCol) {
+		else if (currCol > tgtCol) {
 			if (validPosition(currRow, currCol - 1)) {
+				movePositions.add(new Point(row, col));
 				traverse(currRow, currCol - 1, tgtRow, tgtCol);
 			}
 		}
 
 		// moves down
-		if (currRow < tgtRow) {
+		else if (currRow < tgtRow) {
 			if (validPosition(currRow + 1, currCol)) {
+				movePositions.add(new Point(row, col));
 				traverse(currRow + 1, currCol, tgtRow, tgtCol);
 			}
 		}
 
 		// moves right
-		if (currCol < tgtCol) {
+		else if (currCol < tgtCol) {
 			if (validPosition(currRow, currCol + 1)) {
+				movePositions.add(new Point(row, col));
 				traverse(currRow, currCol + 1, tgtRow, tgtCol);
 			}
 		}
-		movePositions.add(new Point(row, col));
-		// Returns the Point of where the AI should move.
+		else if(currCol == tgtCol && currRow == tgtRow) {
+			movePositions.add(new Point(row, col));
+			System.out.println("THE SIZE IN UNITPATHFINDER IS " + movePositions.size());
+			return new Point(row, col);
+			
+		}
+			
 		return new Point(row, col);
+		// Returns the Point of where the AI should move.
+		
 	}
 
 	/**
@@ -94,11 +105,14 @@ public class UnitPathFinder implements Serializable{
 	public boolean validPosition(int tgtRow, int tgtCol) {
 		boolean valid = false;
 		
+		System.out.println("IN valid position");
+		
 		// Check for hindrance and if walkable
 		if (tgtRow > 49 || tgtRow < 0 || tgtCol > 49 || tgtCol < 0 ) {
 			valid = false;
 		}
 		else {
+			System.out.println("valid is now true");
 						valid = true;
 						row = tgtRow;
 						col = tgtCol;
