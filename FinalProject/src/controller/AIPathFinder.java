@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import model.Map;
 
-// TODO: Auto-generated Javadoc
 /**
  * AIPathFinder attempts to recursively traverse the game Map. The goal is to
  * get from the given starting position to the nearest player location.
@@ -15,19 +14,10 @@ import model.Map;
  */
 public class AIPathFinder implements Serializable{
 	
-	/** The game map. */
 	private Map gameMap;
-	
-	/** The mine locations. */
 	private ArrayList<Point> mineLocations = new ArrayList<Point>();
-	
-	/** The move positions. */
 	private ArrayList<Point> movePositions = new ArrayList<Point>();
-	
-	/** The move range. */
 	private int moveRange;
-	
-	/** The col. */
 	private int row = 0, col = 0;
 
 	/**
@@ -54,9 +44,6 @@ public class AIPathFinder implements Serializable{
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
 		movePositions.add(new Point(currAIRow, currAICol));
-		
-		//System.out.println("Current AI Location: " + currAIRow + ", " + currAICol + ": " + moveRange);
-		//System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
 
 		if ((currAIRow == plyrRow || currAIRow == plyrRow - 1 || currAIRow == plyrRow + 1) && (currAICol == plyrCol || currAICol == plyrCol - 1 || currAICol == plyrCol + 1))
 			isNearPlayer = true; // the AI is near the target location
@@ -124,7 +111,6 @@ public class AIPathFinder implements Serializable{
 			valid = false;
 		}
 		else if (!(gameMap.getSpace(tgtCol, tgtRow).getSpaceType().equals("Wall"))) {
-			// if (getCurrentUnit() != null) {
 			if (!gameMap.isOccupied(tgtRow, tgtCol)
 					&& gameMap.getSpace(tgtRow, tgtCol).getCanMoveTo()) {
 				if (moveRange > 0) {
