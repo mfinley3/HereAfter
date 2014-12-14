@@ -10,13 +10,11 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ZombieDogAI.
+ * The Class ZombieDogAI. 
  */
 public class ZombieDogAI extends Unit{
 
-	/** The zombie. */
 	transient private BufferedImage zombieGen, zombieCantMove, zombie;
 	
 	/**

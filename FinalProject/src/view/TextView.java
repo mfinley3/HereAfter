@@ -6,22 +6,17 @@ import java.awt.Font;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controller.GameController;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TextView.
  */
 public class TextView extends JPanel implements Observer{
 
-  	/** The map text. */
 	  private JTextArea mapText;
-  	
-	  /** The controller. */
 	  private GameController controller;
 	  
 	 /**
@@ -52,7 +47,7 @@ public class TextView extends JPanel implements Observer{
 	   * The map will call notifyObervers, and this method will update the stats of the Player's units.
 	   *
 	   * @param o the o
-	   * @param arg the arg
+	   * @param arg, won't really be used.
 	   */
 	@Override
 	public void update(Observable o, Object arg) {
@@ -60,7 +55,7 @@ public class TextView extends JPanel implements Observer{
 	}
 
 	/**
-	 * Sets the controller.
+	 * Sets the current controller.
 	 *
 	 * @param controller the new controller
 	 */
