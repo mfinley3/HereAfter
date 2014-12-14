@@ -1143,7 +1143,29 @@ public class GameController implements Serializable {
 		if (currUnit != null) {
 			endCol = currCol;
 			endRow = currRow;
-			move();
+			
+			
+			map.resetMapCanMove();
+			// Take the unit that can no longer move out of the
+			// tempUnitList
+			if (!moveOn) {
+				try {
+					currUnit.setCanMove(false);
+					tempUnitList.remove(currUnit);
+					setCurrentUnitSelected(false);
+					currUnit = null;
+				} catch (Exception e) {
+
+				}
+			}
+
+			endRow = 51;
+			endCol = 51;
+
+			map.updateObservers();
+
+			if (tempUnitList.isEmpty())
+				endTurn();
 		}
 
 		else
