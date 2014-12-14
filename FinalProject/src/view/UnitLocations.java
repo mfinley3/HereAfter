@@ -9,19 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class UnitLocations.
+ * The Class UnitLocations. In the game, displays the locations of all of the
+ * units in one of the tabs. Just displays the locations of each of the units.
  */
 public class UnitLocations extends JPanel implements Observer {
-
-	/** The text map. */
 	private JTextArea textMap;
-	
-	/** The string of map. */
 	private String stringOfMap;
-	
-	/** The scroll panel. */
 	private JScrollPane scrollPanel;
 
 	/**
@@ -38,7 +32,9 @@ public class UnitLocations extends JPanel implements Observer {
 		add(scrollPanel);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override

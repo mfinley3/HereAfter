@@ -1,33 +1,21 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
-import controller.GameController;
-
-// TODO: Auto-generated Javadoc
 /**
- * The Class MapView.
+ * The Class MapView. Creates the map to be displayed in the Map tab while in
+ * game.
  */
 public class MapView extends JPanel {
 
-	/** The Corner map. */
 	private BufferedImage survivalMap, TowerMap, CornerMap;
-	
-	/** The Game type. */
 	private String GameType;
 
 	/**
@@ -35,7 +23,7 @@ public class MapView extends JPanel {
 	 */
 	public MapView() {
 		try {
-			
+
 			survivalMap = ImageIO.read(new File("SurvivalMap.png"));
 			TowerMap = ImageIO.read(new File("TowerMap.png"));
 			CornerMap = ImageIO.read(new File("CornerMap.png"));
@@ -45,7 +33,9 @@ public class MapView extends JPanel {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics g) {
@@ -65,7 +55,8 @@ public class MapView extends JPanel {
 	/**
 	 * Sets the game type.
 	 *
-	 * @param GameType the new game type
+	 * @param GameType
+	 *            the new game type
 	 */
 	public void setGameType(String GameType) {
 		this.GameType = GameType;

@@ -9,30 +9,32 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Sniper.
+ * The Sniper is a controllable {@link Unit} by the player. Has a long range and
+ * attack, but low defense. Created upon start of a new game, controlled by the
+ * human player.
  */
 public class Sniper extends Unit {
-	
-	/** The snip. */
-	transient private BufferedImage snipGen, snipSelect, snipCantMove, snip;	
-	
+	transient private BufferedImage snipGen, snipSelect, snipCantMove, snip;
+
 	/**
 	 * Instantiates a new sniper unit.
 	 *
-	 * @param difficulty the difficulty
+	 * @param difficulty
+	 *            the difficulty
 	 */
 	public Sniper(double difficulty) {
-		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
-		
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
+		// Difficulty multiplier
+
 		// Attack is doubled at creation so Attack is actually 70
-		super("Sniper", new Item("MLG's Rifle of Quickscoping 9001", ItemType.ATK), 35, 10, 100, 5, 7, difficulty);
+		super("Sniper", new Item("MLG's Rifle of Quickscoping 9001",
+				ItemType.ATK), 35, 10, 100, 5, 7, difficulty);
 	}
 
-
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see units.Unit#drawUnit(java.awt.Graphics)
 	 */
 	@Override
@@ -49,9 +51,9 @@ public class Sniper extends Unit {
 		}
 		if (super.isSelected)
 			snip = snipSelect;
-		else if (!super.canMove()) //If the soldier cannot move
+		else if (!super.canMove()) // If the soldier cannot move
 			snip = snipCantMove;
-		else 
+		else
 			snip = snipGen;
 		g.drawImage(snip, super.currentY * 100, super.currentX * 100, null);
 	}

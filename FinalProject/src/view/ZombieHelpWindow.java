@@ -6,28 +6,16 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ZombieHelpWindow.
  */
 public class ZombieHelpWindow extends JFrame implements Runnable {
 
-	/** The description. */
 	private JTextArea description;
-	
-	/** The zombie. */
 	private JTextArea zombie;
-	
-	/** The carrier. */
 	private JTextArea carrier;
-	
-	/** The alpha protector. */
 	private JTextArea alphaProtector;
-	
-	/** The zombie dog. */
 	private JTextArea zombieDog;
-	
-	/** The spitter. */
 	private JTextArea spitter;
 	
 	/* (non-Javadoc)
@@ -35,7 +23,6 @@ public class ZombieHelpWindow extends JFrame implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -84,7 +71,7 @@ public class ZombieHelpWindow extends JFrame implements Runnable {
 		alphaProtector = new JTextArea();
 		alphaProtector.setEditable(false);
 		alphaProtector.setBackground(Color.WHITE);
-		alphaProtector.setText( "Unit: alphaProtector.\n"
+		alphaProtector.setText( "Unit: Alpha Protector.\n"
 					+ "     Attack - 35\n"
 					+ "     Defense - 65\n"
 					+ "     Range - 8\n"
@@ -104,7 +91,7 @@ public class ZombieHelpWindow extends JFrame implements Runnable {
 		zombieDog = new JTextArea();
 		zombieDog.setEditable(false);
 		zombieDog.setBackground(Color.WHITE);
-		zombieDog.setText( "Unit: Ranger.\n"
+		zombieDog.setText( "Unit: Zombie Dog.\n"
 					+ "     Attack - 35\n"
 					+ "     Defense - 0\n"
 					+ "     Range - 1\n"

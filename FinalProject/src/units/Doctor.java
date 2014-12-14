@@ -9,32 +9,38 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Doctor.
+ * The Doctor is a controllable {@link Unit} for the player. Has a medium
+ * movement, can't do much damage but has more health, and has two medkits to
+ * heal itself or others. Created upon start of a new game, controlled by the
+ * human player.
  */
 public class Doctor extends Unit {
 
-	
 	/** The doc. */
 	transient private BufferedImage docGen, docSelect, docCantMove, doc;
-	
+
 	/**
 	 * Instantiates a new doctor.
 	 *
-	 * @param difficulty the difficulty
+	 * @param difficulty
+	 *            the difficulty
 	 */
 	public Doctor(double difficulty) {
-		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
-		
+		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
+		// Difficulty multiplier
+
 		// Health is doubled at creation so Health is actually 200
-		super("Doctor", new Item("Emergency Kit", ItemType.HP), 20, 25, 100, 5, 2, difficulty);
+		super("Doctor", new Item("Emergency Kit", ItemType.HP), 20, 25, 100, 5,
+				2, difficulty);
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
 		this.addItem(new UsableItem("Medkit", ItemType.MEDKIT));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see units.Unit#drawUnit(java.awt.Graphics)
 	 */
 	@Override
@@ -51,10 +57,11 @@ public class Doctor extends Unit {
 		}
 		if (super.isSelected)
 			doc = docSelect;
-		else if (!super.canMove()) //If the soldier cannot move
+		else if (!super.canMove()) // If the soldier cannot move
 			doc = docCantMove;
-		else doc = docGen;
+		else
+			doc = docGen;
 		g.drawImage(doc, super.currentY * 100, super.currentX * 100, null);
 	}
-	
+
 } // end of Doctor

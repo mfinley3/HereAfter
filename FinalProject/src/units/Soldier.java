@@ -9,34 +9,34 @@ import javax.imageio.ImageIO;
 
 import item.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Soldier.
+ * The Soldier is a controllable {@link Unit} by the player. Has a high
+ * movement, and a high attack, decent defense. A good standard class. Created
+ * upon start of a new game, controlled by the human player.
  */
 public class Soldier extends Unit {
-
-	/**
-	 * Instantiates a new soldier.
-	 *
-	 */
 	transient private BufferedImage soldGen, soldSelect, soldCantMove, sold;
 
 	/**
 	 * Instantiates a new soldier.
 	 *
-	 * @param difficulty the difficulty
+	 * @param difficulty
+	 *            the difficulty
 	 */
 	public Soldier(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range,
 		// Difficulty multiplier
 
 		// Attack is doubled at creation so Attack is actually 60
-		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 30, 20, 100, 6, 3, difficulty);
+		super("Soldier", new Item("Combat Rifle", ItemType.ATK), 30, 20, 100,
+				6, 3, difficulty);
 		this.addItem(new UsableItem("Salvaged Grenade", ItemType.GRENADE));
 		this.addItem(new UsableItem("Military Grenade", ItemType.GRENADE));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see units.Unit#drawUnit(java.awt.Graphics)
 	 */
 	@Override
@@ -53,7 +53,7 @@ public class Soldier extends Unit {
 		}
 		if (super.isSelected)
 			sold = soldSelect;
-		else if (!super.canMove()) //If the soldier cannot move
+		else if (!super.canMove()) // If the soldier cannot move
 			sold = soldCantMove;
 		else
 			sold = soldGen;

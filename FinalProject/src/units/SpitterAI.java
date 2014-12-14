@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import item.Item;
 import item.ItemType;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SpitterAI.
  */

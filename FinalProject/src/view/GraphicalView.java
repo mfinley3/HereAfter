@@ -10,75 +10,51 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import model.Map;
 import space.Space;
-import units.AlphaProtectorAI;
-import units.CarrierAI;
-import units.Doctor;
-import units.Engineer;
-import units.Hole;
-import units.Ranger;
-import units.ZombieAI;
-import units.Sniper;
-import units.Soldier;
-import units.SpitterAI;
-import units.Unit;
-import units.ZombieDogAI;
+import units.*;
 import controller.GameController;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class GraphicalView.
+ * The Class GraphicalView. Displays the map, the units on the map, in the Game
+ * Window.
  */
 public class GraphicalView extends JPanel implements Observer {
 
-	/** The column. */
 	private int clickX, clickY, row, column;
-	
-	/** The controller. */
 	private GameController controller;
-	
-	/** The first click. */
 	private boolean firstClick;
-	
-	/** The map. */
 	private Map map;
-
-	/** The current spaces. */
 	private Space[][] currentSpaces;
-	
-	/** The current units. */
 	private Unit[][] currentUnits;
-	
-	/** The current items. */
 	private Item[][] currentItems;
-	
-	/** The random boost. */
-	private BufferedImage bridge, corner, mountain, path, indoorPathSpace, indoorPath, tower, wall, indoorWall, waste, indoorWaste, water, hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger, sniper, soldier, Zombie, alpha, zDog, spitter, carrier, docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove, ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove, carrierCantMove, docSelected, engSelected, rangSelected, sinpSelected, soldSelected, ZombieSelected, alphaSelected, zDogSelected, spitterSelected, carrierSelected, randomItem, randomBoost;
-	
-	/** The hole covered indoor with mine. */
-	private BufferedImage bridgeWithMine, cornerWithMine, mountainWithMine, pathWithMine, indoorPathSpaceWithMine, indoorPathWithMine, towerWithMine, wasteWithMine, indoorWasteWithMine, waterWithMine, holeWithMine, holeCoveredWithMine, holeCoveredIndoorWithMine;
-	
-	/** The scale factor. */
+	private BufferedImage bridge, corner, mountain, path, indoorPathSpace,
+			indoorPath, tower, wall, indoorWall, waste, indoorWaste, water,
+			hole, holeCovered, holeCoveredIndoor, doctor, engineer, ranger,
+			sniper, soldier, Zombie, alpha, zDog, spitter, carrier,
+			docCantMove, engCantMove, rangCantMove, snipCantMove, soldCantMove,
+			ZombieCantMove, alphaCantMove, zDogCantMove, spitterCantMove,
+			carrierCantMove, docSelected, engSelected, rangSelected,
+			sinpSelected, soldSelected, ZombieSelected, alphaSelected,
+			zDogSelected, spitterSelected, carrierSelected, randomItem,
+			randomBoost;
+	private BufferedImage bridgeWithMine, cornerWithMine, mountainWithMine,
+			pathWithMine, indoorPathSpaceWithMine, indoorPathWithMine,
+			towerWithMine, wasteWithMine, indoorWasteWithMine, waterWithMine,
+			holeWithMine, holeCoveredWithMine, holeCoveredIndoorWithMine;
 	private double scaleFactor = 1;
-	
-	/** The type. */
 	private String type;
 
 	/**
@@ -100,26 +76,33 @@ public class GraphicalView extends JPanel implements Observer {
 
 		this.addMouseMotionListener(motionListener);
 		this.addMouseListener(listener);
-	
 
 		try {
 			hole = ImageIO.read(new File("HoleSpace.png"));
 			holeCovered = ImageIO.read(new File("HoleSpaceCovered.png"));
-			holeCoveredIndoor = ImageIO.read(new File("HoleSpaceCoveredIndoor.png"));
-			
-			wasteWithMine = ImageIO.read(new File("WasteLandSpaceWithMine.jpg"));
-			indoorWasteWithMine = ImageIO.read(new File("IndoorWasteLandSpaceWithMine.jpg"));
+			holeCoveredIndoor = ImageIO.read(new File(
+					"HoleSpaceCoveredIndoor.png"));
+
+			wasteWithMine = ImageIO
+					.read(new File("WasteLandSpaceWithMine.jpg"));
+			indoorWasteWithMine = ImageIO.read(new File(
+					"IndoorWasteLandSpaceWithMine.jpg"));
 			bridgeWithMine = ImageIO.read(new File("BridgeSpaceWithMine.jpg"));
 			cornerWithMine = ImageIO.read(new File("CornerSpaceWithMine.jpg"));
-			mountainWithMine = ImageIO.read(new File("MountainSpaceWithMine.jpg"));
+			mountainWithMine = ImageIO.read(new File(
+					"MountainSpaceWithMine.jpg"));
 			pathWithMine = ImageIO.read(new File("PathSpaceWithMine.jpg"));
-			indoorPathSpaceWithMine = ImageIO.read(new File("IndoorPathSpaceWithMine.png"));
-			indoorPathWithMine = ImageIO.read(new File("IndoorPathWithMine.jpg"));
+			indoorPathSpaceWithMine = ImageIO.read(new File(
+					"IndoorPathSpaceWithMine.png"));
+			indoorPathWithMine = ImageIO
+					.read(new File("IndoorPathWithMine.jpg"));
 			towerWithMine = ImageIO.read(new File("TowerSpaceWithMine.jpg"));
 			waterWithMine = ImageIO.read(new File("WaterSpaceWithMine.jpg"));
-			holeCoveredWithMine = ImageIO.read(new File("HoleSpaceCoveredWithMine.png"));
-			holeCoveredIndoorWithMine = ImageIO.read(new File("HoleSpaceCoveredIndoorWithMine.png"));
-			
+			holeCoveredWithMine = ImageIO.read(new File(
+					"HoleSpaceCoveredWithMine.png"));
+			holeCoveredIndoorWithMine = ImageIO.read(new File(
+					"HoleSpaceCoveredIndoorWithMine.png"));
+
 			randomItem = ImageIO.read(new File("RandomItem.png"));
 			randomBoost = ImageIO.read(new File("RandomBoost.png"));
 
@@ -140,7 +123,8 @@ public class GraphicalView extends JPanel implements Observer {
 			snipCantMove = ImageIO.read(new File("sniper1CantMove.PNG"));
 			soldCantMove = ImageIO.read(new File("soldier1CantMove.png"));
 			ZombieCantMove = ImageIO.read(new File("ZombieCantMove.png"));
-			alphaCantMove = ImageIO.read(new File("AlphaProtectorCantMove.png"));
+			alphaCantMove = ImageIO
+					.read(new File("AlphaProtectorCantMove.png"));
 			zDogCantMove = ImageIO.read(new File("zDogCantMove.png"));
 			spitterCantMove = ImageIO.read(new File("SpitterCantMove.png"));
 			carrierCantMove = ImageIO.read(new File("carrierCantMove.png"));
@@ -151,7 +135,8 @@ public class GraphicalView extends JPanel implements Observer {
 			sinpSelected = ImageIO.read(new File("sniper1Selected.png"));
 			soldSelected = ImageIO.read(new File("soldier1Selected.png"));
 			ZombieSelected = ImageIO.read(new File("ZombieSelected.png"));
-			alphaSelected = ImageIO.read(new File("AlphaProtectorSelected.png"));
+			alphaSelected = ImageIO
+					.read(new File("AlphaProtectorSelected.png"));
 			zDogSelected = ImageIO.read(new File("zDogSelected.png"));
 			spitterSelected = ImageIO.read(new File("SpitterSelected.png"));
 			carrierSelected = ImageIO.read(new File("carrierSelected.png"));
@@ -179,19 +164,26 @@ public class GraphicalView extends JPanel implements Observer {
 	}
 
 	/**
-	 * The Class ListenToMouse.
+	 * The Class ListenToMouse. Used to read mouse inputs.
 	 */
 	private class ListenToMouse implements MouseMotionListener, MouseListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 		 */
 		public void mouseClicked(MouseEvent evt) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent
+		 * )
 		 */
 		public void mouseMoved(MouseEvent evt) {
 
@@ -207,7 +199,8 @@ public class GraphicalView extends JPanel implements Observer {
 		 * to the controller so that the controller can tell the map to change
 		 * the position of the unit.
 		 *
-		 * @param evt the evt
+		 * @param evt
+		 *            the evt
 		 */
 		public void mousePressed(MouseEvent evt) {
 
@@ -226,14 +219,17 @@ public class GraphicalView extends JPanel implements Observer {
 						if (controller.getCurrentUnit().canMove())
 							firstClick = false;
 						else
-							System.out.println("Unit can't move; select a new one.");
+							System.out
+									.println("Unit can't move; select a new one.");
 					} else
-						System.out.println("No unit to select; please select a new unit.");
+						System.out
+								.println("No unit to select; please select a new unit.");
 
 				} else {
 					if (controller.getCurrentUnit() == null)
 						firstClick = true;
-					if (row >= 0 && row < currentSpaces.length && column >= 0 && column < currentSpaces.length) {
+					if (row >= 0 && row < currentSpaces.length && column >= 0
+							&& column < currentSpaces.length) {
 						controller.setEndRow(row);
 						controller.setEndColumn(column);
 					}
@@ -245,15 +241,21 @@ public class GraphicalView extends JPanel implements Observer {
 			}
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 		 */
 		public void mouseEntered(MouseEvent evt) {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 		 */
 		public void mouseReleased(MouseEvent evt) {
 
@@ -269,8 +271,12 @@ public class GraphicalView extends JPanel implements Observer {
 
 		}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent
+		 * )
 		 */
 		public void mouseDragged(MouseEvent evt) {
 
@@ -281,8 +287,10 @@ public class GraphicalView extends JPanel implements Observer {
 	 * The map calls notify Observers, and the graphical view will repaint the
 	 * map to have the changed that occurred.
 	 *
-	 * @param arg0 the arg0
-	 * @param arg1 the arg1
+	 * @param arg0
+	 *            the arg0
+	 * @param arg1
+	 *            the arg1
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -298,75 +306,82 @@ public class GraphicalView extends JPanel implements Observer {
 	 * This will first print ever space with the default map background. It will
 	 * then print a unit if applicable.
 	 *
-	 * @param g the g
+	 * @param g
+	 *            the g
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.scale(1 * scaleFactor, 1 * scaleFactor);
-		Dimension maxSize = new Dimension((int) (4800 * scaleFactor), (int) (4800 * scaleFactor));
+		Dimension maxSize = new Dimension((int) (4800 * scaleFactor),
+				(int) (4800 * scaleFactor));
 		this.setPreferredSize(maxSize);
 		this.revalidate();
 
 		int x = 0;
 		int y = 0;
 
-		
-		
 		g2.drawImage(map.getBackground(), 0, 0, null);
-//		controller.getCurrentUnit().drawUnit(g2);
-		
-		
+		// controller.getCurrentUnit().drawUnit(g2);
 
-		
 		if (currentSpaces != null) {
 			for (int col = 0; col < currentSpaces.length; col++) {
 				x = 0;
 				for (int row = 0; row < currentSpaces.length; row++) {
 					if (currentSpaces[col][row].getSpaceType().equals("Bridge")) {
-						if(currentSpaces[col][row].hasMine())
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(bridgeWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPathSpace")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"IndoorPathSpace")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorPathSpaceWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Mountain")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"Mountain")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(mountainWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Path")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"Path")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(pathWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorPath")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"IndoorPath")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorPathWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Tower")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"Tower")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(towerWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Wasteland")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"Wasteland")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(wasteWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("IndoorWasteland")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"IndoorWasteland")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(indoorWasteWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("Water")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"Water")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(waterWithMine, x, y, null);
-					} else if (currentSpaces[col][row].getSpaceType().equals("CaptureCorner")) {
-						if(currentSpaces[col][row].hasMine())
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"CaptureCorner")) {
+						if (currentSpaces[col][row].hasMine())
 							g2.drawImage(cornerWithMine, x, y, null);
-					} else 
-					if (currentSpaces[col][row].getSpaceType().equals("HoleCovered")) {
-						
+					} else if (currentSpaces[col][row].getSpaceType().equals(
+							"HoleCovered")) {
+
 						if (!type.equalsIgnoreCase("survive")) {
-							if(currentSpaces[col][row].hasMine())
+							if (currentSpaces[col][row].hasMine())
 								g2.drawImage(holeCoveredWithMine, x, y, null);
 							else
-							g2.drawImage(holeCovered, x, y, null);
+								g2.drawImage(holeCovered, x, y, null);
 						} else {
-							if(currentSpaces[col][row].hasMine())
-								g2.drawImage(holeCoveredIndoorWithMine, x, y, null);
+							if (currentSpaces[col][row].hasMine())
+								g2.drawImage(holeCoveredIndoorWithMine, x, y,
+										null);
 							else
-							g2.drawImage(holeCoveredIndoor, x, y, null);
+								g2.drawImage(holeCoveredIndoor, x, y, null);
 						}
 					}
 
@@ -378,108 +393,19 @@ public class GraphicalView extends JPanel implements Observer {
 						}
 					}
 
-					
-					if(currentUnits[col][row] != null){
+					if (currentUnits[col][row] != null) {
 						currentUnits[col][row].drawUnit(g2);
 					}
-/*
-					if (currentUnits[col][row] == controller.getCurrentUnit()) {
-						if (currentUnits[col][row] instanceof Doctor) {
-							g2.drawImage(docSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof Engineer) {
-							g2.drawImage(engSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof Ranger) {
-							g2.drawImage(rangSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof Sniper) {
-							g2.drawImage(sinpSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof Soldier) {
-							g2.drawImage(soldSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof ZombieAI) {
-							g2.drawImage(ZombieSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
-							g2.drawImage(alphaSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof ZombieDogAI) {
-							g2.drawImage(zDogSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof SpitterAI) {
-							g2.drawImage(spitterSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof CarrierAI) {
-							g2.drawImage(carrierSelected, x, y, null);
-						} else if (currentUnits[col][row] instanceof Hole) {
-							g2.drawImage(hole, x, y, null);
 
-						}
-
-					} else {
-
-						if (currentUnits[col][row] instanceof Doctor) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(doctor, x, y, null);
-							else
-								g2.drawImage(docCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof Engineer) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(engineer, x, y, null);
-							else
-								g2.drawImage(engCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof Ranger) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(ranger, x, y, null);
-							else
-								g2.drawImage(rangCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof Sniper) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(sniper, x, y, null);
-							else
-								g2.drawImage(snipCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof Soldier) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(soldier, x, y, null);
-							else
-								g2.drawImage(soldCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof ZombieAI) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(Zombie, x, y, null);
-							else
-								g2.drawImage(ZombieCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof AlphaProtectorAI) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(alpha, x, y, null);
-							else
-								g2.drawImage(alphaCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof ZombieDogAI) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(zDog, x, y, null);
-							else
-								g2.drawImage(zDogCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof SpitterAI) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(spitter, x, y, null);
-							else
-								g2.drawImage(spitterCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof CarrierAI) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(carrier, x, y, null);
-							else
-								g2.drawImage(carrierCantMove, x, y, null);
-						} else if (currentUnits[col][row] instanceof Hole) {
-							if (currentUnits[col][row].canMove())
-								g2.drawImage(hole, x, y, null);
-							else
-								g2.drawImage(hole, x, y, null);
-						}
-
-					}
-*/
-					// /////
-					// TODO Display which spaces can be moved to
-					if (currentSpaces[row][col].getCanMoveTo() && controller.playerTurn()) {
+					// Display which spaces can be moved to
+					if (currentSpaces[row][col].getCanMoveTo()
+							&& controller.playerTurn()) {
 						g2.setColor(Color.green);
 						Stroke oldStroke = g2.getStroke();
 						g2.setStroke(new BasicStroke((float) (2 / scaleFactor)));
 						g2.drawRect(x, y, 100, 100);
 						g2.setStroke(oldStroke);
 					}
-					// ///////
 
 					x += 100;
 				}
@@ -512,9 +438,10 @@ public class GraphicalView extends JPanel implements Observer {
 	}
 
 	/**
-	 * Sets the scale factor.
+	 * Sets the scale factor for how zoomed in the map is.
 	 *
-	 * @param scaleFactor the new scale factor
+	 * @param scaleFactor
+	 *            the new scale factor
 	 */
 	public void setScaleFactor(double scaleFactor) {
 		this.scaleFactor = scaleFactor;
@@ -524,7 +451,8 @@ public class GraphicalView extends JPanel implements Observer {
 	/**
 	 * Sets the game type.
 	 *
-	 * @param type the new game type
+	 * @param type
+	 *            the new game type
 	 */
 	public void setGameType(String type) {
 		this.type = type;
