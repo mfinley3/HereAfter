@@ -13,15 +13,14 @@ import item.*;
  * The Class Sniper.
  */
 public class Sniper extends Unit {
-
-	/**
-	 * Instantiates a new sniper.
-	 *
-	 * @param difficulty the difficulty
-	 */
 	
 	transient private BufferedImage snipGen, snipSelect, snipCantMove, snip;	
 	
+	/**
+	 * Instantiates a new sniper unit.
+	 *
+	 * @param difficulty, augments the stats
+	 */
 	public Sniper(double difficulty) {
 		// Unit Type, Given Item, Attack, Defense, Health, Movement, Range, Difficulty multiplier
 		
