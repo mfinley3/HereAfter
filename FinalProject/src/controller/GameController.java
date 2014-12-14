@@ -1412,6 +1412,7 @@ public class GameController implements Serializable {
 
 				// Goes through each member of the AI. Checks to see if there
 				// are any enemies within range.
+				
 				temp = this.nearestPlayerUnit(new Point(u.getX(), u.getY()));
 				this.setCurrentUnit(u.getY(), u.getX());
 				this.endRow = temp.y;

@@ -18,7 +18,6 @@ import item.*;
 public class Soldier extends Unit {
 	transient private BufferedImage soldGen, soldSelect, soldCantMove, sold;
 
-
 	/**
 	 * Instantiates a new soldier.
 	 *
