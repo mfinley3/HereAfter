@@ -1311,11 +1311,18 @@ public class GameController implements Serializable {
 				this.endCol = temp.x;
 				
 				// TODO add attack method. If it is around them, and they are not a whole, attack.
-				
-				if(u.canMove()){
-					if(aIInAttackRange(u.getX(), u.getY(), u.getRange())){
+				if(aIInAttackRange(u.getX(), u.getY(), u.getRange())){
+						endCol = toAttack.x;
+						endRow = toAttack.y;
 						
-					}
+						map.getUnitAt(endRow, endCol).reduceHealth(u.getAttack());
+						targetDead(endRow, endCol);
+						gameOver();
+						map.updateObservers();
+						tempUnitList.remove(u);
+						if(tempUnitList.isEmpty()){
+							break;
+						}
 				}
 				//if (this.inAttackRange()) {
 				//	attack();
@@ -1346,13 +1353,29 @@ public class GameController implements Serializable {
 	private boolean aIInAttackRange(int row, int col, int rangeLeft) {
 		// TODO Auto-generated method stub
 		
-		if(rangeLeft == 0&& map.isOccupied(row, col))
-			if(player1.allAliveUnits().contains(map.getUnitAt(row, col))){
-				if(toAttack==null){
-					toAttack = new Point(row,col);
-					toReturn = true;
+		if(rangeLeft >= 0){
+			if(map.isOccupied(row, col)){
+				if(player1.allAliveUnits().contains(map.getUnitAt(row, col))){
+					toAttack = new Point(col,row);
+					return true;
 				}
 			}
+		
+			if (rangeLeft>0){	
+				boolean toReturn = false;
+
+				if (!toReturn&& row < 49)
+					toReturn = aIInAttackRange(row+1, col, rangeLeft-1);
+				if (!toReturn&& row > 0)
+					toReturn = aIInAttackRange(row-1, col, rangeLeft-1);
+				if (!toReturn&& col < 49)
+					toReturn = aIInAttackRange(row, col+1, rangeLeft-1);
+				if (!toReturn&& col > 0)
+					toReturn = aIInAttackRange(row, col-1, rangeLeft-1);
+			
+				return toReturn;
+			}
+		}
 		
 		return false;
 	}
