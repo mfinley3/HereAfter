@@ -202,7 +202,7 @@ public class GameController implements Serializable {
 
 //						if(currUnit instanceof Doctor || currUnit instanceof Engineer || currUnit instanceof Ranger ||
 //							currUnit instanceof Sniper || currUnit instanceof Soldier)
-//							goodUnitMove();
+//							goodUnitMove(); asdfsdfaf
 						
 
 						// Set the new CurrRow and CurrCol, and check
