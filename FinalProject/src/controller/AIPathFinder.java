@@ -39,7 +39,7 @@ public class AIPathFinder implements Serializable{
 	public Point traverse(int currAIRow, int currAICol, int plyrRow, int plyrCol, int aiMovement) {
 		boolean isNearPlayer = false;
 		moveRange = aiMovement;
-		//movePositions.add(new Point(currAIRow, currAICol));
+		movePositions.add(new Point(currAIRow, currAICol));
 		
 		//System.out.println("Current AI Location: " + currAIRow + ", " + currAICol + ": " + moveRange);
 		//System.out.println("\t\tTarget Location: " + plyrRow + ", " + plyrCol);
@@ -48,13 +48,11 @@ public class AIPathFinder implements Serializable{
 			isNearPlayer = true; // the AI is near the target location
 		
 		if (moveRange == 0) {
-			movePositions.add(new Point(currAIRow, currAICol));
 			return new Point(currAIRow, currAICol);
 		}
 		
 		// Stepped on a mine, ends movement
 		if (gameMap.getSpace(currAICol, currAIRow).hasMine()) {
-			movePositions.add(new Point(currAIRow, currAICol));
 			mineLocations.add(new Point(currAIRow, currAICol));
 			return new Point(currAIRow, currAICol);
 		}
@@ -64,7 +62,6 @@ public class AIPathFinder implements Serializable{
 			// moves up
 			if (!isNearPlayer && currAIRow > plyrRow) {
 				if (validPosition(currAIRow - 1, currAICol)) {
-					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow - 1, currAICol, plyrRow, plyrCol, moveRange);
 				}
 			}
@@ -72,7 +69,6 @@ public class AIPathFinder implements Serializable{
 			// moves left
 			if (!isNearPlayer && currAICol > plyrCol) {
 				if (validPosition(currAIRow, currAICol - 1)) {
-					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow, currAICol - 1, plyrRow, plyrCol, moveRange);
 				}
 			}
@@ -80,7 +76,6 @@ public class AIPathFinder implements Serializable{
 			// moves down
 			if (!isNearPlayer && currAIRow < plyrRow) {
 				if (validPosition(currAIRow + 1, currAICol)) {
-					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow + 1, currAICol, plyrRow, plyrCol, moveRange);
 				}
 			}
@@ -88,14 +83,11 @@ public class AIPathFinder implements Serializable{
 			// moves right
 			if (!isNearPlayer && currAICol < plyrCol) {
 				if (validPosition(currAIRow, currAICol + 1)) {
-					movePositions.add(new Point(currAIRow, currAICol));
 					traverse(currAIRow, currAICol + 1, plyrRow, plyrCol, moveRange);
 				}
 			}
 			
 		}
-		
-		movePositions.add(new Point(currAIRow, currAICol));
 		
 		// Returns the Point of where the AI should move.
 		return new Point(row, col);
