@@ -347,20 +347,23 @@ public class GameController implements Serializable {
 	 * Good unit move.
 	 */
 	private void goodUnitMove() {
+		int STARTCol = currCol;
+		int STARTRow = currRow;
 		while (currCol != endCol || currRow != endRow) {
 			if (currRow > endRow) { // Up
-				map.moveUnit(currRow, currCol, currRow - 1, currCol);
+				//map.moveUnit(currRow, currCol, currRow - 1, currCol);
 				currRow--;
 			} else if (currCol > endCol) { // Left
-				map.moveUnit(currRow, currCol, currRow, currCol - 1);
+				//map.moveUnit(currRow, currCol, currRow, currCol - 1);
 				currCol--;
 			} else if (currRow < endRow) { // Down
-				map.moveUnit(currRow, currCol, currRow + 1, currCol);
+				//map.moveUnit(currRow, currCol, currRow + 1, currCol);
 				currRow++;
 			} else if (currCol < endCol) { // Right
-				map.moveUnit(currRow, currCol, currRow, currCol + 1);
+				//map.moveUnit(currRow, currCol, currRow, currCol + 1);
 				currCol++;
 			}
+			currUnit.setCurrentPosition(currCol, currRow);
 			currUnit.drawUnit(graphical.getGraphics());
 			try {
 				Thread.sleep(50);
@@ -368,7 +371,14 @@ public class GameController implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
+		Unit[][] tempUnits = map.getUnits();
+		tempUnits[currCol][currRow] = tempUnits[STARTCol][STARTRow];
+		tempUnits[STARTCol][STARTRow] = null;
+		Space[][] tempSpaces = map.getSpaces();
+		tempSpaces[STARTCol][STARTRow].setOccupied(false);
+		tempSpaces[currCol][currRow].setOccupied(true);
 		graphical.repaint();
 
 	}
