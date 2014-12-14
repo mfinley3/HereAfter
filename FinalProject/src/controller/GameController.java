@@ -910,14 +910,7 @@ public class GameController implements Serializable {
 
 				gameOver = true;
 				playerWon = true;
-				// Display some kind of message telling player 2 won
-				// System.out.println("Player " + player1.getID() + " won!");
-				// System.out.println("Number of turns taken: " + turns);
 				player1.gameFinished();
-				// System.out.println("Games you finished: " +
-				// player1.getGamesFinished());
-				// System.out.println("Your team stats: ");
-				// System.out.println(player1.getTeamStats());
 
 				return true;
 			} else if (player1.everyonesDeadDave()) {
@@ -1244,6 +1237,8 @@ public class GameController implements Serializable {
 				for (Unit i : tempUnitList)
 					i.setCanMove(false);
 				tempUnitList.clear();
+				if(currUnit != null)
+					currUnit.setIsSelected(false);
 				currUnit = null;
 
 				System.out.println("Player 1 ends turn.");
@@ -1267,6 +1262,8 @@ public class GameController implements Serializable {
 				for (Unit i : player2.allAliveUnits())
 					i.setCanMove(false);
 				tempUnitList.clear();
+				if(currUnit != null)
+					currUnit.setIsSelected(false);
 				currUnit = null;
 
 				// Switch to player, add one to turns
