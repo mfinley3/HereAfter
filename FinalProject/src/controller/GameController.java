@@ -7,11 +7,9 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import model.*;
 import songplayer.Songs;
@@ -21,10 +19,9 @@ import view.GraphicalView;
 import view.TRPGGUI;
 import item.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * 
- * The controller for a game. Sends messages to map, Saves Data, Loads Data,
+ * The controller for a game. Is responsible for delegating most of the gameplay. Sends messages to map, Saves Data, Loads Data,
  * sets up players, calculate which map is needed, sends messages to the enemy
  * team factory, etc.
  * 
@@ -63,7 +60,7 @@ public class GameController implements Serializable {
 	private ItemType usingItemType;
 
 	/**
-	 * Constructor for one player.
+	 * Constructor the game controller. Sets all players, difficulties, what type of game it is, if it's testing, sets the map, sets the constructor, etc.
 	 * 
 	 * @param player1
 	 *            the player1
@@ -129,7 +126,7 @@ public class GameController implements Serializable {
 
 	/**
 	 * Set the the current unit to the unit located at this space. Will return
-	 * true if it
+	 * true if it is.
 	 * 
 	 * @param row
 	 *            the row
@@ -162,7 +159,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Get method for CurrUnit.
+	 * Get method for the CurrUnit.
 	 * 
 	 * @return the currently selected unit
 	 */
@@ -186,7 +183,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Move a selected Unit to a another space. Checks to see if the player can
+	 * Move a selected Unit to another space. Checks to see if the player can
 	 * move to the targeted space, and if can, move them.
 	 */
 	public void move() {
@@ -294,7 +291,6 @@ public class GameController implements Serializable {
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -310,7 +306,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Pick up item.
+	 * Pick up item. Puts it into the Unit's inventory.
 	 */
 	private void pickUpItem() {
 
@@ -348,12 +344,11 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Attack after move.
+	 * Attack after moving. Only works if the unit is a player controlled units.
 	 */
 	private void attackAfterMove() {
 
 		if (!gameOver) {
-			// TODO: Test
 
 			for (Unit p : player2.allAliveUnits()) {
 
@@ -378,7 +373,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Get it to attack.
+	 * Attack the unit at the endrow/column.
 	 */
 	public void attack() {
 
@@ -544,19 +539,17 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO Finish this method.
+	 * Checks to see if the unit has an item.
 	 * 
 	 * @param item
 	 *            the item
-	 * @return true, if successful
+	 * @return true, if it does
 	 */
 	public boolean currUnitHasItem(ItemType item) {
 		return currUnit.hasItem(item);
 	}
 
 	/**
-	 * TODO Finish this method
-	 * 
 	 * Use the item of a selected unit.
 	 * 
 	 * @return if the item was used.
@@ -657,7 +650,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO Finish and Test Blow those zombies up, kid. Just try not to blow
+	 * Blow those zombies up, kid. Just try not to blow
 	 * yourself up.
 	 * 
 	 * @param row
@@ -724,7 +717,6 @@ public class GameController implements Serializable {
 	 * 
 	 * @return if the game is over or not
 	 */
-
 	public boolean gameOver() {
 		if (!gameOver) {
 
@@ -764,8 +756,6 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO FINISH
-	 * 
 	 * Determine if a game of a particular type has been won. Sends the relevant
 	 * information to the right file to check.
 	 * 
@@ -1135,9 +1125,7 @@ public class GameController implements Serializable {
 				canMoveHelper(currUnit.getMovement(), row, col - 1);
 	}
 
-	/**
-	 * TODO Get it working
-	 * 
+	/** 
 	 * Helper method for setCanMove.
 	 * 
 	 * @param movesAvail
@@ -1249,8 +1237,6 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO Test
-	 * 
 	 * Gets the point locations of all of the player locations. Used with enemy
 	 * AI, gives them a list of targets that they can move to.
 	 * 
@@ -1260,14 +1246,12 @@ public class GameController implements Serializable {
 		return player1.allAliveUnits();
 	}
 
-	/** The to attack. */
 	private Point toAttack;
 
 	/**
-	 * Enemy turn.
+	 * The method used to go through the enemy units. Moves or attacks them.
 	 */
 	public synchronized void enemyTurn() {
-		// TODO FINISH
 		List<Unit> enemyUnitList = new ArrayList<Unit>(player2.allAliveUnits());
 
 		if (!playerTurn) {
@@ -1307,7 +1291,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * Attacks the nearest unit.
+	 * Attacks the nearest unit. Used by the AI.
 	 * 
 	 * @param row
 	 *            the row
@@ -1318,7 +1302,6 @@ public class GameController implements Serializable {
 	 * @return true, if successful
 	 */
 	private boolean aIInAttackRange(int row, int col, int rangeLeft) {
-		// TODO Auto-generated method stub
 
 		if (rangeLeft >= 0) {
 			if (map.isOccupied(row, col)) {
@@ -1348,7 +1331,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO Write this Method for automatically moving the enemy AI. Moves them
+	 * Automatically moves the enemy AI. Moves them
 	 * toward the closest human based on their behavior. If they are near enough
 	 * to a player's unit, attack.
 	 * 
@@ -1391,7 +1374,7 @@ public class GameController implements Serializable {
 	}
 
 	/**
-	 * TODO.
+	 * Sets the current Player.
 	 * 
 	 * @param player
 	 *            the new current player
@@ -1419,7 +1402,6 @@ public class GameController implements Serializable {
 	 *            the new checks for attacked
 	 */
 	public void setHasAttacked(boolean hasAttacked) {
-		// TODO Auto-generated method stub
 		this.hasAttacked = hasAttacked;
 	}
 
@@ -1437,7 +1419,6 @@ public class GameController implements Serializable {
 	}
 
 	public void setGraphicalView(GraphicalView graphical) {
-		// TODO Auto-generated method stub
 		this.graphical = graphical;
 	}
 
