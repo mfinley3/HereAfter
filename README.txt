@@ -1,4 +1,4 @@
-Project:  HereAfter:  TRPG
+Project:  HereAfter a TRPG
 Project Manager: Ben Whitely
 
 Course:  335
@@ -8,8 +8,7 @@ Iteration 2 Due Date:  Last Day of Class
 Description:  A tactical role playing game set in a post-apocalyptic time period
               after a massive outbreak infected millions and turned them into monsters.
 
-Overview of the Project: To learn the key concepts in working with a small team to develop software while practicing our java skills. 
-			 Project lasted around 6 weeks, starting from coming up with an idea and developing a plan to the game's final state. 
+Overview of the Project: To learn the key concepts in working with a small team to develop software while practicing our java skills. The project lasted around 6 weeks, starting from coming up with an idea and developing a plan to the game's final state. 
 
 Authors:
 
